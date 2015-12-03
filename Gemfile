@@ -17,6 +17,8 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'slim-rails'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+# Autoprefixer is a tool to parse CSS and add vendor prefixes to CSS rules using values from the Can I Use.
+gem 'autoprefixer-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
