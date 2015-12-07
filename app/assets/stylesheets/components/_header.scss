@@ -2,15 +2,38 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 50px;
+  height: rem(50px);
   width: 100%;
 
   color: $font-color-2;
 
   background: $bg-color-2;
+
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.20);
+
+  .nav {
+    float: right;
+    margin: rem(10px) 0;
+
+    li {
+      margin-left: 2rem;
+
+      font-size: rem(11px);
+      font-weight: bold;
+      color: $font-color-2;
+      letter-spacing: 1px;
+      line-height: rem(30px);
+      text-transform: uppercase;
+    }
+
+    a {
+      color: $font-color-2;
+      text-decoration: none;
+    }
+  }
 }
 
 // Adding space at top when header is imported
 body {
-  padding-top: 50px;
+  padding-top: rem(50px);
 }

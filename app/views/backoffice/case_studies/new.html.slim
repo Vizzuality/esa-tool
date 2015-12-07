@@ -1,8 +1,8 @@
 section.l-main
 
-  header.content
+  header.header
     .wrap: .row
-      .grid-sm-12
+      .grid-sm-6
         h1 Create new case study
   
   .content
@@ -13,6 +13,7 @@ section.l-main
       .grid-sm-8.offset-sm-1
 
         = form_tag do
-
-          = label_tag :title, 'Title of the case study'
-          = text_field_tag :title
+          
+          .form-row
+            = label_tag :title, 'Title of the case study'
+            = text_field_tag :title

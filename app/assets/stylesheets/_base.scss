@@ -13,6 +13,19 @@ body {
   background: $bg-color-1;
 }
 
+h1, h2 {
+  font-family: 'Roboto Slab';
+  font-weight: normal;
+}
+
+h1 {
+  font-size: rem(30px);
+
+  &.-big {
+    font-size: rem(70px);
+  }
+}
+
 img {
   display: inline-block;
   max-width: 100%;
@@ -45,4 +58,10 @@ button {
 
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+input, textarea, select, button, a {
+  &:focus {
+    outline: none;
+  }
 }

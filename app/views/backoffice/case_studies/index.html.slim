@@ -1,23 +1,23 @@
 .l-main
   .wrap
     .row
-      .grid-lg-12
-        h1 = t 'case_studies'
+      .grid-xs-12.grid-sm-12
+        h1.-big = t 'case_studies'
 
-        ul
-          - for case_study in 0..4
-            li
-              = link_to edit_backoffice_case_study_path(case_study) do
-                
-                = image_tag ''
+    .row
+      - for case_study in 0..4
+        .grid-xs-12.grid-sm-6.grid-md-4
+          = link_to edit_backoffice_case_study_path(case_study), class: 'thumbnail' do
+            
+            = image_tag '', class: 'thumb'
 
-                .caption
-                  h3 Multi-hazard Vulnerability Assessment in Ho Chi Minh City and Yogyakarta
-                  span
-                    | Last update:  
-                    time Dec 21, 2015
+            .caption
+              p.caption-item.-big Multi-hazard Vulnerability Assessment in Ho Chi Minh City and Yogyakarta
+              span.caption-item.-dark
+                | #{t('last_update')}: 
+                time Dec 21, 2015
+        
+      .grid-xs-12.grid-sm-6.grid-md-4
+        = link_to new_backoffice_case_study_path, class: 'btn -thumbnail' do
           
-          li
-            = link_to new_backoffice_case_study_path do
-
-              p Add new case
+          span.label = t('add_new_case_study')

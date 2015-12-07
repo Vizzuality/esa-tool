@@ -1,0 +1,19 @@
+.btn {
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  color: $font-color-1;
+
+  &.-thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: rem(194px); // Temporal
+
+    font-family: 'Roboto Slab';
+
+    border: 4px dashed $border-color-1;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+}

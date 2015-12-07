@@ -1,0 +1,25 @@
+label {
+  display: block;
+  margin: 0.5rem 0;
+
+  text-transform: uppercase;
+  font-size: rem(14px);
+  letter-spacing: rem(0.5px);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+
+  background-color: transparent;
+
+  border: 0;
+  border-bottom: 1px solid $border-color-1;
+}
+
+.form-row {
+  margin-bottom: 2rem;
+}
