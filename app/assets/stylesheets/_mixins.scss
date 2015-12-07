@@ -1,0 +1,3 @@
+@function rem($px, $font-initial: 16px) {
+  @return ($px / $font-initial) * 1rem;
+}

@@ -1,0 +1,16 @@
+.l-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+
+  color: $font-color-2;
+
+  background: $bg-color-2;
+}
+
+// Adding space at top when header is imported
+body {
+  padding-top: 50px;
+}
