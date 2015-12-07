@@ -1,0 +1,18 @@
+section.l-main
+
+  header.content
+    .wrap: .row
+      .grid-sm-12
+        h1 Create new case study
+  
+  .content
+    .wrap: .row
+      .grid-sm-1
+        | Sidebar
+
+      .grid-sm-8.offset-sm-1
+
+        = form_tag do
+
+          = label_tag :title, 'Title of the case study'
+          = text_field_tag :title

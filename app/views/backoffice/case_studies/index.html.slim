@@ -1,0 +1,23 @@
+.l-main
+  .wrap
+    .row
+      .grid-lg-12
+        h1 = t 'case_studies'
+
+        ul
+          - for case_study in 0..4
+            li
+              = link_to edit_backoffice_case_study_path(case_study) do
+                
+                = image_tag ''
+
+                .caption
+                  h3 Multi-hazard Vulnerability Assessment in Ho Chi Minh City and Yogyakarta
+                  span
+                    | Last update:  
+                    time Dec 21, 2015
+          
+          li
+            = link_to new_backoffice_case_study_path do
+
+              p Add new case

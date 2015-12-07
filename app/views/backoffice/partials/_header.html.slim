@@ -1,10 +1,11 @@
 header.l-header
   .wrap: .row
     .grid-sm-6
-      h1.brand Eoworld
+      h1.brand
+        = link_to 'Eoworld', backoffice_dashboard_path
 
     .grid-sm-6
       nav.nav-inline
         ul
-          li = link_to 'Case Studies', backoffice_dashboard_path
+          li = link_to 'Case Studies', backoffice_case_studies_path
           li Username
