@@ -3,6 +3,7 @@ class Backoffice::CaseStudiesController < BackofficeController
   end
 
   def new
+    @case_study = CaseStudy.new
   end
 
   def edit
