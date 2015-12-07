@@ -17,3 +17,14 @@ section.l-main
           .form-row
             = label_tag :title, 'Title of the case study'
             = text_field_tag :title
+
+          .form-row
+            = radio_button_tag :status, 'published'
+            = label_tag :status_published, 'Published'
+
+            = radio_button_tag :status, 'unpublished'
+            = label_tag :status_unpublished, 'Unpublished'
+
+          .form-row
+            = label_tag :tags, 'Tags'
+            = text_field_tag :tags
