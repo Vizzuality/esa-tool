@@ -5,6 +5,11 @@ label {
   text-transform: uppercase;
   font-size: rem(14px);
   letter-spacing: rem(0.5px);
+
+  abbr[title] {
+    color: red;
+    border-bottom: 0;
+  }
 }
 
 input[type="text"],

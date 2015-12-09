@@ -14,13 +14,13 @@
 ActiveRecord::Schema.define(version: 20151207180023) do
 
   create_table "case_studies", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",                       null: false
     t.text     "description"
     t.string   "thumbnail"
-    t.integer  "template"
-    t.boolean  "status"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "template",    default: 1
+    t.boolean  "status",      default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
 end
