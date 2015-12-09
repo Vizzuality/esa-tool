@@ -18,7 +18,7 @@ section.l-main
           .form-row
             = f.input :title
           .form-row
-            = f.input :status, as: :radio_buttons
+            = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
           .form-row
             = f.input :template
           .form-row

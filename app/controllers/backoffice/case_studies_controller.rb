@@ -16,7 +16,7 @@ class Backoffice::CaseStudiesController < BackofficeController
   def create
     @case_study = CaseStudy.new(case_studies_params)
     if @case_study.save
-      redirect_to backoffice_case_studies_path
+      redirect_to edit_backoffice_case_study_path(@case_study)
     else
       render :new
     end

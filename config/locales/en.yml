@@ -25,3 +25,6 @@ en:
   last_update: "Last update"
   delete: "Delete"
   confirm_sure: "Are you sure?"
+  published: "Published"
+  unpublished: "Unpublished"
+  create_case_study: "Create new case study"

@@ -3,7 +3,7 @@ section.l-main
   header.header
     .wrap: .row
       .grid-sm-6
-        h1 Create new case study
+        h1 = t 'create_case_study'
   
   .content
     .wrap: .row
@@ -12,10 +12,10 @@ section.l-main
           .form-row
             = f.input :title
           .form-row
-            = f.input :status, as: :radio_buttons
+            = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
           .form-row
             = f.input :template
           .form-row
             = f.input :thumbnail
           .form-row
-            = f.button :submit
+            = f.button :submit, class: 'btn -big'
