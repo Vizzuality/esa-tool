@@ -9,23 +9,4 @@ section.l-main
     .wrap: .row
       .grid-sm-6.offset-sm-3
         = simple_form_for @case_study, url: backoffice_case_studies_path, html: { multipart: true } do |f|
-          .form-row
-            = f.input :title
-          .form-row
-            = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
-          .form-row
-            = f.label :contacts
-            = f.simple_fields_for :contacts do |c|
-              .row
-                .grid-sm-12
-                  = c.input :name
-                .grid-sm-8
-                  = c.input :body
-                .grid-sm-4
-                  = c.input :logo
-          .form-row
-            = f.input :template
-          .form-row
-            = f.input :thumbnail
-          .form-row
-            = f.button :submit, class: 'btn -big'
+          = render 'form', f: f

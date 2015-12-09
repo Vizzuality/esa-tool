@@ -15,25 +15,4 @@ section.l-main
 
       .grid-sm-6.offset-sm-1
         = simple_form_for @case_study, url: backoffice_case_study_path, html: { multipart: true } do |f|
-          .form-row
-            = f.input :title
-          .form-row
-            = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
-          .form-row
-            = f.label :contacts
-            = f.simple_fields_for :contacts do |c|
-              .row
-                .grid-sm-12
-                  = c.input :name
-                .grid-sm-8
-                  = c.input :body
-                .grid-sm-4
-                  = c.input :logo
-          .form-row
-            = f.input :template
-          .form-row
-            = f.label :thumbnail
-            = image_tag @case_study.thumbnail.url(:medium), class: 'thumb' if @case_study.thumbnail.present?
-            = f.input_field :thumbnail
-          .form-row
-            = f.button :submit, class: 'btn -big'
+          = render 'form', f: f

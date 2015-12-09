@@ -3,7 +3,7 @@ class CaseStudy < ActiveRecord::Base
   has_many :contacts
   has_many :pages
 
-  accepts_nested_attributes_for :contacts
+  accepts_nested_attributes_for :contacts, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :pages
 
   validates :title, presence: true, length: { minimum: 2 }

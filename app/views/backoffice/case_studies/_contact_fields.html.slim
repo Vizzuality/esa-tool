@@ -1,0 +1,11 @@
+.nested-fields
+  .row
+    .grid-sm-12
+      = f.input :name
+    .grid-sm-8
+      = f.input :body
+    .grid-sm-4
+      = f.input :logo
+  = f.input :id, as: :hidden
+
+  = link_to_remove_association t('delete'), f, class: 'btn'

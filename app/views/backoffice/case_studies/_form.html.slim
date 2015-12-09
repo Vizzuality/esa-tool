@@ -1,0 +1,17 @@
+.form-row
+  = f.input :title
+.form-row
+  = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
+.form-row
+  = f.label :contacts
+  = f.simple_fields_for :contacts do |c|
+    = render 'contact_fields', f: c
+  = link_to_add_association t('add_contact'), f, :contacts, class: 'btn'
+.form-row
+  = f.input :template
+.form-row
+  = f.label :thumbnail
+  = image_tag @case_study.thumbnail.url(:medium), class: 'thumb' if @case_study.thumbnail.present?
+  = f.input_field :thumbnail
+.form-row
+  = f.button :submit, class: 'btn -big'

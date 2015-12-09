@@ -16,7 +16,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
-textarea {
+textarea,
+select {
   display: block;
   width: 100%;
   margin: 0.5rem 0;
@@ -33,4 +34,8 @@ textarea {
 
 .form-row {
   margin-bottom: 2rem;
+
+  .error {
+    color: red;
+  }
 }

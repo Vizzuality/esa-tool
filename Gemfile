@@ -30,6 +30,8 @@ gem 'simple_form'
 gem 'paperclip', '~> 4.3'
 # This plugin was originally based on Acts as Taggable on Steroids by Jonathan Viney.
 gem 'acts-as-taggable-on', '~> 3.4'
+# Cocoon makes it easier to handle nested forms.
+gem 'cocoon'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
