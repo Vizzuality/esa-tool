@@ -1,5 +1,8 @@
 class CaseStudy < ActiveRecord::Base
 
+  has_many :contact
+  has_many :page
+
   validates :title, presence: true, length: { minimum: 2 }
   validates :template, presence: true, numericality: {
     only_integer: true,
