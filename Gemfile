@@ -32,6 +32,8 @@ gem 'paperclip', '~> 4.3'
 gem 'acts-as-taggable-on', '~> 3.4'
 # Cocoon makes it easier to handle nested forms.
 gem 'cocoon'
+# Flexible authentication solution for Rails.
+gem 'devise'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
