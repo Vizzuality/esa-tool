@@ -8,9 +8,11 @@ class Backoffice::CaseStudiesController < BackofficeController
 
   def new
     @case_study = CaseStudy.new
+    @contacts = @case_study.contacts.build
   end
 
   def edit
+    @contacts = @case_study.contacts.build
   end
 
   def create
@@ -42,6 +44,6 @@ class Backoffice::CaseStudiesController < BackofficeController
     end
 
     def case_studies_params
-      params.require(:case_study).permit!
+      params.require(:case_study).permit(:title, :description, :status, :template, :thumbnail, contacts_attributes: [:name, :body, :logo])
     end
 end
