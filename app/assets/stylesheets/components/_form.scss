@@ -39,3 +39,9 @@ textarea {
     color: red;
   }
 }
+
+.radio, .checkbox {
+  label {
+    text-transform: none;
+  }
+}
