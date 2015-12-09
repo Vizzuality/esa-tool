@@ -44,6 +44,6 @@ class Backoffice::CaseStudiesController < BackofficeController
     end
 
     def case_studies_params
-      params.require(:case_study).permit(:title, :description, :status, :template, :thumbnail, contacts_attributes: [:id, :name, :body, :logo, :_destroy])
+      params.require(:case_study).permit(:title, :description, :status, :template, :thumbnail, :tag_list, contacts_attributes: [:id, :name, :body, :logo, :_destroy])
     end
 end

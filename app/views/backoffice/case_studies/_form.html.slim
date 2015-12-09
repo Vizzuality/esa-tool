@@ -3,6 +3,8 @@
 .form-row
   = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
 .form-row
+  = f.input :tag_list
+.form-row
   = f.label :contacts
   = f.simple_fields_for :contacts do |c|
     = render 'contact_fields', f: c

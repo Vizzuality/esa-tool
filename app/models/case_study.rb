@@ -6,6 +6,8 @@ class CaseStudy < ActiveRecord::Base
   accepts_nested_attributes_for :contacts, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :pages
 
+  acts_as_taggable
+
   validates :title, presence: true, length: { minimum: 2 }
   validates :template, presence: true, numericality: {
     only_integer: true,
