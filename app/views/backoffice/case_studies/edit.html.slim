@@ -6,7 +6,7 @@ section.l-main
         h1 = @case_study.title
 
       .grid-sm-6
-        = link_to t('delete'), backoffice_case_study_path,  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn'
+        = link_to t('delete'), backoffice_case_study_path(@case_study),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn'
   
   .content
     .wrap: .row
