@@ -20,6 +20,8 @@ section.l-main
           .form-row
             = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
           .form-row
+            = f.association :contact, as: :check_boxes
+          .form-row
             = f.input :template
           .form-row
             = f.label :thumbnail
