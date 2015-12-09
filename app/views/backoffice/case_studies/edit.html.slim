@@ -1,2 +1,29 @@
-h1 Backoffice::CaseStudies#edit
-p Find me in app/views/backoffice/case_studies/edit.html.slim
+section.l-main
+
+  header.header
+    .wrap: .row
+      .grid-sm-6
+        h1 = @case_study.title
+
+      .grid-sm-6
+        = link_to t('delete'), backoffice_case_study_path(@case_study),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn'
+  
+  .content
+    .wrap: .row
+      .grid-sm-2
+        div Case details
+
+      .grid-sm-6.offset-sm-1
+        = simple_form_for @case_study, url: backoffice_case_study_path, html: { multipart: true } do |f|
+          .form-row
+            = f.input :title
+          .form-row
+            = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
+          .form-row
+            = f.input :template
+          .form-row
+            = f.label :thumbnail
+            = image_tag @case_study.thumbnail.url(:medium), class: 'thumb' if @case_study.thumbnail.present?
+            = f.input_field :thumbnail
+          .form-row
+            = f.button :submit, class: 'btn -big'

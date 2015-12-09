@@ -26,6 +26,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Simple Form aims to be as flexible as possible while helping you with powerful components to create your forms.
 gem 'simple_form'
+# Paperclip is intended as an easy file attachment library for ActiveRecord.
+gem 'paperclip', '~> 4.3'
+# This plugin was originally based on Acts as Taggable on Steroids by Jonathan Viney.
+gem 'acts-as-taggable-on', '~> 3.4'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

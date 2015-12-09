@@ -3,28 +3,19 @@ section.l-main
   header.header
     .wrap: .row
       .grid-sm-6
-        h1 Create new case study
+        h1 = t 'create_case_study'
   
   .content
     .wrap: .row
-      .grid-sm-1
-        | Sidebar
-
-      .grid-sm-8.offset-sm-1
-
-        = form_tag do
-          
+      .grid-sm-6.offset-sm-3
+        = simple_form_for @case_study, url: backoffice_case_studies_path, html: { multipart: true } do |f|
           .form-row
-            = label_tag :title, 'Title of the case study'
-            = text_field_tag :title
-
+            = f.input :title
           .form-row
-            = radio_button_tag :status, 'published'
-            = label_tag :status_published, 'Published'
-
-            = radio_button_tag :status, 'unpublished'
-            = label_tag :status_unpublished, 'Unpublished'
-
+            = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
           .form-row
-            = label_tag :tags, 'Tags'
-            = text_field_tag :tags
+            = f.input :template
+          .form-row
+            = f.input :thumbnail
+          .form-row
+            = f.button :submit, class: 'btn -big'

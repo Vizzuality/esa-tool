@@ -1,8 +1,16 @@
 .btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+
+  font-size: rem(11px);
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
-  color: $font-color-1;
+  color: $font-color-3;
+
+  border: 1px solid $border-color-1;
+
+  background: $bg-color-2;
 
   &.-thumbnail {
     display: flex;
@@ -11,9 +19,18 @@
     min-height: rem(194px); // Temporal
 
     font-family: 'Roboto Slab';
+    font-size: rem(14px);
+    color: $font-color-1;
 
     border: 4px dashed $border-color-1;
     border-radius: 20px;
     box-sizing: border-box;
+
+    background-color: transparent;
+  }
+
+  &.-big {
+    font-size: rem(21px);
+    text-transform: none;
   }
 }

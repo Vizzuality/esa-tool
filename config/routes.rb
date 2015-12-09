@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   namespace :backoffice do
-    resources :case_studies, path: 'case-studies', only: [:index, :edit, :create, :new, :update]
+    resources :case_studies, path: 'case-studies', only: [:index, :edit, :create, :new, :update, :destroy]
 
     root 'case_studies#index', as: 'dashboard'
   end
