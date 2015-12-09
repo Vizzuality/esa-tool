@@ -7,12 +7,8 @@ section.l-main
   
   .content
     .wrap: .row
-      .grid-sm-1
-        | Sidebar
-
-      .grid-sm-8.offset-sm-1
-        
-        = simple_form_for @case_study, url: backoffice_case_studies_path do |f|
+      .grid-sm-6.offset-sm-3
+        = simple_form_for @case_study, url: backoffice_case_studies_path, html: { multipart: true } do |f|
           .form-row
             = f.input :title
           .form-row

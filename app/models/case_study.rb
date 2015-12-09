@@ -9,8 +9,9 @@ class CaseStudy < ActiveRecord::Base
     greater_than_or_equal_to: 1,
     less_than_or_equal_to: 5
   }
-  validates :status, presence: true
+  validates_inclusion_of :status, in: [true, false]
 
-  has_attached_file :thumbnail, styles: { medium: '385x200>' }
+  has_attached_file :thumbnail, styles: { medium: '385x200#' }
+  validates_attachment_content_type :thumbnail, content_type: /\Aimage\/.*\Z/
 
 end
