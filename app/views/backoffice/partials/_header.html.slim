@@ -6,10 +6,11 @@ header.l-header
           svg.icon.icon-eoworld-logo
             use xlink:href="#icon-eoworld-logo"
 
-    .grid-sm-6
-      nav.nav.-inline
-        ul
-          li = link_to t('case_studies'), backoffice_case_studies_path
-          li = current_user.email
-          - if user_signed_in?
-            li = link_to t('logout'), destroy_user_session_path, method: 'delete'
+    - if user_signed_in?
+      .grid-sm-6
+        nav.nav.-inline
+          ul
+            li = link_to t('case_studies'), backoffice_case_studies_path
+            li = current_user.email
+            - if user_signed_in?
+              li = link_to t('logout'), destroy_user_session_path, method: 'delete'

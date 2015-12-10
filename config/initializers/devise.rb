@@ -209,6 +209,7 @@ Devise.setup do |config|
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
   # config.scoped_views = false
+  config.scoped_views = true
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
@@ -259,4 +260,13 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+end
+
+# This allows for layouts to be specified on a per-controller basis
+Rails.application.config.to_prepare do
+  Devise::SessionsController.layout "backoffice"
+  Devise::RegistrationsController.layout proc { |controller| user_signed_in? ? "application" : "backoffice" }
+  Devise::ConfirmationsController.layout "backoffice"
+  Devise::UnlocksController.layout "backoffice"
+  Devise::PasswordsController.layout "backoffice"
 end
