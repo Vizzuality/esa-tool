@@ -21,7 +21,7 @@
     font-size: rem(14px);
     color: $font-color-1;
 
-    border: 3px dashed $border-color-1;
+    border: 2px dashed $border-color-1;
     border-radius: 10px;
     box-sizing: border-box;
 
@@ -38,7 +38,7 @@
     font-size: rem(14px);
     color: $font-color-1;
 
-    border: 4px dashed $border-color-1;
+    border: 2px dashed $border-color-1;
     border-radius: 20px;
     box-sizing: border-box;
 
@@ -46,7 +46,12 @@
   }
 
   &.-big {
+    padding-left: 3rem;
+    padding-right: 3rem;
+
+    font-family: 'Roboto Slab';
     font-size: rem(21px);
+    font-weight: 300;
     text-transform: none;
   }
 
@@ -57,7 +62,7 @@
     font-size: rem(14px);
     color: transparent;
 
-    border: 3px dashed $border-color-1;
+    border: 2px dashed $border-color-1;
     border-radius: 10px;
     box-sizing: border-box;
 
@@ -74,6 +79,14 @@
       content: "+";
       transform: translate(-50%, -50%);
     }
+  }
+
+  &.-delete {
+    color: $font-color-4;
+    font-size: rem(18px);
+    line-height: rem(14px);
+    border: 0;
+    background-color: transparent;
   }
 }
 

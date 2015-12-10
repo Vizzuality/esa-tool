@@ -17,10 +17,12 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
+input[type="file"],
 textarea,
 select {
   display: block;
   width: 100%;
+  padding: 0.3rem 0;
   margin: 0.5rem 0;
 
   background-color: transparent;
@@ -29,9 +31,30 @@ select {
   border-bottom: 1px solid $border-color-1;
 }
 
+input[type="file"] {
+  padding: 0.5rem 1rem;
+  height: rem(110px);
+
+  border: 2px dashed $border-color-1;
+  border-radius: 10px;
+  box-sizing: border-box;
+
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &::-webkit-file-upload-button {
+    width: 0;
+    padding: 0;
+    visibility: hidden;
+  }
+}
+
 textarea {
-  min-height: rem(50px);
+  padding: 0.5rem;
+  height: rem(110px);
+
   border: 1px solid $border-color-1;
+  box-sizing: border-box;
 }
 
 .form-row {
@@ -59,8 +82,25 @@ textarea {
   margin-bottom: 1rem;
 }
 
-.case_study_title input {
+.case_study_title input,
+.page_title input {
   font-family: 'Roboto Slab';
   font-size: rem(21px);
-  font-weight: lighter;
+  font-weight: 300;
+}
+
+::-webkit-input-placeholder {
+  color: $font-color-4;
+}
+
+:-moz-placeholder {
+  color: $font-color-4;
+}
+
+::-moz-placeholder {
+  color: $font-color-4;
+}
+
+:-ms-input-placeholder {
+  color: $font-color-4;
 }

@@ -15,5 +15,6 @@
   = f.label :thumbnail
   = image_tag @case_study.thumbnail.url(:medium), class: 'thumb' if @case_study.thumbnail.present?
   = f.input_field :thumbnail
+  .dropzone-previews
 .form-row
   = f.button :submit, class: 'btn -big'
