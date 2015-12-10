@@ -35,3 +35,12 @@ en:
   map: 'Map'
   backoffice: 'Backoffice'
   logout: 'Logout'
+  simple_form:
+    labels:
+      case_study:
+        title: 'Title of the case study'
+        tag_list: 'Tags'
+        contacts: 'Project contacts'
+    placeholders:
+      contact:
+        name: 'Contact name'

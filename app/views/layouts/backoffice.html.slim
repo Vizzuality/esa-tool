@@ -7,10 +7,14 @@ html lang=I18n.locale
     = stylesheet_link_tag "backoffice", media: "all"
     = csrf_meta_tag
   body
+    = render partial: 'backoffice/partials/icons'
     = render partial: 'backoffice/partials/header'
-
-    - flash.each do |name, msg|
-      = content_tag :div, msg, class: name
+    
+    .wrap: .row
+      - flash.each do |name, msg|
+        - if name == 'error'
+          .grid-sm-12
+            = content_tag :div, msg, class: 'flash -' + name
 
     = yield
     

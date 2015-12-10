@@ -2,11 +2,15 @@
   position: relative;
   display: block;
   min-height: rem(194px); // Temporal
+  max-width: 100%;
   margin-bottom: 2rem;
 
   text-decoration: none;
 
   background-color: $blue;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   &:hover {
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.20);

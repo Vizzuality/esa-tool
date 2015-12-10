@@ -1,11 +1,11 @@
 .nested-fields
   .row
     .grid-sm-12
-      = f.input :name
+      = f.input :name, placeholder: t('simple_form.placeholders.contact.name'), label: false
     .grid-sm-8
-      = f.input :body
+      = f.input :body, label: false
     .grid-sm-4
-      = f.input :logo
+      = f.input :logo, label: false
   = f.input :id, as: :hidden
 
   = link_to_remove_association t('delete'), f, class: 'btn'

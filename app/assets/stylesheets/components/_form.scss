@@ -4,10 +4,11 @@ label {
 
   text-transform: uppercase;
   font-size: rem(14px);
+  color: rgba($font-color-1, 0.3);
   letter-spacing: rem(0.5px);
 
   abbr[title] {
-    color: red;
+    color: $error-color;
     border-bottom: 0;
   }
 }
@@ -30,22 +31,36 @@ select {
 
 textarea {
   min-height: rem(50px);
+  border: 1px solid $border-color-1;
 }
 
 .form-row {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 
   .error {
-    color: red;
+    color: $error-color;
   }
 }
 
 .radio, .checkbox {
+  display: inline-block;
+  margin-right: 4rem;
+
   label {
     text-transform: none;
+  }
+
+  input {
+    margin-right: .5rem;
   }
 }
 
 .nested-fields {
   margin-bottom: 1rem;
+}
+
+.case_study_title input {
+  font-family: 'Roboto Slab';
+  font-size: rem(21px);
+  font-weight: lighter;
 }
