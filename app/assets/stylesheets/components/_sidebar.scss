@@ -19,6 +19,8 @@ $sidebar-item-height: rem(91px);
 
   background-color: $bg-color-4;
 
+  transition: all .35s ease;
+
   a {
     color: $font-color-1;
     text-decoration: none;
@@ -31,5 +33,9 @@ $sidebar-item-height: rem(91px);
     a {
       color: $font-color-3;
     }
+  }
+
+  &:hover {
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
   }
 }
