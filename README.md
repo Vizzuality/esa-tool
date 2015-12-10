@@ -4,11 +4,25 @@ TODO: Description of the project
 
 ## Installation
 
-TODO: Describe the installation process
+Requirements:
+
+* NodeJs 5.2+ [How to install](https://nodejs.org/download/)
+* Ruby 2.2.2 [How to install](https://gorails.com/setup/osx/10.10-yosemite)
+
+Before install the global independencies:
+
+    gem install bundler
+    npm install -g bower
+
+To install run:
+
+    bundle install
 
 ## Usage
 
-TODO: Write usage instructions
+To run the application:
+
+    bundle exec rails server
 
 ## Contributing
 
@@ -17,14 +31,6 @@ TODO: Write usage instructions
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin feature/my-new-feature`
 5. Submit a pull request :D
-
-## History
-
-TODO: Write history
-
-## Credits
-
-TODO: Write credits
 
 ## License
 

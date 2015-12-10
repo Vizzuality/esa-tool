@@ -1,3 +1,9 @@
-/*
- *= require_self
- */
+//= require normalize-css
+//= require_self
+
+@import
+  'settings',
+  'mixins',
+  'helpers',
+  'base',
+  'components/*';

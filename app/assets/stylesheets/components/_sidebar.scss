@@ -1,0 +1,41 @@
+$sidebar-item-height: rem(91px);
+
+.sidebar .btn.-plus {
+  height: $sidebar-item-height;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $sidebar-item-height;
+  margin-bottom: 1rem;
+
+  font-size: rem(11px);
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $font-color-1;
+
+  background-color: $bg-color-4;
+
+  transition: all .35s ease;
+
+  a {
+    color: $font-color-1;
+    text-decoration: none;
+  }
+
+  &._active {
+    color: $font-color-3;
+    background-color: $bg-color-2;
+
+    a {
+      color: $font-color-3;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
+  }
+}

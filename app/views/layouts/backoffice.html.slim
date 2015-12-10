@@ -3,7 +3,20 @@ html lang=I18n.locale
   head
     meta charset="utf-8"
     title ESA - Backoffice
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700", media: "all"
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lato:400", media: "all"
     = stylesheet_link_tag "backoffice", media: "all"
+    = csrf_meta_tag
   body
+    = render partial: 'backoffice/partials/icons'
+    = render partial: 'backoffice/partials/header'
+    
+    .wrap: .row
+      - flash.each do |name, msg|
+        - if name == 'error'
+          .grid-sm-12
+            = content_tag :div, msg, class: 'flash -' + name
+
     = yield
+    
     = javascript_include_tag "backoffice"

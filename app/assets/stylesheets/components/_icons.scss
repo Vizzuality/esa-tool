@@ -1,0 +1,20 @@
+#symbols {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+
+.icon {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon-eoworld-logo {
+  width: rem(112px);
+  height: rem(28px);
+  fill: $font-color-3;
+}

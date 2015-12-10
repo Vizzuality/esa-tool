@@ -1,0 +1,15 @@
+section.l-main
+
+  header.header
+    .wrap: .row
+      .grid-sm-8
+        h1 = @case_study.title.truncate(50)
+  
+  .content
+    .wrap: .row
+      .grid-sm-2
+        = render partial: 'backoffice/partials/sidebar'
+
+      .grid-sm-6.offset-sm-1
+        = link_to t('text'), new_backoffice_case_study_page_path(@case_study, type: 1), class: 'btn'
+        = link_to t('map'), new_backoffice_case_study_page_path(@case_study, type: 2), class: 'btn'

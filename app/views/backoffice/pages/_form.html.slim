@@ -1,0 +1,30 @@
+.form-row
+  = f.input :title
+
+- if params[:type].to_i == 1
+  .form-row
+    = f.input :body
+  .form-row
+    = f.input :background
+
+- else
+  .form-row
+    = f.simple_fields_for :data_layers do |c|
+      = render 'data_layer_fields', f: c
+    = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
+  .form-row
+    = f.input :sql_query
+  .form-row
+    = f.input :color_palette
+  .form-row
+    = f.input :custom_color_palette
+  .form-row
+    = f.simple_fields_for :interest_points do |c|
+      = render 'interest_point_fields', f: c
+    = link_to_add_association t('add_interest_points'), f, :interest_points, class: 'btn -dotted'
+
+= f.hidden_field :page_type, value: params[:type]
+= f.hidden_field :case_study_id, value: params[:case_study_id]
+
+.form-row
+  = f.button :submit, class: 'btn -big'

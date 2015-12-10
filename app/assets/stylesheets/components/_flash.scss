@@ -1,0 +1,15 @@
+.flash {
+  margin: 2rem 0;
+  padding: .5rem 1rem;
+  border: 1px solid;
+
+  &.-notice {
+    background-color: rgba($notice-color, .3);
+    border-color: $notice-color;
+  }
+
+  &.-error {
+    background-color: rgba($error-color, .3);
+    border-color: $error-color;
+  }
+}

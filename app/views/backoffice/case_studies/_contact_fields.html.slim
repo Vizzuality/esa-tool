@@ -1,0 +1,12 @@
+.nested-fields
+  .row
+    .grid-sm-11
+      = f.input :name, placeholder: t('simple_form.placeholders.contact.name'), label: false
+    .grid-sm-1
+      = link_to_remove_association '×', f, class: 'btn -delete'
+    .grid-sm-8
+      = f.input :body, label: false
+    .grid-sm-4
+      = f.input :logo, as: :file, label: false, input_html: { class: f.object.logo.exists? ? '_has_file' : nil,
+          style: f.object.logo.exists? ? "background-image: url(#{f.object.logo})" : nil }
+  = f.input :id, as: :hidden
