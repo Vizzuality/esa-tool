@@ -36,16 +36,22 @@ input[type="file"] {
   height: rem(110px);
 
   border: 2px dashed $border-color-1;
-  border-radius: 10px;
+  border-radius: 5px;
   box-sizing: border-box;
 
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 80% auto;
 
   &::-webkit-file-upload-button {
     width: 0;
     padding: 0;
     visibility: hidden;
+  }
+
+  &._has_file {
+    background-color: $bg-color-4;
+    border: 0;
   }
 }
 
@@ -103,4 +109,10 @@ textarea {
 
 :-ms-input-placeholder {
   color: $font-color-4;
+}
+
+#case_study_thumbnail {
+  width: rem(385px);
+  height: rem(200px);
+  background-size: contain;
 }

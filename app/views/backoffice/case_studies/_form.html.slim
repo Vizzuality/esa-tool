@@ -13,8 +13,9 @@
   = f.input :template, as: :select, collection: 1..5, selected: @case_study.template.to_i or 1
 .form-row
   = f.label :thumbnail
-  = image_tag @case_study.thumbnail.url(:medium), class: 'thumb' if @case_study.thumbnail.present?
-  = f.input_field :thumbnail
+  = f.input_field :thumbnail, 
+    class: @case_study.thumbnail.present? ? '_has_file' : nil, 
+    style: @case_study.thumbnail.present? ? "background-image: url(#{@case_study.thumbnail.url(:medium)})" : nil
   .dropzone-previews
 .form-row
   = f.button :submit, class: 'btn -big'
