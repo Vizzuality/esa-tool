@@ -33,3 +33,5 @@ en:
   case_details: 'Case details'
   text: 'Text'
   map: 'Map'
+  backoffice: 'Backoffice'
+  logout: 'Logout'

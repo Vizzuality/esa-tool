@@ -1,11 +1,14 @@
 .form-row
   = f.input :title
-.form-row
-  = f.input :body
-.form-row
-  = f.input :background
-.form-row
-  = f.button :submit, class: 'btn -big'
+
+- if params[:type].to_i == 1
+  .form-row
+    = f.input :body
+  .form-row
+    = f.input :background
+  .form-row
+    = f.button :submit, class: 'btn -big'
+
 
 = f.hidden_field :page_type, value: params[:type]
 = f.hidden_field :case_study_id, value: params[:case_study_id]

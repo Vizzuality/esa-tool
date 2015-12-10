@@ -2,7 +2,7 @@
   = link_to t('case_details'), edit_backoffice_case_study_path(@case_study), class: controller_name == 'case_studies' && action_name == 'edit' ? 'sidebar-item _active' : 'sidebar-item'
   
   - for page in @case_study.pages
-    - active = params.has_key?(:type) && (params[:type].to_i == page.page_type.to_i) ? 'sidebar-item _active' : 'sidebar-item'
+    - active = params.has_key?(:type) && (params[:type].to_i == page.page_type.to_i) && (page.id == params[:id].to_i) ? 'sidebar-item _active' : 'sidebar-item'
     - page_type = page.page_type.to_i == 1 ? t('text') : t('map')
     = link_to page_type, edit_backoffice_case_study_page_path(id: page.id, type: page.page_type.to_i, case_study_id: @case_study.id), class: active
 
