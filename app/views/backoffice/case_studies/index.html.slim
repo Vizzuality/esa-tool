@@ -9,8 +9,6 @@
         .grid-xs-12.grid-sm-6.grid-md-4
           = link_to edit_backoffice_case_study_path(case_study), class: 'thumbnail', style: case_study.thumbnail.present? ? "background-image: url(#{case_study.thumbnail.url(:medium)})" : nil do 
             
-            / = image_tag case_study.thumbnail.url(:medium), class: 'thumb _invisible' if case_study.thumbnail.present?
-
             .caption
               p.caption-item.-big = case_study.title
               span.caption-item.-dark
