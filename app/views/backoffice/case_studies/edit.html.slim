@@ -2,17 +2,17 @@ section.l-main
 
   header.header
     .wrap: .row
-      .grid-sm-6
-        h1 = @case_study.title
+      .grid-sm-8
+        h1 = @case_study.title.truncate(50)
 
-      .grid-sm-6._vcenter._right
+      .grid-sm-4._vcenter._right
         .btns-toolbar
           = link_to t('delete'), backoffice_case_study_path(@case_study),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn'
   
   .content
     .wrap: .row
       .grid-sm-2
-        div Case details
+        = render partial: 'backoffice/partials/sidebar'
 
       .grid-sm-6.offset-sm-1
         = simple_form_for @case_study, url: backoffice_case_study_path, html: { multipart: true } do |f|

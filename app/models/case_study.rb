@@ -4,7 +4,6 @@ class CaseStudy < ActiveRecord::Base
   has_many :pages
 
   accepts_nested_attributes_for :contacts, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :pages
 
   acts_as_taggable
 

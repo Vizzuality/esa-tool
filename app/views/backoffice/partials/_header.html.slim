@@ -8,4 +8,4 @@ header.l-header
       nav.nav.-inline
         ul
           li = link_to t('case_studies'), backoffice_case_studies_path
-          li Username
+          li = current_user.email

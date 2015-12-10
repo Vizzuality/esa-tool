@@ -1,9 +1,13 @@
 class Backoffice::CaseStudiesController < BackofficeController
 
-  before_action :set_case_study, only: [:edit, :update, :destroy]
+  before_action :set_case_study, only: [:show, :edit, :update, :destroy]
 
   def index
     @case_studies = CaseStudy.all
+  end
+
+  def show
+    redirect_to edit_backoffice_case_study_path(@case_study)
   end
 
   def new
@@ -46,4 +50,5 @@ class Backoffice::CaseStudiesController < BackofficeController
     def case_studies_params
       params.require(:case_study).permit(:title, :description, :status, :template, :thumbnail, :tag_list, contacts_attributes: [:id, :name, :body, :logo, :_destroy])
     end
+
 end
