@@ -35,6 +35,10 @@ en:
   map: 'Map'
   backoffice: 'Backoffice'
   logout: 'Logout'
+  login: 'Login'
+  sign_up: 'Sign up'
+  forgot_password: 'Forgot your password?'
+  resend_password: 'Send me reset password instructions'
   simple_form:
     labels:
       case_study:

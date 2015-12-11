@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20151210181646) do
   create_table "pages", force: :cascade do |t|
     t.string   "title",                               null: false
     t.text     "body"
-    t.integer  "type",                    default: 1
+    t.integer  "page_type",               default: 1
     t.string   "background"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false

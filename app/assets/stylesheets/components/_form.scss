@@ -116,3 +116,12 @@ textarea {
   height: rem(200px);
   background-size: contain;
 }
+
+.simple_form.new_user {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-family: 'Roboto Slab';
+    font-size: rem(21px);
+  }
+}

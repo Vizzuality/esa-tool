@@ -10,12 +10,7 @@ html lang=I18n.locale
   body
     = render partial: 'backoffice/partials/icons'
     = render partial: 'backoffice/partials/header'
-    
-    .wrap: .row
-      - flash.each do |name, msg|
-        - if name == 'error'
-          .grid-sm-12
-            = content_tag :div, msg, class: 'flash -' + name
+    = render partial: 'backoffice/partials/messages'
 
     = yield
     
