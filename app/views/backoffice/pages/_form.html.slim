@@ -13,8 +13,6 @@
       = render 'data_layer_fields', f: c
     = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   .form-row
-    = f.input :sql_query
-  .form-row
     = f.input :color_palette
   .form-row
     = f.input :custom_color_palette
