@@ -88,6 +88,25 @@
     border: 0;
     background-color: transparent;
   }
+
+  &.-image {
+    position: relative;
+    padding: 0;
+
+    border: 0;
+
+    background-color: transparent;
+
+    .label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      color: $font-color-1;
+
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
 .btns-toolbar {

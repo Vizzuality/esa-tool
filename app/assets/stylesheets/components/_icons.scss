@@ -6,7 +6,6 @@
   height: 0;
 }
 
-
 .icon {
   display: inline-block;
   width: 1rem;
@@ -17,4 +16,9 @@
   width: rem(112px);
   height: rem(28px);
   fill: $font-color-3;
+}
+
+.icon-map, .icon-text {
+  width: rem(149px);
+  height: rem(91px);
 }

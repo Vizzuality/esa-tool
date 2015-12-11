@@ -1,13 +1,17 @@
+$sidebar-item-width: rem(149px);
 $sidebar-item-height: rem(91px);
 
 .sidebar .btn.-plus {
+  width: $sidebar-item-width;
   height: $sidebar-item-height;
 }
 
 .sidebar-item {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: $sidebar-item-width;
   height: $sidebar-item-height;
   margin-bottom: 1rem;
 
@@ -17,7 +21,7 @@ $sidebar-item-height: rem(91px);
   text-transform: uppercase;
   color: $font-color-1;
 
-  background-color: $bg-color-4;
+  background-color: rgba($bg-color-4, .2);
 
   transition: all .35s ease;
 
@@ -26,11 +30,21 @@ $sidebar-item-height: rem(91px);
     text-decoration: none;
   }
 
+  .label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    color: $font-color-1;
+
+    transform: translate(-50%, -50%);
+  }
+
   &._active {
     color: $font-color-3;
     background-color: $bg-color-2;
 
-    a {
+    a, .label {
       color: $font-color-3;
     }
   }
