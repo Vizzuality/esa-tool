@@ -1,0 +1,21 @@
+.form-row
+  = f.input :title
+.form-row
+  = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
+.form-row
+  = f.input :tag_list
+.form-row
+  = f.label :contacts
+  = f.simple_fields_for :contacts do |c|
+    = render 'contact_fields', f: c
+  = link_to_add_association t('add_contact'), f, :contacts, class: 'btn -dotted'
+.form-row
+  = f.input :template, as: :select, collection: 1..5, selected: @case_study.template.to_i or 1
+.form-row
+  = f.label :thumbnail
+  = f.input_field :thumbnail, 
+    class: @case_study.thumbnail.present? ? '_has_file' : nil, 
+    style: @case_study.thumbnail.present? ? "background-image: url(#{@case_study.thumbnail.url(:medium)})" : nil
+  .dropzone-previews
+.form-row
+  = f.button :submit, class: 'btn -big'

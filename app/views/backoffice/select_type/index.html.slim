@@ -1,0 +1,26 @@
+section.l-main
+
+  header.header
+    .wrap: .row
+      .grid-sm-8
+        h1 = @case_study.title.truncate(50)
+  
+  .content
+    .wrap: .row
+      .grid-sm-2
+        = render partial: 'backoffice/partials/sidebar'
+
+      .grid-sm-3.offset-sm-1
+
+        = link_to new_backoffice_case_study_page_path(@case_study, type: 1), class: 'select-item btn -image' do
+
+          svg class="icon icon-text"
+            use xlink:href="#icon-text"
+          span.label = t('text')
+      
+      .grid-sm-3
+        = link_to new_backoffice_case_study_page_path(@case_study, type: 2), class: 'select-item btn -image' do
+
+          svg class="icon icon-map"
+            use xlink:href="#icon-map"
+          span.label = t('map')

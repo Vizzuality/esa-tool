@@ -1,0 +1,128 @@
+label {
+  display: block;
+  margin: 0.5rem 0;
+
+  text-transform: uppercase;
+  font-size: rem(14px);
+  color: rgba($font-color-1, 0.3);
+  letter-spacing: rem(0.5px);
+
+  abbr[title] {
+    color: $error-color;
+    border-bottom: 0;
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="file"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.3rem 0;
+  margin: 0.5rem 0;
+
+  background-color: transparent;
+
+  border: 0;
+  border-bottom: 1px solid $border-color-1;
+}
+
+input[type="file"] {
+  padding: 0.5rem 1rem;
+  height: rem(110px);
+
+  border: 2px dashed $border-color-1;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80% auto;
+
+  &::-webkit-file-upload-button {
+    width: 0;
+    padding: 0;
+    visibility: hidden;
+  }
+
+  &._has_file {
+    background-color: $bg-color-4;
+    border: 0;
+  }
+}
+
+textarea {
+  padding: 0.5rem;
+  height: rem(110px);
+
+  border: 1px solid $border-color-1;
+  box-sizing: border-box;
+}
+
+.form-row {
+  margin-bottom: 3rem;
+
+  .error {
+    color: $error-color;
+  }
+}
+
+.radio, .checkbox {
+  display: inline-block;
+  margin-right: 4rem;
+
+  label {
+    text-transform: none;
+    color: $font-color-1;
+  }
+
+  input {
+    margin-right: .5rem;
+  }
+}
+
+.nested-fields {
+  margin-bottom: 1rem;
+}
+
+.case_study_title input,
+.page_title input {
+  font-family: 'Roboto Slab';
+  font-size: rem(21px);
+  font-weight: 300;
+}
+
+::-webkit-input-placeholder {
+  color: $font-color-4;
+}
+
+:-moz-placeholder {
+  color: $font-color-4;
+}
+
+::-moz-placeholder {
+  color: $font-color-4;
+}
+
+:-ms-input-placeholder {
+  color: $font-color-4;
+}
+
+#case_study_thumbnail {
+  width: rem(385px);
+  height: rem(200px);
+  background-size: contain;
+}
+
+.simple_form.new_user {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-family: 'Roboto Slab';
+    font-size: rem(21px);
+  }
+}

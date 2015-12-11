@@ -1,0 +1,35 @@
+<section class="l-main">
+  <div class="content">
+
+    <div class="wrap">
+      <div class="row">
+        <div class="grid-sm-6 offset-sm-3">
+          <h1>Log in</h1>
+
+          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-row">
+              <%= f.input :email, required: true, autofocus: true %>
+            </div>
+            <div class="form-row">
+              <%= f.input :password, required: true %>
+            </div>
+
+            <div class="form-row">
+              <div class="row">
+                <div class="grid-sm-6 _vcenter">
+                  <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+                </div>
+                <div class="grid-sm-6 _right">
+                  <%= f.button :submit, t('login'), class: 'btn -big' %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <%= render "users/shared/links" %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

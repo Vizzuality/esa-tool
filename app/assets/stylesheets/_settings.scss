@@ -1,0 +1,32 @@
+// EM base
+$font-initial: 16px;
+
+// Screen sizes
+$screen-sm:  640px  !default;
+$screen-md: 1024px !default;
+$screen-lg:  1440px !default;
+$screen-xl: 1920px !default;
+
+// Colors
+$white: white;
+$black: #000;
+$dark-gray: #363636;
+$blue: #316274;
+$dark-blue: #00324f;
+
+// Theme
+$font-color-1: $white;
+$font-color-2: $dark-gray;
+$font-color-3: $dark-blue;
+$font-color-4: $blue;
+
+$bg-color-1: $dark-blue;
+$bg-color-2: $white;
+$bg-color-3: $black;
+$bg-color-4: $blue;
+
+$border-color-1: $blue;
+$border-color-2: $white;
+
+$error-color: #fff500;
+$notice-color: #00a600;

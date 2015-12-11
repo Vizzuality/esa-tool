@@ -5,5 +5,9 @@ html lang=I18n.locale
     title ESA
     = stylesheet_link_tag "application", media: "all"
   body
+    - flash.each do |name, msg|
+      = content_tag :div, msg, class: name
+
     = yield
+
     = javascript_include_tag "application"

@@ -1,0 +1,128 @@
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+
+  font-size: rem(11px);
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  color: $font-color-3;
+
+  border: 1px solid $border-color-1;
+
+  background: $bg-color-2;
+
+  &.-dotted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: rem(45px);
+
+    font-size: rem(14px);
+    color: $font-color-1;
+
+    border: 2px dashed $border-color-1;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    background-color: transparent;
+  }
+
+  &.-thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: rem(194px); // Temporal
+
+    font-family: 'Roboto Slab';
+    font-size: rem(14px);
+    color: $font-color-1;
+
+    border: 2px dashed $border-color-1;
+    border-radius: 20px;
+    box-sizing: border-box;
+
+    background-color: transparent;
+  }
+
+  &.-big {
+    padding-left: 3rem;
+    padding-right: 3rem;
+
+    font-family: 'Roboto Slab';
+    font-size: rem(21px);
+    font-weight: 300;
+    text-transform: none;
+  }
+
+  &.-plus {
+    position: relative;
+    display: flex;
+
+    font-size: rem(14px);
+    color: transparent;
+
+    border: 2px dashed $border-color-1;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    background-color: transparent;
+
+    transition: all .3s ease;
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -1px;
+
+      font-family: monospace;
+      font-size: rem(50px);
+      font-weight: lighter;
+      color: $font-color-4;
+
+      content: "+";
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover {
+      border-color: $border-color-2;
+
+      &:after {
+        color: $font-color-1;
+      }
+    }
+  }
+
+  &.-delete {
+    color: $font-color-4;
+    font-size: rem(18px);
+    line-height: rem(14px);
+    border: 0;
+    background-color: transparent;
+  }
+
+  &.-image {
+    position: relative;
+    padding: 0;
+
+    border: 0;
+
+    background-color: transparent;
+
+    .label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      color: $font-color-1;
+
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.btns-toolbar {
+  display: flex;
+  margin: 1rem 0;
+}
