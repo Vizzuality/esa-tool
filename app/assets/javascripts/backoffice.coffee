@@ -32,11 +32,11 @@ $ ->
         .siblings()
         .removeClass('_selected')
 
-      $input.val($current.data('value'))
+      $input.val(value)
 
       # For custom palette
       if value != ''
-        $('#customPalette').hide()
+        $('#customPalette').addClass('_hidden')
       else
-        $('#customPalette').show()
+        $('#customPalette').removeClass('_hidden')
     )
