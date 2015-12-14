@@ -13,7 +13,7 @@
       = render 'data_layer_fields', f: c
     = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   .form-row
-    = f.input :color_palette
+    = f.input :color_palette, as: :select, collection: 1..5, selected: 1
   .form-row
     = f.input :custom_color_palette
   .form-row
@@ -24,5 +24,7 @@
 = f.hidden_field :page_type, value: params[:type]
 = f.hidden_field :case_study_id, value: params[:case_study_id]
 
-.form-row
+.form-row._center
+  - if @page[:id]
+    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -big -alt'
   = f.button :submit, class: 'btn -big'

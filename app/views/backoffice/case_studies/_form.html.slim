@@ -16,6 +16,5 @@
   = f.input_field :thumbnail, 
     class: @case_study.thumbnail.present? ? '_has_file' : nil, 
     style: @case_study.thumbnail.present? ? "background-image: url(#{@case_study.thumbnail.url(:medium)})" : nil
-  .dropzone-previews
-.form-row
+.form-row._center
   = f.button :submit, class: 'btn -big'
