@@ -1,0 +1,27 @@
+.box-selector {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  & > .item {
+    display: inline-block;
+    height: rem(133px);
+    width: 30%;
+    position: relative;
+    margin-bottom: 1rem;
+
+    border: 2px solid $border-color-1;
+    box-sizing: border-box;
+
+    &._selected::after {
+      position: absolute;
+      content: "";
+      width: 14px;
+      height: 12px;
+      top: 5%;
+      right: 5%;
+
+      background: url(asset_path('checked.svg')) no-repeat;
+    }
+  }
+}

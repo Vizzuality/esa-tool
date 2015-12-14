@@ -2,6 +2,7 @@ class DataLayer < ActiveRecord::Base
 
   belongs_to :page
 
-  validates :table_name, presence: true
+  validates :file, presence: true
+  validates :year, presence: true
 
 end
