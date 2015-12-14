@@ -43,7 +43,8 @@ ActiveRecord::Schema.define(version: 20151210181646) do
   add_index "contacts", ["case_study_id"], name: "index_contacts_on_case_study_id"
 
   create_table "data_layers", force: :cascade do |t|
-    t.string   "table_name", null: false
+    t.string   "file",       null: false
+    t.integer  "year",       null: false
     t.integer  "page_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -74,7 +75,6 @@ ActiveRecord::Schema.define(version: 20151210181646) do
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
     t.integer  "case_study_id"
-    t.text     "sql_query"
     t.string   "columns"
     t.integer  "color_palette"
     t.string   "custom_color_palette"
