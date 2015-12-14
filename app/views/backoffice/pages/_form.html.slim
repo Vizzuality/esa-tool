@@ -18,11 +18,13 @@
     = f.label :color_palette
     .box-selector
       - for t in 1..palettes
-        .item data-value="#{t}" class="#{@page.custom_color_palette.blank? && @page.color_palette.to_i == t ? '_selected' : nil}"
-      .item data-value="" class="#{@page.custom_color_palette.blank? ? nil : '_selected'}"
+        .item data-value="#{t}" class="#{@page.color_palette.to_i == t ? '_selected' : nil}"
+      .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
-  .form-row#customPalette
-    = f.input :custom_color_palette, input_html: { class: 'tags' }
+  .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
+    = f.input :custom_color_palette_list, input_html: { class: 'tags' } 
+  .form-row
+    = f.input :chart_type_list, input_html: { class: 'tags' } 
   .form-row
     = f.simple_fields_for :interest_points do |c|
       = render 'interest_point_fields', f: c

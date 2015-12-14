@@ -4,6 +4,9 @@ class Page < ActiveRecord::Base
   has_many :data_layers
   has_many :interest_points
 
+  acts_as_taggable_on :custom_color_palette
+  acts_as_taggable_on :chart_types
+
   accepts_nested_attributes_for :data_layers, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :interest_points, reject_if: :all_blank, allow_destroy: true
 
