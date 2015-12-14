@@ -1,0 +1,49 @@
+.bootstrap-tagsinput {
+  width: 100%;
+  padding: 0 0 .2rem 0;
+
+  line-height: 1;
+
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid $border-color-1;
+
+  background-color: transparent;
+
+  .tag, .input {
+    padding: .3rem .5rem;
+    line-height: 1.4;
+  }
+
+  .tag {
+    background-color: $bg-color-4;
+
+    span {
+      display: inline-block;
+    }
+  }
+
+  .tag [data-role="remove"] {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+
+    text-align: center;
+  }
+
+  .tag [data-role="remove"]:hover {
+    box-shadow: none;
+  }
+
+  input {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    min-width: rem(100px);
+
+    color: $font-color-1;
+
+    border-bottom: 0;
+  }
+}

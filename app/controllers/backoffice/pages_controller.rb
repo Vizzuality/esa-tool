@@ -43,7 +43,7 @@ class Backoffice::PagesController < BackofficeController
     end
 
     def page_params
-      params.require(:page).permit(:title, :body, :background, :page_type, :case_study_id)
+      params.require(:page).permit(:title, :body, :background, :color_palette, :custom_color_palette, :page_type, :case_study_id, data_layers_attributes: [:id, :file, :year, :_destroy], interest_points_attributes: [:id, :lat, :lng, :distance, :_destroy])
     end
 
 end
