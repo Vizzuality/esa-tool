@@ -58,4 +58,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-underscore'
   gem 'rails-assets-backbone'
   gem 'rails-assets-tagsinput'
+  gem 'rails-assets-slick.js'
 end

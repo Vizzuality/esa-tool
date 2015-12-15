@@ -4,14 +4,14 @@ Rails.application.routes.draw do
 
   namespace :backoffice do
     resources :case_studies, path: 'case-studies' do
-      resources :pages
-      get 'select_type' => 'select_type#index'
+      resources :pages, except: [:index, :show]
+      resources :select_type, only: [:index]
     end
 
     root 'case_studies#index', as: 'dashboard'
   end
 
-  get 'case-studies/:id' => 'case_studies#show'
+  resources :case_studies, only: [:show], path: 'case-studies'
 
   root 'welcome#index', as: 'root'
 
