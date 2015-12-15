@@ -1,0 +1,55 @@
+#esa_slamm_gim_lulc_2014 {
+   polygon-opacity: 0.2;
+   line-offset: 0;
+   line-width: 0;
+   line-color: transparent;
+   line-opacity: 1;
+  line-rasterizer: fast;
+  [zoom>15]{
+    line-width: 0;
+  }
+}
+/*Water areas*/
+#esa_slamm_gim_lulc_2014[class_name="Inland water"] {polygon-fill: transparent; line-color: transparent;}
+#esa_slamm_gim_lulc_2014[class_name="Ocean_Sea"] {polygon-fill: transparent;
+   line-color: transparent;}
+
+
+/*Green and natural areas*/
+#esa_slamm_gim_lulc_2014[class_name="Trees"] {polygon-fill: transparent;polygon-fill: #2B7312;}
+#esa_slamm_gim_lulc_2014[class_name="Agricultural land"] {polygon-fill: transparent;polygon-fill: #FF6600;}
+#esa_slamm_gim_lulc_2014[class_name="Urban green"] {polygon-fill: transparent;polygon-fill: #229A00;}
+
+
+/*Contruction and industry areas*/
+#esa_slamm_gim_lulc_2014[class_name="Construction site"] {polygon-fill: transparent;}
+#esa_slamm_gim_lulc_2014[class_name="Industrial and commercial"] {polygon-fill: transparent;}
+
+/*Fabric areas*/
+#esa_slamm_gim_lulc_2014[class_name="Continuous urban fabric"] {
+  polygon-fill: #7801FF;
+  line-color: #7801FF;
+  line-width: 1;}
+#esa_slamm_gim_lulc_2014[class_name="Discontinous high density urban fabric"] {
+  polygon-fill: #EA01FF;
+  line-color: #EA01FF;
+  line-width: 1;}
+#esa_slamm_gim_lulc_2014[class_name="Discontinuous medium density urban fabric"] {
+  polygon-fill: #FF0060;
+  line-color: #FF0060;
+  line-width: 1;}
+#esa_slamm_gim_lulc_2014[class_name="Discontinuous low density urban fabric"] {
+  polygon-fill: #FF6602;
+  line-color: #FF6602;
+  line-width: 1;}
+#esa_slamm_gim_lulc_2014[class_name="Discontinuous very low density urban fabric"] {
+  polygon-fill: #ffc600;
+  line-color: #ffc600;
+  line-width: 1;}
+
+/*Roads*/
+#esa_slamm_gim_lulc_2014[class_name="Transport units"] {polygon-fill: transparent;polygon-fill: #fff;}
+
+/*Cloud cover*/
+#esa_slamm_gim_lulc_2014[class_name="Other"] {polygon-fill: transparent;}
+

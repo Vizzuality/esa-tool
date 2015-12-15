@@ -1,0 +1,11 @@
+#mainSlider.main-slider
+  div
+    h1 = @case_study.title
+
+  - @case_study.pages.each do |c|
+    div
+      - if c.page_type == 1
+        h3 = c.title
+        p = c.body
+      - else
+        p Map
