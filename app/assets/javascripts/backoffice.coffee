@@ -61,7 +61,5 @@ class AppView extends Backbone.View
       reader.readAsDataURL e.target.files[0]
 
 
-$ ->
-
+document.addEventListener 'DOMContentLoaded', ->
   new AppView(el: 'body')
-
