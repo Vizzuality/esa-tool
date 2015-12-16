@@ -116,8 +116,13 @@ GEM
     rails-assets-backbone (1.2.3)
       rails-assets-underscore (>= 1.7.0)
     rails-assets-d3 (3.5.10)
+    rails-assets-jquery (2.1.4)
     rails-assets-leaflet (0.7.7)
     rails-assets-normalize-css (3.0.3)
+    rails-assets-slick.js (1.5.9)
+      rails-assets-jquery (>= 1.7)
+    rails-assets-tagsinput (0.7.1)
+      rails-assets-jquery (~> 2.1.1)
     rails-assets-underscore (1.8.3)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
@@ -201,6 +206,8 @@ DEPENDENCIES
   rails-assets-d3!
   rails-assets-leaflet!
   rails-assets-normalize-css!
+  rails-assets-slick.js!
+  rails-assets-tagsinput!
   rails-assets-underscore!
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

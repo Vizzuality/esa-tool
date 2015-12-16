@@ -12,6 +12,10 @@
 
   background: $bg-color-2;
 
+  & + .btn {
+    margin-left: 1rem;
+  }
+
   &.-dotted {
     display: flex;
     align-items: center;
@@ -119,6 +123,11 @@
 
       transform: translate(-50%, -50%);
     }
+  }
+
+  &.-alt {
+    color: $font-color-1;
+    background-color: $bg-color-1;
   }
 }
 

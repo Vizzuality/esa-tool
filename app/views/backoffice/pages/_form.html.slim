@@ -1,3 +1,5 @@
+- palettes = 3
+
 .form-row
   = f.input :title
 
@@ -13,11 +15,16 @@
       = render 'data_layer_fields', f: c
     = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   .form-row
-    = f.input :sql_query
+    = f.label :color_palette
+    .box-selector
+      - for t in 1..palettes
+        .item data-value="#{t}" class="#{@page.color_palette.to_i == t ? '_selected' : nil}"
+      .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
+      = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
+  .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
+    = f.input :custom_color_palette_list, input_html: { class: 'tags' } 
   .form-row
-    = f.input :color_palette
-  .form-row
-    = f.input :custom_color_palette
+    = f.input :chart_type_list, input_html: { class: 'tags' } 
   .form-row
     = f.simple_fields_for :interest_points do |c|
       = render 'interest_point_fields', f: c
@@ -26,5 +33,7 @@
 = f.hidden_field :page_type, value: params[:type]
 = f.hidden_field :case_study_id, value: params[:case_study_id]
 
-.form-row
+.form-row._center
+  - if @page[:id]
+    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -big -alt'
   = f.button :submit, class: 'btn -big'

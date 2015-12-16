@@ -1,3 +1,11 @@
-/*
- *= require_self
- */
+//= require normalize-css
+//= require slick.js/slick.scss
+//= require_self
+
+@import
+  'settings',
+  'mixins',
+  'helpers',
+  'base',
+  'components/*',
+  'components/application/*';

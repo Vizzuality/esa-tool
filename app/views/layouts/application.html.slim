@@ -1,12 +1,12 @@
 doctype html
-html lang=I18n.locale
+html lang="#{I18n.locale}"
   head
     meta charset="utf-8"
     title ESA
     = stylesheet_link_tag "application", media: "all"
   body
-    - flash.each do |name, msg|
-      = content_tag :div, msg, class: name
+
+    = render partial: 'partials/header'
 
     = yield
 

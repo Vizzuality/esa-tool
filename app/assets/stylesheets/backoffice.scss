@@ -1,4 +1,5 @@
 //= require normalize-css
+//= require tagsinput
 //= require_self
 
 @import
@@ -6,4 +7,5 @@
   'mixins',
   'helpers',
   'base',
-  'components/*';
+  'components/*',
+  'components/backoffice/*';
