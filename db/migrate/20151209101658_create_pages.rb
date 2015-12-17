@@ -4,7 +4,6 @@ class CreatePages < ActiveRecord::Migration
       t.string :title, null: false
       t.text :body
       t.integer :page_type, default: 1
-      t.string :background
 
       t.timestamps null: false
     end

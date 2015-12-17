@@ -7,7 +7,7 @@
     .row
       - for case_study in @case_studies
         .grid-xs-12.grid-sm-6.grid-md-4
-          = link_to edit_backoffice_case_study_path(case_study), class: 'thumbnail', style: case_study.thumbnail.present? ? "background-image: url(#{case_study.thumbnail.url(:medium)})" : nil do 
+          = link_to edit_backoffice_case_study_path(case_study), class: 'thumbnail', style: case_study.cover_image.present? ? "background-image: url(#{case_study.cover_image.url(:medium)})" : nil do 
             
             .caption
               p.caption-item.-big = case_study.title

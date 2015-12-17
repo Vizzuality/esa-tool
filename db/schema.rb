@@ -14,23 +14,21 @@
 ActiveRecord::Schema.define(version: 20151210181646) do
 
   create_table "case_studies", force: :cascade do |t|
-    t.string   "title",                                  null: false
+    t.string   "title",                                    null: false
     t.text     "description"
-    t.string   "cover_image"
-    t.integer  "template",               default: 1
-    t.boolean  "status",                 default: false
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "thumbnail_file_name"
-    t.string   "thumbnail_content_type"
-    t.integer  "thumbnail_file_size"
-    t.datetime "thumbnail_updated_at"
+    t.integer  "template",                 default: 1
+    t.boolean  "status",                   default: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "cover_image_file_name"
+    t.string   "cover_image_content_type"
+    t.integer  "cover_image_file_size"
+    t.datetime "cover_image_updated_at"
   end
 
   create_table "contacts", force: :cascade do |t|
     t.string   "name",              null: false
     t.text     "body"
-    t.string   "logo"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "logo_file_name"
@@ -67,7 +65,6 @@ ActiveRecord::Schema.define(version: 20151210181646) do
     t.string   "title",                               null: false
     t.text     "body"
     t.integer  "page_type",               default: 1
-    t.string   "background"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "background_file_name"
