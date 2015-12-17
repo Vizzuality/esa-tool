@@ -18,9 +18,9 @@
       .item data-value="#{t}" class="#{@case_study.template.to_i == t ? '_selected' : nil}"
     = f.input_field :template, as: :hidden, value: (@case_study.template.to_i or 1), class: 'input'
 .form-row
-  = f.label :thumbnail
-  = f.input_field :thumbnail, 
-    class: @case_study.thumbnail.present? ? '_has_file' : nil, 
-    style: @case_study.thumbnail.present? ? "background-image: url(#{@case_study.thumbnail.url(:medium)})" : nil
+  = f.label :cover_image
+  = f.input_field :cover_image, 
+    class: @case_study.cover_image.present? ? '_has_file' : nil, 
+    style: @case_study.cover_image.present? ? "background-image: url(#{@case_study.cover_image.url(:medium)})" : nil
 .form-row._center
   = f.button :submit, class: 'btn -big'

@@ -1,12 +1,9 @@
 class Backoffice::UsersController < BackofficeController
 
-  before_action :set_user, only: [:edit]
+  before_action :set_user, only: [:edit, :update]
 
   def index
     @users = User.where.not(id: current_user)
-  end
-
-  def edit
   end
 
   def new
@@ -19,6 +16,17 @@ class Backoffice::UsersController < BackofficeController
       redirect_to edit_backoffice_user_path(@user), notice: 'User created successfully.'
     else
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update(page_params)
+      redirect_to edit_backoffice_user_path(@user), notice: 'User updated successfully.'
+    else
+      render :edit
     end
   end
 
