@@ -1,5 +1,5 @@
 class AddDistanceToInterestPoint < ActiveRecord::Migration
   def change
-    add_column :interest_points, :distance, :float
+    add_column :interest_points, :radius, :float
   end
 end

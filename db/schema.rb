@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20151210181646) do
 
   create_table "data_layers", force: :cascade do |t|
     t.string   "file",       null: false
-    t.integer  "year",       null: false
     t.integer  "page_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -53,12 +52,13 @@ ActiveRecord::Schema.define(version: 20151210181646) do
   add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id"
 
   create_table "interest_points", force: :cascade do |t|
+    t.string   "name",                                 null: false
     t.decimal  "lat",        precision: 15, scale: 10, null: false
     t.decimal  "lng",        precision: 15, scale: 10, null: false
     t.integer  "page_id",                              null: false
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
-    t.float    "distance"
+    t.float    "radius"
   end
 
   add_index "interest_points", ["page_id"], name: "index_interest_points_on_page_id"
