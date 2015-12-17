@@ -15,7 +15,7 @@ class CaseStudy < ActiveRecord::Base
   }
   validates_inclusion_of :status, in: [true, false]
 
-  has_attached_file :thumbnail, styles: { medium: '385x200#' }
-  validates_attachment_content_type :thumbnail, content_type: /\Aimage\/.*\Z/
+  has_attached_file :cover_image, styles: { medium: '385x200#', large: '1920x1080#' }
+  validates_attachment_content_type :cover_image, content_type: /\Aimage\/.*\Z/
 
 end
