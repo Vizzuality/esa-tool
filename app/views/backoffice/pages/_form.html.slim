@@ -22,7 +22,7 @@
       .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
   .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
-    = f.input :custom_color_palette_list, input_html: { class: 'tags' } 
+    = f.input :custom_color_palette
   .form-row
     = f.input :chart_type_list, input_html: { class: 'tags' } 
   .form-row
