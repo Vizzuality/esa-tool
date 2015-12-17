@@ -1,0 +1,27 @@
+section.l-main
+  
+  header.header
+    .wrap: .row
+      .grid-sm-8
+        h1 = t 'users'
+
+      .grid-sm-4._vcenter._right
+        .btns-toolbar
+          = link_to t('add user'), new_backoffice_user_path, class: 'btn'
+
+  .content
+    .wrap: .row
+      .grid-sm-12
+        
+        table
+          tr
+            th = t('email')
+            th = t('actions')
+            
+          - @users.each do |u|
+            tr
+              td = link_to u.email, edit_backoffice_user_path(u)
+              td
+                .btns-toolbar
+                  = link_to t('edit'), edit_backoffice_user_path(u)
+                  = link_to t('delete'), backoffice_user_path(u), method: :delete, data: { confirm: t('confirm_sure') }
