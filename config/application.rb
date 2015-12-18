@@ -40,6 +40,7 @@ module Esatool
     # Setup scaffold
     config.generators do |g|
       g.test_framework  :rspec
+      g.factory_girl    false
       g.view_specs      false
       g.helper_specs    false
       g.template_engine :slim
