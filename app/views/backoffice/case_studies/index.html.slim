@@ -10,10 +10,12 @@
           = link_to edit_backoffice_case_study_path(case_study), class: 'thumbnail', style: case_study.cover_image.present? ? "background-image: url(#{case_study.cover_image.url(:medium)})" : nil do 
             
             .caption
+              - unless case_study.status
+                span.caption-item.-dark = t 'unpublished'
               p.caption-item.-big = case_study.title
               span.caption-item.-dark
                 | #{t('last_update')}: 
-                time = case_study.updated_at
+                time = l(case_study.updated_at.to_date, format: :short)
         
       .grid-xs-12.grid-sm-6.grid-md-4
 

@@ -27,6 +27,8 @@
     display: block;
     margin: 0;
     padding: .5rem 1rem;
+    float: left;
+    clear: left;
 
     font-family: 'Roboto Slab';
     color: $font-color-2;

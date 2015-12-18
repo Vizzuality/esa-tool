@@ -20,6 +20,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d, %Y"
+      long: "%B %d, %Y"
   case_studies: "Case studies"
   add_new_case_study: "Add new case"
   last_update: "Last update"
