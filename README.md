@@ -24,6 +24,10 @@ To run the application:
 
     bundle exec rails server
 
+To run test:
+
+    bundle exec rspec
+
 ## Contributing
 
 1. Fork it!
