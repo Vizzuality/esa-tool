@@ -16,6 +16,7 @@
   .box-selector
     - for t in 1..templates
       .item data-value="#{t}" class="#{@case_study.template.to_i == t ? '_selected' : nil}"
+        = image_tag "template-#{t}.jpg"
     = f.input_field :template, as: :hidden, value: (@case_study.template.to_i or 1), class: 'input'
 .form-row
   = f.label :cover_image

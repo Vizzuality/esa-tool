@@ -7,7 +7,10 @@
   .form-row
     = f.input :body
   .form-row
-    = f.input :background
+    = f.label :background
+    = f.input_field :background,
+      class: @page.background.present? ? '_has_file' : nil, 
+      style: @page.background.present? ? "background-image: url(#{@page.background.url(:medium)})" : nil
 
 - else
   .form-row
