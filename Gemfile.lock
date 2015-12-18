@@ -61,6 +61,8 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     debug_inspector (0.0.2)
+    deep_cloneable (2.1.1)
+      activerecord (>= 3.1.0, < 5.0.0)
     devise (3.5.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -214,6 +216,7 @@ DEPENDENCIES
   byebug
   cocoon
   coffee-rails (~> 4.1.0)
+  deep_cloneable (~> 2.1.1)
   devise
   factory_girl_rails
   faker

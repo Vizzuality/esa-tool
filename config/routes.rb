@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :case_studies, path: 'case-studies' do
       resources :pages, except: [:index, :show]
       resources :select_type, only: [:index]
+      post 'duplicate'
     end
 
     resources :users, except: [:show]

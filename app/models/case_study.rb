@@ -24,4 +24,8 @@ class CaseStudy < ActiveRecord::Base
     find_by(id: id, status: true)
   end
 
+  def self.clone(id)
+    find(id).deep_clone include: :pages
+  end
+
 end

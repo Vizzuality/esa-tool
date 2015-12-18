@@ -44,6 +44,17 @@ class Backoffice::CaseStudiesController < BackofficeController
       notice: 'Case study deleted successfully.'
   end
 
+  def duplicate
+    @case_study = CaseStudy.clone(params[:case_study_id])
+    if @case_study.save
+      redirect_to edit_backoffice_case_study_path(@case_study),
+        notice: 'Case study duplicated successfully.'
+    else
+      redirect_to edit_backoffice_case_study_path(@case_study),
+        alert: 'Case study duplication failed.'
+    end
+  end
+
   private
 
     def set_case_study

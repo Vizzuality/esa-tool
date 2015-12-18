@@ -32,6 +32,7 @@ end
 gem 'paperclip', '~> 4.3'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'devise'
+gem 'deep_cloneable', '~> 2.1.1'
 
 # API
 # gem 'sdoc', '~> 0.4.0', group: :doc
