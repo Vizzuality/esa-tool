@@ -1,6 +1,19 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require 'rails'
+
+%w(
+  active_record
+  action_controller
+  action_view
+  action_mailer
+  sprockets
+).each do |framework|
+  begin
+    require "#{framework}/railtie"
+  rescue LoadError
+  end
+end
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -15,6 +28,7 @@ module Esatool
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Europe/Madrid'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
@@ -25,9 +39,12 @@ module Esatool
 
     # Setup scaffold
     config.generators do |g|
+      g.test_framework  :rspec
+      g.view_specs      false
+      g.helper_specs    false
       g.template_engine :slim
-      g.helper false
       g.assets false
+      g.helper false
     end
   end
 end
