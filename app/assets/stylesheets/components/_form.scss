@@ -112,10 +112,11 @@ textarea {
   color: $font-color-4;
 }
 
-#case_study_cover_image {
-  width: rem(385px);
-  height: rem(200px);
-  background-size: contain;
+#case_study_cover_image,
+#page_background {
+  width: 100%;
+  height: rem(250px);
+  background-size: cover;
 }
 
 .simple_form.new_user {
