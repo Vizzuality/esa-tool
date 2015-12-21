@@ -15,7 +15,19 @@
   };
 
   function onReady() {
+    this.el = document.body;
     new App.View.Slider({ el: '#mainSlider' });
+    setListeners();
+  }
+
+  function setListeners() {
+    var menuBtn = document.getElementsByClassName('btn-burguer');
+    menuBtn[0].addEventListener('click', toggleMobileMenu);
+  }
+
+  function toggleMobileMenu() {
+    document.body.classList.toggle('mobile-menu-open');
+    this.classList.toggle('-open');
   }
 
   document.addEventListener('DOMContentLoaded', onReady);

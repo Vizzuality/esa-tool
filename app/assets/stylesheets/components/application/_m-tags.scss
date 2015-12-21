@@ -18,8 +18,13 @@
     line-height: rem(1.3px);
     color: $font-color-2;
     background-color: rgba($font-color-1,0.6);
-    margin-left: rem(5px);
+    margin-right: rem(5px);
     margin-top: rem(5px);
     padding: rem(8px);
+  }
+  &.-light {
+    .tag {
+      background-color: $font-color-1;
+    }
   }
 }

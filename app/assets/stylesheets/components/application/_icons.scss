@@ -23,6 +23,12 @@
   height: rem(91px);
 }
 
+.icon-search {
+  width: rem(32px);
+  height: rem(32px);
+  fill: $font-color-1;
+}
+
 .icon-burger {
   position: relative;
   @extend %bar;

@@ -20,4 +20,12 @@ body {
     flex-direction: column;
     justify-content: center;
   }
+
+  .mobile-menu-open & {
+    background: transparent;
+  }
+}
+
+.l-mobile-search {
+  padding:rem(10px);
 }

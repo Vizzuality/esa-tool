@@ -1,8 +1,35 @@
+#mobileMenu.m-mobile-menu
+  nav role="navigation"
+    ul
+      li 
+        a.nav-item href="" data
+      li 
+        a.nav-item href="" about
+      li 
+        a.nav-item href="" contact
+      / li = link_to t('data'), backoffice_case_studies_path
+      / li = link_to t('about'), backoffice_users_path
+      / li = link_to t('contract'), backoffice_users_path
+  div.l-mobile-search
+    span.nav-item case studies
+    .m-search
+      svg.icon.icon-search
+        use xlink:href="#icon-search"
+      input type="search" placeholder="SEARCH CASE"
+    .m-tags.-light
+      span.tag URBAN
+      span.tag SLUMS
+      span.tag PHILIPPINES
+      span.tag MANILA
+      span.tag WORLDBANK
+      span.tag INTDEV
 header.l-header
   .wrap-lg: .row
     .grid-sm-6._vcenter
       button.btn-burguer
-        span.icon-burger
+        span
+        span
+        span
       h1.brand
         = link_to backoffice_dashboard_path do
           svg.icon.icon-eoworld-logo
