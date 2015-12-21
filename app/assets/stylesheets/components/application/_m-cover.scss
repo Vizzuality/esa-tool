@@ -1,7 +1,6 @@
 .m-cover {
-  width: 60%;
   max-width: rem(740px);
-  margin: 0 auto;
+  
   @media (max-width: $screen-sm) {
     margin: 0;
     width: 100%;
