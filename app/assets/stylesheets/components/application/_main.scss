@@ -1,3 +1,17 @@
 body {
   background: $bg-color-3;
 }
+
+.l-cover {
+  min-height: rem(860px);
+  position: absolute;
+  top:0;
+  left:0;
+  padding-top: rem(50px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-image: url("cover.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

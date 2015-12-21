@@ -16,6 +16,42 @@
     margin-left: 1rem;
   }
 
+  &.-transparent {
+    background-color: rgba(215, 215, 215, 0);
+    border: 1px solid $font-color-1;
+    color: $font-color-1;
+    font-family: $font-secondary;
+    font-weight: 700;
+    font-size: rem(11px);
+  }
+
+  &.arrow {
+    padding: rem(40px);
+    padding-right: rem(60px);
+    background-color: rgba($light-blue, 0.3);
+    color: $font-color-1;
+    font-size: rem(18px);
+    letter-spacing: rem(1px);
+    position: relative;
+    border: 1px solid $light-blue;
+
+    &.next:after, &.prev:after {
+      content: "";
+      position: absolute;
+      right: 20px;
+      width: rem(18px);
+      height: rem(18px);
+      border-right: rem(2px) solid $font-color-1;
+      border-top: rem(2px) solid $font-color-1;
+    }
+    &.next:after {
+      transform: rotate(45deg);
+    }
+    &.prev:after {
+      transform: rotate(215deg);
+    }
+  }
+
   &.-dotted {
     display: flex;
     align-items: center;
@@ -38,7 +74,7 @@
     justify-content: center;
     min-height: rem(194px); // Temporal
 
-    font-family: 'Roboto Slab';
+    font-family: $font-main;
     font-size: rem(14px);
     color: $font-color-1;
 
@@ -53,7 +89,7 @@
     padding-left: 3rem;
     padding-right: 3rem;
 
-    font-family: 'Roboto Slab';
+    font-family: $font-main;
     font-size: rem(21px);
     font-weight: 300;
     text-transform: none;
@@ -129,6 +165,12 @@
     color: $font-color-1;
     background-color: $bg-color-1;
   }
+
+}
+
+.btn-burguer {
+  height: 19px;
+  width: 19px;
 }
 
 .btns-toolbar {

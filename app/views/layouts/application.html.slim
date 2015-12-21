@@ -6,6 +6,7 @@ html lang="#{I18n.locale}"
     = stylesheet_link_tag "application", media: "all"
   body
 
+    = render partial: 'partials/icons'
     = render partial: 'partials/header'
 
     = yield

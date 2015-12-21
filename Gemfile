@@ -34,6 +34,7 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'devise'
 gem 'deep_cloneable', '~> 2.1.1'
 gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt-ruby', '3.1.1.rc1', :require => 'bcrypt'
 
 # API
 # gem 'sdoc', '~> 0.4.0', group: :doc

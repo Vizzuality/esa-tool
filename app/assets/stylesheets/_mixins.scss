@@ -1,3 +1,16 @@
 @function rem($px, $font-initial: 16px) {
   @return ($px / $font-initial) * 1rem;
 }
+
+@mixin font-face($font-name, $font-file, $weight, $style: "normal") {
+  @font-face {
+    font-family: $font-name;
+    src: font-url("#{$font-file}.eot");
+    src: font-url("#{$font-file}.eot?#iefix") format("embedded-opentype"),
+         font-url("#{$font-file}.woff") format("woff"),
+         font-url("#{$font-file}.ttf") format("truetype"),
+         font-url("#{$font-file}.svg") format("svg");
+    font-weight: $weight;
+    font-style: $style;
+  }
+}

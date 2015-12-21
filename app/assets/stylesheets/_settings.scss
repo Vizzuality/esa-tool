@@ -1,5 +1,14 @@
+//Fonts include
+@include font-face("Lato", "Lato-Regular", 500);
+@include font-face("Lato", "Lato-Bold", 700);
+
+//Fonts
+$font-main: 'Roboto Slab';
+$font-secondary: 'Lato';
+
 // EM base
 $font-initial: 16px;
+
 
 // Screen sizes
 $screen-sm:  640px  !default;
@@ -12,6 +21,7 @@ $white: white;
 $black: #000;
 $dark-gray: #363636;
 $blue: #316274;
+$light-blue: #12e9e4;
 $dark-blue: #00324f;
 
 // Theme
