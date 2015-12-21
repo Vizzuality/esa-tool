@@ -14,4 +14,10 @@ body {
   background-image: url("cover.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+
+  @media (max-width: $screen-sm) {
+    min-height: rem(667px);
+    flex-direction: column;
+    justify-content: center;
+  }
 }

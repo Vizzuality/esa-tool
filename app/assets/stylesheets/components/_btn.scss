@@ -171,6 +171,11 @@
 .btn-burguer {
   height: 19px;
   width: 19px;
+  @media (max-width: $screen-sm) {
+    position: absolute;
+    top: rem(20px);
+    right: rem(20px);
+  }
 }
 
 .btns-toolbar {

@@ -1,12 +1,14 @@
 .m-tags {
-  padding: rem(20px) 0;
 
   > h2 {
     font-family: $font-secondary;
     font-size: rem(11px);
     line-height: rem(1.3px);
-    color: $font-color-1;
+    color: rgba($font-color-1,0.6);
     display: inline-block;
+    @media (max-width: $screen-sm) {
+      display: none;
+    }
   }
   .tag {
     font-family: $font-secondary;
@@ -15,8 +17,9 @@
     display: inline-block;
     line-height: rem(1.3px);
     color: $font-color-2;
-    background-color: rgba($white,0.6);
+    background-color: rgba($font-color-1,0.6);
     margin-left: rem(5px);
+    margin-top: rem(5px);
     padding: rem(8px);
   }
 }
