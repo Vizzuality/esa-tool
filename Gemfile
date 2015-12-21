@@ -3,7 +3,10 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'rails', '4.2.5'
-gem 'sqlite3'
+
+# Rails plugins
+gem 'httmultiparty'
+gem 'dotenv-rails'
 
 # Assets managment
 gem 'sass-rails', '~> 5.0'
@@ -29,6 +32,7 @@ source 'https://rails-assets.org' do
 end
 
 # Active record
+gem 'sqlite3'
 gem 'paperclip', '~> 4.3'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'devise'
@@ -40,14 +44,12 @@ gem 'bcrypt-ruby', '3.1.1.rc1', :require => 'bcrypt'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'byebug'
 end
 
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem 'tzinfo-data' # Required in Windows OS
 end
 
 group :test do
