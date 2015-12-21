@@ -45,7 +45,6 @@ GEM
       json
     bcrypt (3.1.10)
     bcrypt (3.1.10-x64-mingw32)
-    bcrypt-ruby (3.1.1.rc1)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
@@ -232,8 +231,6 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
   autoprefixer-rails
-  bcrypt (~> 3.1.7)
-  bcrypt-ruby (= 3.1.1.rc1)
   byebug
   cocoon
   coffee-rails (~> 4.1.0)
