@@ -31,7 +31,7 @@
   .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
     = f.input :custom_color_palette
   .form-row
-    = f.input :chart_type_list, input_html: { class: 'tags' } 
+    = f.association :charts, as: :check_boxes
   .form-row
     = f.simple_fields_for :interest_points do |c|
       = render 'interest_point_fields', f: c

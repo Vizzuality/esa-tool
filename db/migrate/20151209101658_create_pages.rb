@@ -4,6 +4,10 @@ class CreatePages < ActiveRecord::Migration
       t.string :title, null: false
       t.text :body
       t.integer :page_type, default: 1
+      t.integer :color_palette
+      t.string :custom_color_palette
+
+      t.belongs_to :case_study, index: true, null: false
 
       t.timestamps null: false
     end
