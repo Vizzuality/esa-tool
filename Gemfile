@@ -33,17 +33,20 @@ gem 'paperclip', '~> 4.3'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'devise'
 gem 'deep_cloneable', '~> 2.1.1'
+gem 'bcrypt', '~> 3.1.7'
 
 # API
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'byebug'
 end
 
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'tzinfo-data' # Required in Windows OS
 end
 
 group :test do

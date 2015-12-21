@@ -71,6 +71,10 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    dotenv (2.0.2)
+    dotenv-rails (2.0.2)
+      dotenv (= 2.0.2)
+      railties (~> 4.0)
     erubis (2.7.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
@@ -196,6 +200,8 @@ GEM
     tilt (2.0.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2015.7)
+      tzinfo (>= 1.0.0)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -213,11 +219,13 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
   autoprefixer-rails
+  bcrypt (~> 3.1.7)
   byebug
   cocoon
   coffee-rails (~> 4.1.0)
   deep_cloneable (~> 2.1.1)
   devise
+  dotenv-rails
   factory_girl_rails
   faker
   jquery-rails
@@ -236,6 +244,7 @@ DEPENDENCIES
   slim-rails
   spring
   sqlite3
+  tzinfo-data
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
 
