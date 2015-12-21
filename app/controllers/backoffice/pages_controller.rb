@@ -9,6 +9,13 @@ class Backoffice::PagesController < BackofficeController
 
   def create
     @page = Page.new(page_params)
+
+    if file_params.has_key?(:file)
+      data_layer = DataLayer.new(page_id: @page.id)
+        .create_file(file_params[:file])
+      @page.data_layer = data_layer
+    end
+
     if @page.save
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
@@ -22,6 +29,12 @@ class Backoffice::PagesController < BackofficeController
   end
 
   def update
+    if file_params.has_key?(:file)
+      data_layer = @page.data_layer
+        .create_file(file_params[:file])
+      @page.data_layer = data_layer
+    end
+
     if @page.update(page_params)
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
@@ -53,13 +66,16 @@ class Backoffice::PagesController < BackofficeController
         :body,
         :background,
         :color_palette,
-        :custom_color_palette_list,
+        :custom_color_palette,
         :page_type,
         :chart_type_list,
         :case_study_id,
-        data_layers_attributes: [:id, :file, :year, :_destroy],
         interest_points_attributes: [:id, :lat, :lng, :distance, :_destroy]
       )
+    end
+
+    def file_params
+      params.require(:page).permit(:file)
     end
 
 end
