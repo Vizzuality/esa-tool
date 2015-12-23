@@ -6,6 +6,7 @@
 - if params[:type].to_i == 1
   .form-row
     = f.input :body
+    
   .form-row
     = f.label :background
     = f.input_field :background,
@@ -21,17 +22,20 @@
     / = f.simple_fields_for :data_layer do |c|
     /   = render 'data_layer_fields', f: c
     / = link_to_add_association t('add_data_layers'), f, :data_layer, class: 'btn -dotted'
+    
   .form-row
     = f.label :color_palette
     .box-selector
       - for t in 1..palettes
         .item data-value="#{t}" class="#{@page.color_palette.to_i == t ? '_selected' : nil}"
-      .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
+      / .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
-  .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
-    = f.input :custom_color_palette
+  / .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
+  /   = f.input :custom_color_palette
+  
   .form-row
     = f.association :charts, as: :check_boxes
+    
   .form-row
     = f.simple_fields_for :interest_points do |c|
       = render 'interest_point_fields', f: c

@@ -1,10 +1,19 @@
 $sidebar-item-width: rem(149px);
 $sidebar-item-height: rem(91px);
 
-.sidebar .btn.-sidebar-item {
-  width: $sidebar-item-width;
-  height: $sidebar-item-height;
-  color: transparent;
+.sidebar {
+  position: fixed;
+  top: rem(160px);
+  bottom: 1rem;
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .btn.-sidebar-item {
+    width: $sidebar-item-width;
+    height: $sidebar-item-height;
+    color: transparent;
+  }
 }
 
 .sidebar-item {

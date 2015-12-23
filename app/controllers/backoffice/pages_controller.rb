@@ -68,10 +68,13 @@ class Backoffice::PagesController < BackofficeController
     def page_params
       params.require(:page).permit(
         :title,
-        :body,
+        :body_first,
+        :body_second,
+        :body_thirth,
         :background,
         :color_palette,
-        :custom_color_palette,
+        :text_columns,
+        # :custom_color_palette,
         :page_type,
         :chart_type_list,
         :case_study_id,

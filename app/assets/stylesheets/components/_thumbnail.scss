@@ -11,11 +11,6 @@ $thumb-height: rem(194px);
 
   outline: 2px solid transparent;
 
-  background-color: $blue;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-
   transition: all .3s ease;
 
   @extend %clearfix;
@@ -30,6 +25,21 @@ $thumb-height: rem(194px);
     max-width: calc(100% - 20px);
     left: rem(10px);
     bottom: rem(10px);
+  }
+
+  .thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: $blue;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    overflow: hidden;
   }
 
   .caption-item {
@@ -54,6 +64,10 @@ $thumb-height: rem(194px);
       background-color: $bg-color-3;
     }
   }
+
+  &._unpublished .thumb {
+    opacity: .5;
+  }
 }
 
 .btn.-thumbnail {
@@ -61,6 +75,6 @@ $thumb-height: rem(194px);
 
   &::after {
     margin-top: -20px;
-    font-size: 100px;    
+    font-size: 100px;
   }
 }
