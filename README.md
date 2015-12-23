@@ -1,4 +1,4 @@
-# ESA Tool
+# esaworld
 
 TODO: Description of the project
 

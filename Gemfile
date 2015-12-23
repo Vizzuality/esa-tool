@@ -7,6 +7,7 @@ gem 'rails', '4.2.5'
 # Rails plugins
 gem 'httmultiparty'
 gem 'dotenv-rails'
+gem 'rails_12factor', group: :production
 
 # Assets managment
 gem 'sass-rails', '~> 5.0'
@@ -32,7 +33,7 @@ source 'https://rails-assets.org' do
 end
 
 # Active record
-gem 'sqlite3'
+gem 'pg', '~> 0.15'
 gem 'paperclip', '~> 4.3'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'devise'
