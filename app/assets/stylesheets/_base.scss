@@ -5,14 +5,14 @@ body {
 }
 
 body {
-  font-family: 'Lato', Arial, sans-serif;
+  font-family: $font-main, Arial, sans-serif;
   color: $font-color-1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2 {
-  font-family: 'Roboto Slab';
+  font-family: $font-main;
   font-weight: normal;
 }
 
@@ -66,4 +66,8 @@ input, textarea, select, button, a {
   &:focus {
     outline: none;
   }
+}
+
+table {
+  width: 100%;
 }

@@ -5,26 +5,46 @@
 
 - if params[:type].to_i == 1
   .form-row
-    = f.input :body
+    = f.input :text_columns, as: :radio_buttons, collection: 1..3
+  
   .form-row
-    = f.input :background
+    = f.input :body_first
+  
+  .form-row
+    = f.input :body_second
+    
+  .form-row
+    = f.input :body_thirth
+    
+  .form-row
+    = f.label :background
+    = f.input_field :background,
+      class: @page.background.present? ? '_has_file' : nil, 
+      style: @page.background.present? ? "background-image: url(#{@page.background.url(:medium)})" : nil
 
 - else
   .form-row
-    = f.simple_fields_for :data_layers do |c|
-      = render 'data_layer_fields', f: c
-    = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
+    = f.label :file
+    - if @page.data_layer.present?
+      p = @page.data_layer[:table_name]
+    = f.input_field :file, as: :file
+    / = f.simple_fields_for :data_layer do |c|
+    /   = render 'data_layer_fields', f: c
+    / = link_to_add_association t('add_data_layers'), f, :data_layer, class: 'btn -dotted'
+    
   .form-row
     = f.label :color_palette
     .box-selector
       - for t in 1..palettes
         .item data-value="#{t}" class="#{@page.color_palette.to_i == t ? '_selected' : nil}"
-      .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
+      / .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
-  .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
-    = f.input :custom_color_palette_list, input_html: { class: 'tags' } 
+  / .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
+  /   = f.input :custom_color_palette
+  
   .form-row
-    = f.input :chart_type_list, input_html: { class: 'tags' } 
+    = f.association :charts, as: :check_boxes
+    
   .form-row
     = f.simple_fields_for :interest_points do |c|
       = render 'interest_point_fields', f: c
@@ -35,5 +55,5 @@
 
 .form-row._center
   - if @page[:id]
-    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -big -alt'
-  = f.button :submit, class: 'btn -big'
+    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
+  = f.button :submit, class: 'btn -primary'

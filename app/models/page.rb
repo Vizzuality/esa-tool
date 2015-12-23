@@ -1,18 +1,25 @@
 class Page < ActiveRecord::Base
 
   belongs_to :case_study
-  has_many :data_layers
+  has_one :data_layer
   has_many :interest_points
+  has_and_belongs_to_many :charts
+  has_attached_file :background, styles: {
+    medium: '385x200#',
+    large: '1920x1080#'
+  }
 
-  acts_as_taggable_on :custom_color_palette
-  acts_as_taggable_on :chart_types
-
-  accepts_nested_attributes_for :data_layers, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :data_layer, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :interest_points, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :charts, reject_if: :all_blank, allow_destroy: true
 
   validates :title, presence: true, length: { minimum: 2 }
+  validates :text_columns, presence: true, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 1,
+    less_than_or_equal_to: 3
+  }
 
-  has_attached_file :background, styles: { large: '1920x1080>' }
   validates_attachment_content_type :background, content_type: /\Aimage\/.*\Z/
 
 end

@@ -1,0 +1,9 @@
+//= require normalize-css
+//= require_self
+
+@import
+  'mixins',
+  'settings',
+  'helpers',
+  'base',
+  'welcome/*';

@@ -1,0 +1,16 @@
+.m-title {
+  margin-bottom: rem(20px);
+
+  > h1 {
+    font-size: rem(70px);
+    line-height: rem(70px);
+    color: $font-color-1;
+    border-bottom: 3px solid $font-color-1;
+    margin: 0;
+
+    @media (max-width: $screen-sm) {
+      font-size: rem(45px);
+      line-height: rem(52px);
+    }
+  }
+}

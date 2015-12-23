@@ -1,6 +1,23 @@
 #mainSlider.main-slider
   div
-    h1 = @case_study.title
+    .l-cover style="background-image: url(#{@case_study.cover_image.url(:large)})"
+      article.m-cover
+        .m-title
+          h1 = @case_study.title
+        .m-tags
+          h2 TAGS:
+          span.tag URBAN
+          span.tag SLUMS
+          span.tag PHILIPPINES
+          span.tag MANILA
+          span.tag WORLDBANK
+          span.tag INTDEV
+          
+        .m-partners
+          a.partner href="#" ESA
+          a.partner href="#" WORLD BANK
+          a.partner href="#" GIM 
+          button.partner.btn.-transparent PROJECT CONTACT
 
   - @case_study.pages.each do |c|
     div

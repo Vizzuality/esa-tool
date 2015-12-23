@@ -11,74 +11,86 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151210181646) do
+ActiveRecord::Schema.define(version: 20151221173053) do
 
   create_table "case_studies", force: :cascade do |t|
-    t.string   "title",                                  null: false
+    t.string   "title",                                    null: false
     t.text     "description"
-    t.string   "thumbnail"
-    t.integer  "template",               default: 1
-    t.boolean  "status",                 default: false
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "thumbnail_file_name"
-    t.string   "thumbnail_content_type"
-    t.integer  "thumbnail_file_size"
-    t.datetime "thumbnail_updated_at"
+    t.integer  "template",                 default: 1
+    t.boolean  "published",                default: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "cover_image_file_name"
+    t.string   "cover_image_content_type"
+    t.integer  "cover_image_file_size"
+    t.datetime "cover_image_updated_at"
   end
 
+  create_table "charts", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "charts_pages", force: :cascade do |t|
+    t.integer "chart_id"
+    t.integer "page_id"
+  end
+
+  add_index "charts_pages", ["chart_id"], name: "index_charts_pages_on_chart_id"
+  add_index "charts_pages", ["page_id"], name: "index_charts_pages_on_page_id"
+
   create_table "contacts", force: :cascade do |t|
-    t.string   "name",              null: false
-    t.text     "body"
-    t.string   "logo"
+    t.text     "body",              null: false
+    t.integer  "case_study_id",     null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.integer  "case_study_id"
   end
 
   add_index "contacts", ["case_study_id"], name: "index_contacts_on_case_study_id"
 
   create_table "data_layers", force: :cascade do |t|
-    t.string   "file",       null: false
-    t.integer  "year",       null: false
-    t.integer  "page_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "table_name",    null: false
+    t.string   "import_status", null: false
+    t.integer  "page_id",       null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id"
 
   create_table "interest_points", force: :cascade do |t|
+    t.string   "name",                                 null: false
     t.decimal  "lat",        precision: 15, scale: 10, null: false
     t.decimal  "lng",        precision: 15, scale: 10, null: false
+    t.float    "radius"
     t.integer  "page_id",                              null: false
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
-    t.float    "distance"
   end
 
   add_index "interest_points", ["page_id"], name: "index_interest_points_on_page_id"
 
   create_table "pages", force: :cascade do |t|
     t.string   "title",                               null: false
-    t.text     "body"
+    t.text     "body_first"
+    t.text     "body_second"
+    t.text     "body_thirth"
     t.integer  "page_type",               default: 1
-    t.string   "background"
+    t.integer  "text_columns",            default: 1
+    t.integer  "color_palette"
+    t.string   "custom_color_palette"
+    t.integer  "case_study_id",                       null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "background_file_name"
     t.string   "background_content_type"
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
-    t.integer  "case_study_id"
-    t.string   "columns"
-    t.integer  "color_palette"
-    t.string   "custom_color_palette"
-    t.string   "chart_types"
   end
 
   add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id"

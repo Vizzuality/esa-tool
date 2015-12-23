@@ -25,6 +25,8 @@ select {
   padding: 0.3rem 0;
   margin: 0.5rem 0;
 
+  font-family: $font-secondary;
+
   background-color: transparent;
 
   border: 0;
@@ -77,6 +79,7 @@ textarea {
 
   label {
     text-transform: none;
+    font-family: $font-secondary;
     color: $font-color-1;
   }
 
@@ -91,7 +94,7 @@ textarea {
 
 .case_study_title input,
 .page_title input {
-  font-family: 'Roboto Slab';
+  font-family: $font-main;
   font-size: rem(21px);
   font-weight: 300;
 }
@@ -112,17 +115,18 @@ textarea {
   color: $font-color-4;
 }
 
-#case_study_thumbnail {
-  width: rem(385px);
-  height: rem(200px);
-  background-size: contain;
+#case_study_cover_image,
+#page_background {
+  width: 100%;
+  height: rem(250px);
+  background-size: cover;
 }
 
 .simple_form.new_user {
   input[type="text"],
   input[type="email"],
   input[type="password"] {
-    font-family: 'Roboto Slab';
+    font-family: $font-main;
     font-size: rem(21px);
   }
 }

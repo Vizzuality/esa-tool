@@ -1,4 +1,4 @@
-# ESA Tool
+# esaworld
 
 TODO: Description of the project
 
@@ -23,6 +23,10 @@ To install run:
 To run the application:
 
     bundle exec rails server
+
+To run test:
+
+    bundle exec rspec
 
 ## Contributing
 

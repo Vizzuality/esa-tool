@@ -1,7 +1,10 @@
 class CaseStudiesController < ApplicationController
 
   def show
-    @case_study = CaseStudy.where(id: params[:id]).includes(:pages).first
+    @case_study = CaseStudy.find_published(params[:id])
+    unless @case_study
+      not_found
+    end
   end
 
 end

@@ -1,3 +1,21 @@
+%clearfix {
+  &::before,
+  &::after {
+    content: "";
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}
+
 @function rem($px, $font-initial: 16px) {
   @return ($px / $font-initial) * 1rem;
+}
+
+@mixin placeholder() {
+  &::-webkit-input-placeholder { @content}
+  &:-moz-placeholder { @content}
+  &::-moz-placeholder { @content}
+  &:-ms-input-placeholder { @content}
 }

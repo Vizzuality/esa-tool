@@ -1,0 +1,25 @@
+.m-search {
+  padding:rem(10px) 0;
+  position: relative;
+
+  > .icon {
+    position: absolute;
+    top: rem(13px);
+    left: rem(5px);
+  }
+
+  > input {
+    padding-left: 40px;
+    background-color: transparent;
+    border: 1px solid rgba($gray,0.2);
+    color: $font-color-1;
+    height: rem(34px);
+    width: 87%;
+    line-height: rem(34px);
+    @include placeholder {
+      font-size: rem(11px);
+      letter-spacing: rem(1.3px);
+      color: $font-color-1;
+    }
+  }
+}

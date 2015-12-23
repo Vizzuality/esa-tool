@@ -1,19 +1,32 @@
-<h2>Change your password</h2>
+<section class="l-main">
+  <div class="content">
+    <div class="wrap">
+      <div class="row">
+        <div class="grid-sm-6 offset-sm-3">
 
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+          <h1>Change your password</h1>
 
-  <%= f.input :reset_password_token, as: :hidden %>
-  <%= f.full_error :reset_password_token %>
+          <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+            <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :password, label: "New password", required: true, autofocus: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-    <%= f.input :password_confirmation, label: "Confirm your new password", required: true %>
+            <%= f.input :reset_password_token, as: :hidden %>
+            <%= f.full_error :reset_password_token %>
+
+            <div class="form-row">
+              <%= f.input :password, label: "New password", required: true, autofocus: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+              <%= f.input :password_confirmation, label: "Confirm your new password", required: true %>
+            </div>
+
+            <div class="form-row">
+              <%= f.button :submit, "Change my password", class: "btn -primary" %>
+            </div>
+          <% end %>
+
+          <%= render "users/shared/links" %>
+
+
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</section>

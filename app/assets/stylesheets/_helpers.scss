@@ -22,3 +22,11 @@
   display: flex;
   justify-content: center;
 }
+
+._clearfix {
+  @extend %clearfix;
+}
+
+._upper {
+  text-transform: uppercase;
+}
