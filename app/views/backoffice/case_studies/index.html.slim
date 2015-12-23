@@ -11,9 +11,9 @@
             
             .caption
               - unless case_study.status
-                span.caption-item.-dark = t 'unpublished'
+                span.caption-item.-secondary._upper = t 'unpublished'
               p.caption-item.-big = case_study.title
-              span.caption-item.-dark
+              span.caption-item.-secondary
                 | #{t('last_update')}: 
                 time = l(case_study.updated_at.to_date, format: :short)
         
