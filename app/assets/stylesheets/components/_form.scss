@@ -25,6 +25,8 @@ select {
   padding: 0.3rem 0;
   margin: 0.5rem 0;
 
+  font-family: $font-secondary;
+
   background-color: transparent;
 
   border: 0;
@@ -77,6 +79,7 @@ textarea {
 
   label {
     text-transform: none;
+    font-family: $font-secondary;
     color: $font-color-1;
   }
 
