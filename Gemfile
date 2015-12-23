@@ -8,6 +8,7 @@ gem 'rails', '4.2.5'
 gem 'httmultiparty'
 gem 'dotenv-rails'
 gem 'rails_12factor', group: :production
+gem 'puma'
 
 # Assets managment
 gem 'sass-rails', '~> 5.0'
