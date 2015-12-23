@@ -4,7 +4,7 @@ class CreateCaseStudies < ActiveRecord::Migration
       t.string :title, null: false
       t.text :description
       t.integer :template, default: 1
-      t.boolean :status, default: false
+      t.boolean :published, default: false
 
       t.timestamps null: false
     end

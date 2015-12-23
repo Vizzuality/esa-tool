@@ -65,7 +65,7 @@ class Backoffice::CaseStudiesController < BackofficeController
       params.require(:case_study).permit(
         :title,
         :description,
-        :status,
+        :published,
         :template,
         :cover_image,
         :tag_list,

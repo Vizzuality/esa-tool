@@ -15,13 +15,13 @@ class CaseStudy < ActiveRecord::Base
     greater_than_or_equal_to: 1,
     less_than_or_equal_to: 5
   }
-  validates_inclusion_of :status, in: [true, false]
+  validates_inclusion_of :published, in: [true, false]
   validates_attachment_content_type :cover_image, content_type: /\Aimage\/.*\Z/
 
   accepts_nested_attributes_for :contacts, reject_if: :all_blank, allow_destroy: true
 
   def self.find_published(id)
-    find_by(id: id, status: true)
+    find_by(id: id, published: true)
   end
 
   def self.clone(id)

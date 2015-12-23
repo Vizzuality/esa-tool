@@ -11,17 +11,21 @@ section.l-main
 
   .content
     .wrap: .row
-      .grid-sm-12
+      .grid-sm-8.offset-sm-2
         
-        table
+        table.data-table
           tr
             th = t('email')
+            th = t('organisation')
+            th = t('role')
             th = t('actions')
             
           - @users.each do |u|
             tr
               td = link_to u.email, edit_backoffice_user_path(u)
               td
+              td
+              td
                 .btns-toolbar
-                  = link_to t('edit'), edit_backoffice_user_path(u)
-                  = link_to t('delete'), backoffice_user_path(u), method: :delete, data: { confirm: t('confirm_sure') }
+                  = link_to t('edit'), edit_backoffice_user_path(u), class: 'btn -secondary'
+                  = link_to t('delete'), backoffice_user_path(u), method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -secondary'

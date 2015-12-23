@@ -3,7 +3,7 @@
 .form-row
   = f.input :title
 .form-row
-  = f.input :status, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
+  = f.input :published, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
 .form-row
   = f.input :tag_list, input_html: { class: 'tags' }
 .form-row

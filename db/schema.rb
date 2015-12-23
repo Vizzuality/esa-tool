@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.string   "title",                                    null: false
     t.text     "description"
     t.integer  "template",                 default: 1
-    t.boolean  "status",                   default: false
+    t.boolean  "published",                default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.string   "cover_image_file_name"
