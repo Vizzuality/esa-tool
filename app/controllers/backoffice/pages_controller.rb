@@ -30,8 +30,13 @@ class Backoffice::PagesController < BackofficeController
 
   def update
     if file_params.has_key?(:file)
-      data_layer = @page.data_layer
-        .create_file(file_params[:file])
+      if @page.data_layer
+        data_layer = @page.data_layer
+          .create_file(file_params[:file])
+      else
+        data_layer = DataLayer.create(page_id: @page.id)
+          .create_file(file_params[:file])
+      end
       @page.data_layer = data_layer
     end
 
