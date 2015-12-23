@@ -69,7 +69,7 @@ class Backoffice::CaseStudiesController < BackofficeController
         :template,
         :cover_image,
         :tag_list,
-        contacts_attributes: [:id, :name, :body, :logo, :_destroy]
+        contacts_attributes: [:id, :body, :logo, :_destroy]
       )
     end
 

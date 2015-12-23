@@ -1,6 +1,6 @@
 class Backoffice::UsersController < BackofficeController
 
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.where.not(id: current_user)
@@ -30,6 +30,11 @@ class Backoffice::UsersController < BackofficeController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to backoffice_users_path, notice: 'Page deleted successfully.'
   end
 
   private

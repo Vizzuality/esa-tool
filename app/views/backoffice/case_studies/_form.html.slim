@@ -24,4 +24,4 @@
     class: @case_study.cover_image.present? ? '_has_file' : nil, 
     style: @case_study.cover_image.present? ? "background-image: url(#{@case_study.cover_image.url(:medium)})" : nil
 .form-row._center
-  = f.button :submit, class: 'btn -big'
+  = f.button :submit, class: 'btn -primary'

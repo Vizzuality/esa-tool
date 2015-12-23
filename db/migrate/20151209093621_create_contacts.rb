@@ -1,8 +1,7 @@
 class CreateContacts < ActiveRecord::Migration
   def change
     create_table :contacts do |t|
-      t.string :name, null: false
-      t.text :body
+      t.text :body, null: false
 
       t.belongs_to :case_study, index: true, null: false
 

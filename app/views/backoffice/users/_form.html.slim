@@ -5,4 +5,6 @@
 .form-row
   = f.input :password_confirmation, required: true
 .form-row._center
-  = f.button :submit, class: 'btn -big'
+  - if @user[:id]
+    = link_to t('delete'), backoffice_user_path(@user), method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
+  = f.button :submit, class: 'btn -primary'

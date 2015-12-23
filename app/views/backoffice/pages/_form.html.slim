@@ -42,5 +42,5 @@
 
 .form-row._center
   - if @page[:id]
-    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -big -alt'
-  = f.button :submit, class: 'btn -big'
+    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
+  = f.button :submit, class: 'btn -primary'

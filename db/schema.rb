@@ -41,8 +41,7 @@ ActiveRecord::Schema.define(version: 20151221173053) do
   add_index "charts_pages", ["page_id"], name: "index_charts_pages_on_page_id"
 
   create_table "contacts", force: :cascade do |t|
-    t.string   "name",              null: false
-    t.text     "body"
+    t.text     "body",              null: false
     t.integer  "case_study_id",     null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false

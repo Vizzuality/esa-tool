@@ -1,9 +1,10 @@
 $sidebar-item-width: rem(149px);
 $sidebar-item-height: rem(91px);
 
-.sidebar .btn.-plus {
+.sidebar .btn.-sidebar-item {
   width: $sidebar-item-width;
   height: $sidebar-item-height;
+  color: transparent;
 }
 
 .sidebar-item {

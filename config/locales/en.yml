@@ -52,5 +52,4 @@ en:
         contacts: 'Project contacts'
     placeholders:
       contact:
-        name: 'Contact name'
         body: 'Type your adress, email, etc'
