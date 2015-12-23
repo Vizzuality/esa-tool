@@ -27,7 +27,7 @@ To run the application:
 
 To run testing heroku on local:
 
-    heroku run local
+    heroku local
 
 To run test:
 
