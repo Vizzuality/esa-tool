@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151221173053) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "case_studies", force: :cascade do |t|
     t.string   "title",                                    null: false
     t.text     "description"
@@ -37,8 +40,8 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.integer "page_id"
   end
 
-  add_index "charts_pages", ["chart_id"], name: "index_charts_pages_on_chart_id"
-  add_index "charts_pages", ["page_id"], name: "index_charts_pages_on_page_id"
+  add_index "charts_pages", ["chart_id"], name: "index_charts_pages_on_chart_id", using: :btree
+  add_index "charts_pages", ["page_id"], name: "index_charts_pages_on_page_id", using: :btree
 
   create_table "contacts", force: :cascade do |t|
     t.text     "body",              null: false
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.datetime "logo_updated_at"
   end
 
-  add_index "contacts", ["case_study_id"], name: "index_contacts_on_case_study_id"
+  add_index "contacts", ["case_study_id"], name: "index_contacts_on_case_study_id", using: :btree
 
   create_table "data_layers", force: :cascade do |t|
     t.string   "table_name",    null: false
@@ -61,7 +64,7 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id"
+  add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id", using: :btree
 
   create_table "interest_points", force: :cascade do |t|
     t.string   "name",                                 null: false
@@ -73,7 +76,7 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.datetime "updated_at",                           null: false
   end
 
-  add_index "interest_points", ["page_id"], name: "index_interest_points_on_page_id"
+  add_index "interest_points", ["page_id"], name: "index_interest_points_on_page_id", using: :btree
 
   create_table "pages", force: :cascade do |t|
     t.string   "title",                               null: false
@@ -93,7 +96,7 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.datetime "background_updated_at"
   end
 
-  add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id"
+  add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -105,15 +108,15 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
   end
 
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -130,7 +133,7 @@ ActiveRecord::Schema.define(version: 20151221173053) do
     t.datetime "updated_at",                          null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

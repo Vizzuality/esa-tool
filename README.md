@@ -6,6 +6,7 @@ TODO: Description of the project
 
 Requirements:
 
+* Heroku Toolbet [How to install](https://toolbelt.heroku.com)
 * NodeJs 5.2+ [How to install](https://nodejs.org/download/)
 * Ruby 2.2.2 [How to install](https://gorails.com/setup/osx/10.10-yosemite)
 
@@ -24,9 +25,17 @@ To run the application:
 
     bundle exec rails server
 
+To run testing heroku on local:
+
+    heroku local
+
 To run test:
 
     bundle exec rspec
+
+To deploy:
+
+    git push heroku master
 
 ## Contributing
 
