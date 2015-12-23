@@ -33,9 +33,10 @@
      * Initializing box selector
      * @param {Object}
      */
-    new App.View.BoxSelect({
-      el: this.el.getElementsByClassName('box-selector')
-    });
+    var boxSelects = this.el.getElementsByClassName('box-selector');
+    if (boxSelects && boxSelects.length) {
+      new App.View.BoxSelect({ el: boxSelects });
+    }
 
     new App.View.PreviewImage({
       el: this.el.querySelectorAll('input[type="file"]')
