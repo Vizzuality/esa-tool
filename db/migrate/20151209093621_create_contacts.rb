@@ -4,6 +4,8 @@ class CreateContacts < ActiveRecord::Migration
       t.string :name, null: false
       t.text :body
 
+      t.belongs_to :case_study, index: true, null: false
+
       t.timestamps null: false
     end
   end
