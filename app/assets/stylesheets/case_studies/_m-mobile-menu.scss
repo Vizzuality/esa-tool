@@ -1,0 +1,44 @@
+%nav-item {
+  font-family: $font-main;
+  font-weight: 500;
+  font-size: rem(30px);
+  line-height: rem(35px);
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+}
+
+.m-mobile-menu {
+  position: absolute;
+  top: 50px;
+  left: -100%;
+  width: calc(100% - 20px);
+  height: 100%;
+  z-index: 2;
+  background-color: $dark;
+  padding: rem(20px) rem(10px);
+  transition: .25s ease-in-out;
+  display: block;
+
+  .mobile-menu-open & {
+    left:0;
+  }
+
+  nav {
+    padding: rem(15px) 0;
+    border-top: 4px solid $white;
+    border-bottom: 4px solid $white;
+    > ul {
+      padding: 0;
+      > li {
+        > a {
+          @extend %nav-item;
+        }
+      }
+    }
+  }
+
+  .nav-item {
+    @extend %nav-item;
+  }
+}

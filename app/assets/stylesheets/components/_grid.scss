@@ -24,6 +24,13 @@ $max-width: 1200px;
   padding-right: $site-margin;
 }
 
+.wrap-lg {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: $site-margin;
+  padding-right: $site-margin;
+}
+
 .row {
   display: flex;
   flex: 0 1 auto;

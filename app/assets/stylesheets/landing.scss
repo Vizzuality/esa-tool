@@ -1,5 +1,4 @@
 //= require normalize-css
-//= require slick.js/slick.scss
 //= require_self
 
 @import
@@ -7,5 +6,4 @@
   'settings',
   'helpers',
   'base',
-  'components/*',
-  'case_studies/*';
+  'welcome/*';
