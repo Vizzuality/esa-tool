@@ -1,28 +1,6 @@
 #mainSlider.main-slider
-  div
-    .l-cover style="background-image: url(#{@case_study.cover_image.url(:large)})"
-      article.m-cover
-        .m-title
-          h1 = @case_study.title
-        .m-tags
-          h2 TAGS:
-          span.tag URBAN
-          span.tag SLUMS
-          span.tag PHILIPPINES
-          span.tag MANILA
-          span.tag WORLDBANK
-          span.tag INTDEV
-          
-        .m-partners
-          a.partner href="#" ESA
-          a.partner href="#" WORLD BANK
-          a.partner href="#" GIM 
-          button.partner.btn.-transparent PROJECT CONTACT
+  div = render partial: 'cover', locals: { case_study: @case_study }
 
-  - @case_study.pages.each do |c|
-    div
-      - if c.page_type == 1
-        h3 = c.title
-        p = c.body
-      - else
-        p Map
+  - @case_study.pages.each do |p|
+    div = render partial: p.page_type == 1 ? 'text' : 'map', locals: { p: p }
+        

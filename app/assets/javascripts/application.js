@@ -14,20 +14,27 @@
     View: {}
   };
 
+  var ApplicationView = Backbone.View.extend({
+
+    events: {
+      'click #btnBurguer': 'toggleMenu'
+    },
+
+    initialize: function() {
+      this.menu = document.getElementById('menu');
+      new App.View.Slider({ el: '#mainSlider' });
+    },
+
+    toggleMenu: function(e) {
+      e.preventDefault();
+      e.currentTarget.classList.toggle('_active');
+      this.menu.classList.toggle('_active');
+    }
+
+  });
+
   function onReady() {
-    this.el = document.body;
-    new App.View.Slider({ el: '#mainSlider' });
-    setListeners();
-  }
-
-  function setListeners() {
-    var menuBtn = document.getElementsByClassName('btn-burguer');
-    menuBtn[0].addEventListener('click', toggleMobileMenu);
-  }
-
-  function toggleMobileMenu() {
-    document.body.classList.toggle('mobile-menu-open');
-    this.classList.toggle('-open');
+    new ApplicationView({ el: document.body });
   }
 
   document.addEventListener('DOMContentLoaded', onReady);
