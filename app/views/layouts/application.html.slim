@@ -2,15 +2,18 @@ doctype html
 html lang="#{I18n.locale}"
   head
     meta charset="utf-8"
-    title ESA
+    meta http-equiv="x-ua-compatible" content="ie=edge"
+    title = "#{@case_study.title} · esaworld | ESA"
+    meta name="description" content=""
+    meta name="viewport" content="width=device-width, initial-scale=1"
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700", media: "all"
-    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lato:400", media: "all"
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lato:400,700", media: "all"
     = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tag
   body
-
     = render partial: 'partials/icons'
     = render partial: 'partials/header'
+    = render partial: 'partials/menu'
 
     = yield
 

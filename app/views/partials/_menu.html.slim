@@ -1,0 +1,17 @@
+.menu#menu
+
+  .wrap: .row
+    .grid-xs-12.grid-sm-4.offset-sm-1
+      .navigation
+        nav role="navigation"
+          ul
+            li
+              = link_to t('data'), '#'
+            li
+              = link_to t('about'), '#'
+            li
+              = link_to t('contact'), '#'
+              
+    .grid-xs-12.grid-sm-4.offset-sm-1
+      .search
+        h2 = t('case_studies')
