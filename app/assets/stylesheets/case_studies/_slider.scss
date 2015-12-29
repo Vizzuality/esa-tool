@@ -13,6 +13,7 @@
     width: 100px;
     bottom:rem(29px);
     border: 1px solid rgba($white, 0.2);
+    color: $font-color-1;
   }
 
   .slick-prev {
@@ -30,6 +31,43 @@
       top: 50%;
       border: none;
       padding: 0;
+      width: 0;
+      color: transparent;
+
+      &:after {
+        content: "";
+        display: block;
+        width: 200px;
+        height: 266px;
+        border-radius: 100%;
+        background: rgba($white, 0.5);
+        position: absolute;
+        top: -100px;
+        z-index: -1;
+      }
+    }
+
+    .slick-prev {
+      &:before {
+        content: "<";
+        color: $font-color-1;
+        position: absolute;
+        left:20px;
+      }
+      &:after {
+        left: -160px;
+      }
+    }
+    .slick-next {
+      &:before {
+        content:">";
+        color: $font-color-1;
+        position: absolute;
+        right:20px;
+      }
+      &:after {
+        right: -160px;
+      }
     }
 
   }
