@@ -1,5 +1,94 @@
 .text {
   height: 100vh;
+  position: relative;
 
   @extend %clearfix;
+
+  @media screen and (min-width: $screen-sm) {
+    .wrap {
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  }
+
+
+  .title {
+    font-family: $font-main;
+    font-size: rem(30px);
+    font-weight: 500;
+    line-height: rem(36px);
+    color: $font-color-1;
+    padding: rem(10px) 0;
+    border-top: 4px solid $white;
+    border-bottom: 4px solid $white;
+
+    @media screen and (min-width: $screen-sm) {
+      width: 66%;
+    }
+
+
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-sm) {
+      flex-direction: row;
+    }
+
+    > .column {
+
+      padding: 0;
+
+      @media screen and (min-width: $screen-sm) {
+        width: 33%;
+        padding: rem(20px) 2%;
+      }
+
+      &:first-child {
+        padding-left: 0
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+
+      > p {
+        font-family: $font-secondary;
+        font-size: rem(14px);
+        font-weight: 500;
+        line-height: rem(18px);
+      }
+    }
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 128px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media screen and (min-width: $screen-sm) {
+      display: none;
+    }
+
+    .slide {
+      height: 65px;
+      width: calc(100% - 200px);
+      border-top: 1px solid rgba($white, 0.2);
+      border-bottom: 1px solid rgba($white, 0.2);
+    }
+
+    .contact {
+      height: 62px;
+
+      > a {
+        text-decoration: none;
+      }
+    }
+  }
 }

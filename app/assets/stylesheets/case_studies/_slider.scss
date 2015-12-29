@@ -7,17 +7,30 @@
 
   .slick-arrow {
     position: absolute;
-    top: 50%;
     transform: translateY(-50%);
     z-index: 1;
+    height: 66px;
+    width: 100px;
+    bottom:rem(29px);
+    border: 1px solid rgba($white, 0.2);
   }
 
   .slick-prev {
     left: 0;
+    border-left: none;
   }
 
   .slick-next {
     right: 0;
+    border-right: none;
+  }
+
+  @media screen and (min-width: $screen-sm) {
+    .slick-arrow {
+      top: 50%;
+      border: none;
+      padding: 0;
+    }
+
   }
 }
-
