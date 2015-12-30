@@ -18,7 +18,7 @@
   var ApplicationView = Backbone.View.extend({
 
     events: {
-      'click #btnBurguer': 'toggleMenu'
+      'click #btnBurguer': 'toggleMenu',
     },
 
     initialize: function() {
@@ -27,8 +27,13 @@
     },
 
     instanceModules: function() {
-      new App.View.Slider({ el: '#mainSlider' });
-      
+      new App.View.Slider({
+        el: '#mainSlider',
+        arrows: true,
+        appendArrows:'.slick-slide',
+        adaptiveHeight: true
+      });
+
       this.$('.m-tabs').each(function(){
         new App.View.Tabs({
           el: this

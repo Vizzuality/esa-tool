@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 1350px;
+  min-height: 1200px;
 
   @extend %clearfix;
 
@@ -22,7 +22,7 @@
   }
 
   > aside {
-    min-height: 750px;
+    min-height: 400px;
     background-color: rgba($dark, 0.9);
     position: absolute;
     bottom: 128px;
@@ -120,7 +120,7 @@
         }
       }
       > .charts-content {
-
+        min-height: 200px;
         > .content {
           display: none;
           &.-active {
