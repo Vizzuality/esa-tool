@@ -30,7 +30,7 @@
       new App.View.Slider({
         el: '#mainSlider',
         arrows: true,
-        appendArrows:'.slick-slide',
+        appendArrows:'.slick-list',
         adaptiveHeight: true
       });
 
