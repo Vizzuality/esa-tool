@@ -5,6 +5,7 @@
 //= require backbone
 //= require_self
 //= require views/slider_view
+//= require views/tabs_view
 
 'use strict';
 
@@ -22,9 +23,16 @@
 
     initialize: function() {
       this.menu = document.getElementById('menu');
+      this.instanceModules();
+    },
+
+    instanceModules: function() {
       new App.View.Slider({ el: '#mainSlider' });
-      new App.View.Tabs({
-        el: this.el.getElementsByClassName('tags')
+      
+      this.$('.m-tabs').each(function(){
+        new App.View.Tabs({
+          el: this
+        });
       });
     },
 

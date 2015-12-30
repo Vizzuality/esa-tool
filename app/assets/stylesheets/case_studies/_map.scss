@@ -1,10 +1,3 @@
-%legend-font {
-  font-family: $font-secondary;
-  font-size: rem(11px);
-  letter-spacing: rem(1.3px);
-  color: $font-color-1;
-}
-
 .map {
   position: relative;
   display: flex;
@@ -63,43 +56,8 @@
     }
 
     > .legend {
-      > .legend-nav {
-        > .tabs {
-          list-style: none;
-          border: 1px solid rgba($white, 0.2);
-          padding: rem(6px) rem(23px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: rem(25px) 0;
-
-          > .tab {
-            margin-right: rem(20px);
-            display: flex;
-            &:last-child {
-              margin-right: 0;
-            }
-            > a {
-              @extend %legend-font;
-              opacity: 0.2;
-              text-decoration: none;
-              text-transform: uppercase;
-            }
-            &.-active {
-              a {
-                opacity: 1;
-              }
-            }
-          }
-        }
-      }
       > .legend-content {
         margin:rem(10px) 0;
-        display: none;
-
-        &.-active {
-          display: block;
-        }
 
         > .content-list {
           width: 100%;
@@ -111,7 +69,10 @@
 
             .description, .value {
               padding-left: rem(16px);
-              @extend %legend-font;
+              font-family: $font-secondary;
+              font-size: rem(11px);
+              letter-spacing: rem(1.3px);
+              color: $font-color-1;
               display: inline-block;
               line-height: 16px;
               vertical-align: top;
@@ -134,7 +95,7 @@
         justify-content: flex-start;
         margin: rem(15px) 0;
 
-        >.title {
+        > .title {
           font-family: $font-main;
           font-size: rem(20px);
           line-height: rem(36px);
@@ -144,20 +105,11 @@
         }
 
         > .tabs {
-          display: flex;
-          list-style: none;
+          border:none;
           margin: 0 rem(15px);
           padding: 0;
 
-          > .tab {
-            margin-right: rem(20px);
-            > a {
-              text-decoration: none;
-            }
-
-            &:last-child {
-              margin-right: 0;
-            }
+          > .tab-title {
 
             &.-active {
               .icon-chart {
