@@ -6,31 +6,52 @@
 }
 
 .map {
-  height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 1350px;
 
   @extend %clearfix;
 
   @media screen and (min-width: $screen-sm) {
+    height: 100vh;
     .wrap {
       padding-left: 100px;
       padding-right: 100px;
     }
   }
 
+  .map-container {
+    height: 700px;
+    @media screen and (min-width: $screen-sm) {
+      height: 100vh;
+    }
+  }
+
   > aside {
-    background-color: rgba($black,0.5);
+    min-height: 750px;
+    background-color: rgba($dark, 0.9);
     position: absolute;
-    top: 0;
-    right: 60px;
-    width: 415px;
-    height: 100%;
-    padding: rem(90px) rem(30px) rem(50px);
+    bottom: 128px;
+    width: calc(100% - 40px);
+    padding: 20px;
+
+    @media screen and (min-width: $screen-sm) {
+      top: 0;
+      right: 60px;
+      width: 415px;
+      height: 100%;
+      padding: rem(90px) rem(30px) rem(50px);
+      background-color: rgba($dark, 0.5);
+    }
 
     > .title {
       padding: rem(14px);
       border-bottom: 4px solid $white;
-      border-top: 4px solid white;
+
+      @media screen and (min-width: $screen-sm) {
+        border-top: 4px solid white;
+      }
 
       > h2 {
         font-family: $font-main;

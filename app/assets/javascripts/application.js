@@ -23,6 +23,9 @@
     initialize: function() {
       this.menu = document.getElementById('menu');
       new App.View.Slider({ el: '#mainSlider' });
+      new App.View.Tabs({
+        el: this.el.getElementsByClassName('tags')
+      });
     },
 
     toggleMenu: function(e) {

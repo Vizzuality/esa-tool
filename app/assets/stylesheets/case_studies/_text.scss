@@ -1,10 +1,16 @@
 .text {
-  height: 100vh;
+  height: 950px;
+  padding: rem(200px) 0;
   position: relative;
 
   @extend %clearfix;
 
   @media screen and (min-width: $screen-sm) {
+    height: 100vh;
+    padding: 0;
+    display: flex;
+    align-items: center;
+
     .wrap {
       padding-left: 100px;
       padding-right: 100px;
