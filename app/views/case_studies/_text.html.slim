@@ -10,8 +10,5 @@
             p = p.body_second unless p.body_second.blank?
           .column
             p = p.body_thirth unless p.body_thirth.blank?
-  .footer
-    .slide._center._vcenter
-      span PAG. #{index}
-    .contact._center._vcenter
-      a href="#" PROJECT CONTACT
+            
+    = render partial: 'footer', locals: { index: index }

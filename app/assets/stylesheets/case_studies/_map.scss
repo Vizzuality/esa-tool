@@ -1,0 +1,17 @@
+.map {
+  height: 100vh;
+  position: relative;
+
+  @extend %clearfix;
+
+  @media screen and (min-width: $screen-sm) {
+    .wrap {
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+  }
+
+  > aside {
+    background-color: rgba($black,0.5);
+  }
+}
