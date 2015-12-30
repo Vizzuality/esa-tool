@@ -11,10 +11,15 @@
 
   .slick-slide {
     position: relative;
+
   }
 
   .slick-list {
     position: relative;
+
+    @media screen and (min-width: $screen-sm) {
+      height: 100vh!important;
+    }
 
     .slick-arrow {
       display: none;
