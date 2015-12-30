@@ -1,3 +1,10 @@
+%legend-font {
+  font-family: $font-secondary;
+  font-size: rem(11px);
+  letter-spacing: rem(1.3px);
+  color: $font-color-1;
+}
+
 .map {
   height: 100vh;
   position: relative;
@@ -13,5 +20,141 @@
 
   > aside {
     background-color: rgba($black,0.5);
+    position: absolute;
+    top: 0;
+    right: 60px;
+    width: 415px;
+    height: 100%;
+    padding: rem(90px) rem(30px) rem(50px);
+
+    > .title {
+      padding: rem(14px);
+      border-bottom: 4px solid $white;
+      border-top: 4px solid white;
+
+      > h2 {
+        font-family: $font-main;
+        font-weight: 500;
+        font-size: rem(30px);
+        line-height: rem(36px);
+        margin: 0;
+      }
+    }
+
+    > .legend {
+      > .legend-nav {
+        > .tabs {
+          list-style: none;
+          border: 1px solid rgba($white, 0.2);
+          padding: rem(6px) rem(23px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: rem(25px) 0;
+
+          > .tab {
+            margin-right: rem(20px);
+            display: flex;
+            &:last-child {
+              margin-right: 0;
+            }
+            > a {
+              @extend %legend-font;
+              opacity: 0.2;
+              text-decoration: none;
+              text-transform: uppercase;
+            }
+            &.-active {
+              a {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+      > .legend-content {
+        margin:rem(10px) 0;
+        display: none;
+
+        &.-active {
+          display: block;
+        }
+
+        > .content-list {
+          width: 100%;
+          list-style: none;
+          padding: rem(5px) 0;
+          margin:0;
+          > .content-item {
+            padding: rem(5px) 0;
+
+            .description, .value {
+              padding-left: rem(16px);
+              @extend %legend-font;
+              display: inline-block;
+              line-height: 16px;
+              vertical-align: top;
+              margin-top: 1px;
+            }
+
+            .value {
+              padding-left: 0;
+              float:right;
+            }
+          }
+        }
+      }
+    }
+
+    > .charts {
+      > .charts-nav {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: rem(15px) 0;
+
+        >.title {
+          font-family: $font-main;
+          font-size: rem(20px);
+          line-height: rem(36px);
+          font-weight: 500;
+          color: $font-color-1;
+          margin: 0;
+        }
+
+        > .tabs {
+          display: flex;
+          list-style: none;
+          margin: 0 rem(15px);
+          padding: 0;
+
+          > .tab {
+            margin-right: rem(20px);
+            > a {
+              text-decoration: none;
+            }
+
+            &:last-child {
+              margin-right: 0;
+            }
+
+            &.-active {
+              .icon-chart {
+                fill: $white;
+              }
+            }
+          }
+        }
+      }
+      > .charts-content {
+
+        > .content {
+          display: none;
+          &.-active {
+            display: block;
+          }
+        }
+      }
+    }
   }
 }

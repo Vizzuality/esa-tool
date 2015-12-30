@@ -1,2 +1,101 @@
-.map
-  p Map
+.map style="background-image: url(#{p.background.url(:large)})"
+  .map-container
+    p TODO FULL MAP
+    
+  aside
+    .title
+      h2 = p.title
+    .legend
+      .legend-nav
+        ul.tabs
+          li.tab.-active 
+            a href="#tab1" By number of slums
+          li.tab 
+            a href="#tab2" By area
+            
+      #tab1.legend-content.-active
+        ul.content-list
+          li.content-item 
+            span.icon-legend.-color-1
+            span.description Continuous
+            span.value 2%
+          li.content-item 
+            span.icon-legend.-color-2
+            span.description Discontinuous high density
+            span.value 8%
+          li.content-item 
+            span.icon-legend.-color-3
+            span.description Discontinuous medium density
+            span.value 10%
+          li.content-item 
+            span.icon-legend.-color-4
+            span.description Discontinuous low density
+            span.value 20%
+          li.content-item 
+            span.icon-legend.-color-5
+            span.description Discontinuous very low density
+            span.value 25%
+          li.content-item 
+            span.icon-legend.-color-6
+            span.description Others
+            span.value 35%
+            
+      #tab2.legend-content
+        ul.content-list
+          li.content-item
+            span.icon-legend.-color-1
+            span.description Continuous
+            span.value 2%
+          li.content-item 
+            span.icon-legend.-color-2
+            span.description Discontinuous high density
+            span.value 8%
+          li.content-item 
+            span.icon-legend.-color-3
+            span.description Discontinuous medium density
+            span.value 10%
+          li.content-item 
+            span.icon-legend.-color-4
+            span.description Discontinuous low density
+            span.value 20%
+          li.content-item 
+            span.icon-legend.-color-5
+            span.description Discontinuous very low density
+            span.value 25%
+          li.content-item 
+            span.icon-legend.-color-6
+            span.description Others
+            span.value 35%
+      
+    .charts
+      .charts-nav
+        h3.title Chart:
+        ul.tabs
+          li.tab.-active
+            a href="#chart-line"
+              svg.icon-chart.-line
+                use xlink:href="#icon-chart-line"
+          li.tab
+            a href="#chart-pie" 
+              svg.icon-chart.-pie
+                use xlink:href="#icon-chart-pie"
+          li.tab
+            a href="#chart-bar" 
+              svg.icon-chart.-bar
+                use xlink:href="#icon-chart-bar"
+      .charts-content
+        #chart-line.content.-active
+          p TODO LINE CHAR
+        #chart-pie.content
+          p TODO PIE CHAR
+        #chart-bar.content
+          p TODO BAR CHAR
+      / .charts-timeline
+      /   ul.times
+      /     li 1990
+      /     li 1995
+      /     li 2010
+      /     li 2014
+      /   button.btn PLAY
+      
+  = render partial: 'footer', locals: { index: index }    
