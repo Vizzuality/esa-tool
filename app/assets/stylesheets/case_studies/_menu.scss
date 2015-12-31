@@ -21,10 +21,19 @@
 
   background-color: $bg-color-3;
 
-  z-index: 1;
+  z-index: 2;
 
   transition: all .3s ease;
   transform: translateX(-100%);
+
+  display: flex;
+  align-items: flex-start;
+  padding-top: rem(100px);
+
+  @media screen and (min-width: $screen-sm) {
+    align-items: center;
+    padding-top: 0;
+  }
 
   .navigation {
     @extend %menu-bar;
@@ -53,8 +62,4 @@
     transform: translateX(0);
   }
 
-  @media screen and (min-width: $screen-sm) {
-    display: flex;
-    align-items: center;
-  }
 }
