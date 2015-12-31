@@ -1,3 +1,17 @@
+
+%menu-main-font {
+  font-family: $font-main;
+  font-size: rem(30px);
+  color: $font-color-1;
+  line-height: rem(36px);
+  text-transform: uppercase;
+}
+
+%menu-bar {
+  padding: rem(20px) 0;
+  border-top: 4px solid $white;
+}
+
 .menu {
   position: fixed;
   top: 0;
@@ -11,6 +25,29 @@
 
   transition: all .3s ease;
   transform: translateX(-100%);
+
+  .navigation {
+    @extend %menu-bar;
+
+    .nav-item {
+      padding: rem(5px) 0;
+      > a {
+        text-decoration: none;
+        > span {
+          @extend %menu-main-font;
+        }
+      }
+    }
+  }
+
+  .search {
+    @extend %menu-bar;
+
+    > h2 {
+      @extend %menu-main-font;
+      margin: rem(5px) 0;
+    }
+  }
 
   &._active {
     transform: translateX(0);

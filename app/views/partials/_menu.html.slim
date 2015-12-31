@@ -5,13 +5,24 @@
       .navigation
         nav role="navigation"
           ul
-            li
+            li.nav-item
               = link_to t('data'), '#'
-            li
+            li.nav-item
               = link_to t('about'), '#'
-            li
+            li.nav-item
               = link_to t('contact'), '#'
               
     .grid-xs-12.grid-sm-4.offset-sm-1
       .search
         h2 = t('case_studies')
+        .m-search
+          svg.icon
+            use xlink:href="#icon-search"
+          input type="search" placeholder="SEARCH CASE"
+        .m-tags.-light
+          span.tag URBAN
+          span.tag SLUMS
+          span.tag PHILIPPINES
+          span.tag MANILA
+          span.tag WORLDBANK
+          span.tag INTDEV
