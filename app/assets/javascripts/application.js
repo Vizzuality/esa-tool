@@ -28,10 +28,7 @@
 
     instanceModules: function() {
       new App.View.Slider({
-        el: '#mainSlider',
-        arrows: true,
-        appendArrows:'.slick-list',
-        adaptiveHeight: true
+        el: '#mainSlider'
       });
 
       this.$('.m-tabs').each(function(){

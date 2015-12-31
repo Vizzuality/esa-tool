@@ -6,7 +6,7 @@
 
   @extend %clearfix;
 
-  @media screen and (min-width: $screen-sm) {
+  @media screen and (min-width: $screen-md) {
     height: 100vh;
     .wrap {
       padding-left: 100px;
@@ -16,7 +16,7 @@
 
   .map-container {
     height: 700px;
-    @media screen and (min-width: $screen-sm) {
+    @media screen and (min-width: $screen-md) {
       height: 100vh;
     }
   }
@@ -29,7 +29,7 @@
     width: calc(100% - 40px);
     padding: 20px;
 
-    @media screen and (min-width: $screen-sm) {
+    @media screen and (min-width: $screen-md) {
       top: 0;
       right: 60px;
       width: 415px;
@@ -42,7 +42,7 @@
       padding: rem(14px);
       border-bottom: 4px solid $white;
 
-      @media screen and (min-width: $screen-sm) {
+      @media screen and (min-width: $screen-md) {
         border-top: 4px solid white;
       }
 

@@ -1,9 +1,12 @@
 .cover {
   height: 100vh;
+  padding: rem(100px) 0;
+  margin-bottom: rem(130px);
 
   @extend %clearfix;
 
-  @media screen and (min-width: $screen-sm) {
+  @media screen and (min-width: $screen-md) {
+    margin-bottom: 0;
     .wrap {
       padding-left: 100px;
       padding-right: 100px;
@@ -20,7 +23,7 @@
       border-bottom: 3px solid $font-color-1;
       margin: 0;
 
-      @media (max-width: $screen-sm) {
+      @media (max-width: $screen-md) {
         font-size: rem(45px);
         line-height: rem(52px);
       }

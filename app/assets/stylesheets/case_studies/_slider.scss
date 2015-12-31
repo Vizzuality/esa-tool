@@ -5,19 +5,54 @@
   width: 100%;
   height: 100%;
 
-  @media screen and (min-width: $screen-sm) {
+  &.-first {
+    .slick-list {
+      .slick-prev{
+        display: none!important;
+      }
+      .slick-next{
+        @media screen and (max-width: $screen-md) {
+          color:transparent;
+          width: 100%;
+          background-color: rgba($light-blue, 0.3);
+          bottom: 0;
+          transform: translateY(0);
+
+          &:after {
+            content: attr(data-first-label);
+            position: absolute;
+            top:0;
+            left:0;
+            display: block;
+            color: $font-color-1;
+            font-family: $font-main;
+            font-size: rem(18px);
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  &.-last {
+    .slick-list {
+      .slick-next{
+        display: none!important;
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-md) {
     height: 100%;
   }
 
   .slick-slide {
     position: relative;
-
   }
 
   .slick-list {
     position: relative;
 
-    @media screen and (min-width: $screen-sm) {
+    @media screen and (min-width: $screen-md) {
       height: 100vh!important;
     }
 
@@ -31,6 +66,13 @@
       bottom:rem(29px);
       border: 1px solid rgba($white, 0.2);
       color: $font-color-1;
+      line-height: 64px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 25px;
+      }
     }
 
     &.slick-active {
@@ -42,14 +84,26 @@
     .slick-prev {
       left: 0;
       border-left: none;
+      padding-left: 25px;
+
+      &:before {
+        @include arrow (14px, $font-color-1, 2px, -45deg);
+        left:20px;
+      }
     }
 
     .slick-next {
       right: 0;
       border-right: none;
+      padding-right: 25px;
+
+      &:before {
+        @include arrow (14px, $font-color-1, 2px, 135deg);
+        right:20px;
+      }
     }
 
-    @media screen and (min-width: $screen-sm) {
+    @media screen and (min-width: $screen-md) {
       .slick-arrow {
         top: 50%;
         border: none;
@@ -71,32 +125,24 @@
           z-index: -1;
         }
         &:before {
-          content: "";
-          position: absolute;
-          width: rem(14px);
-          height: rem(14px);
-          border-right: 2px solid $font-color-1;
-          border-top: 2px solid $font-color-1;
           top: 130px;
         }
       }
 
       .slick-prev {
-        &:before {
-          transform: rotate(225deg);
-          left:13px;
-        }
         &:after {
           left: -160px;
         }
+        &:before {
+          left: 13px;
+        }
       }
       .slick-next {
-        &:before {
-          transform: rotate(45deg);
-          right:13px;
-        }
         &:after {
           right: -160px;
+        }
+        &:before {
+          right: 13px;
         }
       }
 
