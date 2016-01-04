@@ -12,7 +12,7 @@ $screen-lg:  1440px !default;
 $screen-xl: 1920px !default;
 
 // Colors
-$white: white;
+$white: #fff;
 $black: #000;
 $dark: #040205;
 $dark-gray: #363636;
@@ -37,3 +37,11 @@ $border-color-2: $white;
 
 $error-color: #fff500;
 $notice-color: #00a600;
+
+// Legend
+$legend-1: #ffc602;
+$legend-2: #ff6602;
+$legend-3: #ff2a60;
+$legend-4: #ea3eff;
+$legend-5: #7836ff;
+$legend-6: #b8b8b8;

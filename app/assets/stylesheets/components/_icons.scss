@@ -22,3 +22,56 @@
   width: rem(149px);
   height: rem(91px);
 }
+
+.icon-legend {
+  width: rem(16px);
+  height: rem(16px);
+  display: inline-block;
+  box-sizing: border-box;
+
+  &.-color-1 {
+    background-color: rgba($legend-1, 0.30);
+    border: 1px solid $legend-1;
+  }
+  &.-color-2 {
+    background-color: rgba($legend-2, 0.30);
+    border: 1px solid $legend-2;
+  }
+  &.-color-3 {
+    background-color: rgba($legend-3, 0.30);
+    border: 1px solid $legend-3;
+  }
+  &.-color-4 {
+    background-color: rgba($legend-4, 0.30);
+    border: 1px solid $legend-4;
+  }
+  &.-color-5 {
+    background-color: rgba($legend-5, 0.30);
+    border: 1px solid $legend-5;
+  }
+  &.-color-6 {
+    background-color: rgba($legend-6, 0.30);
+    border: 1px solid $legend-6;
+  }
+}
+
+.icon-chart {
+  width: rem(22px);
+  height: rem(22px);
+  display: inline-block;
+  fill: rgba($white,0.5);
+
+  &.-line {
+    width: rem(32px);
+    margin-top: 2px;;
+  }
+
+  &.-bar {
+    width: rem(32px);
+  }
+
+  &.-active {
+    fill: $white;
+  }
+
+}

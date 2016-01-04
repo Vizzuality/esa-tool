@@ -2,4 +2,51 @@
   height: 100vh;
 
   @extend %clearfix;
+
+  .caption {
+    position: relative;
+
+    font-size: rem(14px);
+
+    z-index: 1;
+
+    @media screen and (max-width: $screen-md) {
+      top: 100px;
+      max-height: 60vh;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  .title {
+    padding-bottom: rem(10px);
+    padding-top: rem(10px);
+
+    border-top: 4px solid $white;
+    border-bottom: 4px solid $white;
+
+    & > h2 {
+      margin: 0;
+      padding: 0;
+
+      font-family: $font-main;
+      font-size: rem(30px);
+      line-height: 1.2;
+      color: $font-color-1;
+    }
+
+    @media screen and (min-width: $screen-md) {
+      padding-right: 33%;
+    }
+  }
+
+  @media screen and (min-width: $screen-md) {
+    display: flex;
+    align-items: center;
+
+    .caption {
+      position: relative;
+    }
+  }
+
 }

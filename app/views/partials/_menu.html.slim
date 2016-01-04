@@ -1,25 +1,23 @@
 .menu#menu
-
   .wrap: .row
-    .grid-xs-12.grid-sm-4.offset-sm-1
-      .navigation
-        nav role="navigation"
-          ul
-            li.nav-item
-              = link_to t('data'), '#'
-            li.nav-item
-              = link_to t('about'), '#'
-            li.nav-item
-              = link_to t('contact'), '#'
+    .grid-xs-12.grid-sm-6
+      nav.navigation role="navigation"      
+        ul
+          li.nav-item
+            = link_to t('data'), '#'
+          li.nav-item
+            = link_to t('about'), '#'
+          li.nav-item
+            = link_to t('contact'), '#'
               
-    .grid-xs-12.grid-sm-4.offset-sm-1
+    .grid-xs-12.grid-sm-6
       .search
         h2 = t('case_studies')
-        .m-search
-          svg.icon
-            use xlink:href="#icon-search"
-          input type="search" placeholder="SEARCH CASE"
-        .m-tags.-light
+        / .m-search
+        /   svg.icon
+        /     use xlink:href="#icon-search"
+        /   input type="search" placeholder="SEARCH CASE"
+        .tags.-light
           span.tag URBAN
           span.tag SLUMS
           span.tag PHILIPPINES

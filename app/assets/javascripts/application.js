@@ -5,6 +5,7 @@
 //= require backbone
 //= require_self
 //= require views/slider_view
+//= require views/tabs_view
 
 'use strict';
 
@@ -17,12 +18,24 @@
   var ApplicationView = Backbone.View.extend({
 
     events: {
-      'click #btnBurguer': 'toggleMenu'
+      'click #btnBurguer': 'toggleMenu',
     },
 
     initialize: function() {
       this.menu = document.getElementById('menu');
-      new App.View.Slider({ el: '#mainSlider' });
+      this.instanceModules();
+    },
+
+    instanceModules: function() {
+      new App.View.Slider({
+        el: '#mainSlider'
+      });
+
+      this.$('.m-tabs').each(function(){
+        new App.View.Tabs({
+          el: this
+        });
+      });
     },
 
     toggleMenu: function(e) {
