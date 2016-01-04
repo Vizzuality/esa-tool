@@ -13,9 +13,9 @@
   App.View.Map = Backbone.View.extend({
 
     defaults: {
-      center: [40, -3],
+      center: [46, 20],
       scrollWheelZoom: false,
-      zoom: 3
+      zoom: 5
     },
 
     initialize: function(options) {
@@ -30,6 +30,7 @@
     createMap: function() {
       if (!this.map) {
         this.map = L.map(this.el, this.options);
+        window.map = this.map;
         this.setBasemap(TILEURL);
       }
     },
