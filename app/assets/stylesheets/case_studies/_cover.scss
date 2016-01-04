@@ -1,44 +1,41 @@
 .cover {
+  position: relative;
   height: 100vh;
-  padding: rem(100px) 0;
-  margin-bottom: rem(130px);
 
   @extend %clearfix;
 
-  @media screen and (min-width: $screen-md) {
-    margin-bottom: 0;
-    .wrap {
-      padding-left: 100px;
-      padding-right: 100px;
-    }
+  .caption {
+    position: relative;
+    z-index: 1;
   }
 
   .title {
-    margin-bottom: rem(20px);
+    margin-top: 0;
+    margin-bottom: 1rem;
 
-    > h1 {
+    font-size: rem(45px);
+    line-height: 1;
+    color: $font-color-1;
+
+    border-bottom: 3px solid $font-color-1;
+
+    @media (min-width: $screen-md) {
       font-size: rem(70px);
-      line-height: rem(70px);
-      color: $font-color-1;
-      border-bottom: 3px solid $font-color-1;
-      margin: 0;
-
-      @media (max-width: $screen-md) {
-        font-size: rem(45px);
-        line-height: rem(52px);
-      }
     }
   }
 
 
   .partners {
-    padding: rem(20px) 0;
+    margin: 1rem 0;
 
     .partner {
-      margin-right: rem(25px);
-      margin-top: rem(15px);
-      text-decoration: none;
       display: inline-block;
+
+      margin-right: 1rem;
+
+      text-decoration: none;
+
+      vertical-align: middle;
     }
   }
 

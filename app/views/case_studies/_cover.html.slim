@@ -1,15 +1,16 @@
 .cover._vcenter style="background-image: url(#{case_study.cover_image.url(:large)})"
+  .veil
   .wrap: .row
     .grid-xs-12
-      article.m-cover
-        .title
-          h1 = case_study.title
-        .m-tags
-          h2 TAGS:
+      article.caption
+        h1.title = case_study.title
+
+        .tags
+          h2 = "#{t('tags')}:"
           - case_study.tags.each do |t|
             span.tag = t
           
         .partners
           - case_study.contacts.each do |c|
-            span.partner = c.body
-          button.partner.btn.-transparent PROJECT CONTACT
+            span.partner = image_tag c.logo.url(:thumb)
+          button.btn.-transparent = t 'project_contact'

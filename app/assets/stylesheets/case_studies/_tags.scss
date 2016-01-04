@@ -1,4 +1,4 @@
-.m-tags {
+.tags {
 
   > h2 {
     font-family: $font-secondary;
@@ -10,6 +10,7 @@
       display: none;
     }
   }
+
   .tag {
     font-family: $font-secondary;
     font-size: rem(11px);
@@ -22,6 +23,7 @@
     margin-top: rem(5px);
     padding: rem(8px);
   }
+
   &.-light {
     .tag {
       background-color: $font-color-1;

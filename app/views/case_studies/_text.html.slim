@@ -1,14 +1,18 @@
-.text._vcenter style="background-image: url(#{p.background.url(:large)})"
+.text style="background-image: url(#{p.background.url(:large)})"
+  .veil
   .wrap: .row
     .grid-xs-12
-      article
-        h2.title = p.title
-        .content
-          .column
+
+      article.caption
+        .row: .grid-xs-12.grid-sm-8
+          .title: h2 = p.title
+        
+        .row
+          .column.grid-xs-12.grid-sm-4
             p = p.body_first unless p.body_first.blank?
-          .column
+          .column.grid-xs-12.grid-sm-4
             p = p.body_second unless p.body_second.blank?
-          .column
+          .column.grid-xs-12.grid-sm-4
             p = p.body_thirth unless p.body_thirth.blank?
             
     = render partial: 'footer', locals: { index: index }
