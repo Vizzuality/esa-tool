@@ -7,7 +7,6 @@ gem 'rails', '4.2.5'
 # Rails plugins
 gem 'httmultiparty'
 gem 'dotenv-rails'
-gem 'rails_12factor', group: :production
 gem 'puma'
 
 # Assets managment
@@ -56,4 +55,9 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails'
   gem 'faker'
+end
+
+group :production do
+  gem 'aws-sdk', '~> 2'
+  gem 'rails_12factor' # Required for Heroku
 end
