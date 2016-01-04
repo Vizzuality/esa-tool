@@ -13,14 +13,18 @@
     margin-top: 0;
     margin-bottom: 1rem;
 
-    font-size: rem(45px);
-    line-height: 1;
-    color: $font-color-1;
+    border-bottom: 4px solid $font-color-1;
 
-    border-bottom: 3px solid $font-color-1;
+    & > h1 {
+      margin: 0;
 
-    @media (min-width: $screen-md) {
-      font-size: rem(70px);
+      font-size: rem(45px);
+      line-height: 1;
+      color: $font-color-1;
+
+      @media (min-width: $screen-md) {
+        font-size: rem(70px);
+      }
     }
   }
 
