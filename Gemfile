@@ -58,6 +58,6 @@ group :test do
 end
 
 group :production do
-  gem 'aws-sdk', '~> 2'
+  gem 'aws-sdk', '< 2.0'
   gem 'rails_12factor' # Required for Heroku
 end
