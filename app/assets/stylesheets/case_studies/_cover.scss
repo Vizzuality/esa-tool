@@ -3,6 +3,7 @@
   height: 100vh;
 
   @extend %clearfix;
+  @include veil($bg-color-3);
 
   .caption {
     position: relative;
@@ -22,7 +23,7 @@
       line-height: 1;
       color: $font-color-1;
 
-      @media (min-width: $screen-md) {
+      @media (min-width: $screen-sm) {
         font-size: rem(70px);
       }
     }

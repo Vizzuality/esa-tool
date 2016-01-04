@@ -15,35 +15,82 @@
       infinite: false,
       speed: 150,
       arrows: true,
-      appendArrows:'.slick-list',
       adaptiveHeight: true,
-      prevArrow:'<button type="button" class="slick-prev">Prev.</button>',
-      nextArrow:'<button type="button" data-first-label="VIEW CASE" class="slick-next">Prev.</button>'
+      prevArrow: '<button type="button" class="slick-prev"></button>',
+      nextArrow: '<button type="button" class="slick-next"></button>'
     },
 
-    initialize: function(options) {
-      this.options = _.extend({}, this.defaults, options || {});
-      this.setListeners();
+    /**
+     * This function will be executed when the instance is created
+     * @param  {Object} params
+     */
+    initialize: function(params) {
+      this.options = _.extend({}, this.defaults, params.options || {});
+      this.$page = document.getElementById('page');
+      this._setListeners();
+      // At beginning initialize slick jquery plugin
       this.$el.slick(this.options);
     },
 
-    setListeners: function() {
-      var self = this;
-      this.$el.on('init', function(){
-        this.classList.add('-first');
-      });
-      this.$el.on('afterChange', function(event, slick, currentSlide){
-        if (currentSlide === 0) {
-          this.classList.add('-first');
-        } else {
-          this.classList.remove('-first');
-        }
-        if (currentSlide === slick.slideCount -1) {
-          this.classList.add('-last');
-        } else {
-          this.classList.remove('-last');
-        }
-      });
+    /**
+     * Function to set events at beginning
+     */
+    _setListeners: function() {
+      this.$el
+        .on('init', _.bind(this._onInit, this))
+        .on('afterChange', _.bind(this._afterChange, this));
+    },
+
+    /**
+     * This function will be executed when slick has been initialized
+     * @param  {Event} e
+     * @param  {Object} s Slick params
+     */
+    _onInit: function(e, s) {
+      this.setCurrent(s.currentSlide);
+    },
+
+    /**
+     * This function will be executed when slick has changed
+     * @param  {Event} e
+     * @param  {Object} s Slick params
+     * @param  {Number} i Current slide
+     */
+    _afterChange: function(e, s, i) {
+      if (i === this.current) {
+        return;
+      }
+      this.updatePage(i);
+      this._triggerChange(s, i);
+      this.setCurrent(i);
+    },
+
+    /**
+     * Setting current slide to this instance
+     * @param {Number} i Current slide
+     */
+    setCurrent: function(i) {
+      this.current = i;
+    },
+
+    /**
+     * Update the current page
+     * @param  {Number} i Current slide
+     */
+    updatePage: function(i) {
+      if (this.$page) {
+        this.$page.innerHTML = i + 1;
+      }
+    },
+
+    /**
+     * Trigger an event when the slide has changed
+     * @param  {Object} slickObject Slick params
+     * @param  {Number} i           Current slide
+     */
+    _triggerChange: function(slickObject, i) {
+      var $current = $(slickObject.$slides[i]).find('div:first');
+      this.trigger('slider:change', $current.data('type'));
     }
 
   });

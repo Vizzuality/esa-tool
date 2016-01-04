@@ -1,5 +1,5 @@
-.text style="background-image: url(#{p.background.url(:large)})"
-  .veil
+.text data-type="text" style="background-image: url(#{p.background.url(:large)})"
+
   .wrap: .row
     .grid-xs-12
 
@@ -14,5 +14,3 @@
             p = p.body_second unless p.body_second.blank?
           .column.grid-xs-12.grid-sm-4
             p = p.body_thirth unless p.body_thirth.blank?
-            
-    = render partial: 'footer', locals: { index: index }

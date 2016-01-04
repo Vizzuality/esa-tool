@@ -1,5 +1,5 @@
 ._hidden {
-  display: none;
+  display: none !important;
 }
 
 ._invisible {
@@ -29,4 +29,16 @@
 
 ._upper {
   text-transform: uppercase;
+}
+
+@media screen and (max-width: $screen-sm) {
+  ._xs_hidden {
+    display: none;
+  }
+}
+
+@media screen and (min-width: $screen-sm) {
+  ._sm_hidden {
+    display: none !important;
+  }
 }
