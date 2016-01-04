@@ -1,13 +1,24 @@
+%menu-main-font {
+  font-family: $font-main;
+  font-size: rem(30px);
+  font-weight: bold;
+  color: $font-color-1;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
 .menu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  padding-top: rem(100px);
 
   background-color: $bg-color-3;
 
-  z-index: 1;
+  z-index: 2;
 
   transition: all .3s ease;
   transform: translateX(-100%);
@@ -16,8 +27,34 @@
     transform: translateX(0);
   }
 
-  @media screen and (min-width: $screen-sm) {
+  h2 {
+    margin-top: 0;
+
+    @extend %menu-main-font;
+  }
+
+  .navigation, .search {
+    padding: rem(20px) 0;
+
+    border-top: 4px solid $white;
+
+    a {
+      display: block;
+
+      @extend %menu-main-font;
+    }
+
+    @media screen and (min-width: $screen-md) {
+      .nav-item {
+        margin: 1rem 0;
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen-md) {
     display: flex;
     align-items: center;
+    padding-top: 0;
   }
+
 }

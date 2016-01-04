@@ -1,5 +1,7 @@
 class Page < ActiveRecord::Base
 
+  default_scope { order('created_at ASC') }
+
   belongs_to :case_study
   has_one :data_layer
   has_many :interest_points

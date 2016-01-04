@@ -6,6 +6,9 @@
     position: absolute;
     top: rem(13px);
     left: rem(5px);
+    width: rem(32px);
+    height: rem(32px);
+    fill: $font-color-1;
   }
 
   > input {
