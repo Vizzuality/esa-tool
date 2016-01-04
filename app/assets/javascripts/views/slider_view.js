@@ -15,34 +15,22 @@
       infinite: false,
       speed: 150,
       arrows: true,
-      appendArrows:'.slick-list',
       adaptiveHeight: true,
-      prevArrow:'<button type="button" class="slick-prev">Prev.</button>',
-      nextArrow:'<button type="button" data-first-label="VIEW CASE" class="slick-next">Prev.</button>'
+      prevArrow: '<button type="button" class="slick-prev"></button>',
+      nextArrow: '<button type="button" class="slick-next"></button>'
     },
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
+      this.$page = document.getElementById('page');
       this.setListeners();
       this.$el.slick(this.options);
     },
 
     setListeners: function() {
-      var self = this;
-      this.$el.on('init', function(){
-        this.classList.add('-first');
-      });
-      this.$el.on('afterChange', function(event, slick, currentSlide){
-        if (currentSlide === 0) {
-          this.classList.add('-first');
-        } else {
-          this.classList.remove('-first');
-        }
-        if (currentSlide === slick.slideCount -1) {
-          this.classList.add('-last');
-        } else {
-          this.classList.remove('-last');
-        }
+      var _this = this;
+      this.$el.on('afterChange', function(e, s, currentSlide) {
+        _this.$page.innerHTML = currentSlide + 1;
       });
     }
 

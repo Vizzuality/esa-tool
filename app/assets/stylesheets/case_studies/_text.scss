@@ -1,20 +1,24 @@
 .text {
+  position: relative;
   height: 100vh;
 
   @extend %clearfix;
+  @include veil($bg-color-3);
 
   .caption {
     position: relative;
+    top: 100px;
+    height: 70vh;
 
     font-size: rem(14px);
 
     z-index: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 
-    @media screen and (max-width: $screen-md) {
-      top: 100px;
-      max-height: 60vh;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
+    @media screen and (min-width: $screen-sm) {
+      top: 0;
+      height: auto;
     }
   }
 
@@ -35,18 +39,16 @@
       color: $font-color-1;
     }
 
-    @media screen and (min-width: $screen-md) {
+    @media screen and (min-width: $screen-sm) {
       padding-right: 33%;
     }
   }
 
-  @media screen and (min-width: $screen-md) {
+  @media screen and (min-width: $screen-sm) {
     display: flex;
     align-items: center;
-
-    .caption {
-      position: relative;
-    }
   }
+
+
 
 }

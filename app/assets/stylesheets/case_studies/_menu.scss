@@ -44,17 +44,21 @@
       @extend %menu-main-font;
     }
 
-    @media screen and (min-width: $screen-md) {
+    @media screen and (min-width: $screen-sm) {
       .nav-item {
         margin: 1rem 0;
       }
     }
   }
 
-  @media screen and (min-width: $screen-md) {
+  @media screen and (min-width: $screen-sm) {
     display: flex;
     align-items: center;
     padding-top: 0;
+
+    .wrap {
+      width: 100%;
+    }
   }
 
 }

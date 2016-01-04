@@ -1,133 +1,133 @@
 .map {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 1200px;
+  // display: flex;
+  // flex-direction: column;
+  // min-height: 1200px;
 
   @extend %clearfix;
 
-  @media screen and (min-width: $screen-md) {
-    height: 100vh;
-    .wrap {
-      padding-left: 100px;
-      padding-right: 100px;
-    }
-  }
+  // @media screen and (min-width: $screen-md) {
+  //   height: 100vh;
+  //   .wrap {
+  //     padding-left: 100px;
+  //     padding-right: 100px;
+  //   }
+  // }
 
-  .map-container {
-    height: 700px;
-    @media screen and (min-width: $screen-md) {
-      height: 100vh;
-    }
-  }
+  // .map-container {
+  //   height: 700px;
+  //   @media screen and (min-width: $screen-md) {
+  //     height: 100vh;
+  //   }
+  // }
 
-  > aside {
-    min-height: 400px;
-    background-color: rgba($dark, 0.9);
-    position: absolute;
-    bottom: 128px;
-    width: calc(100% - 40px);
-    padding: 20px;
+  // > aside {
+  //   min-height: 400px;
+  //   background-color: rgba($dark, 0.9);
+  //   position: absolute;
+  //   bottom: 128px;
+  //   width: calc(100% - 40px);
+  //   padding: 20px;
 
-    @media screen and (min-width: $screen-md) {
-      top: 0;
-      right: 60px;
-      width: 415px;
-      height: 100%;
-      padding: rem(90px) rem(30px) rem(50px);
-      background-color: rgba($dark, 0.5);
-    }
+  //   @media screen and (min-width: $screen-md) {
+  //     top: 0;
+  //     right: 60px;
+  //     width: 415px;
+  //     height: 100%;
+  //     padding: rem(90px) rem(30px) rem(50px);
+  //     background-color: rgba($dark, 0.5);
+  //   }
 
-    > .title {
-      padding: rem(14px);
-      border-bottom: 4px solid $white;
+  //   > .title {
+  //     padding: rem(14px);
+  //     border-bottom: 4px solid $white;
 
-      @media screen and (min-width: $screen-md) {
-        border-top: 4px solid white;
-      }
+  //     @media screen and (min-width: $screen-md) {
+  //       border-top: 4px solid white;
+  //     }
 
-      > h2 {
-        font-family: $font-main;
-        font-weight: 500;
-        font-size: rem(30px);
-        line-height: rem(36px);
-        margin: 0;
-      }
-    }
+  //     > h2 {
+  //       font-family: $font-main;
+  //       font-weight: 500;
+  //       font-size: rem(30px);
+  //       line-height: rem(36px);
+  //       margin: 0;
+  //     }
+  //   }
 
-    > .legend {
-      > .legend-content {
-        margin:rem(10px) 0;
+  //   > .legend {
+  //     > .legend-content {
+  //       margin:rem(10px) 0;
 
-        > .content-list {
-          width: 100%;
-          list-style: none;
-          padding: rem(5px) 0;
-          margin:0;
-          > .content-item {
-            padding: rem(5px) 0;
+  //       > .content-list {
+  //         width: 100%;
+  //         list-style: none;
+  //         padding: rem(5px) 0;
+  //         margin:0;
+  //         > .content-item {
+  //           padding: rem(5px) 0;
 
-            .description, .value {
-              padding-left: rem(16px);
-              font-family: $font-secondary;
-              font-size: rem(11px);
-              letter-spacing: rem(1.3px);
-              color: $font-color-1;
-              display: inline-block;
-              line-height: 16px;
-              vertical-align: top;
-              margin-top: 1px;
-            }
+  //           .description, .value {
+  //             padding-left: rem(16px);
+  //             font-family: $font-secondary;
+  //             font-size: rem(11px);
+  //             letter-spacing: rem(1.3px);
+  //             color: $font-color-1;
+  //             display: inline-block;
+  //             line-height: 16px;
+  //             vertical-align: top;
+  //             margin-top: 1px;
+  //           }
 
-            .value {
-              padding-left: 0;
-              float:right;
-            }
-          }
-        }
-      }
-    }
+  //           .value {
+  //             padding-left: 0;
+  //             float:right;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
 
-    > .charts {
-      > .charts-nav {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin: rem(15px) 0;
+  //   > .charts {
+  //     > .charts-nav {
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: flex-start;
+  //       margin: rem(15px) 0;
 
-        > .title {
-          font-family: $font-main;
-          font-size: rem(20px);
-          line-height: rem(36px);
-          font-weight: 500;
-          color: $font-color-1;
-          margin: 0;
-        }
+  //       > .title {
+  //         font-family: $font-main;
+  //         font-size: rem(20px);
+  //         line-height: rem(36px);
+  //         font-weight: 500;
+  //         color: $font-color-1;
+  //         margin: 0;
+  //       }
 
-        > .tabs {
-          border:none;
-          margin: 0 rem(15px);
-          padding: 0;
+  //       > .tabs {
+  //         border:none;
+  //         margin: 0 rem(15px);
+  //         padding: 0;
 
-          > .tab-title {
+  //         > .tab-title {
 
-            &.-active {
-              .icon-chart {
-                fill: $white;
-              }
-            }
-          }
-        }
-      }
-      > .charts-content {
-        min-height: 200px;
-        > .content {
-          display: none;
-          &.-active {
-            display: block;
-          }
-        }
-      }
-    }
-  }
+  //           &.-active {
+  //             .icon-chart {
+  //               fill: $white;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //     > .charts-content {
+  //       min-height: 200px;
+  //       > .content {
+  //         display: none;
+  //         &.-active {
+  //           display: block;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
