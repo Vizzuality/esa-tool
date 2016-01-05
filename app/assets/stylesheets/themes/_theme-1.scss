@@ -1,0 +1,78 @@
+.-theme-1 {
+  // Colors
+  $t-black: #000;
+  $t-white: #fff;
+
+  // Theme definition
+  $t-bg-color-1: $t-black;
+  $t-font-color-1: $t-white;
+  $t-font-color-2: $t-black;
+  $t-border-color-1: $t-white;
+
+  $default-opacity: 0.7;
+  $arrows-opacity: 0.2;
+
+  // General
+  $body-color: $t-bg-color-1;
+
+  // Typography
+  $main-color: $t-font-color-1;
+  $title-border-color: $t-border-color-1;
+  $title-border-width: 4px;
+
+  // Slick arrows
+  $arrow-color: $t-font-color-1;
+  $arrow-bg: rgba($t-font-color-1, $arrows-opacity);
+
+  // Veil
+  $veil-bg: rgba($t-bg-color-1, $default-opacity);
+
+  // Tags
+  $tag-color: $t-font-color-2;
+  $tag-bg: rgba($t-font-color-1, $default-opacity);
+
+  // Dashboard
+  $dashboard-bg: rgba($t-bg-color-1, $default-opacity);
+
+  color: $main-color;
+  background-color: $body-color;
+
+  .main-slider {
+    .slick-arrow {
+      color: $arrow-color;
+
+      &::before {
+        border-color: $arrow-color;
+      }
+      &::after {
+        background-color: $arrow-bg;
+      }
+    }
+  }
+
+  .text,
+  .cover {
+    // Veil
+    &::after {
+      background-color: $veil-bg;
+    }
+  }
+
+  .text,
+  .cover,
+  .map {
+    .title {
+      border-width: $title-border-width;
+      border-color: $title-border-color;
+    }
+  }
+
+  .tags .tag {
+    color: $tag-color;
+    background-color: $tag-bg;
+  }
+
+  .dashboard {
+    background-color: $dashboard-bg;
+  }
+}

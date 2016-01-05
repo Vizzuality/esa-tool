@@ -16,7 +16,6 @@
     bottom: 0;
     box-sizing: border-box;
 
-    color: $font-color-1;
     line-height: 60px;
 
     cursor: pointer;
@@ -48,8 +47,6 @@
 
         border-radius: 100%;
 
-        background: rgba($bg-color-2, 0.2);
-
         z-index: -1;
       }
     }
@@ -57,10 +54,10 @@
 
   .slick-prev {
     left: 0;
-    border-right: 1px solid rgba($white, 0.2);
+    border-right: 1px solid;
 
     &::before {
-      @include arrow(14px, $font-color-1, 2px, -45deg);
+      @include arrow(14px, 2px, -45deg);
     }
 
     @media screen and (min-width: $screen-sm) {
@@ -74,10 +71,10 @@
 
   .slick-next {
     right: 0;
-    border-left: 1px solid rgba($white, 0.2);
+    border-left: 1px solid;
 
     &::before {
-      @include arrow (14px, $font-color-1, 2px, 135deg);
+      @include arrow (14px, 2px, 135deg);
     }
 
     @media screen and (min-width: $screen-sm) {

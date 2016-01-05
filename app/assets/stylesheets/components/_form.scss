@@ -3,6 +3,7 @@ label {
   margin: 0.5rem 0;
 
   text-transform: uppercase;
+  font-family: $font-secondary;
   font-size: rem(14px);
   color: rgba($font-color-1, 0.5);
   letter-spacing: rem(0.5px);
@@ -66,7 +67,7 @@ textarea {
 }
 
 .form-row {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 
   .error {
     color: $error-color;

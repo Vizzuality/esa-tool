@@ -1,11 +1,14 @@
 .tags {
 
   > h2 {
+    display: inline-block;
+
     font-family: $font-secondary;
     font-size: rem(11px);
-    line-height: rem(1.3px);
-    color: rgba($font-color-1,0.6);
-    display: inline-block;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: rgba($font-color-1, 0.6);
+
     @media (max-width: $screen-sm) {
       display: none;
     }
@@ -13,21 +16,17 @@
 
   .tag {
     display: inline-block;
-    font-family: $font-secondary;
-    font-size: rem(11px);
-    font-weight: 700;
-    display: inline-block;
-    line-height: rem(1.3px);
-    color: $font-color-2;
-    background-color: rgba($font-color-1,0.6);
     margin-right: rem(5px);
     margin-top: rem(5px);
     padding: rem(8px);
-  }
 
-  &.-light {
-    .tag {
-      background-color: $font-color-1;
-    }
+    font-family: $font-secondary;
+    font-size: rem(11px);
+    font-weight: bold;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: $font-color-2;
+
+    background-color: rgba($font-color-1, 0.6);
   }
 }

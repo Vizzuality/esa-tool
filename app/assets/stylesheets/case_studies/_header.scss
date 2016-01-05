@@ -9,12 +9,21 @@
   z-index: 3;
 
   .brands {
-    padding: 0 rem(20px);
+    display: flex;
+    align-items: center;
 
     .brand {
+      display: block;
+      margin-left: 2rem;
+
       svg {
+        display: block;
         fill: $white;
       }
+    }
+
+    .icon-eoworld-logo {
+      margin-top: -11px;
     }
   }
 }

@@ -3,7 +3,7 @@
   height: 100vh;
 
   @extend %clearfix;
-  @include veil($bg-color-3);
+  @include veil;
 
   .caption {
     position: relative;
@@ -14,14 +14,13 @@
     margin-top: 0;
     margin-bottom: 1rem;
 
-    border-bottom: 4px solid $font-color-1;
+    border-bottom: 4px solid;
 
     & > h1 {
       margin: 0;
 
       font-size: rem(45px);
       line-height: 1;
-      color: $font-color-1;
 
       @media (min-width: $screen-sm) {
         font-size: rem(70px);
@@ -29,17 +28,14 @@
     }
   }
 
-
   .partners {
     margin: 1rem 0;
 
     .partner {
       display: inline-block;
-
       margin-right: 1rem;
 
       text-decoration: none;
-
       vertical-align: middle;
     }
   }

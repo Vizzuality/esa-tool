@@ -11,5 +11,6 @@
           
         .partners
           - case_study.contacts.each do |c|
-            span.partner = image_tag c.logo.url(:thumb)
+            = link_to c.website, class: 'partner' do
+              = image_tag c.logo.url(:thumb)
           button.btn.-transparent = t 'project_contact'
