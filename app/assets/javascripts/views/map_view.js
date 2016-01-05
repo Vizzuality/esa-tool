@@ -18,10 +18,20 @@
       zoom: 5
     },
 
+
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       // At beginning create the map
       this.createMap();
+      this._setListeners();
+    },
+
+    /**
+     * Function to set events at beginning
+     */
+    _setListeners: function() {
+      var refreshLayout = _.debounce(_.bind(this.refresh, this), 500);
+      window.addEventListener('resize', refreshLayout, false);
     },
 
     /**
@@ -30,7 +40,6 @@
     createMap: function() {
       if (!this.map) {
         this.map = L.map(this.el, this.options);
-        window.map = this.map;
         this.setBasemap(TILEURL);
       }
     },
@@ -52,6 +61,13 @@
     remove: function() {
       this.removeMap();
       this.$el.html(null);
+    },
+
+    /**
+     * Re-render the map
+     */
+    refresh: function() {
+      this.map.invalidateSize();
     },
 
     /**

@@ -1,7 +1,9 @@
 .brand {
-  margin: rem(5px) 0;
+  margin-top: rem(5px);
+  margin-bottom: rem(5px);
+
   @media (max-width: $screen-sm) {
-    margin-left: 0;
+    margin-left: 1rem;
     margin-top: rem(10px);
   }
 }

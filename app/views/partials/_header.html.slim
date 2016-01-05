@@ -6,12 +6,11 @@ header.l-header
         span
         span
         
-    .grid-sm-4._right.brands
-      .brand
-        = link_to root_path do
+    .grid-sm-4._right
+      .brands
+        = link_to root_path, class: 'brand' do
           svg.icon.icon-eoworld-logo
             use xlink:href="#icon-eoworld-logo"
-      .brand
-        = link_to 'http://www.esa.int/ESA' do
-          svg.icon.icon-esa
-            use xlink:href="#icon-esa"
+        = link_to 'http://www.esa.int/ESA', class: 'brand' do
+          svg.icon.icon-esa-logo
+            use xlink:href="#icon-esa-logo"
