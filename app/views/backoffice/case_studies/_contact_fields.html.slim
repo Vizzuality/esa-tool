@@ -7,4 +7,6 @@
           style: f.object.logo.exists? ? "background-image: url(#{f.object.logo})" : nil }
     .grid-sm-1
       = link_to_remove_association '×', f, class: 'btn -delete'
+    .grid-sm-11
+      = f.input_field :website, placeholder: t('simple_form.placeholders.contact.website')
   = f.input :id, as: :hidden

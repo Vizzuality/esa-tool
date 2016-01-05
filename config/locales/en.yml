@@ -55,4 +55,5 @@ en:
         contacts: 'Project contacts'
     placeholders:
       contact:
+        website: 'Type you website URL'
         body: 'Type your adress, email, etc'
