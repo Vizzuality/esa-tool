@@ -4,8 +4,6 @@
   margin: 0 -1rem;
   padding: 0 1rem;
 
-  background-color: rgba($bg-color-3, 0.9);
-
   z-index: 1;
   @extend %clearfix;
 
@@ -15,8 +13,8 @@
 
   .title {
     margin-top: 100px;
-    border-top: 4px solid $border-color-2;
-    border-bottom: 4px solid $border-color-2;
+    border-top: 4px solid;
+    border-bottom: 4px solid;
 
     & > h2 {
       margin: .5rem 0;
