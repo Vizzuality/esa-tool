@@ -17,30 +17,55 @@
     View: {}
   };
 
-  function onReady() {
+  var Backoffice = Backbone.View.extend({
 
-    this.el = document.body;
+    events: {
+      'click #saveBtn': 'submitForm'
+    },
+
+    initialize: function() {
+      this.initTags();
+      this.initBoxSelects();
+    },
 
     /**
      * Initializing tags plugin
      * @param {Object}
      */
-    new App.View.Tags({
-      el: this.el.getElementsByClassName('tags')
-    });
+    initTags: function() {
+      new App.View.Tags({
+        el: this.$el.find('.tags')
+      });
+    },
 
     /**
      * Initializing box selector
      * @param {Object}
      */
-    var boxSelects = this.el.getElementsByClassName('box-selector');
-    if (boxSelects && boxSelects.length) {
-      new App.View.BoxSelect({ el: boxSelects });
+    initBoxSelects: function() {
+      var boxSelects = this.el.getElementsByClassName('box-selector');
+      if (boxSelects && boxSelects.length) {
+        new App.View.BoxSelect({ el: boxSelects });
+      }
+    },
+
+    initPreviewImage: function() {
+      new App.View.PreviewImage({
+        el: this.el.querySelectorAll('input[type="file"]')
+      });
+    },
+
+    submitForm: function(e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+      this.$el.find('form').submit();
     }
 
-    new App.View.PreviewImage({
-      el: this.el.querySelectorAll('input[type="file"]')
-    });
+  });
+
+  function onReady() {
+    new Backoffice({ el: document.body });
   }
 
   document.addEventListener('DOMContentLoaded', onReady);

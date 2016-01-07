@@ -4,7 +4,10 @@ section.l-main
     .wrap: .row
       .grid-sm-8
         h1 = @case_study.title.truncate(50)
-  
+      .grid-sm-4._vcenter._right
+        .btns-toolbar
+          = link_to t('save'), '#save', class: 'btn', id: 'saveBtn'
+
   .content
     .wrap: .row
       .grid-sm-2

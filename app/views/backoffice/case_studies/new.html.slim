@@ -2,8 +2,12 @@ section.l-main
 
   header.header
     .wrap: .row
-      .grid-sm-6
+      .grid-sm-8
         h1 = t 'create_case_study'
+
+      .grid-sm-4._vcenter._right
+        .btns-toolbar
+          = link_to t('save'), '#save', class: 'btn', id: 'saveBtn'
   
   .content
     .wrap: .row
