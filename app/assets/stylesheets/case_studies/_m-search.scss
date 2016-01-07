@@ -20,7 +20,7 @@
     width: 87%;
     line-height: rem(34px);
     @include placeholder {
-      font-size: rem(11px);
+      font-size: rem($font-size-small);
       letter-spacing: rem(1.3px);
       color: $font-color-1;
     }

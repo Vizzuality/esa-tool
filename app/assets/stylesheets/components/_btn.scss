@@ -4,7 +4,7 @@
   justify-content: center;
   height: rem(45px);
 
-  font-size: rem(14px);
+  font-size: rem($font-size);
   font-weight: normal;
   color: $font-color-1;
 
@@ -38,7 +38,7 @@
   padding: 0.5rem 1rem;
 
   font-family: $font-secondary;
-  font-size: rem(11px);
+  font-size: rem($font-size-small);
   font-weight: bold;
   text-transform: uppercase;
   text-decoration: none;
@@ -70,7 +70,7 @@
     padding-right: 3rem;
 
     font-family: $font-main;
-    font-size: rem(21px);
+    font-size: rem($font-size-medium);
     font-weight: 300;
     text-transform: none;
 
@@ -106,7 +106,7 @@
   &.-delete {
     color: rgba($font-color-1, .5);
     font-weight: normal;
-    font-size: rem(18px);
+    font-size: rem($font-size-medium);
     line-height: rem(14px);
 
     border: 0;
@@ -207,7 +207,7 @@
 //   padding-right: rem(60px);
 //   background-color: rgba($light-blue, 0.3);
 //   color: $font-color-1;
-//   font-size: rem(18px);
+//   font-size: rem($font-size-medium);
 //   letter-spacing: rem(1px);
 //   position: relative;
 //   border: 1px solid $light-blue;

@@ -4,7 +4,7 @@ label {
 
   text-transform: uppercase;
   font-family: $font-secondary;
-  font-size: rem(14px);
+  font-size: rem($font-size);
   color: rgba($font-color-1, 0.5);
   letter-spacing: rem(0.5px);
 
@@ -96,7 +96,7 @@ textarea {
 .case_study_title input,
 .page_title input {
   font-family: $font-main;
-  font-size: rem(21px);
+  font-size: rem($font-size-medium);
   font-weight: 300;
 }
 
@@ -128,6 +128,6 @@ textarea {
   input[type="email"],
   input[type="password"] {
     font-family: $font-main;
-    font-size: rem(21px);
+    font-size: rem($font-size-medium);
   }
 }
