@@ -73,7 +73,6 @@ class Backoffice::PagesController < BackofficeController
         :body_thirth,
         :background,
         :color_palette,
-        :text_columns,
         # :custom_color_palette,
         :page_type,
         :chart_type_list,

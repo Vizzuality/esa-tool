@@ -47,13 +47,3 @@ en:
   sign_up: 'Sign up'
   forgot_password: 'Forgot your password?'
   resend_password: 'Send me reset password instructions'
-  simple_form:
-    labels:
-      case_study:
-        title: 'Title of the case study'
-        tag_list: 'Tags'
-        contacts: 'Project contacts'
-    placeholders:
-      contact:
-        website: 'Type you website URL'
-        body: 'Type your adress, email, etc'

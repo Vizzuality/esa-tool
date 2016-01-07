@@ -29,3 +29,12 @@ en:
     # prompts:
     #   defaults:
     #     age: 'Select your age'
+    labels:
+      case_study:
+        title: 'Title of the case study'
+        tag_list: 'Tags'
+        contacts: 'Project contacts'
+    placeholders:
+      contact:
+        website: 'Type you website URL (include http:// or https://)'
+        body: 'Type your adress, email, etc'
