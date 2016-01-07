@@ -10,6 +10,7 @@ html lang="#{I18n.locale}"
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lato:400,700", media: "all"
     = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tag
+
   body class="-theme-#{@case_study.template}"
     = render partial: 'partials/icons'
     = render partial: 'partials/header'

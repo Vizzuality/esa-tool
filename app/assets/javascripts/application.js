@@ -15,6 +15,7 @@
 
   var App = root.App = {
     View: {},
+    Model: {},
     Events: _.clone(Backbone.Events)
   };
 

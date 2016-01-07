@@ -18,7 +18,6 @@
       zoom: 5
     },
 
-
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       // At beginning create the map

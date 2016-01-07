@@ -1,5 +1,7 @@
 class CaseStudy < ActiveRecord::Base
 
+  default_scope { order('created_at ASC') }
+
   acts_as_taggable
 
   has_many :contacts
@@ -9,7 +11,7 @@ class CaseStudy < ActiveRecord::Base
     large: '1920x1080#'
   }
 
-  validates :title, presence: true, length: { minimum: 2 }
+  validates :title, presence: true, length: { minimum: 2, maximum: 100 }
   validates :template, presence: true, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 1,
