@@ -8,6 +8,7 @@ gem 'rails', '4.2.5'
 gem 'httmultiparty'
 gem 'dotenv-rails'
 gem 'puma'
+gem 'gon'
 
 # Assets managment
 gem 'sass-rails', '~> 5.0'

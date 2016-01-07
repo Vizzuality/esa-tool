@@ -26,6 +26,14 @@ class CaseStudy < ActiveRecord::Base
     find_by(id: id, published: true)
   end
 
+  def self.where_published(params)
+    where(params.merge(published: true))
+  end
+
+  def self.with_pages
+    includes(:pages)
+  end
+
   def self.clone(id)
     find(id).deep_clone include: :pages
   end
