@@ -1,0 +1,7 @@
+#mainSlider.main-slider
+  div = render partial: 'cover', locals: { case_study: @case_study }
+
+  - @case_study.pages.each_with_index do |p, index|
+    div = render partial: p.page_type == 1 ? 'text' : 'map', locals: { p: p, index: (index + 2) }
+
+= render partial: 'footer'
