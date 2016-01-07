@@ -1,7 +1,7 @@
 //= require jquery2
 //= require jquery_ujs
 //= require cocoon
-//= require tagsinput
+//= require jquery.tagsinput/jquery.tagsinput
 //= require underscore
 //= require backbone
 //= require_self

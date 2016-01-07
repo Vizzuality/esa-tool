@@ -1,6 +1,6 @@
 $bg-tags: #0a3c57;
 
-.bootstrap-tagsinput {
+.bootstrap-tagsinput, .tagsinput {
   width: 100%;
   padding: 0 0 .2rem 0;
 
@@ -13,17 +13,42 @@ $bg-tags: #0a3c57;
 
   background-color: transparent;
 
-  .tag, .input {
+  a {
+    text-decoration: none;
+  }
+
+  input, #case_study_tag_list_addTag {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    min-width: rem(100px);
+
+    color: $font-color-1 !important;
+
+    border: 0;
+    border-bottom: 0;
+
+    background: none;
+  }
+
+  .tag, .input,  {
     padding: .2rem .5rem .3rem .5rem;
     line-height: 1.4;
   }
 
   .tag {
     display: inline-block;
+    margin-right: rem(5px);
     background-color: $bg-tags;
 
     span {
       display: inline-block;
+      text-transform: uppercase;
+    }
+
+    a {
+      margin-left: rem(5px);
+      opacity: .5;
     }
   }
 
@@ -38,16 +63,5 @@ $bg-tags: #0a3c57;
 
   .tag [data-role="remove"]:hover {
     box-shadow: none;
-  }
-
-  input {
-    display: inline-block;
-    width: auto;
-    margin: 0;
-    min-width: rem(100px);
-
-    color: $font-color-1;
-
-    border-bottom: 0;
   }
 }
