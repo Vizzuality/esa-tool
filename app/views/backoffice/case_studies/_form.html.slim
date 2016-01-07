@@ -24,7 +24,7 @@
     = f.input_field :template, as: :hidden, value: (@case_study.template.to_i or 1), class: 'input'
 
 .form-row
-  = render 'input_file', f: f, name: :cover_image, image: @case_study.cover_image
+  = render 'input_file', f: f, name: :cover_image, image: @case_study.cover_image, class_name: '-large'
 
 .form-row._center
   = f.button :submit, class: 'btn -primary'

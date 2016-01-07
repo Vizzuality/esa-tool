@@ -53,7 +53,6 @@ input[type="file"] {
   }
 
   &._has_file {
-    background-color: $bg-color-4;
     border: 0;
   }
 }
@@ -61,6 +60,7 @@ input[type="file"] {
 textarea {
   padding: 0.5rem;
   height: rem(110px);
+  max-width: 100%;
 
   border: 1px solid $border-color-1;
   box-sizing: border-box;
@@ -114,13 +114,6 @@ textarea {
 
 :-ms-input-placeholder {
   color: $font-color-4;
-}
-
-#case_study_cover_image,
-#page_background {
-  width: 100%;
-  height: rem(250px);
-  background-size: cover;
 }
 
 .simple_form.new_user {

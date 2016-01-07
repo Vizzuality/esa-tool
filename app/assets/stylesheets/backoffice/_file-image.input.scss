@@ -1,0 +1,92 @@
+%placeholder-font {
+  font-family: $font-main;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.file-image-input {
+  position: relative;
+  height: rem(110px);
+  margin: .5rem 0;
+
+  &.-large {
+    height: rem(250px);
+  }
+
+  > .file {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 8px;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &.-previewing {
+      background-size: 80% auto;
+      background-position: center;
+    }
+
+    &.-previewing + .placeholder {
+      display: none;
+    }
+
+    .close {
+      position:absolute;
+      top: 3px;
+      right: 5px;
+      display: block;
+
+      color: rgba($font-color-1, .5);
+      font-weight: normal;
+      font-size: rem(18px);
+      line-height: rem(14px);
+
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    > input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      font-size: 0;
+      z-index: 1;
+
+      height: 100%;
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  > .placeholder {
+    position: absolute;
+    top:0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    z-index: 0;
+    > .title {
+      @extend %placeholder-font;
+      display: block;
+      color: $font-color-1;
+    }
+
+    > .sub-title {
+      @extend %placeholder-font;
+      color: $font-color-4;
+
+      > .link {
+        text-decoration: underline;
+
+        margin: 0 2px;
+      }
+    }
+  }
+}
