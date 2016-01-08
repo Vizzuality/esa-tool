@@ -46,33 +46,5 @@
         box-sizing: border-box;
       }
     }
-
-    &.-range-1 {
-      @for $i from 1 through length($palette1) {
-      	.range:nth-child(#{$i}) {
-          span {
-            background-color: rgba(nth($palette1, $i), 0.3);
-
-            &.-bordered {
-              border: 1px solid nth($palette1, $i);
-            }
-          }
-      	}
-      }
-    }
-
-    &.-range-2 {
-      @for $i from 1 through length($palette2) {
-      	.range:nth-child(#{$i}) {
-          span {
-            background-color: rgba(nth($palette2, $i), 0.3);
-
-            &.-bordered {
-              border: 1px solid nth($palette2, $i);
-            }
-          }
-      	}
-      }
-    }
   }
 }
