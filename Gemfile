@@ -33,6 +33,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-slick.js'
 end
 
+# Lightbox
+gem 'featherlight'
+
 # Active record
 gem 'pg', '~> 0.15'
 gem 'paperclip', '~> 4.3'

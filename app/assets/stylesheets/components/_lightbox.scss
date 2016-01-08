@@ -1,0 +1,24 @@
+.lightbox {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.featherlight-content {
+  width: 85%;
+  height: 85%;
+
+  h1.title{
+    color: $font-color-2;
+  }
+
+  .iframe-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
