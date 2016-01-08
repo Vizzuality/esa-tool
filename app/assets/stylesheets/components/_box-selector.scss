@@ -12,6 +12,14 @@
     border: 2px solid $border-color-1;
     box-sizing: border-box;
 
+    > .icon {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 15px;
+      height: 15px;
+    }
+
     &._selected::after {
       position: absolute;
       content: "";
