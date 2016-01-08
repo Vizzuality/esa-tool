@@ -14,8 +14,8 @@
 
     > .icon {
       position: absolute;
-      left: 0;
-      bottom: 0;
+      left: rem(5px);
+      bottom: rem(5px);
       width: 15px;
       height: 15px;
     }

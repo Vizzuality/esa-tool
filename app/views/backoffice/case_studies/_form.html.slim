@@ -21,9 +21,9 @@
     - for t in 1..templates
       .item data-value="#{t}" class="#{@case_study.template.to_i == t ? '_selected' : nil}"
         = image_tag "template-#{t}.jpg"
-        a.icon href="#" data-featherlight="template-#{t}.jpg"
-          svg.icon-search
-            use xlink:href="#icon-search"
+        a.icon href="#" data-featherlight= image_path("template-#{t}.jpg")
+          svg.icon-zoom-in
+            use xlink:href="#icon-zoom-in"
     = f.input_field :template, as: :hidden, value: (@case_study.template.to_i or 1), class: 'input'
 
 .form-row
