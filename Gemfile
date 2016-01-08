@@ -50,12 +50,14 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'i18n_yaml_sorter'
 end
 
 group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem "i18n-tasks"
 end
 
 group :production do
