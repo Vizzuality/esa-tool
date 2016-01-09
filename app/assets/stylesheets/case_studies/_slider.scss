@@ -54,7 +54,7 @@
 
   .slick-prev {
     left: 0;
-    border-right: 1px solid;
+    border-right: 1px solid rgba($white, 0.2);
 
     &::before {
       @include arrow(14px, 2px, -45deg);
@@ -71,7 +71,7 @@
 
   .slick-next {
     right: 0;
-    border-left: 1px solid;
+    border-left: 1px solid rgba($white, 0.2);
 
     &::before {
       @include arrow (14px, 2px, 135deg);

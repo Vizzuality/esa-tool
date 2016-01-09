@@ -25,7 +25,7 @@ $sidebar-item-height: rem(91px);
   height: $sidebar-item-height;
   margin-bottom: 1rem;
 
-  font-size: rem(11px);
+  font-size: rem($font-size-small);
   font-weight: bold;
   text-decoration: none;
   text-transform: uppercase;

@@ -13,10 +13,10 @@
     .grid-xs-12.grid-sm-6
       .search
         h2 = t('case_studies')
-        / .m-search
-        /   svg.icon
-        /     use xlink:href="#icon-search"
-        /   input type="search" placeholder="SEARCH CASE"
+        .search-form
+          svg.icon-search
+            use xlink:href="#icon-search"
+          input type="search" placeholder="SEARCH CASE"
         .tags.-light
           span.tag URBAN
           span.tag SLUMS

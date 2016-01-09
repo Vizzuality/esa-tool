@@ -1,6 +1,6 @@
 %menu-main-font {
   font-family: $font-main;
-  font-size: rem(30px);
+  font-size: rem($font-size-large);
   font-weight: bold;
   color: $font-color-1;
   line-height: 1.2;
@@ -34,7 +34,7 @@
   }
 
   .navigation, .search {
-    padding: rem(20px) 0;
+    padding: 1.25rem 0;
 
     border-top: 4px solid $white;
 
@@ -46,7 +46,7 @@
 
     @media screen and (min-width: $screen-sm) {
       .nav-item {
-        margin: 1rem 0;
+        margin-bottom: 1rem;
       }
     }
   }

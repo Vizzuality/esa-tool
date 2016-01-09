@@ -50,7 +50,7 @@ $thumb-height: rem(194px);
     padding: .5rem;
 
     font-family: $font-main;
-    font-size: rem(21px);
+    font-size: rem($font-size-medium);
     color: $font-color-2;
     line-height: 1.1;
 
@@ -58,7 +58,7 @@ $thumb-height: rem(194px);
 
     &.-secondary {
       font-family: $font-secondary;
-      font-size: rem(14px);
+      font-size: rem($font-size);
       color: $font-color-1;
 
       background-color: $bg-color-3;
