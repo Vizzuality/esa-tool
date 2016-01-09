@@ -1,4 +1,5 @@
-- palettes = 3
+- palettes = 2
+- palette_range = 8
 
 .form-row
   = f.input :title
@@ -33,8 +34,11 @@
     = f.label :color_palette
     .box-selector
       - for t in 1..palettes
-        .item data-value="#{t}" class="#{@page.color_palette.to_i == t ? '_selected' : nil}"
-          | #{t}
+        .item.-col-2.-palette data-value="#{t}" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
+          - for r in 1..palette_range
+            .range
+              span.-bordered
+              span
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
   / .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
   /   = f.input :custom_color_palette
