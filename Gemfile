@@ -45,6 +45,8 @@ gem 'deep_cloneable', '~> 2.1.1'
 
 group :development, :test do
   gem 'byebug'
+  gem 'i18n_yaml_sorter'
+  gem "i18n-tasks"
 end
 
 group :development do

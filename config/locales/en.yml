@@ -18,32 +18,45 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-
 en:
+  about: "About"
+  actions: "Actions"
+  add_contact: "Add new contact"
+  add_interest_points: "Add interest points"
+  add_new_case_study: "Add new case"
+  add_page: 'Add new page'
+  backoffice: 'Backoffice'
+  case_details: 'Case details'
+  case_studies: "Case studies"
+  confirm_sure: "Are you sure?"
+  contact: "Contact"
+  create_case_study: "Create new case study"
+  create_user: "Create user"
+  data: "Data"
   date:
     formats:
       default: "%Y-%m-%d"
-      short: "%b %d, %Y"
       long: "%B %d, %Y"
-  case_studies: "Case studies"
-  add_new_case_study: "Add new case"
-  view_case: 'View case'
-  last_update: "Last update"
+      short: "%b %d, %Y"
   delete: "Delete"
-  confirm_sure: "Are you sure?"
-  published: "Published"
-  unpublished: "Unpublished"
-  create_case_study: "Create new case study"
-  add_contact: "Add new contact"
-  add_page: 'Add new page'
-  case_details: 'Case details'
-  text: 'Text'
-  tags: 'Tags'
-  map: 'Map'
-  project_contact: 'Project contact'
-  backoffice: 'Backoffice'
-  logout: 'Logout'
-  login: 'Login'
-  sign_up: 'Sign up'
+  duplicate: "Duplicate"
+  edit: "Edit"
+  email: "Email"
   forgot_password: 'Forgot your password?'
+  last_update: "Last update"
+  login: 'Login'
+  logout: 'Logout'
+  map: 'Map'
+  organisation: "Organisation"
+  page: 'Page'
+  preview: "Preview"
+  project_contact: 'Project contact'
+  published: "Published"
   resend_password: 'Send me reset password instructions'
+  role: "Role"
+  save: "Save"
+  sign_up: 'Sign up'
+  tags: 'Tags'
+  text: 'Text'
+  unpublished: "Unpublished"
+  users: "Users"
