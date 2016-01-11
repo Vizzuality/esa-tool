@@ -8,6 +8,7 @@
 //= require views/tags_view
 //= require views/box_select_view
 //= require views/preview_image_view
+//= require views/map_file_columns_view
 
 'use strict';
 
@@ -27,6 +28,7 @@
       this.initTags();
       this.initBoxSelects();
       this.initPreviewImage();
+      this.initMapFileColumns();
     },
 
     /**
@@ -51,8 +53,14 @@
     },
 
     initPreviewImage: function() {
-      new App.View.PreviewImage({
-        el: this.el.querySelectorAll('input[type="file"]')
+      // new App.View.PreviewImage({
+      //   el: this.el.querySelectorAll('input[type="file"]')
+      // });
+    },
+
+    initMapFileColumns: function() {
+      new App.View.MapFileColumns({
+        el: document.getElementById('page_file')
       });
     },
 
