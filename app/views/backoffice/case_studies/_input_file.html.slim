@@ -1,0 +1,11 @@
+- placeholder_title = placeholder_title ? placeholder_title : 'Drop an image file here'
+- placeholder_subtitle = placeholder_subtitle ? placeholder_subtitle : 'or <span class="link">browse'
+
+- class_name = class_name ? class_name : nil
+
+- input_style = image.exists? ? "background-image: url(#{image})" : nil
+.file-image-input class= class_name
+  = f.input name, as: :file, label: false, wrapper_html: {style: input_style}
+  .placeholder
+    span.title = placeholder_title.html_safe
+    span.sub-title = placeholder_subtitle.html_safe

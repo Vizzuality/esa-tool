@@ -6,15 +6,18 @@
 
     .row
       - for case_study in @case_studies
+      
+        - class_name = "thumbnail #{'_unpublished' unless case_study.published}"
+        - bg_image = case_study.cover_image.present? ? "background-image: url(#{case_study.cover_image.url(:medium)})" : nil
+        
         .grid-xs-12.grid-sm-6.grid-md-4
-          = link_to edit_backoffice_case_study_path(case_study), class: "thumbnail #{case_study.published ? nil : "_unpublished"}" do 
-            
-            .thumb style="#{case_study.cover_image.present? ? "background-image: url(#{case_study.cover_image.url(:medium)})" : nil}"
-              
+          
+          = link_to edit_backoffice_case_study_path(case_study), class: class_name do
+
+            .thumb style= bg_image
             .caption
-              - unless case_study.published
-                span.caption-item.-secondary._upper = t 'unpublished'
-              p.caption-item.-big = case_study.title
+              span.caption-item.-secondary._upper = t 'unpublished' unless case_study.published
+              p.caption-item = case_study.title
               span.caption-item.-secondary
                 | #{t('last_update')}: 
                 time = l(case_study.updated_at.to_date, format: :short)
@@ -22,5 +25,5 @@
       .grid-xs-12.grid-sm-6.grid-md-4
 
         = link_to new_backoffice_case_study_path, class: 'btn -add -thumbnail' do
-          
+
           span.label = t('add_new_case_study')

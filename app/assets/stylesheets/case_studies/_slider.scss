@@ -54,7 +54,7 @@
 
   .slick-prev {
     left: 0;
-    border-right: 1px solid;
+    border-right: 1px solid rgba($white, 0.2);
 
     &::before {
       @include arrow(14px, 2px, -45deg);
@@ -71,7 +71,7 @@
 
   .slick-next {
     right: 0;
-    border-left: 1px solid;
+    border-left: 1px solid rgba($white, 0.2);
 
     &::before {
       @include arrow (14px, 2px, 135deg);
@@ -79,6 +79,57 @@
 
     @media screen and (min-width: $screen-sm) {
       border-left: 0;
+    }
+  }
+
+  .slick-dots {
+    position: absolute;
+    top: .9rem;
+    left: 0;
+    right: 0;
+    padding: 0;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+
+    list-style: none;
+    z-index: 3;
+
+    > li {
+      display: inline-block;
+
+      padding: .5rem;
+
+      cursor: pointer;
+
+      button {
+        font-size: 0;
+        line-height: 0;
+
+        display: block;
+
+        width: rem(10px);
+        height: rem(10px);
+
+        border-radius: 50%;
+        border: 1px solid;
+        outline: none;
+        background: transparent;
+        box-shadow: 0px 1px 2px 0px rgba($bg-color-3, 0.25), inset 0px 1px 3px 0px rgba($bg-color-3,0.75);
+
+        &:focus, &:hover {
+          outline: none;
+        }
+      }
+
+      &.slick-active {
+        button {
+          background-color: $font-color-1;
+          box-shadow: 0px 1px 2px 0px rgba($bg-color-3, 0.25);
+        }
+      }
     }
   }
 }

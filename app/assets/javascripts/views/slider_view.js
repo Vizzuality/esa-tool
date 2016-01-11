@@ -15,9 +15,18 @@
       infinite: false,
       speed: 150,
       arrows: true,
+      dots: true,
       adaptiveHeight: true,
       prevArrow: '<button type="button" class="slick-prev"></button>',
-      nextArrow: '<button type="button" class="slick-next"></button>'
+      nextArrow: '<button type="button" class="slick-next"></button>',
+      responsive: [
+       {
+         breakpoint: 640,
+         settings: {
+           dots: false
+         }
+       }
+     ]
     },
 
     /**

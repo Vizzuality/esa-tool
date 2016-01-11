@@ -13,17 +13,18 @@
   .title {
     margin-top: 0;
     margin-bottom: 1rem;
+    padding-bottom: 1rem;
 
     border-bottom: 4px solid;
 
     & > h1 {
       margin: 0;
 
-      font-size: rem(45px);
+      font-size: rem($font-size-big);
       line-height: 1;
 
       @media (min-width: $screen-sm) {
-        font-size: rem(70px);
+        font-size: rem($font-size-extra);
       }
     }
   }

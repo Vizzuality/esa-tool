@@ -8,6 +8,7 @@ gem 'rails', '4.2.5'
 gem 'httmultiparty'
 gem 'dotenv-rails'
 gem 'puma'
+gem 'gon'
 
 # Assets managment
 gem 'sass-rails', '~> 5.0'
@@ -28,7 +29,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-leaflet'
   gem 'rails-assets-underscore'
   gem 'rails-assets-backbone'
-  gem 'rails-assets-tagsinput'
+  gem 'rails-assets-jquery.tagsinput'
   gem 'rails-assets-slick.js'
 end
 
@@ -44,6 +45,8 @@ gem 'deep_cloneable', '~> 2.1.1'
 
 group :development, :test do
   gem 'byebug'
+  gem 'i18n_yaml_sorter'
+  gem "i18n-tasks"
 end
 
 group :development do

@@ -1,5 +1,5 @@
 //= require normalize-css
-//= require tagsinput
+// require jquery.tagsinput/jquery.tagsinput
 //= require_self
 
 @import
@@ -8,4 +8,5 @@
   'helpers',
   'base',
   'components/*',
-  'backoffice/*';
+  'backoffice/*',
+  'themes/backoffice/*';

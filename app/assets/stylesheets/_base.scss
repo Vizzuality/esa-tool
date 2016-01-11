@@ -1,6 +1,7 @@
 html,
 body {
   font-size: 100%;
+  letter-spacing: -0.2px;
   box-sizing: border-box;
 }
 
@@ -17,10 +18,10 @@ h1, h2 {
 }
 
 h1 {
-  font-size: rem(30px);
+  font-size: rem($font-size-large);
 
   &.-big {
-    font-size: rem(70px);
+    font-size: rem($font-size-extra);
   }
 }
 

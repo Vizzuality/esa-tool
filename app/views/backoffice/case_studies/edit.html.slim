@@ -7,9 +7,9 @@ section.l-main
 
       .grid-sm-4._vcenter._right
         .btns-toolbar
-          / = link_to t('preview'), '#', class: 'btn'
-          / = link_to t('save'), '#', class: 'btn'
-          = link_to t('duplicate'), backoffice_case_study_duplicate_path(@case_study), method: :post, class: 'btn'
+          = link_to t('preview'), preview_case_study_path(@case_study), class: 'btn', target: '_blank'
+          = link_to t('save'), '#save', class: 'btn', id: 'saveBtn'
+          = link_to t('duplicate'), duplicate_backoffice_case_study_path(@case_study), method: :post, class: 'btn'
           = link_to t('delete'), backoffice_case_study_path(@case_study),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn'
   
   .content

@@ -1,12 +1,10 @@
-- palettes = 3
+- palettes = 2
+- palette_range = 8
 
 .form-row
   = f.input :title
 
 - if params[:type].to_i == 1
-  .form-row
-    = f.input :text_columns, as: :radio_buttons, collection: 1..3
-  
   .form-row
     = f.input :body_first
   
@@ -36,8 +34,11 @@
     = f.label :color_palette
     .box-selector
       - for t in 1..palettes
-        .item data-value="#{t}" class="#{@page.color_palette.to_i == t ? '_selected' : nil}"
-      / .item data-value="" class="#{@page.color_palette.nil? ? '_selected' : nil}"
+        .item.-col-2.-palette data-value="#{t}" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
+          - for r in 1..palette_range
+            .range
+              span.-bordered
+              span
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
   / .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
   /   = f.input :custom_color_palette

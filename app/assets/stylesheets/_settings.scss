@@ -5,6 +5,14 @@ $font-secondary: 'Lato';
 // EM base
 $font-initial: 16px;
 
+// Font sizes
+$font-size-extra: 70px;
+$font-size-big: 45px;
+$font-size-large: 30px;
+$font-size-medium: 21px;
+$font-size: 14px;
+$font-size-small: 11px;
+
 // Screen sizes
 $screen-sm:  640px  !default;
 $screen-md: 1024px !default;
@@ -45,3 +53,10 @@ $legend-3: #ff2a60;
 $legend-4: #ea3eff;
 $legend-5: #7836ff;
 $legend-6: #b8b8b8;
+
+// Palettes
+$palette1: #ff9000, #fff500, #57d700, #00a600, #1dcfb4, #3f7eff, #5034ff, #8f37ff;
+
+$palette2: #8f37ff, #5034ff, #3f7eff, #1dcfb4, #00a600, #57d700, #fff500, #ff9000;
+
+$palette-reds: #ff9999, #ff6666, #ff3333, #ff0000, #cc0000, #990000, #660000, #330000;

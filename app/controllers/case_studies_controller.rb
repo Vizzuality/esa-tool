@@ -1,10 +1,26 @@
 class CaseStudiesController < ApplicationController
 
+  after_action :check_case_study
+
   def show
     @case_study = CaseStudy.find_published(params[:id])
-    unless @case_study
+    gon.case_study = @case_study.to_json(include: [:contacts, :pages])
+  end
+
+  def preview
+    if user_signed_in?
+      @case_study = CaseStudy.find(params[:id])
+    else
       not_found
     end
   end
+
+  private
+
+    def check_case_study
+      unless @case_study
+        not_found
+      end
+    end
 
 end

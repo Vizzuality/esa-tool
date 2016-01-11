@@ -1,16 +1,20 @@
 - templates = 3
 
 .form-row
-  = f.input :title
+  = f.input :title, input_html: { maxlength: 100 }
+
 .form-row
   = f.input :published, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
+
 .form-row
   = f.input :tag_list, input_html: { class: 'tags' }
+
 .form-row
   = f.label :contacts
   = f.simple_fields_for :contacts do |c|
     = render 'contact_fields', f: c
   = link_to_add_association t('add_contact'), f, :contacts, class: 'btn -dotted'
+
 .form-row
   = f.label :template
   .box-selector
@@ -18,10 +22,9 @@
       .item data-value="#{t}" class="#{@case_study.template.to_i == t ? '_selected' : nil}"
         = image_tag "template-#{t}.jpg"
     = f.input_field :template, as: :hidden, value: (@case_study.template.to_i or 1), class: 'input'
+
 .form-row
-  = f.label :cover_image
-  = f.input_field :cover_image, 
-    class: @case_study.cover_image.present? ? '_has_file' : nil, 
-    style: @case_study.cover_image.present? ? "background-image: url(#{@case_study.cover_image.url(:medium)})" : nil
+  = render 'input_file', f: f, name: :cover_image, image: @case_study.cover_image, class_name: '-large'
+
 .form-row._center
   = f.button :submit, class: 'btn -primary'

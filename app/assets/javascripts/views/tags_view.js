@@ -12,12 +12,15 @@
   App.View.Tags = Backbone.View.extend({
 
     defaults: {
-      delimiter: [' ']
+      width: '100%',
+      height: 'auto',
+      delimiter: [' '],
+      defaultText: 'Add tag'
     },
 
-    initialize: function(options) {
-      this.options = _.extend({}, this.defaults, options || {});
-      this.$el.tagsinput(this.options);
+    initialize: function(params) {
+      this.options = _.extend({}, this.defaults, params.options || {});
+      this.$el.tagsInput(this.options);
     }
 
   });

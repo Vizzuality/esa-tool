@@ -45,7 +45,7 @@ class Backoffice::CaseStudiesController < BackofficeController
   end
 
   def duplicate
-    @case_study = CaseStudy.clone(params[:case_study_id])
+    @case_study = CaseStudy.clone(params[:id])
     if @case_study.save
       redirect_to edit_backoffice_case_study_path(@case_study),
         notice: 'Case study duplicated successfully.'
