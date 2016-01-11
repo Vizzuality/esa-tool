@@ -13,14 +13,19 @@
     setBackgroundImage: function(e) {
       var self = this;
       var reader = new FileReader();
+      var file = e.target.files[0];
       reader.onload = function() {
         var parent = e.currentTarget.parentNode;
-        parent.classList.add('-previewing');
         parent.style.backgroundImage = 'url(' + reader.result + ')';
-        parent.insertAdjacentHTML('beforeend','<span class="close">×</div>');
-        parent.getElementsByClassName('close')[0].addEventListener('click', self.cleanPreviewImage);
+        if (!parent.classList.contains('-previewing')) {
+          parent.classList.add('-previewing');
+          parent.insertAdjacentHTML('beforeend','<span class="close">×</div>');
+          parent.getElementsByClassName('close')[0].addEventListener('click', self.cleanPreviewImage);
+        }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      if (file && file.type.match('image.*')) {
+        reader.readAsDataURL(file);
+      }
     },
 
     cleanPreviewImage: function(e) {
@@ -28,6 +33,7 @@
       target.style.backgroundImage = null;
       target.classList.remove('-previewing');
       target.removeChild(e.currentTarget);
+      target.querySelectorAll('input[type="file"]')[0].value = "";
     }
 
   });
