@@ -28,10 +28,21 @@
       font-size: 0;
       z-index: 1;
 
-      height: 100%;
       cursor: pointer;
       margin: 0;
       padding: 0;
+    }
+
+    > label + input[type="file"] {
+      height: 17px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    > label + input[type="file"] {
+      height: calc(100% - 25px);
     }
   }
 
