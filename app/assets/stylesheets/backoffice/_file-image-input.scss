@@ -33,16 +33,12 @@
       padding: 0;
     }
 
-    > label + input[type="file"] {
+    > label {
       height: 17px;
 
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-
-    > label + input[type="file"] {
-      height: calc(100% - 25px);
     }
   }
 
@@ -98,6 +94,12 @@
     }
     > .placeholder {
       display: none;
+    }
+  }
+
+  &._has_label {
+    > .file {
+      height: calc(100% - 25px);
     }
   }
 }
