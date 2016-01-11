@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require cocoon
 //= require jquery.tagsinput/jquery.tagsinput
+//= require featherlight
 //= require underscore
 //= require backbone
 //= require_self
@@ -53,6 +54,12 @@
     initPreviewImage: function() {
       new App.View.PreviewImage({
         el: this.el.querySelectorAll('input[type="file"]')
+      });
+    },
+
+    initPreviewCase: function() {
+      new App.View.Modal({
+        el: this.el.getElementsByClassName('.modal')
       });
     },
 
