@@ -9,29 +9,35 @@
     defaults: {
       ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
       listContainer: 'map-columns-list',
+      listInput: 'page_file',
     },
 
     columns: [],
 
     events: {
-      'change': 'inputChanged'
+      'change #page_file': 'inputChanged',
+      'click .close': 'removeFileSelected'
     },
 
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params.options || {});
       this.ignored_columns = this.options.ignored_columns;
       this.listContainer = document.getElementById(this.options.listContainer);
-      this.columnSelected = parseInt(this.el.getAttribute('data-column'));
-      if (this.el.getAttribute('data-filename')){
-        this.init(this.el.getAttribute('data-filename'));
+      this.listInput = document.getElementById(this.options.listInput);
+      this.columnSelected = parseInt(this.listInput.getAttribute('data-column'));
+
+      if (this.listInput.getAttribute('data-filename')){
+        this.init(this.listInput.getAttribute('data-filename'));
       }
     },
 
     init: function(fileName) {
       var self = this
+      self.columns = [];
       var promise = self.getColumns(fileName);
       promise.done(function(){
         self.refreshColumns();
+        self.addFileSelected();
       });
       promise.fail(function(error){
         self.handleColumnsError(error);
@@ -72,6 +78,7 @@
 
     refreshColumns: function() {
       var self = this;
+      this.listContainer.innerHTML = '';
       _.each(self.columns, function(element, index){
         self.addColummn(element,index);
       });
@@ -82,7 +89,6 @@
     },
 
     _columnTemplate: function(element,index) {
-      debugger;
       var selected_class = (index === this.columnSelected) ? '_selected':'';
       return '<div class="item '+ selected_class +'" data-value="'+index+'">'+
               '<span>'+element+'</span>'+
@@ -91,6 +97,18 @@
 
     handleColumnsError: function(error) {
       console.log(error);
+    },
+
+    addFileSelected: function(e) {
+      if (this.listInput.files[0]) {
+        this.$('.filename-selected .name').text(this.listInput.files[0].name);
+        this.$('.filename-selected').removeClass('_hidden');
+      }
+    },
+
+    removeFileSelected: function(e) {
+      this.$('.filename-selected').addClass('_hidden');
+      this.listInput.value = '';
     }
 
   });

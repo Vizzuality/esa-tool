@@ -1,8 +1,6 @@
 - palettes = 2
 - palette_range = 8
 
-- columns = 48
-
 .form-row
   = f.input :title
 
@@ -23,11 +21,16 @@
       style: @page.background.present? ? "background-image: url(#{@page.background.url(:medium)})" : nil
 
 - else
-  .form-row
+  .form-row.file-map-input
     = f.label :file
     - if @page.data_layer.present?
       p = @page.data_layer[:table_name]
-    = f.input_field :file, as: :file, accept: ".csv", data: {filename: 'public', column: 0}
+    .filename-selected
+      p.name fileselected.csv
+      span.close ×
+    .input-wrapper
+      = f.input_field :file, as: :file, accept: ".csv", data: {filename: 'public', column: 0}
+      .placeholder =t ('new_shapefile')
     / = f.simple_fields_for :data_layer do |c|
     /   = render 'data_layer_fields', f: c
     / = link_to_add_association t('add_data_layers'), f, :data_layer, class: 'btn -dotted'

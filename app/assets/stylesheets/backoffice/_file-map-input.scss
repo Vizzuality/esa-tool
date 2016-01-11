@@ -1,0 +1,56 @@
+.file-map-input {
+  > .filename-selected {
+    position: relative;
+    padding: 1rem;
+
+    background-color: rgba($font-color-4, 0.3);
+    border-radius: 5px;
+
+    > .name {
+      margin: 0;
+
+      font-family: $font-secondary;
+      font-size: $font-size;
+      line-height: 1.2;
+      color: $font-color-1;
+    }
+
+    > .close {
+      position:absolute;
+      top: 5px;
+      right: 10px;
+      display: block;
+
+      color: rgba($font-color-1, .5);
+      font-weight: normal;
+      font-size: rem(20px);
+      line-height: 1.8;
+
+      cursor: pointer;
+    }
+  }
+
+  > .input-wrapper {
+    position: relative;
+    height: rem(30px);
+    margin: .5rem 0;
+    padding: .5rem 0;
+
+    text-align: center;
+
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 0;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .placeholder {
+      line-height: rem(30px);
+    }
+  }
+
+}

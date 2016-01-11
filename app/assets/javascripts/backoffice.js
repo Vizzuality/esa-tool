@@ -61,7 +61,7 @@
 
     initMapFileColumns: function() {
       new App.View.MapFileColumns({
-        el: document.getElementById('page_file')
+        el: document.querySelectorAll('.file-map-input')
       });
     },
 
