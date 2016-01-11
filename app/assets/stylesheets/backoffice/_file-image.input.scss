@@ -21,30 +21,6 @@
     background-size: cover;
     background-repeat: no-repeat;
 
-    &.-previewing {
-      background-size: 80% auto;
-      background-position: center;
-    }
-
-    &.-previewing + .placeholder {
-      display: none;
-    }
-
-    .close {
-      position:absolute;
-      top: 3px;
-      right: 5px;
-      display: block;
-
-      color: rgba($font-color-1, .5);
-      font-weight: normal;
-      font-size: rem(18px);
-      line-height: rem(14px);
-
-      z-index: 1;
-      cursor: pointer;
-    }
-
     > input[type="file"] {
       position: absolute;
       width: 100%;
@@ -58,6 +34,28 @@
       padding: 0;
     }
   }
+
+  > .close {
+    position:absolute;
+    top: 3px;
+    right: 5px;
+    display: none;
+
+    color: rgba($font-color-1, .5);
+    font-weight: normal;
+    font-size: rem(18px);
+    line-height: rem(14px);
+
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  &._has_file {
+    > .close {
+      display: block;
+    }
+  }
+
 
   > .placeholder {
     position: absolute;
@@ -87,6 +85,15 @@
 
         margin: 0 2px;
       }
+    }
+  }
+
+  &._has_file {
+    > .close {
+      display: block;
+    }
+    > .placeholder {
+      display: none;
     }
   }
 }

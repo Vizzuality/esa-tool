@@ -36,7 +36,7 @@ select {
 
 input[type="file"] {
   padding: 0.5rem 1rem;
-  height: rem(110px);
+  height: auto;
 
   border: 2px dashed $border-color-1;
   border-radius: 8px;
