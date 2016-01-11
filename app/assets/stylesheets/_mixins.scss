@@ -34,6 +34,19 @@
   pointer-events: none;
 }
 
+@mixin checked($opacity:1) {
+  position: absolute;
+  content: "";
+  width: 14px;
+  height: 12px;
+  top: 5%;
+  right: 5%;
+
+  background: url(asset_path('checked.svg')) no-repeat;
+
+  opacity: $opacity;
+}
+
 @mixin veil() {
   &::after {
     position: absolute;
