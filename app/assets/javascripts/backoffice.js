@@ -53,7 +53,7 @@
 
     initPreviewImage: function() {
       new App.View.PreviewImage({
-        el: this.el.querySelectorAll('input[type="file"]')
+        el: this.el.querySelectorAll('.file-image-input')
       });
     },
 
