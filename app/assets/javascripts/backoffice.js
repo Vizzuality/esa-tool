@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require cocoon
 //= require jquery.tagsinput/jquery.tagsinput
+//= require featherlight
 //= require underscore
 //= require backbone
 //= require_self
@@ -53,9 +54,9 @@
     },
 
     initPreviewImage: function() {
-      // new App.View.PreviewImage({
-      //   el: this.el.querySelectorAll('input[type="file"]')
-      // });
+      new App.View.PreviewImage({
+        el: this.el.querySelectorAll('.file-image-input')
+      });
     },
 
     initMapFileColumns: function() {

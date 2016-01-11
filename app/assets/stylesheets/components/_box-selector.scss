@@ -12,6 +12,12 @@
     border: 1px solid $border-color-1;
     box-sizing: border-box;
 
+    > .icon {
+      position: absolute;
+      left: rem(5px);
+      bottom: rem(5px);
+    }
+
     &.-col-2 {
       width: 49%;
     }
