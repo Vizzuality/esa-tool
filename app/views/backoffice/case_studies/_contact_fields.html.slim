@@ -3,7 +3,7 @@
     .grid-sm-7
       = f.input :body, label: false, placeholder: t('simple_form.placeholders.contact.body')
     .grid-sm-4
-      = render 'input_file', f: f, name: :logo, image: f.object.logo, placeholder_title:'', placeholder_subtitle:'Select Logo'
+      = render 'backoffice/partials/input_image_file', f: f, name: :logo, image: f.object.logo, placeholder_title:'', placeholder_subtitle:'Select Logo'
     .grid-sm-1
       = link_to_remove_association '×', f, class: 'btn -delete'
     .grid-sm-11

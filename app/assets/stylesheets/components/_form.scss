@@ -46,13 +46,19 @@ input[type="file"] {
   background-position: center;
   background-size: 80% auto;
 
+  transition: all .3s ease;
+
   &::-webkit-file-upload-button {
     width: 0;
     padding: 0;
     visibility: hidden;
   }
 
-  &._has_file {
+  &:hover {
+    border-color: $font-color-1;
+  }
+
+  ._has_file & {
     border: 0;
   }
 }

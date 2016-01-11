@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(version: 20160105095306) do
     t.text     "body_second"
     t.text     "body_thirth"
     t.integer  "page_type",               default: 1
-    t.integer  "text_columns",            default: 1
     t.integer  "color_palette"
     t.string   "custom_color_palette"
     t.integer  "case_study_id",                       null: false

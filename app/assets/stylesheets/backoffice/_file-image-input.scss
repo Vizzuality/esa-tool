@@ -50,13 +50,6 @@
     cursor: pointer;
   }
 
-  &._has_file {
-    > .close {
-      display: block;
-    }
-  }
-
-
   > .placeholder {
     position: absolute;
     top:0;
