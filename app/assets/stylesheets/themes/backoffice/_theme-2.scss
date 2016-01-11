@@ -1,0 +1,37 @@
+.-cs-theme-2 {
+
+  // Palette
+  $t-palette1: $palette2;
+
+  $t-palette2: $palette-reds;
+
+  .box-selector .-palette {
+    &.-range-1 {
+      @for $i from 1 through length($t-palette1) {
+      	.range:nth-child(#{$i}) {
+          span {
+            background-color: rgba(nth($t-palette1, $i), 0.3);
+
+            &.-bordered {
+              border: 1px solid nth($t-palette1, $i);
+            }
+          }
+      	}
+      }
+    }
+
+    &.-range-2 {
+      @for $i from 1 through length($t-palette2) {
+      	.range:nth-child(#{$i}) {
+          span {
+            background-color: rgba(nth($t-palette2, $i), 0.3);
+
+            &.-bordered {
+              border: 1px solid nth($t-palette2, $i);
+            }
+          }
+      	}
+      }
+    }
+  }
+}

@@ -74,8 +74,8 @@
   //     > h2 {
   //       font-family: $font-main;
   //       font-weight: 500;
-  //       font-size: rem(30px);
-  //       line-height: rem(36px);
+  //       font-size: rem($font-size-large);
+  //       line-height: 1.2;
   //       margin: 0;
   //     }
   //   }
@@ -95,11 +95,11 @@
   //           .description, .value {
   //             padding-left: rem(16px);
   //             font-family: $font-secondary;
-  //             font-size: rem(11px);
+  //             font-size: rem($font-size-small);
   //             letter-spacing: rem(1.3px);
   //             color: $font-color-1;
   //             display: inline-block;
-  //             line-height: 16px;
+  //             line-height: 1.4;
   //             vertical-align: top;
   //             margin-top: 1px;
   //           }
@@ -122,8 +122,8 @@
 
   //       > .title {
   //         font-family: $font-main;
-  //         font-size: rem(20px);
-  //         line-height: rem(36px);
+  //         font-size: rem($font-size-medium);
+  //         line-height: 1.7;
   //         font-weight: 500;
   //         color: $font-color-1;
   //         margin: 0;
@@ -158,5 +158,3 @@
   //
 
 }
-
-

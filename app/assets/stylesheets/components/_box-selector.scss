@@ -9,15 +9,11 @@
     position: relative;
     margin-bottom: 1rem;
 
-    border: 2px solid $border-color-1;
+    border: 1px solid $border-color-1;
     box-sizing: border-box;
 
-    > .icon {
-      position: absolute;
-      left: rem(5px);
-      bottom: rem(5px);
-      width: 15px;
-      height: 15px;
+    &.-col-2 {
+      width: 49%;
     }
 
     &._selected::after {
@@ -29,6 +25,26 @@
       right: 5%;
 
       background: url(asset_path('checked.svg')) no-repeat;
+    }
+  }
+
+  & > .-palette {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: rem(130px);
+    padding: .5rem;
+
+    .range {
+
+      > span {
+        display: block;
+        width: rem(24px);
+        height: rem(24px);
+        margin: .7em 0;
+
+        box-sizing: border-box;
+      }
     }
   }
 }

@@ -1,13 +1,5 @@
 en:
   simple_form:
-    "yes": 'Yes'
-    "no": 'No'
-    required:
-      text: 'required'
-      mark: '*'
-      # You can uncomment the line below if you need to overwrite the whole required html.
-      # When using html, text and mark won't be used.
-      # html: '<abbr title="required">*</abbr>'
     error_notification:
       default_message: "Please review the problems below:"
     # Examples
@@ -31,10 +23,18 @@ en:
     #     age: 'Select your age'
     labels:
       case_study:
-        title: 'Title of the case study'
-        tag_list: 'Tags'
         contacts: 'Project contacts'
+        tag_list: 'Tags'
+        title: 'Title of the case study'
+    "no": 'No'
     placeholders:
       contact:
-        website: 'Type you website URL (include http:// or https://)'
         body: 'Type your adress, email, etc'
+        website: 'Type you website URL (include http:// or https://)'
+    required:
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+      text: 'required'
+    "yes": 'Yes'

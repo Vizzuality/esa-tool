@@ -11,9 +11,9 @@
     left: 50%;
 
     font-family: $font-secondary;
-    font-size: rem(24px);
+    font-size: rem($font-size-medium);
     text-transform: uppercase;
-    
+
     transform: translate(-50%, -50%);
   }
 

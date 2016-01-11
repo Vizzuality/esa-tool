@@ -27,6 +27,7 @@
     initialize: function() {
       this.initTags();
       this.initBoxSelects();
+      this.initPreviewImage();
     },
 
     /**
