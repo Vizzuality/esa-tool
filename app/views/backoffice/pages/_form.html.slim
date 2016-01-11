@@ -26,7 +26,7 @@
     - if @page.data_layer.present?
       p = @page.data_layer[:table_name]
     .filename-selected
-      p.name fileselected.csv
+      p.name public.csv
       span.close ×
     .input-wrapper
       = f.input_field :file, as: :file, accept: ".csv", data: {filename: 'public', column: 0}
