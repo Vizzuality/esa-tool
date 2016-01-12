@@ -29,6 +29,7 @@
      * This function will be executed when the instance is created
      */
     initialize: function() {
+      this.data = this._getAppData();
       this.menu = document.getElementById('menu');
       // At beginning instance slider view
       this.slider = new App.View.Slider({ el: '#mainSlider' });
@@ -43,17 +44,38 @@
     },
 
     /**
+     * Function to set the app's data from the 'gon' namespace
+     * provided by the view.
+     */
+    _getAppData: function() {
+      var data;
+
+      if (gon && gon.case_study) {
+        data = JSON.parse(gon.case_study);
+      }
+
+      return data;
+    },
+
+    /**
      * When the type of slide is 'map' the map view will be initialized
      * else the map will be removed to improve the performance.
      * @param  {String} slideType It could be cover, text or map
      */
     initMap: function(slideType) {
+      var template = this.data && this.data.template ? 
+        this.data.template : 1;
+
       if (this.map) {
         this.map.remove();
         this.map = null;
       }
       if (slideType === 'map') {
-        this.map = new App.View.Map({ el: '#mapView' });
+        this.map = new App.View.Map({ 
+          el: '#mapView',
+          elMap: 'map',
+          template: template
+        });
       }
     },
 

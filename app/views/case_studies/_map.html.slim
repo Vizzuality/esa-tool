@@ -1,6 +1,12 @@
 .map data-type="map": .container
 
     .vis#mapView
+      #map
+      .basemap
+        button.action Basemap
+        ul.list
+          li.item.selected data-value=("terrain") Terrain
+          li.item data-value=("satellite") Satellite
 
     .wrap: .row: .grid-xs-12.grid-sm-4.offset-sm-8
         
