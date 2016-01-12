@@ -8,46 +8,45 @@
 
     defaults: {
       ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
-      listContainer: 'map-columns-list',
-      listInput: 'page_file',
+      fileInput: 'page_file',
+      columnInput: 'page_column_selected',
+      columnListContainer: 'map-columns-list',
     },
 
     columns: [],
 
     events: {
-      'change #page_file': 'inputChanged',
-      'click .close': 'removeFileSelected'
+      'change #page_file': 'onInputChanged',
+      'click .close': 'removeFileSelected',
+      'click .item': 'onClickItem'
     },
 
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params.options || {});
       this.ignored_columns = this.options.ignored_columns;
-      this.listContainer = document.getElementById(this.options.listContainer);
-      this.listInput = document.getElementById(this.options.listInput);
+      this.columnListContainer = document.getElementById(this.options.columnListContainer);
+      this.fileInput = document.getElementById(this.options.fileInput);
+      this.columnInput = document.getElementById(this.options.columnInput);
 
-      if (this.listInput) {
-        this.columnSelected = parseInt(this.listInput.getAttribute('data-column'));
-        if (this.listInput.getAttribute('data-filename')){
-          this.init(this.listInput.getAttribute('data-filename'));
-        }
+      if (this.fileInput && this.fileInput.getAttribute('data-filename')) {
+        this.init(this.fileInput.getAttribute('data-filename'));
       }
-
     },
 
     init: function(fileName) {
       var self = this
       self.columns = [];
+      self.addFileSelected();
       var promise = self.getColumns(fileName);
       promise.done(function(){
         self.refreshColumns();
-        self.addFileSelected();
       });
       promise.fail(function(error){
         self.handleColumnsError(error);
       });
     },
 
-    inputChanged: function(e) {
+    onInputChanged: function(e) {
       var self = this;
       var file = e.currentTarget.files[0];
       var extension = file.name.substr(file.name.lastIndexOf('.')+1);
@@ -60,7 +59,7 @@
       var self = this;
       var query = 'SELECT * FROM ' + name + ' LIMIT 0';
       var defer = new $.Deferred();
-      $.getJSON('https://'+'<%= ENV["CDB_USERNAME"] %>'+'.cartodb.com/api/v2/sql/?q='+query)
+      $.getJSON('https://<%= ENV["CDB_USERNAME"] %>.cartodb.com/api/v2/sql/?q='+query)
         .done(function(data){
           $.each(data.fields, function(key, val) {
             if (!_.contains(self.ignored_columns, key)) {
@@ -81,19 +80,20 @@
 
     refreshColumns: function() {
       var self = this;
-      this.listContainer.innerHTML = '';
+      this.columnListContainer.innerHTML = '';
       _.each(self.columns, function(element, index){
         self.addColummn(element,index);
       });
     },
 
-    addColummn: function(element, index) {
-      this.listContainer.insertAdjacentHTML("afterbegin", this._columnTemplate(element,index));
+    addColummn: function(element) {
+      this.columnListContainer.insertAdjacentHTML("afterbegin", this._columnTemplate(element));
     },
 
-    _columnTemplate: function(element,index) {
-      var selected_class = (index === this.columnSelected) ? '_selected':'';
-      return '<div class="item '+ selected_class +'" data-value="'+index+'">'+
+    _columnTemplate: function(element) {
+      debugger;
+      var selected_class = (element === this.columnInput.value) ? '_selected':'';
+      return '<div class="item '+ selected_class +'" data-value="'+element+'">'+
               '<span>'+element+'</span>'+
             '</div>'
     },
@@ -103,16 +103,38 @@
     },
 
     addFileSelected: function(e) {
-      if (this.listInput.files[0]) {
-        this.$('.filename-selected .name').text(this.listInput.files[0].name);
+      if (this.fileInput.files[0]) {
+        this.$('.filename-selected .name').text(this.fileInput.files[0].name);
         this.$('.filename-selected').removeClass('_hidden');
       }
     },
 
     removeFileSelected: function(e) {
       this.$('.filename-selected').addClass('_hidden');
-      this.listInput.value = '';
-      this.listContainer.innerHTML = '';
+      this.columnListContainer.innerHTML = '';
+      this.columnInput.value = '';
+      this.fileInput.value = '';
+    },
+
+    onClickItem: function(e) {
+      this.currentItem = e.currentTarget;
+      this.selectCurrent();
+      this.updateValue();
+    },
+
+    selectCurrent: function() {
+      var el = this.currentItem;
+      var siblings = [].filter.call(el.parentNode.children, function(child) {
+        return child.localName == 'div' && child !== el;
+      });
+      el.classList.add('_selected');
+      siblings.forEach(function(e) {
+        e.classList.remove('_selected');
+      });
+    },
+
+    updateValue: function() {
+      this.columnInput.value = this.currentItem.getAttribute('data-value');
     }
 
   });
