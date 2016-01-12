@@ -8,7 +8,7 @@ section.l-main
         .btns-toolbar
           = link_to t('save'), '#save', class: 'btn', id: 'saveBtn'
 
-  .content
+  .content class="-cs-theme-#{@case_study.template}"
     .wrap: .row
       .grid-sm-2
         = render partial: 'backoffice/partials/sidebar'

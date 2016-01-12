@@ -24,11 +24,14 @@
       this.ignored_columns = this.options.ignored_columns;
       this.listContainer = document.getElementById(this.options.listContainer);
       this.listInput = document.getElementById(this.options.listInput);
-      this.columnSelected = parseInt(this.listInput.getAttribute('data-column'));
 
-      if (this.listInput.getAttribute('data-filename')){
-        this.init(this.listInput.getAttribute('data-filename'));
+      if (this.listInput) {
+        this.columnSelected = parseInt(this.listInput.getAttribute('data-column'));
+        if (this.listInput.getAttribute('data-filename')){
+          this.init(this.listInput.getAttribute('data-filename'));
+        }
       }
+
     },
 
     init: function(fileName) {
