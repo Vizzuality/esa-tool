@@ -80,12 +80,19 @@
     fill: $white;
   }
 
+  &.-bo {
+    width: 100%;
+    height: 100%;
+
+    fill: $font-color-4;
+  }
+
 }
 
 .icon-zoom-in {
   width: rem(15px);
   height: rem(15px);
-  
+
   fill: $white;
 }
 

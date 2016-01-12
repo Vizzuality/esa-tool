@@ -5,6 +5,7 @@ class Backoffice::PagesController < BackofficeController
 
   def new
     @page = Page.new
+    @charts = Chart.all
   end
 
   def create
@@ -26,9 +27,11 @@ class Backoffice::PagesController < BackofficeController
   end
 
   def edit
+    @charts = Chart.all
   end
 
   def update
+    @charts = Chart.all
     if file_params.has_key?(:file)
       if @page.data_layer
         data_layer = @page.data_layer
