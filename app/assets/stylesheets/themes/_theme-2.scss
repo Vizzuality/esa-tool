@@ -11,6 +11,9 @@
 
   $default-opacity: 0.7;
   $arrows-opacity: 0.2;
+  $map-basemap-opacity: 0.8;
+  $map-basemap-shadow-opacity: 0.8;
+  $map-basemap-selected-opacity: 0.5;
 
   // General
   $body-color: $t-bg-color-1;
@@ -33,6 +36,11 @@
 
   // Dashboard
   $dashboard-bg: rgba($t-bg-color-1, $default-opacity);
+
+  // Map
+  $map-basemap-bg: rgba($t-bg-color-1, $map-basemap-opacity);
+  $map-basemap-shadow: 0px 10px 30px 0px rgba($t-bg-color-1, $map-basemap-shadow-opacity);
+  $map-basemap-selected: rgba($main-color, $map-basemap-selected-opacity);
 
   color: $main-color;
   background-color: $body-color;
@@ -74,5 +82,27 @@
 
   .dashboard {
     background-color: $dashboard-bg;
+  }
+
+  .map {
+    .basemap {
+      > .action {
+        color: $main-color;
+        background-color: $map-basemap-bg;
+        box-shadow: $map-basemap-shadow;
+      }
+
+      > .list {
+        background-color: $map-basemap-bg;
+
+        > .item {
+          color: $main-color;
+
+          &.selected {
+            color: $map-basemap-selected;
+          }
+        }
+      }
+    }
   }
 }
