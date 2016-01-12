@@ -99,6 +99,7 @@
      */
     _triggerChange: function(slickObject, i) {
       var $current = $(slickObject.$slides[i]).find('div:first');
+      this.trigger('slider:page', i);
       this.trigger('slider:change', $current.data('type'));
     }
 

@@ -40,7 +40,7 @@
   // Map
   $map-basemap-bg: rgba($t-bg-color-1, $map-basemap-opacity);
   $map-basemap-shadow: 0px 10px 30px 0px rgba($t-bg-color-1, $map-basemap-shadow-opacity);
-  $map-basemap-selected: rgba($main-color, $map-basemap-selected-opacity);
+  $map-basemap-unselected: rgba($main-color, $map-basemap-selected-opacity);
 
   color: $main-color;
   background-color: $body-color;
@@ -96,10 +96,10 @@
         background-color: $map-basemap-bg;
 
         > .item {
-          color: $main-color;
+          color: $map-basemap-unselected;
 
           &.selected {
-            color: $map-basemap-selected;
+            color: $main-color;
           }
         }
       }

@@ -10,11 +10,6 @@
 
   App.View.Map = Backbone.View.extend({
 
-    events: {
-      'click .basemap': '_toggleBasemap',
-      'click .basemap .item': '_selectBasemap'
-    },
-
     defaults: {
       center: [46, 20],
       scrollWheelZoom: false,
@@ -79,7 +74,6 @@
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       this.template = this.options.template;
-      this.elMap = this.options.elMap;
 
       // At beginning create the map
       this.createMap();
@@ -99,7 +93,7 @@
      */
     createMap: function() {
       if (!this.map) {
-        this.map = L.map(this.elMap, this.options);
+        this.map = L.map(this.el, this.options);
         this.setBasemap(this.defaults.basemap);
       }
     },
@@ -149,33 +143,6 @@
           attribution: attributionUrl
         }).addTo(this.map);
       }
-    },
-
-    /**
-     * Toggles the basemap menu
-     * @param {Event} 
-     */
-    _toggleBasemap: function(ev) {
-      var elem = ev.currentTarget;
-      elem.classList.toggle('active');
-    },
-
-    /**
-     * Selects a basemap from the menu
-     * @param {Event} 
-     */
-    _selectBasemap: function(ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      var elem = ev.currentTarget;
-      var selectedValue = elem.getAttribute('data-value');
-      var previousSelected = document.querySelector('.basemap .selected');
-      
-      previousSelected.classList.remove('selected');
-      elem.classList.add('selected');
-
-      this.setBasemap(selectedValue);
     }
 
   });

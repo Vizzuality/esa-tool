@@ -5,9 +5,11 @@
 //= require backbone
 //= require leaflet
 //= require_self
-//= require views/slider_view
 //= require views/map_view
+//= require views/map_basemap_view
+//= require views/slider_view
 //= require views/tabs_view
+//= require controllers/map_controller
 
 'use strict';
 
@@ -16,6 +18,7 @@
   var App = root.App = {
     View: {},
     Model: {},
+    Controller: {},
     Events: _.clone(Backbone.Events)
   };
 
@@ -32,7 +35,7 @@
       this.data = this._getAppData();
       this.menu = document.getElementById('menu');
       // At beginning instance slider view
-      this.slider = new App.View.Slider({ el: '#mainSlider' });
+      this._initSlider();
       this._setListeners();
     },
 
@@ -40,6 +43,7 @@
      * Function to set events at beginning
      */
     _setListeners: function() {
+      this.listenTo(this.slider, 'slider:page', this._setSliderPage);
       this.listenTo(this.slider, 'slider:change', this.initMap);
     },
 
@@ -57,12 +61,28 @@
       return data;
     },
 
+    /** 
+     * Function to set the current slider page
+     */
+    _setSliderPage: function(page) {
+      this.sliderPage = page;
+    },
+
+    /**
+     * Function to initialize the slider
+     */
+    _initSlider: function() {
+      this.sliderPage = 0;
+      this.slider = new App.View.Slider({ el: '#mainSlider' });
+    },
+
     /**
      * When the type of slide is 'map' the map view will be initialized
      * else the map will be removed to improve the performance.
      * @param  {String} slideType It could be cover, text or map
      */
     initMap: function(slideType) {
+      var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
       var template = this.data && this.data.template ? 
         this.data.template : 1;
 
@@ -70,11 +90,11 @@
         this.map.remove();
         this.map = null;
       }
+
       if (slideType === 'map') {
-        this.map = new App.View.Map({ 
-          el: '#mapView',
-          elMap: 'map',
-          template: template
+        this.map = new App.Controller.Map({ 
+          template: template,
+          elContent: el
         });
       }
     },
