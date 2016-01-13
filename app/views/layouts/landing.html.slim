@@ -7,5 +7,12 @@ html lang="#{I18n.locale}"
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700", media: "all"
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lato:400", media: "all"
     = csrf_meta_tag
+  
   body
+    = render partial: 'partials/icons'
+    = render partial: 'partials/header'
+    = render partial: 'partials/menu'
+
     = yield
+    
+    = javascript_include_tag "landing"

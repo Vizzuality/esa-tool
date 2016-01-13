@@ -22,6 +22,7 @@ $max-width: 1200px;
   margin-left: auto;
   padding-left: $site-margin;
   padding-right: $site-margin;
+  width: calc(100% - 40px);
 }
 
 .row {
