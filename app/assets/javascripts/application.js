@@ -5,6 +5,7 @@
 //= require backbone
 //= require leaflet
 //= require_self
+//= require router
 //= require views/map_view
 //= require views/map_basemap_view
 //= require views/slider_view
@@ -32,18 +33,32 @@
      * This function will be executed when the instance is created
      */
     initialize: function() {
+      this.router = new root.App.Router();
       this.data = this._getAppData();
+
+      // Start application
+      this._start();
+    },
+
+    /**
+     * Function to start the application
+     * Initializing the slider, the listeners and
+     * starting the router.
+     */
+    _start: function() {
       this.menu = document.getElementById('menu');
-      // At beginning instance slider view
       this._initSlider();
       this._setListeners();
+      this.router.start();
     },
 
     /**
      * Function to set events at beginning
      */
     _setListeners: function() {
-      this.listenTo(this.slider, 'slider:page', this._setSliderPage);
+      this.listenTo(this.router, 'update:slider', this._setSliderPageFromUrl);
+
+      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
       this.listenTo(this.slider, 'slider:change', this.initMap);
     },
 
@@ -64,16 +79,27 @@
     /** 
      * Function to set the current slider page
      */
-    _setSliderPage: function(page) {
+    _setCurrentSliderPage: function(page) {
       this.sliderPage = page;
+      this.router.trigger('route:update', {
+        page: page.toString()
+      });
+    },
+
+    /**
+     * Function to update slide current page from the url
+     */
+    _setSliderPageFromUrl: function(page) {
+      this.slider.goToSlide(page);
     },
 
     /**
      * Function to initialize the slider
      */
     _initSlider: function() {
-      this.sliderPage = 0;
-      this.slider = new App.View.Slider({ el: '#mainSlider' });
+      this.slider = new App.View.Slider({ 
+        el: '#mainSlider'
+      });
     },
 
     /**
