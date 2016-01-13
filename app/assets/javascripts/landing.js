@@ -4,6 +4,7 @@
 //= require underscore
 //= require backbone
 //= require_self
+//= require views/slider_view
 
 'use strict';
 
@@ -28,7 +29,7 @@
     initialize: function() {
       this.menu = document.getElementById('menu');
       // At beginning instance slider view
-      // this._initSlider();
+      this._initSlider();
     },
 
     /**
@@ -36,7 +37,14 @@
      */
     _initSlider: function() {
       this.sliderPage = 0;
-      this.slider = new App.View.Slider({ el: '#mainSlider' });
+      this.slider = new App.View.Slider({
+        el: '#landingSlider',
+        arrows: false,
+        dots:true,
+        responsive: [],
+        autoplay: true,
+        autoplaySpeed: 3000
+      });
     },
 
     /**

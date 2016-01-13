@@ -99,6 +99,32 @@
     }
   }
 
+  &.-landing {
+    padding: .7rem 1.6rem;
+
+    color: $font-color-landing-3;
+    font-size: $font-size;
+
+    border-radius: 5px;
+    background-color: $bg-color-landing-2;
+
+    &:hover, &:active {
+      border-color: transparent;
+      color: $bg-color-landing-2;
+      background-color: $font-color-landing-3;
+    }
+
+    &.-inv {
+      color: $font-color-landing-2;
+      background-color: $bg-color-landing-3;
+
+      &:hover, &:active {
+        color: $bg-color-landing-3;
+        background-color: $font-color-landing-2;
+      }
+    }
+  }
+
   &.-dotted {
     @extend %btn-dotted;
   }
