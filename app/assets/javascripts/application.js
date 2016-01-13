@@ -3,7 +3,6 @@
 //= require slick.js/slick.js
 //= require underscore
 //= require backbone
-//= require leaflet
 //= require_self
 //= require views/map_view
 //= require views/map_basemap_view
@@ -52,10 +51,14 @@
      * provided by the view.
      */
     _getAppData: function() {
-      var data;
+      var data = {};
 
       if (gon && gon.case_study) {
-        data = JSON.parse(gon.case_study);
+        data.case_study = JSON.parse(gon.case_study);
+      }
+
+      if (gon && gon.cartodb_user) {
+        data.cartodb_user = gon.cartodb_user;
       }
 
       return data;
@@ -83,8 +86,10 @@
      */
     initMap: function(slideType) {
       var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
-      var template = this.data && this.data.template ? 
-        this.data.template : 1;
+      var template = this.data && this.data.case_study ? 
+        this.data.case_study.template : 1;
+      var user = this.data && this.data.cartodb_user ?
+        this.data.cartodb_user : '';
 
       if (this.map) {
         this.map.remove();
@@ -94,7 +99,8 @@
       if (slideType === 'map') {
         this.map = new App.Controller.Map({ 
           template: template,
-          elContent: el
+          elContent: el,
+          user: user
         });
       }
     },
