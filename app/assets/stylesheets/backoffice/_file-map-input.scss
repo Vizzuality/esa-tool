@@ -1,3 +1,9 @@
+%placeholder-font {
+  font-family: $font-main;
+  font-size: 20px;
+  font-weight: 400;
+}
+
 .file-map-input {
   > .filename-selected {
     position: relative;
@@ -35,6 +41,9 @@
     height: rem(30px);
     margin: .5rem 0 2rem;
     padding: .5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     text-align: center;
 
@@ -48,8 +57,35 @@
       padding: 0;
     }
 
-    .placeholder {
+    > .placeholder {
       line-height: rem(30px);
+
+      > .title {
+        @extend %placeholder-font;
+        display: block;
+        color: $font-color-1;
+      }
+
+      > .sub-title {
+        @extend %placeholder-font;
+        color: $font-color-4;
+
+        > .link {
+          text-decoration: underline;
+
+          margin: 0 5px;
+        }
+      }
+    }
+
+    &.-lg {
+      height: rem(450px);
+    }
+
+    &._has_file {
+      > .placeholder {
+        display: none;
+      }
     }
   }
 

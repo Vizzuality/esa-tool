@@ -9,6 +9,7 @@
     defaults: {
       ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
       fileInput: 'page_file',
+      fileNameContainer: 'filename',
       columnInput: 'page_column_selected',
       columnListContainer: 'map-columns-list',
     },
@@ -27,16 +28,17 @@
       this.columnListContainer = document.getElementById(this.options.columnListContainer);
       this.fileInput = document.getElementById(this.options.fileInput);
       this.columnInput = document.getElementById(this.options.columnInput);
+      this.fileNameContainer = document.getElementById(this.options.fileNameContainer);
 
-      if (this.fileInput && this.fileInput.getAttribute('data-filename')) {
-        this.init(this.fileInput.getAttribute('data-filename'));
+      if (this.fileNameContainer && this.fileNameContainer.getAttribute('data-filename')) {
+        this.init(this.fileNameContainer.getAttribute('data-filename'));
       }
     },
 
     init: function(fileName) {
       var self = this
       self.columns = [];
-      self.addFileSelected();
+      // self.addFileSelected();
       var promise = self.getColumns(fileName);
       promise.done(function(){
         self.refreshColumns();
@@ -51,7 +53,8 @@
       var file = e.currentTarget.files[0];
       var extension = file.name.substr(file.name.lastIndexOf('.')+1);
       if (extension === "csv"){
-        self.init(file.name.slice(0, -extension.length-1));
+        self.addFileSelected();
+        // self.init(file.name.slice(0, -extension.length-1));
       }
     },
 
@@ -91,7 +94,6 @@
     },
 
     _columnTemplate: function(element) {
-      debugger;
       var selected_class = (element === this.columnInput.value) ? '_selected':'';
       return '<div class="item '+ selected_class +'" data-value="'+element+'">'+
               '<span>'+element+'</span>'+
@@ -104,15 +106,15 @@
 
     addFileSelected: function(e) {
       if (this.fileInput.files[0]) {
-        this.$('.filename-selected .name').text(this.fileInput.files[0].name);
-        this.$('.filename-selected').removeClass('_hidden');
+        this.fileNameContainer.getElementsByClassName('name')[0].textContent = this.fileInput.files[0].name;
+        this.fileNameContainer.classList.remove('_hidden');
       }
     },
 
     removeFileSelected: function(e) {
-      this.$('.filename-selected').addClass('_hidden');
-      this.columnListContainer.innerHTML = '';
-      this.columnInput.value = '';
+      this.fileNameContainer.classList.add('_hidden');
+      // this.columnListContainer.innerHTML = '';
+      // this.columnInput.value = '';
       this.fileInput.value = '';
     },
 
