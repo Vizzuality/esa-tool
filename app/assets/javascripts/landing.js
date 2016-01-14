@@ -9,6 +9,7 @@
 //= require views/slider_view
 //= require views/cases_filter_view
 //= require controllers/map_controller
+//= require collections/case_study_collection
 
 'use strict';
 
@@ -18,6 +19,7 @@
     View: {},
     Model: {},
     Controller: {},
+    Collection: {},
     Events: _.clone(Backbone.Events)
   };
 
@@ -42,7 +44,7 @@
      * Function to initialize modules
      */
     _initModules: function() {
-      this._initMap();
+      // this._initMap();
       this._initSlider();
       this._initCasesFilter();
     },

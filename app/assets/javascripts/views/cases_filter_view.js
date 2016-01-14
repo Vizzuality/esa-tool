@@ -16,6 +16,8 @@
       this.casesContainer = document.getElementById('casesArticles');
       this.casesOriginal = document.getElementById('casesArticles').innerHTML;
 
+      this.cases = new App.Collection.CaseStudyCollection();
+
       this._initSearchBox();
       this._setListeners();
 
@@ -40,16 +42,10 @@
      * Function to get the filtered by tag study cases
      */
     _getCases: function() {
-      console.log('get');
       var self = this;
-      $.ajax({
-        dataType: "json",
-        url: '',
-        data: this.search.val()? this.filterName+'='+this.search.val(): ''
-      }).done( function(data) {
+      var params = this.search.val()? this.filterName+'='+this.search.val(): '';
+      this.cases.fetch({data:params}).done(function(data){
         self._refreshCases(data.landing);
-      }).fail( function(error) {
-        console.log('There was an error getting cases');
       });
     },
 
