@@ -71,7 +71,6 @@
       if (gon && gon.case_study) {
         data.case_study = JSON.parse(gon.case_study);
       }
-      
       return data;
     },
 
