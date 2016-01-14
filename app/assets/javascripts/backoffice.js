@@ -9,6 +9,7 @@
 //= require views/tags_view
 //= require views/box_select_view
 //= require views/preview_image_view
+//= require views/map_file_columns_view
 
 'use strict';
 
@@ -28,6 +29,7 @@
       this.initTags();
       this.initBoxSelects();
       this.initPreviewImage();
+      this.initMapFileColumns();
     },
 
     /**
@@ -57,9 +59,9 @@
       });
     },
 
-    initPreviewCase: function() {
-      new App.View.Modal({
-        el: this.el.getElementsByClassName('.modal')
+    initMapFileColumns: function() {
+      new App.View.MapFileColumns({
+        el: document.querySelectorAll('.file-map-input')
       });
     },
 
