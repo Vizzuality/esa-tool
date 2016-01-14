@@ -10,9 +10,9 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = Page.new(page_params)
 
-    if file_params.has_key?(:file)
+    if data_layer_params.has_key?(:file)
       data_layer = DataLayer.new(page_id: @page.id)
-        .create_file(file_params[:file])
+        .create_file(data_layer_params[:file])
       @page.data_layer = data_layer
     end
 
@@ -29,15 +29,21 @@ class Backoffice::PagesController < BackofficeController
   end
 
   def update
-    if file_params.has_key?(:file)
-      if @page.data_layer
-        data_layer = @page.data_layer
-          .create_file(file_params[:file])
-      else
-        data_layer = DataLayer.create(page_id: @page.id)
-          .create_file(file_params[:file])
-      end
-      @page.data_layer = data_layer
+    # if data_layer_params.has_key?(:file)
+    #   if @page.data_layer
+    #     data_layer = @page.data_layer
+    #       .create_file(data_layer_params[:file])
+    #     data_layer.update_columns(column_selected: data_layer_params[:column_selected])
+    #   else
+    #     data_layer = DataLayer.create(page_id: @page.id, column_selected: data_layer_params[:column_selected])
+    #       .create_file(data_layer_params[:file])
+    #   end
+    #   @page.data_layer = data_layer
+    # end
+
+    if @page.data_layer
+      data_layer = @page.data_layer
+        .update_columns(column_selected: data_layer_params[:column_selected])
     end
 
     if @page.update(page_params)
@@ -82,8 +88,8 @@ class Backoffice::PagesController < BackofficeController
       )
     end
 
-    def file_params
-      params.require(:page).permit(:file)
+    def data_layer_params
+      params.require(:page).permit(:file, :column_selected)
     end
 
 end

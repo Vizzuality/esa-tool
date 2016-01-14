@@ -1,0 +1,39 @@
+.box-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  padding: 1rem 2rem;
+
+  border: 1px solid $border-color-1;
+
+  & > .item {
+    display: block;
+    position: relative;
+    padding: .5rem;
+    width: 25%;
+
+    box-sizing: border-box;
+
+    span {
+      font-family: $font-secondary;
+      font-size: $font-size;
+      line-height: 1.2;
+      color: $font-color-1;
+    }
+
+    &._selected::after {
+      @include checked();
+      top:13px;
+    }
+
+    &:not(._selected):hover {
+      background-color: rgba($bg-color-4, 0.3);
+      border-radius: 3px;
+
+      &::after {
+        @include checked(0.3);
+        top:13px;
+      }
+    }
+  }
+}

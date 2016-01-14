@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105095306) do
+ActiveRecord::Schema.define(version: 20160112091756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,11 +58,12 @@ ActiveRecord::Schema.define(version: 20160105095306) do
   add_index "contacts", ["case_study_id"], name: "index_contacts_on_case_study_id", using: :btree
 
   create_table "data_layers", force: :cascade do |t|
-    t.string   "table_name",    null: false
-    t.string   "import_status", null: false
-    t.integer  "page_id",       null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "table_name",      null: false
+    t.string   "import_status",   null: false
+    t.integer  "page_id",         null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "column_selected"
   end
 
   add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id", using: :btree
