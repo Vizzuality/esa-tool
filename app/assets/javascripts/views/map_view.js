@@ -75,7 +75,7 @@
       this.options = _.extend({}, this.defaults, options || {});
       this.template = this.options.data.template || 1;
       this.cartoUser = this.options.data.cartoUser || '';
-      this.layer = this.options.data.layer || {};
+      this.layerData = this.options.data.layer || {};
 
       // At beginning create the map
       this._setCartoOptions();
@@ -180,7 +180,7 @@
         type: 'cartodb',
         cartodb_logo: false,
         sublayers: [{
-          sql: 'SELECT * FROM ' + this.layer.table_name,
+          sql: 'SELECT * FROM ' + this.layerData.table_name,
           cartocss: '#null {polygon-fill:red;}' // WIP
         }]
       };
