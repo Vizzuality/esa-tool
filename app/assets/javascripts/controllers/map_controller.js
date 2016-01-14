@@ -19,8 +19,9 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
-      this.template = this.options.template;
       this.elContent = this.options.elContent;
+      this.data = this.options.data;
+      this.page = this.options.page;
 
       this._initMap();
     },
@@ -29,18 +30,19 @@
      * Initializes the map
      */
     _initMap: function() {
+      var parent = this.elContent;
+      var mapEl = parent.querySelector('#mapView');
+      var basemapEl = parent.querySelector('#basemapView');
+      var mapData = this._getData();
+
       if (this.map) {
         this.map.remove();
         this.map = null;
       }
 
-      var parent = this.elContent;
-      var mapEl = parent.querySelector('#mapView');
-      var basemapEl = parent.querySelector('#basemapView');
-
       this.map = new App.View.Map({ 
         el: mapEl,
-        template: this.template
+        data: mapData
       });
 
       this.mapBasemap = new App.View.MapBasemap({
@@ -48,6 +50,32 @@
       })
 
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
+    },
+
+    /**
+     * Gets the needed data to pass it to the map view 
+    */
+    _getData: function() {
+      var data = {};
+
+      if (this.data) {
+        var caseStudy = this.data.case_study;
+        data.cartoUser = this.data.cartodb_user;
+
+        if (caseStudy) {
+          var pages = caseStudy.pages;
+          data.template = caseStudy.template;
+          
+          if (pages) {
+            var page = pages[this.page - 1];
+
+            if (page) {
+              data.layer = page.data_layer;
+            }
+          }
+        }
+      }
+      return data;
     },
 
     /** 

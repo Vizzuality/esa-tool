@@ -26,7 +26,6 @@ gem 'cocoon'
 source 'https://rails-assets.org' do
   gem 'rails-assets-normalize-css'
   gem 'rails-assets-d3'
-  gem 'rails-assets-leaflet'
   gem 'rails-assets-underscore'
   gem 'rails-assets-backbone'
   gem 'rails-assets-jquery.tagsinput'
