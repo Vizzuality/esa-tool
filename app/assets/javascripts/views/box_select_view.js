@@ -17,12 +17,32 @@
 
     initialize: function() {
       this.inputElement = this.el.querySelector('.input');
+      this.checkSelecteds();
+    },
+
+    checkSelecteds: function() {
+      this.inputs = document.getElementsByClassName('association-input');
+      _.each(this.inputs,function(e){
+        if (e.checked) {
+          document.querySelectorAll('[data-input='+e.id+']')[0].classList.add('_selected');
+        }
+      });
     },
 
     onClickItem: function(e) {
       this.currentItem = e.currentTarget;
-      this.selectCurrent();
-      this.updateValue();
+
+      if (this.currentItem.getAttribute('data-multiple')!=="yes"){
+        this.selectCurrent();
+      } else {
+        this.toggleSelection();
+      }
+
+      if (this.currentItem.getAttribute('data-input')){
+        this.checkInput(this.currentItem.getAttribute('data-input'));
+      } else {
+        this.updateValue();
+      }
     },
 
     selectCurrent: function() {
@@ -36,8 +56,23 @@
       });
     },
 
+    toggleSelection: function() {
+      var el = this.currentItem;
+      el.classList.toggle('_selected');
+    },
+
     updateValue: function() {
       this.inputElement.value = this.currentItem.getAttribute('data-value');
+    },
+
+    checkInput: function(id) {
+      var el = this.currentItem;
+      var input = document.getElementById(id);
+      if (el.classList.contains('_selected')){
+        input.checked = true;
+      } else {
+        input.checked = false;
+      }
     }
 
   });

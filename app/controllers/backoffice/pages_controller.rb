@@ -5,6 +5,7 @@ class Backoffice::PagesController < BackofficeController
 
   def new
     @page = Page.new
+    @charts = Chart.all
   end
 
   def create
@@ -26,6 +27,7 @@ class Backoffice::PagesController < BackofficeController
   end
 
   def edit
+    @charts = Chart.all
   end
 
   def update

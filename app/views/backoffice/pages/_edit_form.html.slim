@@ -56,7 +56,14 @@
   /   = f.input :custom_color_palette
   
   .form-row
-    = f.association :charts, as: :check_boxes
+    = f.label :charts
+    .box-selector
+      - for chart in @charts
+        .item.checkbox data={input: "chart-#{chart.name}", multiple: "yes"}
+          svg.icon-chart.-bo
+            use xlink:href="#icon-chart-#{chart.name}"
+    ._hidden
+      = f.association :charts, as: :check_boxes, label:false, collection: @charts.map { |r| [r.name, r.id, {class: 'association-input', id: "chart-#{r.name}"}] }  
     
   .form-row
     = f.simple_fields_for :interest_points do |c|
