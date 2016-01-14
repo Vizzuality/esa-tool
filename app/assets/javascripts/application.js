@@ -71,6 +71,11 @@
       if (gon && gon.case_study) {
         data.case_study = JSON.parse(gon.case_study);
       }
+
+      if (gon && gon.cartodb_user) {
+        data.cartodb_user = gon.cartodb_user;
+      }
+
       return data;
     },
 

@@ -11,10 +11,9 @@
   App.View.Map = Backbone.View.extend({
 
     defaults: {
-      center: [14.608822, 121.073225],
+      center: [35.863760, -21.217176],
       scrollWheelZoom: false,
-      zoom: 13,
-      maxZoom: 18,
+      zoom: 3,
       basemap: 'terrain'
     },
 
