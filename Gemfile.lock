@@ -119,7 +119,7 @@ GEM
       erubis
       highline (>= 1.7.3)
       i18n
-      parser (>= 2.2.3.0)
+      parser (>= 2.2.2.0)
       term-ansicolor (>= 1.3.2)
       terminal-table (>= 1.5.1)
     i18n_yaml_sorter (0.2.0)
@@ -150,7 +150,7 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
-    parser (2.2.3.0)
+    parser (2.2.2.0)
       ast (>= 1.1, < 3.0)
     pg (0.18.4)
     pg (0.18.4-x64-mingw32)
@@ -174,7 +174,6 @@ GEM
     rails-assets-d3 (3.5.10)
     rails-assets-jquery (2.1.4)
     rails-assets-jquery.tagsinput (1.3.2)
-    rails-assets-leaflet (0.7.7)
     rails-assets-normalize-css (3.0.3)
     rails-assets-slick.js (1.5.9)
       rails-assets-jquery (>= 1.7)
@@ -295,7 +294,6 @@ DEPENDENCIES
   rails-assets-backbone!
   rails-assets-d3!
   rails-assets-jquery.tagsinput!
-  rails-assets-leaflet!
   rails-assets-normalize-css!
   rails-assets-slick.js!
   rails-assets-underscore!
