@@ -9,16 +9,17 @@
     .link
       button#exploreMap.btn.-landing =t('explore_map')
   section#cases.cases
-    .wrap: .row
-      .search
-        select#searchBox.autocomplete multiple="multiple"
-          - @tags.each do |t|
-            option value="#{t.name}" =t.name
-      - @case_studies.each do |c|
-        article.grid-xs-12.grid-md-4
-          =link_to case_study_path(c.id), class: "case", style: "background-image: url(#{c.cover_image.url(:medium)})"
-            .caption
-              h2 =c.title
+    .search
+      select#searchBox.autocomplete multiple="multiple"
+        - @tags.each do |t|
+          option value="#{t.name}" =t.name
+    .wrap
+      #casesArticles.row
+        - @case_studies.each do |c|
+          article.grid-xs-12.grid-sm-6.grid-md-4
+            =link_to case_study_path(c.id), class: "case", style: "background-image: url(#{c.cover_image.url(:medium)})"
+              .caption
+                h2 =c.title
             
           
   section.slider

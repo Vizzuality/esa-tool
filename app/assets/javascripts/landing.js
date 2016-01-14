@@ -6,6 +6,7 @@
 //= require backbone
 //= require_self
 //= require views/slider_view
+//= require views/cases_filter_view
 
 'use strict';
 
@@ -33,16 +34,8 @@
       this.banner = document.getElementById('banner');
       this.cases = document.getElementById('cases');
       // At beginning instance slider view
-      this._initSearchBox();
       this._initSlider();
-    },
-
-    /**
-     * Function to initialize the searchBox
-     */
-    _initSearchBox: function() {
-      this.search = this.$('#searchBox');
-      this.search.select2();
+      this._initCasesFilter();
     },
 
     /**
@@ -57,6 +50,15 @@
         responsive: [],
         autoplay: true,
         autoplaySpeed: 3000
+      });
+    },
+
+    /**
+     * Function to initialize the cases filter view
+     */
+    _initCasesFilter: function() {
+      this.cases = new App.View.CasesFilter({
+        el: '#cases'
       });
     },
 

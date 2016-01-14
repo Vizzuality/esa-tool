@@ -1,4 +1,4 @@
-class WelcomeController < ApplicationController
+class LandingController < ApplicationController
 
   layout "landing"
 
