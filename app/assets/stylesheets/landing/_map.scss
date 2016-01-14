@@ -5,9 +5,15 @@
   left:0;
   width: 100%;
 
+  background-color: $bg-color-landing-3;
+
   z-index: -1;
 
   img {
     width: 100%;
+  }
+
+  &._expanded {
+    z-index: 0;
   }
 }

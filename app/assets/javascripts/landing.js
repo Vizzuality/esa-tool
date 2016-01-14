@@ -5,8 +5,10 @@
 //= require underscore
 //= require backbone
 //= require_self
+//= require views/map_view
 //= require views/slider_view
 //= require views/cases_filter_view
+//= require controllers/map_controller
 
 'use strict';
 
@@ -32,10 +34,26 @@
     initialize: function() {
       this.menu = document.getElementById('menu');
       this.banner = document.getElementById('banner');
-      this.cases = document.getElementById('cases');
       // At beginning instance slider view
+      this._initModules();
+    },
+
+    /**
+     * Function to initialize modules
+     */
+    _initModules: function() {
+      this._initMap();
       this._initSlider();
       this._initCasesFilter();
+    },
+
+    /**
+     * Function to initialize the map
+     */
+    _initMap: function() {
+      this.map = new App.View.Map({
+        el: '#map'
+      });
     },
 
     /**
@@ -78,7 +96,7 @@
      */
     _exploreMap: function(e) {
       this.banner.classList.add('_hidden');
-      this.cases.classList.add('_expanded');
+      this.cases.el.classList.add('_expanded');
     }
 
   });

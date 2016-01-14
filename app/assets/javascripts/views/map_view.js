@@ -11,9 +11,9 @@
   App.View.Map = Backbone.View.extend({
 
     defaults: {
-      center: [46, 20],
+      center: [35.863760, -21.217176],
       scrollWheelZoom: false,
-      zoom: 5,
+      zoom: 3,
       basemap: 'terrain'
     },
 
@@ -73,9 +73,12 @@
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
-      this.template = this.options.template;
+      this.template = this.options.data.template || 1;
+      this.cartoUser = this.options.data.cartoUser || '';
+      this.layerData = this.options.data.layer || {};
 
       // At beginning create the map
+      this._setCartoOptions();
       this.createMap();
       this._setListeners();
     },
@@ -84,8 +87,15 @@
      * Function to set events at beginning
      */
     _setListeners: function() {
-      var refreshLayout = _.debounce(_.bind(this.refresh, this), 500);
-      window.addEventListener('resize', refreshLayout, false);
+      this.refreshEvent = _.debounce(_.bind(this.refresh, this), 500);
+      window.addEventListener('resize', this.refreshEvent, false);
+    },
+
+    /**
+     * Function to unset events after removing the map
+     */
+    _unsetListeners: function() {
+      window.removeEventListener('resize', this.refreshEvent, false);
     },
 
     /**
@@ -95,6 +105,7 @@
       if (!this.map) {
         this.map = L.map(this.el, this.options);
         this.setBasemap(this.defaults.basemap);
+        this.createLayer();
       }
     },
 
@@ -102,10 +113,17 @@
      * Remove initialized map
      */
     removeMap: function() {
+      if (this.layer) {
+        this.map.removeLayer(this.layer);
+        this.layer = null;
+      }
+
       if (this.map) {
         this.map.remove();
         this.map = null;
       }
+
+      this._unsetListeners();
     },
 
     /**
@@ -143,6 +161,63 @@
           attribution: attributionUrl
         }).addTo(this.map);
       }
+    },
+
+    /**
+     * Sets the provided bounds in the map
+     * @param {Object} bounds latlng
+     */
+    _setMapBounds: function(bounds) {
+      this.map.fitBounds(bounds);
+    },
+
+    /**
+     * Sets the default CartoDB options
+     */
+    _setCartoOptions: function() {
+      this.cartoOpts = {
+        user_name: this.cartoUser,
+        type: 'cartodb',
+        cartodb_logo: false,
+        sublayers: [{
+          sql: 'SELECT * FROM ' + this.layerData.table_name,
+          cartocss: '#null {polygon-fill:red;}' // WIP
+        }]
+      };
+    },
+
+    /**
+     * Creates the layer and it's added to the map
+     */
+    createLayer: function() {
+      var self = this;
+
+      cartodb.createLayer(this.map, this.cartoOpts)
+        .addTo(this.map)
+        .on('done', function(layer) {
+          layer.setZIndex(1);
+
+          self.layer = layer;
+          self.setLayerBounds();
+        })
+        .on('error', function(err) {
+          console.warn(err);
+        });
+    },
+
+    /**
+     * Gets the layer's bounds from CartoDB 
+     * and then its set in the map
+     */
+    setLayerBounds: function() {
+      var self = this;
+      var opts = this.cartoOpts;
+      var sqlBounds = new cartodb.SQL({ user: opts.user_name});
+      var sql = opts.sublayers[0].sql;
+
+      sqlBounds.getBounds(sql).done(function(bounds) {
+        self._setMapBounds(bounds);
+      });
     }
 
   });
