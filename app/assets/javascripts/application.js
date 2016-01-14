@@ -112,10 +112,6 @@
      */
     initMap: function(slideType) {
       var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
-      var template = this.data && this.data.case_study ? 
-        this.data.case_study.template : 1;
-      var user = this.data && this.data.cartodb_user ?
-        this.data.cartodb_user : '';
 
       if (this.map) {
         this.map.remove();
@@ -124,9 +120,9 @@
 
       if (slideType === 'map') {
         this.map = new App.Controller.Map({ 
-          template: template,
           elContent: el,
-          user: user
+          data: this.data,
+          page: this.sliderPage
         });
       }
     },

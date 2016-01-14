@@ -14,6 +14,7 @@
       center: [14.608822, 121.073225],
       scrollWheelZoom: false,
       zoom: 13,
+      maxZoom: 18,
       basemap: 'terrain'
     },
 
@@ -73,10 +74,12 @@
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
-      this.template = this.options.template;
-      this.user = this.options.user;
+      this.template = this.options.data.template || 1;
+      this.cartoUser = this.options.data.cartoUser || '';
+      this.layer = this.options.data.layer || {};
 
       // At beginning create the map
+      this._setCartoOptions();
       this.createMap();
       this._setListeners();
     },
@@ -161,26 +164,61 @@
       }
     },
 
-    createLayer: function() {
-      var cartoOpts = {
-        user_name: this.user,
+    /**
+     * Sets the provided bounds in the map
+     * @param {Object} bounds latlng
+     */
+    _setMapBounds: function(bounds) {
+      this.map.fitBounds(bounds);
+    },
+
+    /**
+     * Sets the default CartoDB options
+     */
+    _setCartoOptions: function() {
+      this.cartoOpts = {
+        user_name: this.cartoUser,
         type: 'cartodb',
         cartodb_logo: false,
         sublayers: [{
-          sql: 'SELECT * FROM table',
-          cartocss: 'cartocss'
+          sql: 'SELECT * FROM ' + this.layer.table_name,
+          cartocss: '#null {polygon-fill:red;}' // WIP
         }]
       };
+    },
 
-      cartodb.createLayer(this.map, cartoOpts)
+    /**
+     * Creates the layer and it's added to the map
+     */
+    createLayer: function() {
+      var self = this;
+
+      cartodb.createLayer(this.map, this.cartoOpts)
         .addTo(this.map)
         .on('done', function(layer) {
           layer.setZIndex(1);
-          this.layer = layer;
+
+          self.layer = layer;
+          self.setLayerBounds();
         })
         .on('error', function(err) {
           console.warn(err);
         });
+    },
+
+    /**
+     * Gets the layer's bounds from CartoDB 
+     * and then its set in the map
+     */
+    setLayerBounds: function() {
+      var self = this;
+      var opts = this.cartoOpts;
+      var sqlBounds = new cartodb.SQL({ user: opts.user_name});
+      var sql = opts.sublayers[0].sql;
+
+      sqlBounds.getBounds(sql).done(function(bounds) {
+        self._setMapBounds(bounds);
+      });
     }
 
   });
