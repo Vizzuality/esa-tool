@@ -1,0 +1,92 @@
+%placeholder-font {
+  font-family: $font-main;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.file-map-input {
+  > .filename-selected {
+    position: relative;
+    padding: 1rem;
+
+    background-color: rgba($font-color-4, 0.3);
+    border-radius: 5px;
+
+    > .name {
+      margin: 0;
+
+      font-family: $font-secondary;
+      font-size: $font-size;
+      line-height: 1.2;
+      color: $font-color-1;
+    }
+
+    > .close {
+      position:absolute;
+      top: 5px;
+      right: 10px;
+      display: block;
+
+      color: rgba($font-color-1, .5);
+      font-weight: normal;
+      font-size: rem(20px);
+      line-height: 1.8;
+
+      cursor: pointer;
+    }
+  }
+
+  > .input-wrapper {
+    position: relative;
+    height: rem(30px);
+    margin: .5rem 0 2rem;
+    padding: .5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 0;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    > .placeholder {
+      line-height: rem(30px);
+
+      > .title {
+        @extend %placeholder-font;
+        display: block;
+        color: $font-color-1;
+      }
+
+      > .sub-title {
+        @extend %placeholder-font;
+        color: $font-color-4;
+
+        > .link {
+          text-decoration: underline;
+
+          margin: 0 5px;
+        }
+      }
+    }
+
+    &.-lg {
+      height: rem(450px);
+    }
+
+    &._has_file {
+      > .placeholder {
+        display: none;
+      }
+    }
+  }
+
+}

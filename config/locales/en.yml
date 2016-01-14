@@ -26,6 +26,7 @@ en:
   add_new_case_study: "Add new case"
   add_page: 'Add new page'
   backoffice: 'Backoffice'
+  browse: 'browse'
   case_details: 'Case details'
   case_studies: "Case studies"
   confirm_sure: "Are you sure?"
@@ -39,6 +40,7 @@ en:
       long: "%B %d, %Y"
       short: "%b %d, %Y"
   delete: "Delete"
+  drop_shapefile: Start by dropping a shapefile here
   duplicate: "Duplicate"
   edit: "Edit"
   email: "Email"
@@ -48,6 +50,7 @@ en:
   logout: 'Logout'
   map: 'Map'
   organisation: "Organisation"
+  or: "or"
   page: 'Page'
   preview: "Preview"
   project_contact: 'Project contact'
