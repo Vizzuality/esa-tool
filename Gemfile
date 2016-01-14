@@ -9,6 +9,7 @@ gem 'httmultiparty'
 gem 'dotenv-rails'
 gem 'puma'
 gem 'gon'
+gem 'active_model_serializers'
 
 # Assets managment
 gem 'sass-rails', '~> 5.0'
@@ -35,6 +36,9 @@ end
 
 # Lightbox
 gem 'featherlight'
+
+# Select2
+gem "select2-rails"
 
 # Active record
 gem 'pg', '~> 0.15'

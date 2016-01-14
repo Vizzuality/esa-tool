@@ -1,36 +1,45 @@
 .l-content
   .map
     img src= asset_path('landing-map.png')
-  .banner
+  #banner.banner
     .title 
       h1 =t('earth_observation')
     .title
       h1 =t('sustainable_development')
     .link
-      button.btn.-landing =t('explore_map')
-  .cases
+      button#exploreMap.btn.-landing =t('explore_map')
+  section#cases.cases
     .wrap: .row
-      .grid-sm-12
-        span cases
-  .slider
+      .search
+        select#searchBox.autocomplete multiple="multiple"
+          - @tags.each do |t|
+            option value="#{t.name}" =t.name
+      - @case_studies.each do |c|
+        article.grid-xs-12.grid-md-4
+          =link_to case_study_path(c.id), class: "case", style: "background-image: url(#{c.cover_image.url(:medium)})"
+            .caption
+              h2 =c.title
+            
+          
+  section.slider
     .wrap
       #landingSlider
-        .slide
+        article.slide
           .slide-content
             h2.title = t('slide1_title')
             p.content = t('slide1_content')
           .slide-link
             button.btn.-landing.-inv =t('data_origin')
-        .slide
+        article.slide
           .slide-content
-            h2.title = t('slide1_title')
-            p.content = t('slide1_content')
+            h2.title = t('slide2_title')
+            p.content = t('slide2_content')
           .slide-link
             button.btn.-landing.-inv =t('data_origin')
-        .slide
+        article.slide
           .slide-content
-            h2.title = t('slide1_title')
-            p.content = t('slide1_content')
+            h2.title = t('slide3_title')
+            p.content = t('slide3_content')
           .slide-link
             button.btn.-landing.-inv =t('data_origin')
   footer.footer
@@ -45,10 +54,10 @@
             svg.icon.icon-eoworld-logo
               use xlink:href="#icon-eoworld-logo"
             ul
-              li = link_to t('case_studies'), "www.vizzuality.com"
-              li = link_to t('data sources'), "www.vizzuality.com"
-              li = link_to t('about'), "www.vizzuality.com"
-              li = link_to t('contact'), "www.vizzuality.com"
+              li = link_to t('case_studies'), "http://www.vizzuality.com"
+              li = link_to t('data sources'), "http://www.vizzuality.com"
+              li = link_to t('about'), "http://www.vizzuality.com"
+              li = link_to t('contact'), "http://www.vizzuality.com"
         .grid-sm-5.column.partnerts
             span.title =t('parnertship_convened')
             .partner-list

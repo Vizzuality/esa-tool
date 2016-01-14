@@ -1,6 +1,7 @@
 //= require jquery2
 //= require jquery_ujs
 //= require slick.js/slick.js
+//= require select2
 //= require underscore
 //= require backbone
 //= require_self
@@ -21,6 +22,7 @@
 
     events: {
       'click #btnBurguer': '_toggleMenu',
+      'click #exploreMap': '_exploreMap',
     },
 
     /**
@@ -28,8 +30,19 @@
      */
     initialize: function() {
       this.menu = document.getElementById('menu');
+      this.banner = document.getElementById('banner');
+      this.cases = document.getElementById('cases');
       // At beginning instance slider view
+      this._initSearchBox();
       this._initSlider();
+    },
+
+    /**
+     * Function to initialize the searchBox
+     */
+    _initSearchBox: function() {
+      this.search = this.$('#searchBox');
+      this.search.select2();
     },
 
     /**
@@ -55,6 +68,15 @@
       e.preventDefault();
       e.currentTarget.classList.toggle('_active');
       this.menu.classList.toggle('_active');
+    },
+
+    /**
+     * Function to open the map navigation
+     * @param  {Event} e
+     */
+    _exploreMap: function(e) {
+      this.banner.classList.add('_hidden');
+      this.cases.classList.add('_expanded');
     }
 
   });

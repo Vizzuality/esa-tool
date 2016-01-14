@@ -61,7 +61,7 @@
       return data;
     },
 
-    /** 
+    /**
      * Function to set the current slider page
      */
     _setSliderPage: function(page) {
@@ -83,7 +83,7 @@
      */
     initMap: function(slideType) {
       var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
-      var template = this.data && this.data.template ? 
+      var template = this.data && this.data.template ?
         this.data.template : 1;
 
       if (this.map) {
@@ -92,7 +92,7 @@
       }
 
       if (slideType === 'map') {
-        this.map = new App.Controller.Map({ 
+        this.map = new App.Controller.Map({
           template: template,
           elContent: el
         });
