@@ -14,7 +14,6 @@
       this.options = _.extend({}, this.defaults, options || {});
       this.filterName = this.options.filterName;
       this.casesContainer = document.getElementById('casesArticles');
-      this.casesOriginal = document.getElementById('casesArticles').innerHTML;
 
       this.cases = new App.Collection.CaseStudyCollection();
 
@@ -35,7 +34,7 @@
      * Function to set searchBox event listeners
      */
     _setListeners: function() {
-      this.search.on("select2:close", _.bind(this._getCases,this));
+      this.search.on("select2:close", _.debounce(_.bind(this._getCases, this), 500));
     },
 
     /**
@@ -45,7 +44,10 @@
       var self = this;
       var params = this.search.val()? this.filterName+'='+this.search.val(): '';
       this.cases.fetch({data:params}).done(function(data){
-        self._refreshCases(data.landing);
+        if (!_.isEqual(self.casesOriginal , data.landing)) {
+          self.casesOriginal = data.landing;
+          self._refreshCases(data.landing);
+        }
       });
     },
 
@@ -64,8 +66,8 @@
      * Function to get the case with template
      */
     _caseTemplate: function(studyCase) {
-      return '<article class="grid-xs-12 grid-sm-6 grid-md-4">'+
-                '<a class="case" style="background-image: url('+ studyCase.cover_path + '" href="'+ studyCase.case_path+'">'+
+      return '<article class="grid-xs-12 grid-sm-6 grid-md-4 case">'+
+                '<a style="background-image: url('+ studyCase.cover_path + '" href="'+ studyCase.case_path+'">'+
                   '<div class="caption">'+
                     '<h2>'+studyCase.title+'</h2>'+
                   '</div>'+

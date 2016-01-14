@@ -9,6 +9,8 @@ class LandingController < ApplicationController
       format.html
       format.json{ render json: @case_studies }
     end
+
+    gon.cartodb_user = ENV["CDB_USERNAME"]
   end
 
   private

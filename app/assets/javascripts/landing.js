@@ -44,7 +44,7 @@
      * Function to initialize modules
      */
     _initModules: function() {
-      // this._initMap();
+      this._initMap();
       this._initSlider();
       this._initCasesFilter();
     },
@@ -54,7 +54,10 @@
      */
     _initMap: function() {
       this.map = new App.View.Map({
-        el: '#map'
+        el: '#map',
+        template: 0,
+        basemap: 'satellite',
+        zoomControl: false
       });
     },
 
@@ -98,6 +101,7 @@
      */
     _exploreMap: function(e) {
       this.banner.classList.add('_hidden');
+      this.map.el.classList.add('_expanded');
       this.cases.el.classList.add('_expanded');
     }
 

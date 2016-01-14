@@ -1,6 +1,5 @@
 .l-content
-  .map
-    img src= asset_path('landing-map.png')
+  #map.map
   #banner.banner
     .title 
       h1 =t('earth_observation')
@@ -16,8 +15,8 @@
     .wrap
       #casesArticles.row
         - @case_studies.each do |c|
-          article.grid-xs-12.grid-sm-6.grid-md-4
-            =link_to case_study_path(c.id), class: "case", style: "background-image: url(#{c.cover_image.url(:medium)})"
+          article.grid-xs-12.grid-sm-6.grid-md-4.case
+            =link_to case_study_path(c.id), style: "background-image: url(#{c.cover_image.url(:medium)})"
               .caption
                 h2 =c.title
             
