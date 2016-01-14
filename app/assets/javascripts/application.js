@@ -5,9 +5,12 @@
 //= require backbone
 //= require leaflet
 //= require_self
-//= require views/slider_view
+//= require router
 //= require views/map_view
+//= require views/map_basemap_view
+//= require views/slider_view
 //= require views/tabs_view
+//= require controllers/map_controller
 
 'use strict';
 
@@ -16,6 +19,7 @@
   var App = root.App = {
     View: {},
     Model: {},
+    Controller: {},
     Events: _.clone(Backbone.Events)
   };
 
@@ -29,17 +33,73 @@
      * This function will be executed when the instance is created
      */
     initialize: function() {
+      this.router = new root.App.Router();
+      this.data = this._getAppData();
+
+      // Start application
+      this._start();
+    },
+
+    /**
+     * Function to start the application
+     * Initializing the slider, the listeners and
+     * starting the router.
+     */
+    _start: function() {
       this.menu = document.getElementById('menu');
-      // At beginning instance slider view
-      this.slider = new App.View.Slider({ el: '#mainSlider' });
+      this._initSlider();
       this._setListeners();
+      this.router.start();
     },
 
     /**
      * Function to set events at beginning
      */
     _setListeners: function() {
+      this.listenTo(this.router, 'update:slider', this._setSliderPageFromUrl);
+
+      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
       this.listenTo(this.slider, 'slider:change', this.initMap);
+    },
+
+    /**
+     * Function to set the app's data from the 'gon' namespace
+     * provided by the view.
+     */
+    _getAppData: function() {
+      var data;
+
+      if (gon && gon.case_study) {
+        data = JSON.parse(gon.case_study);
+      }
+
+      return data;
+    },
+
+    /** 
+     * Function to set the current slider page
+     */
+    _setCurrentSliderPage: function(page) {
+      this.sliderPage = page;
+      this.router.trigger('route:update', {
+        page: page.toString()
+      });
+    },
+
+    /**
+     * Function to update slide current page from the url
+     */
+    _setSliderPageFromUrl: function(page) {
+      this.slider.goToSlide(page);
+    },
+
+    /**
+     * Function to initialize the slider
+     */
+    _initSlider: function() {
+      this.slider = new App.View.Slider({ 
+        el: '#mainSlider'
+      });
     },
 
     /**
@@ -48,12 +108,20 @@
      * @param  {String} slideType It could be cover, text or map
      */
     initMap: function(slideType) {
+      var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
+      var template = this.data && this.data.template ? 
+        this.data.template : 1;
+
       if (this.map) {
         this.map.remove();
         this.map = null;
       }
+
       if (slideType === 'map') {
-        this.map = new App.View.Map({ el: '#mapView' });
+        this.map = new App.Controller.Map({ 
+          template: template,
+          elContent: el
+        });
       }
     },
 
