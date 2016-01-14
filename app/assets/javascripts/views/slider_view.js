@@ -34,7 +34,7 @@
      * @param  {Object} params
      */
     initialize: function(params) {
-      this.options = _.extend({}, this.defaults, params.options || {});
+      this.options = _.extend({}, this.defaults, params || {});
       this.$page = document.getElementById('page');
       this._setListeners();
       // At beginning initialize slick jquery plugin
@@ -80,6 +80,14 @@
      */
     setCurrent: function(i) {
       this.current = i;
+    },
+
+    /**
+     * Go to the specified slide
+     * @param  {Number} slide Slide number
+     */
+    goToSlide: function(slide) {
+      this.$el.slick('slickGoTo', slide);
     },
 
     /**
