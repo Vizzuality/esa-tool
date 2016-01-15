@@ -15,4 +15,5 @@ Rails.application.config.assets.precompile += %w( backoffice.js )
 Rails.application.config.assets.precompile += %w( backoffice.css )
 
 # Assets for landing page
+Rails.application.config.assets.precompile += %w( landing.js )
 Rails.application.config.assets.precompile += %w( landing.css )

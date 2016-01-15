@@ -26,10 +26,20 @@
       'mapbox': '&copy; <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     },
 
-    /** 
+    /**
     * Basemaps dictionary by themes id
     */
     basemaps: {
+      0: {
+        terrain: {
+          tileUrl: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+          attribution: 'cartodb'
+        },
+        satellite: {
+          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',
+          attribution: 'mapbox'
+        }
+      },
       1: {
         terrain: {
           tileUrl: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
@@ -74,11 +84,12 @@
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
+      this.basemap = this.options.basemap;
       this.cartoCss = this.options.cartoCss || '';
 
-      this.template = this.options.data.template || 1;
-      this.cartoUser = this.options.data.cartoUser || '';
-      this.layerData = this.options.data.layer || {};
+      this.template = this.options.data ? this.options.data.template : 1;
+      this.cartoUser = this.options.data ? this.options.data.cartoUser : '';
+      this.layerData = this.options.data ? this.options.data.layer : {};
 
       // At beginning create the map
       this._setCartoOptions();
@@ -107,7 +118,8 @@
     createMap: function() {
       if (!this.map) {
         this.map = L.map(this.el, this.options);
-        this.setBasemap(this.defaults.basemap);
+        this.setBasemap(this.basemap);
+        // this.createLayer();
       }
     },
 
@@ -219,7 +231,7 @@
       var groups = this.layerData.groups;
       var defaultCarto = cartoCss['default'];
       var dataCarto = cartoCss['data'];
-      var result; 
+      var result;
 
       defaultCarto = this._formatCartoCss(defaultCarto);
       result = '#' + table + defaultCarto;
@@ -244,7 +256,7 @@
     },
 
     /**
-     * Formats the plain cartocss with the colors 
+     * Formats the plain cartocss with the colors
      * of the current template.
      * @params {String} carto Default template carto code.
      * @params {String} index Current element index.
@@ -265,7 +277,7 @@
     },
 
     /**
-     * Gets the layer's bounds from CartoDB 
+     * Gets the layer's bounds from CartoDB
      * and then its set in the map
      */
     _setLayerBounds: function() {

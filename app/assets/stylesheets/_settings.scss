@@ -23,11 +23,24 @@ $screen-xl: 1920px !default;
 $white: #fff;
 $black: #000;
 $dark: #040205;
+$light-dark: #4a4a4a;
 $dark-gray: #363636;
 $gray: #D7D7D7;
+$light-gray: #f0f4f8;
 $blue: #316274;
 $light-blue: #12e9e4;
 $dark-blue: #00324f;
+
+// Landing
+$font-color-landing-1: $light-dark;
+$font-color-landing-2: $light-blue;
+$font-color-landing-3: $dark-blue;
+$font-color-landing-4: $black;
+
+$bg-color-landing-1: $light-gray;
+$bg-color-landing-2: $light-blue;
+$bg-color-landing-3: $dark-blue;
+$bg-color-landing-4: $white;
 
 // Theme
 $font-color-1: $white;

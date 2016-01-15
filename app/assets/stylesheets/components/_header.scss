@@ -1,4 +1,5 @@
 .l-header {
+
   position: fixed;
   top: rem(30px);
   left: 0;
@@ -24,6 +25,26 @@
 
     .icon-eoworld-logo {
       margin-top: -11px;
+    }
+  }
+
+  &.-bo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: rem(50px);
+    width: 100%;
+
+    color: $font-color-2;
+
+    background: $bg-color-2;
+
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.20);
+
+    z-index: 1;
+
+    body {
+      padding-top: rem(50px);
     }
   }
 }

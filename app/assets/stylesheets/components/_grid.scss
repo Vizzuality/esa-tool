@@ -15,13 +15,17 @@ $max-width: 1200px;
 @function grid_space($column) {
   @return $column * (100 / $grid-columns) * 1%;
 }
-
-.wrap {
+%wrap {
   max-width: $max-width;
   margin-right: auto;
   margin-left: auto;
   padding-left: $site-margin;
   padding-right: $site-margin;
+  width: calc(100% - 40px);
+}
+
+.wrap{
+  @extend %wrap;
 }
 
 .row {
