@@ -46,7 +46,8 @@
           attribution: 'mapbox'
         },
         satellite: {
-          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',          attribution: 'mapbox'
+          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',
+          attribution: 'mapbox'
         }
       },
       3: {
@@ -206,6 +207,9 @@
         });
     },
 
+    /**
+     * Generates and sets the cartocss for the layer
+     */
     _setCartoCss: function() {
       var self = this;
       var table = this.layerData.table_name;
@@ -239,6 +243,13 @@
       sublayer.setCartoCSS(result);
     },
 
+    /**
+     * Formats the plain cartocss with the colors 
+     * of the current template.
+     * @params {String} carto Default template carto code.
+     * @params {String} index Current element index.
+     * @params {String} color RGB hex color for the element.
+     */
     _formatCartoCss: function(carto, index, color) {
       carto = JSON.stringify(carto);
       carto = carto.replace(/\"/g, '');

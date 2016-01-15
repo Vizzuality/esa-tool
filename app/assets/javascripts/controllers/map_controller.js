@@ -60,6 +60,7 @@
         cartoCss: this.cartoCss
       });
 
+      // Creates a CartoDB layer
       this.map.createLayer();
 
       this.mapBasemap = new App.View.MapBasemap({
@@ -95,6 +96,9 @@
       return formattedData;
     },
 
+    /**
+     * Gets the data from CartoDB
+     */
     _getCategories: function() {
       var self = this;
       var data = this.data;
@@ -108,6 +112,10 @@
       return cartoQuery;
     },
 
+    /**
+     * Parser to group the recieved data for the views
+     * @param {Object} res response from CartoDB
+     */
     _parseCategoriesData: function(res) {
       var data = res.rows;
       var groups = _.groupBy(data, 'category');
