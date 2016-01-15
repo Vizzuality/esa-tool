@@ -34,6 +34,7 @@ en:
   create_case_study: "Create new case study"
   create_user: "Create user"
   data: "Data"
+  data_origin: "Data origin"
   date:
     formats:
       default: "%Y-%m-%d"
@@ -44,6 +45,8 @@ en:
   duplicate: "Duplicate"
   edit: "Edit"
   email: "Email"
+  earth_observation: "Earth observation"
+  explore_map: "Explore the map"
   forgot_password: 'Forgot your password?'
   last_update: "Last update"
   login: 'Login'
@@ -52,6 +55,7 @@ en:
   organisation: "Organisation"
   or: "or"
   page: 'Page'
+  parnertship_convened: "Partnership convened by"
   preview: "Preview"
   project_contact: 'Project contact'
   published: "Published"
@@ -59,6 +63,13 @@ en:
   role: "Role"
   save: "Save"
   sign_up: 'Sign up'
+  slide1_title: "Where the data come from"
+  slide1_content: "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+  slide2_title: "Where the data come from"
+  slide2_content: "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+  slide3_title: "Where the data come from"
+  slide3_content: "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+  sustainable_development: 'For sustainable development'
   tags: 'Tags'
   text: 'Text'
   unpublished: "Unpublished"
