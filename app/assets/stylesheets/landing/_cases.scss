@@ -6,7 +6,7 @@
 
   background-color: $bg-color-landing-3;
 
-  box-shadow: 0px 14px 4px 0px rgba(0,0,0,0.5);
+  box-shadow: inset 0px -14px 4px 0px rgba(0,0,0,0.5);
   transition: margin .5s ease;
 
   &._expanded {
