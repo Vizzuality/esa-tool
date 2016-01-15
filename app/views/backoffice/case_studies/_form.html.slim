@@ -6,6 +6,13 @@
 .form-row
   = f.input :published, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
 
+.nested-fields
+  .row
+    .grid-sm-6
+      = f.input :lat
+    .grid-sm-6
+      = f.input :lng
+
 .form-row
   = f.input :tag_list, input_html: { class: 'tags' }
 
