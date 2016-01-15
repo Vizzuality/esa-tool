@@ -80,7 +80,7 @@
       return data;
     },
 
-    /** 
+    /**
      * Function to set the current slider page
      */
     _setCurrentSliderPage: function(page) {
@@ -101,7 +101,7 @@
      * Function to initialize the slider
      */
     _initSlider: function() {
-      this.slider = new App.View.Slider({ 
+      this.slider = new App.View.Slider({
         el: '#mainSlider'
       });
     },

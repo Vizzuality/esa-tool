@@ -38,4 +38,10 @@ class CaseStudy < ActiveRecord::Base
     find(id).deep_clone include: :pages
   end
 
+  def self.get_tag_filtered(options={})
+    case_studies = CaseStudy.all
+    case_studies = case_studies.tagged_with(options[:tags]) if options[:tags]
+    case_studies
+  end
+
 end

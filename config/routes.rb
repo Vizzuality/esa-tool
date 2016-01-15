@@ -18,6 +18,6 @@ Rails.application.routes.draw do
     get 'preview', on: :member
   end
 
-  root 'welcome#index', as: 'root'
+  root 'landing#index', as: 'root'
 
 end

@@ -22,7 +22,7 @@
       this.elContent = this.options.elContent;
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
-      
+
       this.template = this.data.template
       this.cartoCss = App.CartoCSS['Theme' + this.template];
 
@@ -53,7 +53,7 @@
         this.map = null;
       }
 
-      this.map = new App.View.Map({ 
+      this.map = new App.View.Map({
         el: mapEl,
         data: this.data,
         categories: this.categoriesData,
@@ -71,7 +71,7 @@
     },
 
     /**
-     * Gets the needed data to pass it to the map view 
+     * Gets the needed data to pass it to the map view
     */
     _getData: function(data) {
       var formattedData = {};
@@ -83,7 +83,7 @@
         if (caseStudy) {
           var pages = caseStudy.pages;
           formattedData.template = caseStudy.template;
-          
+
           if (pages) {
             var page = pages[this.page - 1];
 
@@ -106,7 +106,7 @@
       var table = data.layer.table_name;
       var column = data.layer.column_selected;
 
-      var cartoQuery = sql.execute('SELECT count({{column}}) as sum, {{column}} as category FROM {{table}} GROUP BY {{column}}', 
+      var cartoQuery = sql.execute('SELECT count({{column}}) as sum, {{column}} as category FROM {{table}} GROUP BY {{column}}',
         { column: column, table: table });
 
       return cartoQuery;
@@ -138,7 +138,7 @@
       this.data.layer.groups = groups;
     },
 
-    /** 
+    /**
      * Removes the map and basemap view and the listening events.
      */
     remove: function() {
