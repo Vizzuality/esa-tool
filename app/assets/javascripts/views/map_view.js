@@ -14,6 +14,7 @@
       center: [35.863760, -21.217176],
       scrollWheelZoom: false,
       zoom: 3,
+      zoomControl: false,
       basemap: 'terrain'
     },
 
@@ -51,7 +52,7 @@
       },
       2: {
         terrain: {
-          tileUrl: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+          tileUrl: 'https://api.mapbox.com/v4/alexdontsurf.fa9a7462/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxleGRvbnRzdXJmIiwiYSI6IlU5MWZ4TU0ifQ.Ro2ZkpiiUpzhResB5Lr04A',
           attribution: 'mapbox'
         },
         satellite: {
@@ -84,7 +85,8 @@
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       this.basemap = this.options.basemap;
-      
+      this.cartoCss = this.options.cartoCss || '';
+
       this.template = this.options.data ? this.options.data.template : 1;
       this.cartoUser = this.options.data ? this.options.data.cartoUser : '';
       this.layerData = this.options.data ? this.options.data.layer : {};
@@ -192,8 +194,7 @@
         type: 'cartodb',
         cartodb_logo: false,
         sublayers: [{
-          sql: 'SELECT * FROM ' + this.layerData.table_name,
-          cartocss: '#null {polygon-fill:red;}' // WIP
+          sql: 'SELECT * FROM ' + this.layerData.table_name
         }]
       };
     },
@@ -210,7 +211,8 @@
           layer.setZIndex(1);
 
           self.layer = layer;
-          self.setLayerBounds();
+          self._setCartoCss();
+          self._setLayerBounds();
         })
         .on('error', function(err) {
           console.warn(err);
@@ -218,13 +220,70 @@
     },
 
     /**
+     * Generates and sets the cartocss for the layer
+     */
+    _setCartoCss: function() {
+      var self = this;
+      var table = this.layerData.table_name;
+      var column = this.layerData.column_selected;
+      var cartoCss = this.cartoCss;
+      var palette = cartoCss.palette;
+      var groups = this.layerData.groups;
+      var defaultCarto = cartoCss['default'];
+      var dataCarto = cartoCss['data'];
+      var result;
+
+      defaultCarto = this._formatCartoCss(defaultCarto);
+      result = '#' + table + defaultCarto;
+
+      for (var group in groups) {
+        var category = groups[group][0];
+        var cat = category.category;
+        var color = category.color;
+        var index = category.index;
+        var data = dataCarto[index];
+
+        if (data) {
+          index = index + 1;
+          index = index.toString();
+          var carto = self._formatCartoCss(data, index, color);
+          result += '#' + table +'[' + column + '="' + cat + '"]' + carto;
+        }
+      }
+
+      var sublayer = this.layer.getSubLayer(0);
+      sublayer.setCartoCSS(result);
+    },
+
+    /**
+     * Formats the plain cartocss with the colors
+     * of the current template.
+     * @params {String} carto Default template carto code.
+     * @params {String} index Current element index.
+     * @params {String} color RGB hex color for the element.
+     */
+    _formatCartoCss: function(carto, index, color) {
+      carto = JSON.stringify(carto);
+      carto = carto.replace(/\"/g, '');
+      carto = carto.replace(/\,/g, ';');
+      carto = carto.replace(/\}/g, ';}');
+
+      if (index) {
+        var search = new RegExp('%' + index, 'gi');
+        carto = carto.replace(search, color);
+      }
+
+      return carto;
+    },
+
+    /**
      * Gets the layer's bounds from CartoDB
      * and then its set in the map
      */
-    setLayerBounds: function() {
+    _setLayerBounds: function() {
       var self = this;
       var opts = this.cartoOpts;
-      var sqlBounds = new cartodb.SQL({ user: opts.user_name});
+      var sqlBounds = new cartodb.SQL({ user: opts.user_name });
       var sql = opts.sublayers[0].sql;
 
       sqlBounds.getBounds(sql).done(function(bounds) {

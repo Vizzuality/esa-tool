@@ -9,7 +9,7 @@
       button#exploreMap.btn.-landing =t('explore_map')
   section#cases.cases
     .search
-      select#searchBox.autocomplete multiple="multiple"
+      select#searchBox.select2 multiple="multiple"
         - @tags.each do |t|
           option value="#{t.name}" =t.name
     .wrap

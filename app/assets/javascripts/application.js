@@ -5,6 +5,7 @@
 //= require backbone
 //= require_self
 //= require router
+//= require_tree ./cartocss
 //= require views/map_view
 //= require views/map_basemap_view
 //= require views/slider_view
@@ -119,7 +120,7 @@
       }
 
       if (slideType === 'map') {
-        this.map = new App.Controller.Map({
+        this.map = new App.Controller.Map({ 
           elContent: el,
           data: this.data,
           page: this.sliderPage

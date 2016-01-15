@@ -56,8 +56,7 @@
       this.map = new App.View.Map({
         el: '#map',
         template: 0,
-        basemap: 'satellite',
-        zoomControl: false
+        basemap: 'satellite'
       });
     },
 
@@ -101,8 +100,8 @@
      */
     _exploreMap: function(e) {
       this.banner.classList.add('_hidden');
-      this.map.el.classList.add('_expanded');
       this.cases.el.classList.add('_expanded');
+      this.map.el.classList.add('_expanded');
     }
 
   });
