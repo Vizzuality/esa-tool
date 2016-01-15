@@ -1,0 +1,45 @@
+%modal-font {
+  font-family: $font-main;
+  font-size: $font-initial;
+  color: $font-color-landing-4;
+}
+.leaflet-popup {
+  .leaflet-popup-close-button {
+    display: none;
+  }
+
+  .leaflet-popup-content {
+    background-color: $bg-color-landing-4;
+    p {
+      @extend %modal-font;
+    }
+
+    .link {
+      display: block;
+
+      @extend %modal-font;
+      color:$font-color-landing-2;
+
+      text-align: center;
+      text-decoration: none;
+    }
+  }
+
+  .leaflet-popup-tip {
+    width: 5px;
+    height: 5px;
+    margin-top: -5px;
+
+    &:after {
+      content:"";
+      height: 23px;
+      width: 1px;
+      background-color: $bg-color-landing-4;
+      position: absolute;
+      bottom: -19px;
+      left: 14px;
+      right: 0;
+      transform: rotate(-45deg);
+    }
+  }
+}

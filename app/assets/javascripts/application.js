@@ -120,7 +120,7 @@
       }
 
       if (slideType === 'map') {
-        this.map = new App.Controller.Map({ 
+        this.map = new App.Controller.Map({
           elContent: el,
           data: this.data,
           page: this.sliderPage

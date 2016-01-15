@@ -34,6 +34,7 @@
      * This function will be executed when the instance is created
      */
     initialize: function() {
+      this.data = this._getAppData();
       this.menu = document.getElementById('menu');
       this.banner = document.getElementById('banner');
       // At beginning instance slider view
@@ -43,8 +44,26 @@
     /**
      * Function to initialize modules
      */
+    _getAppData: function() {
+      var data = {};
+
+      if (gon && gon.case_studies) {
+        data.caseStudies = JSON.parse(gon.case_studies);
+      }
+
+      if (gon && gon.cartodb_user) {
+        data.cartodbUser = gon.cartodb_user;
+      }
+
+      return data;
+    },
+
+    /**
+     * Function to initialize modules
+     */
     _initModules: function() {
       this._initMap();
+      this._renderCases();
       this._initSlider();
       this._initCasesFilter();
     },
@@ -58,6 +77,32 @@
         template: 0,
         basemap: 'satellite'
       });
+    },
+
+    /**
+     * Function to initialize the map
+     */
+    _renderCases: function() {
+      var self = this;
+      var markerOptions = {};
+      _.each(this.data.caseStudies, function(caseStudy){
+        if (caseStudy.lat && caseStudy.lng){
+          self.map.createMarker(
+            [caseStudy.lat,caseStudy.lng],
+            markerOptions,
+            self._popUpTemplate(caseStudy)
+          );
+        }
+      });
+    },
+
+    /**
+     * Function to initialize the map
+     */
+    _popUpTemplate: function(caseStudy) {
+      return  '<div class="content"><p>'+caseStudy.title+'</p>'+
+                '<a class="link" href='+'#'+'> Learn more </>'+
+              '</div>';
     },
 
     /**
