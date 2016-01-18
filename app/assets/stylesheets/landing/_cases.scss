@@ -6,7 +6,6 @@
 
   background-color: $bg-color-landing-3;
 
-  box-shadow: inset 0px -14px 4px 0px rgba(0,0,0,0.5);
   transition: margin .5s ease;
 
   &._expanded {
@@ -24,16 +23,6 @@
   }
 
   .case {
-
-    animation: translate .5s linear;
-    animation-fill-mode: forwards;
-    transform: translateX(400%);
-
-    @for $i from 1 through 9 {
-      &:nth-child(#{$i}){
-        animation-delay: $i*0.2s;
-      }
-    }
 
     > a {
     position: relative;
@@ -77,10 +66,4 @@
       }
     }
   }
-}
-
-@-webkit-keyframes translate {
-  0% { opacity:0; transform: translateX(400%);}
-  85% { opacity:0.5; transform: translateX(100%);}
-  100% { opacity:1; transform: translateX(0);}
 }
