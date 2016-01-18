@@ -76,9 +76,7 @@ class Backoffice::PagesController < BackofficeController
     def page_params
       params.require(:page).permit(
         :title,
-        :body_first,
-        :body_second,
-        :body_thirth,
+        :body,
         :background,
         :color_palette,
         # :custom_color_palette,
