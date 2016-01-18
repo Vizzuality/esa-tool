@@ -6,13 +6,16 @@
     &.y {
       .domain {
         stroke-width: 0;
-        stroke: red;
+        stroke: transparent;
+        shape-rendering: crispEdges;
       }
     }
 
     &.x {
       .domain {
         stroke-width: 0;
+        stroke: transparent;
+        shape-rendering: crispEdges;
       }
 
       .tick {
@@ -33,7 +36,31 @@
     }
   }
 
-  &.area {
+  &.bar {
+     .bar {
+      stroke-width: 1;
+      fill-opacity: 0.3;
+      shape-rendering: crispEdges;
+    }
+
+    .axis {
+      &.x {
+        .domain {
+          stroke: #B8B8B8;
+          stroke-width: 1;
+        }
+      }
+    }
+  }
+
+  &.pie {
+    .arc {
+      fill-opacity: 0.3;
+      stroke-width: 2;
+    }
+  }
+
+  &.line {
     .line-top {
       stroke: #B8B8B8;
       stroke-width: 2;

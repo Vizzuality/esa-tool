@@ -186,6 +186,11 @@
         this.mapBasemap = null;
       }
 
+      if (this.dashboard) {
+        this.dashboard.remove();
+        this.dashboard = null;
+      }
+      
       this.stopListening();
     },
 

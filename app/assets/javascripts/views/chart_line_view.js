@@ -8,13 +8,13 @@
 
   App.View = App.View || {};
 
-  App.View.ChartArea = Backbone.View.extend({
+  App.View.ChartLine = Backbone.View.extend({
 
     events: {
     },
 
     defaults: {
-      chartEl: '#area-chart',
+      chartEl: '#line-chart',
       dateFormat: '%Y',
       interpolate: 'linear',
       areaInterpolate: 'basic',
@@ -208,7 +208,7 @@
         .innerTickSize(-this.cHeight)
         .ticks(d3.time.years, 3)
         .outerTickSize(0)
-        .tickFormat(d3.time.format(this.dateFormat));
+        .tickFormat('');
     },
 
     _setDomain: function() {
@@ -272,6 +272,8 @@
         .data(areas)
         .enter().append('path')
           .attr('class', 'area')
+          .transition()
+          .duration(700) 
           .attr('d', function(d) { return area(d.values); })
           .style('fill', function(d) { return d.color; });
     },
@@ -294,6 +296,17 @@
           .style('stroke', d.color);
       });
 
+      this.svg.selectAll('.line').transition()
+        .attr('stroke-dasharray', function() { 
+          var total = this.getTotalLength(); 
+          return total + ' ' + total;
+        })
+        .attr('stroke-dashoffset', function() { return this.getTotalLength(); })
+        .transition()
+          .duration(300)
+          .ease('linear')
+          .attr('stroke-dashoffset', 0);
+
       this.svg.append('g')
         .attr('class', 'line-top-group')
         .attr('transform', 'translate(0,0)')
@@ -303,6 +316,36 @@
           .attr('x2', this.cWidth)
           .attr('y1', 0)
           .attr('y1', 0);
+    },
+    
+    prepareRemove: function() {
+      this.svg.selectAll('.area')
+        .transition()
+        .duration(1000)
+        .style('fill-opacity', function(d) { return 0 });
+
+      this.svg.selectAll('.line')
+        .transition()
+        .duration(500)
+        .ease('linear')
+        .attr('stroke-dashoffset', function() { return this.getTotalLength(); });
+
+      if (this.removeTimer) {
+        clearTimeout(this.removeTimer);
+        this.removeTimer = null;
+      }
+
+      this.removeTimer = setTimeout(this.remove.bind(this), 300);
+    },
+
+    remove: function() {
+      if(this.svg) {
+        var svgContainer = this.el.querySelector('svg');
+
+        this.svg.remove();
+        this.svg = null;
+        this.el.removeChild(svgContainer);
+      }
     }
   });
 

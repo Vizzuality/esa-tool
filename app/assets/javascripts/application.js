@@ -9,7 +9,9 @@
 //= require_tree ./cartocss
 //= require views/map_view
 //= require views/map_basemap_view
-//= require views/chart_area_view
+//= require views/chart_line_view
+//= require views/chart_pie_view
+//= require views/chart_bar_view
 //= require views/dashboard_view
 //= require views/slider_view
 //= require views/tabs_view

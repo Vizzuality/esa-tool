@@ -27,26 +27,16 @@
           .charts-nav
             h3.title Chart:
             ul.tabs
-              li.tab-title.-active
-                a href="#"
-                  svg.icon-chart.-line
-                    use xlink:href="#icon-chart-line"
-              li.tab-title
-                a href="#"
-                  svg.icon-chart.-pie
-                    use xlink:href="#icon-chart-pie"
-              li.tab-title
-                a href="#"
-                  svg.icon-chart.-bar
-                    use xlink:href="#icon-chart-bar"
-                    
+              - p.charts.each.with_index do |chart, index|
+                li data-tab="#{chart.name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)
+                  a href="#"
+                    svg class=("icon-chart -#{chart.name}")
+                      use xlink:href="#icon-chart-#{chart.name}"
+
           .charts-content
-            .tab-content.-active
-              #area-chart.chart.area
-            .tab-content
-              #line-pie.chart
-            .tab-content
-              #line-bar.chart
+            - p.charts.each.with_index do |chart, index|
+              div data-tab-content="#{chart.name}" class=("tab-content -active" if index == 0) class=("tab-content" if index > 0) 
+                div id=("#{chart.name}-chart") class=("chart #{chart.name}")
           / .charts-timeline
           /   ul.times
           /     li 1990
