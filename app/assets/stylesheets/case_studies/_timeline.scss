@@ -1,0 +1,37 @@
+.timeline {
+  .list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > .item {
+      float: left;
+      padding: rem(10px);
+      margin: 0 rem(10px);
+      font-family: $font-secondary;
+      font-size: rem($font-size-small);
+      font-weight: 700;
+      letter-spacing: rem(1px);
+      cursor: pointer;
+    }
+  }
+
+  > .action {
+    width: 100%;
+    padding: rem(10px) 0;
+    margin-top: rem(25px);
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #434343;
+
+    > .icon {
+      width: rem(18px);
+      height: rem(22px);
+      fill: $white;
+    }
+  }
+}

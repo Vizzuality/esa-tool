@@ -37,11 +37,8 @@
             - p.charts.each.with_index do |chart, index|
               div data-tab-content="#{chart.name}" class=("tab-content -active" if index == 0) class=("tab-content" if index > 0) 
                 div id=("#{chart.name}-chart") class=("chart #{chart.name}")
-          / .charts-timeline
-          /   ul.times
-          /     li 1990
-          /     li 1995
-          /     li 2010
-          /     li 2014
-          /   button.btn PLAY
-        
+          .charts-timeline.timeline
+            ul.list
+            button.action
+              svg.icon-play.icon
+                use xlink:href="#icon-play"

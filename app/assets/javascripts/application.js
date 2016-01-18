@@ -12,6 +12,7 @@
 //= require views/chart_line_view
 //= require views/chart_pie_view
 //= require views/chart_bar_view
+//= require views/timeline_view
 //= require views/dashboard_view
 //= require views/slider_view
 //= require views/tabs_view

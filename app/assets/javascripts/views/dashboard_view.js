@@ -26,6 +26,7 @@
       this.data = this.options.data;
 
       this._initChart();
+      this._initTimeline();
     },
 
     /**
@@ -41,6 +42,22 @@
           this._renderChart(chart);
         }
       }
+    },
+
+    _initTimeline: function() {
+      var parent = this.el;
+      var elem = parent.querySelector('.charts-timeline');
+      var data = this.data.groups;
+
+      if (this.timeline) {
+        this.timeline.remove();
+        this.timeline = null;
+      }
+
+      this.timeline = new App.View.Timeline({
+        el: elem,
+        data: data
+      });
     },
 
     /**

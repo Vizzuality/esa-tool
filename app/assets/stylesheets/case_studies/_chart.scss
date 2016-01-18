@@ -54,6 +54,7 @@
   }
 
   &.pie {
+    height: rem(300px);
     .arc {
       fill-opacity: 0.3;
       stroke-width: 2;
