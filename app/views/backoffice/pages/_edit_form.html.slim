@@ -1,5 +1,6 @@
 - palettes = 2
 - palette_range = 8
+- basemaps = [[t('terrain'), 'terrain'], [t('satellite'), 'satellite']]
 
 .form-row
   = f.input :title
@@ -37,7 +38,9 @@
   /   = f.label :map_column
   /   = f.input_field :map_column, as: :radio_buttons
 
-  
+  .form-row
+    = f.input :basemap, as: :radio_buttons, collection: basemaps
+
     
   .form-row
     = f.label :color_palette
