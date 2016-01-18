@@ -48,7 +48,7 @@
       var parent = this.elContent;
       var mapEl = parent.querySelector('#mapView');
       var basemapEl = parent.querySelector('#basemapView');
-      var defaultBasemap = basemapEl.getAttribute('data-basemap');
+      var defaultBaseMap = basemapEl.getAttribute('data-basemap');
 
       if (this.map) {
         this.map.remove();
@@ -60,14 +60,14 @@
         data: this.data,
         categories: this.categoriesData,
         cartoCss: this.cartoCss,
-        basemap: defaultBasemap
+        basemap: defaultBaseMap
       });
 
       // Creates a CartoDB layer
       this.map.createLayer();
-
       this.mapBasemap = new App.View.MapBasemap({
-        el: basemapEl
+        el: basemapEl,
+        basemap: defaultBaseMap
       });
 
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
