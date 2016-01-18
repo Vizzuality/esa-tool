@@ -1,0 +1,65 @@
+.chart {
+  width: 100%;
+  height: rem(300px);
+
+  .axis {
+    &.y {
+      .domain {
+        stroke-width: 0;
+        stroke: red;
+      }
+    }
+
+    &.x {
+      .domain {
+        stroke-width: 0;
+      }
+
+      .tick {
+        line {
+          shape-rendering: crispEdges;
+          stroke-width: 1;
+          stroke: rgba($white, 0.2);
+        }
+
+        text {
+          fill: $white;
+          font-family: $font-secondary;
+          font-size: rem($font-size-small);
+          letter-spacing: rem(1px);
+          shape-rendering: crispEdges;
+        }
+      }
+    }
+  }
+
+  &.area {
+    .line-top {
+      stroke: #B8B8B8;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .curstom-domain {
+      stroke: #B8B8B8;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+
+    .area {
+      shape-rendering: crispEdges;
+      fill-opacity: 0.3;
+      stroke-width: 0;
+    }
+
+    .line {
+      shape-rendering: optimizeSpeed;
+      fill: transparent;
+      stroke-width: 2;
+    }
+
+    text {
+      stroke: $white;
+    }
+  }
+}

@@ -3,11 +3,14 @@
 //= require slick.js/slick.js
 //= require underscore
 //= require backbone
+//= require d3
 //= require_self
 //= require router
 //= require_tree ./cartocss
 //= require views/map_view
 //= require views/map_basemap_view
+//= require views/chart_area_view
+//= require views/dashboard_view
 //= require views/slider_view
 //= require views/tabs_view
 //= require controllers/map_controller
