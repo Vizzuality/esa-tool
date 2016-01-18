@@ -23,7 +23,8 @@
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
 
-      this.template = this.data.template
+      this.basemap = this.data.basemap;
+      this.template = this.data.template;
       this.cartoCss = App.CartoCSS['Theme' + this.template];
 
       this._start();
@@ -47,6 +48,7 @@
       var parent = this.elContent;
       var mapEl = parent.querySelector('#mapView');
       var basemapEl = parent.querySelector('#basemapView');
+      var defaultBasemap = basemapEl.getAttribute('data-basemap');
 
       if (this.map) {
         this.map.remove();
@@ -57,7 +59,8 @@
         el: mapEl,
         data: this.data,
         categories: this.categoriesData,
-        cartoCss: this.cartoCss
+        cartoCss: this.cartoCss,
+        basemap: defaultBasemap
       });
 
       // Creates a CartoDB layer
