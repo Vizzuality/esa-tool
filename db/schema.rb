@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118103230) do
+ActiveRecord::Schema.define(version: 20160118120312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20160118103230) do
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
     t.string   "basemap"
+    t.string   "basemap_url"
   end
 
   add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id", using: :btree

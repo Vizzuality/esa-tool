@@ -60,7 +60,8 @@
         data: this.data,
         categories: this.categoriesData,
         cartoCss: this.cartoCss,
-        basemap: defaultBaseMap
+        basemap: defaultBaseMap,
+        customBaseMap: defaultBaseMap === 'custom' ? {url:basemapEl.getAttribute('data-basemap-url')}:null
       });
 
       // Creates a CartoDB layer

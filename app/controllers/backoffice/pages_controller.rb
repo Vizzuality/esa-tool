@@ -77,6 +77,7 @@ class Backoffice::PagesController < BackofficeController
       params.require(:page).permit(
         :title,
         :basemap,
+        :basemap_url,
         :body_first,
         :body_second,
         :body_thirth,

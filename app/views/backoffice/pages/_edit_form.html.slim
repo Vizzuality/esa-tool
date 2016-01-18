@@ -1,6 +1,8 @@
 - palettes = 2
 - palette_range = 8
-- basemaps = [[t('terrain'), 'terrain'], [t('satellite'), 'satellite']]
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title"}], 
+              [t('satellite'), 'satellite', {class:"item detail-title"}], 
+              [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"} } ]]
 
 .form-row
   = f.input :title
@@ -38,9 +40,11 @@
   /   = f.label :map_column
   /   = f.input_field :map_column, as: :radio_buttons
 
-  .form-row
+  .form-row.box-selector
     = f.input :basemap, as: :radio_buttons, collection: basemaps
-
+  
+  #customBasemapUrl.detail-item class=('_hidden' unless @page.basemap == 'custom')
+    = f.input :basemap_url
     
   .form-row
     = f.label :color_palette

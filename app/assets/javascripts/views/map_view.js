@@ -15,7 +15,10 @@
       scrollWheelZoom: false,
       zoom: 3,
       zoomControl: false,
-      basemap: 'terrain'
+      basemap: 'terrain',
+      customBaseMap: {
+        url:''
+      }
     },
 
     /**
@@ -86,6 +89,8 @@
       this.options = _.extend({}, this.defaults, options || {});
       this.basemap = this.options.basemap;
       this.cartoCss = this.options.cartoCss || '';
+
+      this.customBaseMap = this.options.customBaseMap;
 
       this.template = this.options.data ? this.options.data.template : 1;
       this.cartoUser = this.options.data ? this.options.data.cartoUser : '';
@@ -161,9 +166,20 @@
      * @param {String} type of basemap terrain | satellite
      */
     setBasemap: function(type) {
-      var tile = this.basemaps[this.template];
-      var attribution = tile[type].attribution;
-      var attributionUrl = this.attributions[attribution];
+      var tile, attribution, attributionUrl;
+
+      if (type === 'custom') {
+        tile = {
+          custom: {
+            tileUrl: this.customBaseMap.url
+          }
+        };
+        attributionUrl = '';
+      } else {
+        tile = this.basemaps[this.template];
+        attribution = tile[type].attribution;
+        attributionUrl = this.attributions[attribution];
+      }
 
       if (this.tileLayer) {
         this.map.removeLayer(this.tileLayer);
