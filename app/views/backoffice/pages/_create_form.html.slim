@@ -3,13 +3,7 @@
 
 - if params[:type].to_i == 1
   .form-row
-    = f.input :body_first
-  
-  .form-row
-    = f.input :body_second
-    
-  .form-row
-    = f.input :body_thirth
+    = f.input :body
     
   .form-row.file-image
     = render 'backoffice/partials/input_image_file', f: f, name: :background, image: @page.background, class_name: "-large", custom_label:'background'
