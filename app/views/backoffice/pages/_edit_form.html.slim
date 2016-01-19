@@ -1,19 +1,16 @@
 - palettes = 2
 - palette_range = 8
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title"}], 
+              [t('satellite'), 'satellite', {class:"item detail-title"}], 
+              [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"} } ]]
 
 .form-row
   = f.input :title
 
 - if params[:type].to_i == 1
   .form-row
-    = f.input :body_first
-  
-  .form-row
-    = f.input :body_second
-    
-  .form-row
-    = f.input :body_thirth
-    
+    = f.input :body
+
   .form-row
     = render 'backoffice/partials/input_image_file', f: f, name: :background, image: @page.background, class_name: "-large", custom_label:'background'
 
@@ -37,7 +34,11 @@
   /   = f.label :map_column
   /   = f.input_field :map_column, as: :radio_buttons
 
+  .form-row.box-selector
+    = f.input :basemap, as: :radio_buttons, collection: basemaps
   
+  #customBasemapUrl.detail-item class=('_hidden' unless @page.basemap == 'custom')
+    = f.input :basemap_url
     
   .form-row
     = f.label :color_palette

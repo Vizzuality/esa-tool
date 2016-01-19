@@ -19,58 +19,62 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 en:
-  about: "About"
-  actions: "Actions"
-  add_contact: "Add new contact"
-  add_interest_points: "Add interest points"
-  add_new_case_study: "Add new case"
+  about: 'About'
+  actions: 'Actions'
+  add_contact: 'Add new contact'
+  add_interest_points: 'Add interest points'
+  add_new_case_study: 'Add new case'
   add_page: 'Add new page'
   backoffice: 'Backoffice'
   browse: 'browse'
   case_details: 'Case details'
-  case_studies: "Case studies"
-  confirm_sure: "Are you sure?"
-  contact: "Contact"
-  create_case_study: "Create new case study"
-  create_user: "Create user"
-  data: "Data"
-  data_origin: "Data origin"
+  case_studies: 'Case studies'
+  confirm_sure: 'Are you sure?'
+  contact: 'Contact'
+  create_case_study: 'Create new case study'
+  create_user: 'Create user'
+  data: 'Data'
+  data_origin: 'Data origin'
   date:
     formats:
-      default: "%Y-%m-%d"
-      long: "%B %d, %Y"
-      short: "%b %d, %Y"
-  delete: "Delete"
+      default: '%Y-%m-%d'
+      long: '%B %d, %Y'
+      short: '%b %d, %Y'
+  delete: 'Delete'
   drop_shapefile: Start by dropping a shapefile here
-  duplicate: "Duplicate"
-  edit: "Edit"
-  email: "Email"
-  earth_observation: "Earth observation"
-  explore_map: "Explore the map"
+  duplicate: 'Duplicate'
+  edit: 'Edit'
+  email: 'Email'
+  earth_observation: 'Earth observation'
+  explore_map: 'Explore the map'
   forgot_password: 'Forgot your password?'
-  last_update: "Last update"
+  last_update: 'Last update'
   login: 'Login'
   logout: 'Logout'
   map: 'Map'
-  organisation: "Organisation"
-  or: "or"
+  organisation: 'Organisation'
+  or: 'or'
   page: 'Page'
-  parnertship_convened: "Partnership convened by"
-  preview: "Preview"
+  parnertship_convened: 'Partnership convened by'
+  preview: 'Preview'
   project_contact: 'Project contact'
+  publish: "Publish"
   published: "Published"
   resend_password: 'Send me reset password instructions'
-  role: "Role"
-  save: "Save"
+  role: 'Role'
+  save: 'Save'
+  satellite: 'Satellite'
   sign_up: 'Sign up'
-  slide1_title: "Where the data come from"
-  slide1_content: "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
-  slide2_title: "Where the data come from"
-  slide2_content: "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
-  slide3_title: "Where the data come from"
-  slide3_content: "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+  slide1_title: 'Where the data come from'
+  slide1_content: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'
+  slide2_title: 'Where the data come from'
+  slide2_content: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'
+  slide3_title: 'Where the data come from'
+  slide3_content: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.'
   sustainable_development: 'For sustainable development'
   tags: 'Tags'
+  terrain: 'Terrain'
   text: 'Text'
+  unpublish: "Unpublish"
   unpublished: "Unpublished"
   users: "Users"

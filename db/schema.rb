@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160115102435) do
+ActiveRecord::Schema.define(version: 20160118155621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,22 +71,20 @@ ActiveRecord::Schema.define(version: 20160115102435) do
   add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id", using: :btree
 
   create_table "interest_points", force: :cascade do |t|
-    t.string   "name",                                 null: false
-    t.decimal  "lat",        precision: 15, scale: 10, null: false
-    t.decimal  "lng",        precision: 15, scale: 10, null: false
+    t.string   "name",                                  null: false
+    t.decimal  "lat",         precision: 15, scale: 10, null: false
+    t.decimal  "lng",         precision: 15, scale: 10, null: false
     t.float    "radius"
-    t.integer  "page_id",                              null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.integer  "page_id",                               null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "description"
   end
 
   add_index "interest_points", ["page_id"], name: "index_interest_points_on_page_id", using: :btree
 
   create_table "pages", force: :cascade do |t|
     t.string   "title",                               null: false
-    t.text     "body_first"
-    t.text     "body_second"
-    t.text     "body_thirth"
     t.integer  "page_type",               default: 1
     t.integer  "color_palette"
     t.string   "custom_color_palette"
@@ -97,6 +95,9 @@ ActiveRecord::Schema.define(version: 20160115102435) do
     t.string   "background_content_type"
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
+    t.text     "body"
+    t.string   "basemap"
+    t.string   "basemap_url"
   end
 
   add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id", using: :btree
