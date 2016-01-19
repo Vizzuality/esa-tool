@@ -83,7 +83,7 @@ class Backoffice::PagesController < BackofficeController
         :page_type,
         :chart_type_list,
         :case_study_id,
-        interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy],
+        interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )
     end

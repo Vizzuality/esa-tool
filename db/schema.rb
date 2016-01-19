@@ -27,8 +27,6 @@ ActiveRecord::Schema.define(version: 20160118155621) do
     t.string   "cover_image_content_type"
     t.integer  "cover_image_file_size"
     t.datetime "cover_image_updated_at"
-    t.decimal  "lat"
-    t.decimal  "lng"
   end
 
   create_table "charts", force: :cascade do |t|
@@ -95,8 +93,6 @@ ActiveRecord::Schema.define(version: 20160118155621) do
     t.string   "background_content_type"
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
-    t.string   "basemap"
-    t.string   "basemap_url"
     t.text     "body"
   end
 
