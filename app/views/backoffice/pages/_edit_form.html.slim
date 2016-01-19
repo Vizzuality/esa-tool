@@ -37,19 +37,19 @@
   .form-row.box-selector
     = f.input :basemap, as: :radio_buttons, collection: basemaps
   
-  #customBasemapUrl.detail-item class=('_hidden' unless @page.basemap == 'custom')
+  #customBasemapUrl.form-row.detail-item class=('_hidden' unless @page.basemap == 'custom')
     = f.input :basemap_url
     
   .form-row
     = f.label :color_palette
     .box-selector
       - for t in 1..palettes
-        .item.-col-2.-palette data-value="#{t}" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
+        .item.-col-2.-palette data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
           - for r in 1..palette_range
             .range
               span.-bordered
               span
-      = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
+      = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.nil? or 1), class: 'input', id:"pallete"
   / .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
   /   = f.input :custom_color_palette
   
@@ -74,4 +74,4 @@
 .form-row._center
   - if @page[:id]
     = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
-  = f.button :submit, class: 'btn -primary'
+  = f.button :submit, class: 'btn -primary', id: 'saveBtn'

@@ -40,7 +40,11 @@
       }
 
       if (this.currentItem.getAttribute('data-input')) {
-        this.checkInput(this.currentItem.getAttribute('data-input'));
+        if (this.currentItem.getAttribute('data-value')) {
+          this.setInputValue(this.currentItem.getAttribute('data-input'),this.currentItem.getAttribute('data-value'));
+        } else {
+          this.checkInput(this.currentItem.getAttribute('data-input'));
+        }
       } else {
         this.updateValue();
       }
@@ -73,6 +77,11 @@
 
     updateValue: function() {
       this.inputElement.value = this.currentItem.getAttribute('data-value');
+    },
+
+    setInputValue: function(id, value) {
+      var input = document.getElementById(id);
+      input.value = value;
     },
 
     checkInput: function(id) {
