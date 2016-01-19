@@ -70,15 +70,18 @@
       if (e && e.preventDefault) {
         e.preventDefault();
       }
+      this.submitted = true;
       this.$el.find('form').submit();
     },
 
     setExitWithoutSavingConfirmation: function(){
       var self = this;
-      this.cleanForm = this.$("form").serialize();
-      window.onbeforeunload = function (e) {
+      this.submitted = false;
+      this.form = this.$("form.exit-saving");
+      this.cleanForm = this.form.serialize();
+      $(window).on('beforeunload', function(e){
         e = e || window.event;
-        if(self.cleanForm != self.$("form").serialize()) {
+        if(!self.submitted && self.cleanForm != self.form.serialize()) {
           // For IE and Firefox
           if (e) {
             e.returnValue = "You have unsaved changes.";
@@ -86,7 +89,7 @@
           // For Safari
           return "You have unsaved changes.";
         }
-      };
+      });
     }
 
   });

@@ -12,5 +12,5 @@ section.l-main
   .content
     .wrap: .row
       .grid-sm-6.offset-sm-3
-        = simple_form_for @case_study, url: backoffice_case_studies_path, html: { multipart: true } do |f|
+        = simple_form_for @case_study, url: backoffice_case_studies_path, html: { multipart: true }, html: { class: "exit-saving"}  do |f|
           = render 'form', f: f
