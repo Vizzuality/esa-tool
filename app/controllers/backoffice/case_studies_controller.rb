@@ -66,6 +66,8 @@ class Backoffice::CaseStudiesController < BackofficeController
         :title,
         :description,
         :published,
+        :lat,
+        :lng,
         :template,
         :cover_image,
         :tag_list,
