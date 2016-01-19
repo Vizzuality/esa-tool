@@ -30,6 +30,8 @@
     _render: function() {
       var self = this;
       var years = _.keys(this.data);
+      var container = this.el.querySelector('.list');
+      container.innerHTML = '';
       
       _.each(years, function(year) {
         self._addYearToTimeline(year);

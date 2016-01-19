@@ -19,6 +19,8 @@
       interpolate: 'linear',
       areaInterpolate: 'basic',
       paddingAxisLabels: 0,
+      removeTimeout: 300,
+      handleWidth: 50,
       margin: {
         top: 30,
         right: 40,
@@ -40,6 +42,9 @@
       this.interpolate = this.options.interpolate;
       this.areaInterpolate = this.options.areaInterpolate;
       this.paddingAxisLabels = this.options.paddingAxisLabels;
+      this.removeTimeout = this.options.removeTimeout;
+      this.handleWidth = this.options.handleWidth;
+      this.currentStep = this.options.currentStep;
 
       this._render();
     },
@@ -51,6 +56,7 @@
       this._drawStack();
       this._drawGraph();
       this._drawAxis();
+      this._drawSlider();
     },
 
     _setUpGraph: function() {
@@ -182,6 +188,14 @@
         d.x = self.parseDate(d.x);
       });
 
+      this.min = d3.min(fakeData, function(d) {
+        return d.x;
+      });
+
+      this.max = d3.max(fakeData, function(d) {
+        return d.x;
+      });
+
       this.chartData = d3.nest()
         .key(function(d) { return d.category; })
         .entries(fakeData);
@@ -208,7 +222,7 @@
         .innerTickSize(-this.cHeight)
         .ticks(d3.time.years, 3)
         .outerTickSize(0)
-        .tickFormat('');
+        .tickFormat(d3.time.format(this.dateFormat));
     },
 
     _setDomain: function() {
@@ -317,6 +331,84 @@
           .attr('y1', 0)
           .attr('y1', 0);
     },
+
+    _drawSlider: function() {
+      var self = this;
+
+      this.brush = d3.svg.brush()
+        .x(this.x)
+        .extent([0, 0])
+        .on('brush', function() {
+          if (d3.event.sourceEvent) {
+            d3.event.sourceEvent.stopPropagation();
+          }
+
+          var value = self.brush.extent()[0];
+
+          if (d3.event.sourceEvent) {
+            value = self.x.invert(d3.mouse(this)[0]);
+            self.brush.extent([value, value]);
+          }
+
+          self.currentStep = value;
+          self._setHandlePosition();
+        })
+        .on('brushend', function() {
+          if (!d3.event.sourceEvent) return;
+          var extent0 = self.brush.extent(),
+              extent1 = extent0.map(d3.time.year.round);
+
+          if (extent1[0] >= extent1[1]) {
+            extent1[0] = d3.time.year.floor(extent0[0]);
+            extent1[1] = d3.time.year.ceil(extent0[1]);
+          }
+
+          if (extent1[0] < self.min) {
+            extent1[0] = self.min;
+          }
+
+          if (extent1[0] > self.max) {
+            extent1[0] = self.max;
+          }
+
+          self.currentStep = extent1[0];
+
+          d3.select(this).transition()
+            .duration(0) 
+            .call(self.brush.extent(extent1))
+            .call(self.brush.event);
+        });
+
+      this.slider = this.svg.append('g')
+        .attr('class', 'handles')
+        .call(this.brush);
+
+      this.slider.selectAll('.extent,.resize')
+        .remove();
+
+      this.slider.select('.background')
+        .attr('height', this.cHeight + this.margin.bottom);
+
+      this.handle = this.slider.append('rect')
+        .attr('class', 'handle')
+        .attr('width', this.handleWidth)
+        .attr('height', this.cHeight + this.margin.bottom + (this.margin.top / 2));
+
+      this._setHandlePosition();
+    },
+
+    _setHandlePosition: function() {
+      var self = this;
+
+      if (!this.currentStep) {
+        this.currentStep = this.max;
+      }
+
+      this.handle.attr('transform', function() {
+        return 'translate('+ (self.x(self.currentStep) - 
+          (self.handleWidth / 2)) + ', ' + -(self.margin.top / 2) + ')';
+      });
+    },
     
     prepareRemove: function() {
       this.svg.selectAll('.area')
@@ -335,7 +427,7 @@
         this.removeTimer = null;
       }
 
-      this.removeTimer = setTimeout(this.remove.bind(this), 300);
+      this.removeTimer = setTimeout(this.remove.bind(this), this.removeTimeout);
     },
 
     remove: function() {

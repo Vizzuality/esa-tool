@@ -26,7 +26,7 @@
       this.data = this.options.data;
 
       this._initChart();
-      this._initTimeline();
+      // this._initTimeline();
     },
 
     /**
@@ -153,9 +153,14 @@
         var previousTabSelected = this.el.querySelector('.charts-nav .-active');
         var previousContentSelected = this.el.querySelector('.charts-content .-active');
 
-        this.remove();
+        this._removeChart();
 
-        setTimeout(function() {
+        if (this.tabContentTimer) {
+          clearTimeout(this.tabContentTimer);
+          this.tabContentTimer = null;
+        }
+
+        this.tabContentTimer = setTimeout(function() {
           previousTabSelected.classList.remove('-active');
           previousContentSelected.classList.remove('-active');
 
@@ -166,11 +171,30 @@
       }
     },
 
-    remove: function() {
+    _defaultTabs: function() {
+      var currentTabSelectd = this.el.querySelector('.charts-nav .-active');
+      var curremtContentSelected = this.el.querySelector('.charts-content .-active');
+      var defaultTab = this.el.querySelector('.charts-nav li');
+      var defaultTabContent = this.el.querySelector('.charts-content .tab-content');
+
+      currentTabSelectd.classList.remove('-active');
+      curremtContentSelected.classList.remove('-active');
+
+      defaultTab.classList.add('-active');
+      defaultTabContent.classList.add('-active');
+    },
+
+    _removeChart: function() {
       if(this.chart) {
         this.chart.prepareRemove();
         this.chart = null;
       }
+    },
+
+    remove: function() {
+      this._removeChart();
+      this._defaultTabs();
+      this.undelegateEvents();
     }
 
   });

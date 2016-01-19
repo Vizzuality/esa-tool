@@ -18,6 +18,7 @@
       barsRange: 0.7,
       animationType: 'linear',
       animationTime: 200,
+      removeTimeout: 350,      
       margin: {
         top: 30,
         right: 40,
@@ -38,6 +39,7 @@
       this.barsRange = this.options.barsRange;
       this.animationType = this.options.animationType;
       this.animationTime = this.options.animationTime;
+      this.removeTimeout = this.options.removeTimeout;
 
       this._render();
     },
@@ -167,7 +169,7 @@
         this.removeTimer = null;
       }
 
-      this.removeTimer = setTimeout(this.remove.bind(this), 350);
+      this.removeTimer = setTimeout(this.remove.bind(this), this.removeTimeout);
     },
 
     remove: function() {

@@ -12,11 +12,16 @@
       float: left;
       padding: rem(10px);
       margin: 0 rem(10px);
+      border: 2px solid transparent;
       font-family: $font-secondary;
       font-size: rem($font-size-small);
       font-weight: 700;
       letter-spacing: rem(1px);
       cursor: pointer;
+
+      &.-selected {
+        border-color: $white;
+      }
     }
   }
 

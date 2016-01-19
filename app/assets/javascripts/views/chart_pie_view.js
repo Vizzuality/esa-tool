@@ -17,6 +17,7 @@
       chartEl: '#pie-chart',
       animationTime: 400,
       outerRadius: 40,
+      removeTimeout: 300,
       margin: {
         top: 30,
         right: 40,
@@ -36,6 +37,7 @@
       this.margin = this.options.margin;
       this.outerRadius = this.options.outerRadius;
       this.animationTime = this.options.animationTime;
+      this.removeTimeout = this.options.removeTimeout;
 
       this._render();
     },
@@ -102,12 +104,16 @@
         endAngle: 0
       };
       var i = d3.interpolate(start, finish);
+
       return function(d) { return self.arc(i(d)); };
     },
 
     _tweenPieOut: function(b) {
       var self = this;
-      var start = {startAngle: b.startAngle, endAngle: b.endAngle};
+      var start = {
+        startAngle: b.startAngle, 
+        endAngle: b.endAngle
+      };
 
       b.startAngle = 0;
       b.endAngle = 0;
@@ -115,7 +121,7 @@
       
       var i = d3.interpolate(start, b);
       return function(t) {
-       return self.arc(i(t)); 
+        return self.arc(i(t)); 
       };
     },
 
@@ -158,7 +164,7 @@
         this.removeTimer = null;
       }
 
-      this.removeTimer = setTimeout(this.remove.bind(this), 300);
+      this.removeTimer = setTimeout(this.remove.bind(this), this.removeTimeout);
     },
     
     remove: function() {
