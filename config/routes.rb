@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     root 'case_studies#index', as: 'dashboard'
   end
 
-  resources :case_studies, only: [:show], path: 'case-studies' do
+  resources :case_studies, only: [:index, :show], path: 'case-studies' do
     get 'preview', on: :member
   end
 
