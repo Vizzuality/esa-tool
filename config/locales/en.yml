@@ -58,6 +58,7 @@ en:
   parnertship_convened: "Partnership convened by"
   preview: "Preview"
   project_contact: 'Project contact'
+  publish: "Publish"
   published: "Published"
   resend_password: 'Send me reset password instructions'
   role: "Role"
@@ -72,5 +73,6 @@ en:
   sustainable_development: 'For sustainable development'
   tags: 'Tags'
   text: 'Text'
+  unpublish: "Unpublish"
   unpublished: "Unpublished"
   users: "Users"
