@@ -44,9 +44,9 @@
       var self = this;
       var params = this.search.val()? this.filterName+'='+this.search.val(): '';
       this.cases.fetch({data:params}).done(function(data){
-        if (!_.isEqual(self.casesOriginal , data.landing)) {
-          self.casesOriginal = data.landing;
-          self._refreshCases(data.landing);
+        if (!_.isEqual(self.casesOriginal , data.case_studies)) {
+          self.casesOriginal = data.case_studies;
+          self._refreshCases(data.case_studies);
         }
       });
     },

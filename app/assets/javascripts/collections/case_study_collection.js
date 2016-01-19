@@ -6,7 +6,7 @@
 
   App.Collection.CaseStudyCollection = Backbone.Collection.extend({
 
-    url: '/',
+    url: '/case-studies'
 
   });
 
