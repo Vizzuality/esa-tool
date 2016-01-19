@@ -9,8 +9,10 @@
 //= require views/map_view
 //= require views/map_basemap_view
 //= require views/slider_view
+//= require views/search_view
 //= require views/tabs_view
 //= require controllers/map_controller
+//= require collections/case_study_collection
 
 'use strict';
 
@@ -48,6 +50,7 @@
     _start: function() {
       this.menu = document.getElementById('menu');
       this._initSlider();
+      this._initSearch();
       this._setListeners();
       this.router.start();
     },
@@ -107,6 +110,15 @@
     },
 
     /**
+     * Function to initialize the search box form
+     */
+    _initSearch: function() {
+      this.search = new App.View.Search({
+        el: '#casesSearch'
+      });
+    },
+
+    /**
      * When the type of slide is 'map' the map view will be initialized
      * else the map will be removed to improve the performance.
      * @param  {String} slideType It could be cover, text or map
@@ -120,7 +132,7 @@
       }
 
       if (slideType === 'map') {
-        this.map = new App.Controller.Map({ 
+        this.map = new App.Controller.Map({
           elContent: el,
           data: this.data,
           page: this.sliderPage

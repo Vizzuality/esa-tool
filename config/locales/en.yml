@@ -58,7 +58,8 @@ en:
   parnertship_convened: 'Partnership convened by'
   preview: 'Preview'
   project_contact: 'Project contact'
-  published: 'Published'
+  publish: "Publish"
+  published: "Published"
   resend_password: 'Send me reset password instructions'
   role: 'Role'
   save: 'Save'
@@ -74,5 +75,6 @@ en:
   tags: 'Tags'
   terrain: 'Terrain'
   text: 'Text'
-  unpublished: 'Unpublished'
-  users: 'Users'
+  unpublish: "Unpublish"
+  unpublished: "Unpublished"
+  users: "Users"
