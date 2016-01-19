@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160118152440) do
+ActiveRecord::Schema.define(version: 20160118155621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,6 @@ ActiveRecord::Schema.define(version: 20160118152440) do
     t.string   "cover_image_content_type"
     t.integer  "cover_image_file_size"
     t.datetime "cover_image_updated_at"
-    t.decimal  "lat"
-    t.decimal  "lng"
   end
 
   create_table "charts", force: :cascade do |t|
@@ -85,9 +83,6 @@ ActiveRecord::Schema.define(version: 20160118152440) do
 
   create_table "pages", force: :cascade do |t|
     t.string   "title",                               null: false
-    t.text     "body_first"
-    t.text     "body_second"
-    t.text     "body_thirth"
     t.integer  "page_type",               default: 1
     t.integer  "color_palette"
     t.string   "custom_color_palette"
@@ -98,8 +93,7 @@ ActiveRecord::Schema.define(version: 20160118152440) do
     t.string   "background_content_type"
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
-    t.string   "basemap"
-    t.string   "basemap_url"
+    t.text     "body"
   end
 
   add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id", using: :btree
