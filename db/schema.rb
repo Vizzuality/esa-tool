@@ -95,9 +95,9 @@ ActiveRecord::Schema.define(version: 20160118155621) do
     t.string   "background_content_type"
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
-    t.text     "body"
     t.string   "basemap"
     t.string   "basemap_url"
+    t.text     "body"
   end
 
   add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id", using: :btree
