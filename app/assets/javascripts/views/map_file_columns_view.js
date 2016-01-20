@@ -24,6 +24,8 @@
 
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params.options || {});
+
+      this.data = this._getAppData();
       this.ignored_columns = this.options.ignored_columns;
       this.columnListContainer = document.getElementById(this.options.columnListContainer);
       this.fileInput = document.getElementById(this.options.fileInput);
@@ -62,7 +64,7 @@
       var self = this;
       var query = 'SELECT * FROM ' + name + ' LIMIT 0';
       var defer = new $.Deferred();
-      $.getJSON('https://<%= ENV["CDB_USERNAME"] %>.cartodb.com/api/v2/sql/?q='+query)
+      $.getJSON('https://'+this.data.cartodb_user+'.cartodb.com/api/v2/sql/?q='+query)
         .done(function(data){
           $.each(data.fields, function(key, val) {
             if (!_.contains(self.ignored_columns, key)) {
@@ -106,7 +108,7 @@
 
     addFileSelected: function(e) {
       if (this.fileInput.files[0]) {
-        this.fileNameContainer.getElementsByClassName('name')[0].textContent = this.fileInput.files[0].name;
+        this.fileNameContainer.insertAdjacentHTML('beforeend', '<p class="name">'+this.fileInput.files[0].name+'<p>');
         this.fileNameContainer.classList.remove('_hidden');
       }
     },
@@ -137,7 +139,17 @@
 
     updateValue: function() {
       this.columnInput.value = this.currentItem.getAttribute('data-value');
-    }
+    },
+
+    _getAppData: function() {
+      var data = {};
+
+      if (gon && gon.cartodb_user) {
+        data.cartodb_user = gon.cartodb_user;
+      }
+
+      return data;
+    },
 
   });
 

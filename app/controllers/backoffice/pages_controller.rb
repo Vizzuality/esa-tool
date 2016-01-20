@@ -28,6 +28,7 @@ class Backoffice::PagesController < BackofficeController
 
   def edit
     @charts = Chart.all
+    gon.cartodb_user = ENV["CDB_USERNAME"]
   end
 
   def update
