@@ -15,8 +15,10 @@
 //= require views/timeline_view
 //= require views/dashboard_view
 //= require views/slider_view
+//= require views/search_view
 //= require views/tabs_view
 //= require controllers/map_controller
+//= require collections/case_study_collection
 
 'use strict';
 
@@ -54,6 +56,7 @@
     _start: function() {
       this.menu = document.getElementById('menu');
       this._initSlider();
+      this._initSearch();
       this._setListeners();
       this.router.start();
     },
@@ -86,7 +89,7 @@
       return data;
     },
 
-    /** 
+    /**
      * Function to set the current slider page
      */
     _setCurrentSliderPage: function(page) {
@@ -107,8 +110,17 @@
      * Function to initialize the slider
      */
     _initSlider: function() {
-      this.slider = new App.View.Slider({ 
+      this.slider = new App.View.Slider({
         el: '#mainSlider'
+      });
+    },
+
+    /**
+     * Function to initialize the search box form
+     */
+    _initSearch: function() {
+      this.search = new App.View.Search({
+        el: '#casesSearch'
       });
     },
 
@@ -126,7 +138,7 @@
       }
 
       if (slideType === 'map') {
-        this.map = new App.Controller.Map({ 
+        this.map = new App.Controller.Map({
           elContent: el,
           data: this.data,
           page: this.sliderPage

@@ -22,8 +22,9 @@
       this.elContent = this.options.elContent;
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
-      
-      this.template = this.data.template
+
+      this.basemap = this.data.basemap;
+      this.template = this.data.template;
       this.cartoCss = App.CartoCSS['Theme' + this.template];
 
       this._start();
@@ -50,23 +51,31 @@
       var parent = this.elContent;
       var mapEl = parent.querySelector('#mapView');
       var basemapEl = parent.querySelector('#basemapView');
+      var defaultBaseMap = basemapEl.getAttribute('data-basemap');
+      var customBaseMapUrl = basemapEl.getAttribute('data-basemap-url');
+      var customBaseMap = {};
+
+      customBaseMap.url = defaultBaseMap === 'custom' ? 
+        customBaseMapUrl : null;
 
       if (this.map) {
         this.map.remove();
         this.map = null;
       }
 
-      this.map = new App.View.Map({ 
+      this.map = new App.View.Map({
         el: mapEl,
         data: this.data,
-        cartoCss: this.cartoCss
+        cartoCss: this.cartoCss,
+        basemap: defaultBaseMap,
+        customBaseMap: customBaseMap
       });
 
       // Creates a CartoDB layer
       this.map.createLayer();
-
       this.mapBasemap = new App.View.MapBasemap({
-        el: basemapEl
+        el: basemapEl,
+        basemap: defaultBaseMap
       });
 
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
@@ -104,7 +113,7 @@
         if (caseStudy) {
           var pages = caseStudy.pages;
           formattedData.template = caseStudy.template;
-          
+
           if (pages) {
             var page = pages[this.page - 1];
 
@@ -172,7 +181,7 @@
       this.data.layer.groups = groups;
     },
 
-    /** 
+    /**
      * Removes the map and basemap view and the listening events.
      */
     remove: function() {

@@ -76,16 +76,16 @@ class Backoffice::PagesController < BackofficeController
     def page_params
       params.require(:page).permit(
         :title,
-        :body_first,
-        :body_second,
-        :body_thirth,
+        :basemap,
+        :basemap_url,
+        :body,
         :background,
         :color_palette,
         # :custom_color_palette,
         :page_type,
         :chart_type_list,
         :case_study_id,
-        interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy],
+        interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )
     end

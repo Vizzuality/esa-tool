@@ -1,0 +1,71 @@
+.l-content
+  #map.map
+  #banner.banner
+    .title 
+      h1 =t('earth_observation')
+    .title
+      h1 =t('sustainable_development')
+    .link
+      button#exploreMap.btn.-landing =t('explore_map')
+  section#cases.cases
+    .search
+      select#searchBox.select2 multiple="multiple"
+        - @tags.each do |t|
+          option value="#{t.name}" =t.name
+    .wrap
+      #casesArticles.row
+        - @case_studies.each do |c|
+          article.grid-xs-12.grid-sm-6.grid-md-4.case
+            =link_to case_study_path(c.id), style: "background-image: url(#{c.cover_image.url(:medium)})"
+              .caption
+                h2 =c.title
+            
+          
+  section.slider
+    .wrap
+      #landingSlider
+        article.slide
+          .slide-content
+            h2.title = t('slide1_title')
+            p.content = t('slide1_content')
+          .slide-link
+            button.btn.-landing.-inv =t('data_origin')
+        article.slide
+          .slide-content
+            h2.title = t('slide2_title')
+            p.content = t('slide2_content')
+          .slide-link
+            button.btn.-landing.-inv =t('data_origin')
+        article.slide
+          .slide-content
+            h2.title = t('slide3_title')
+            p.content = t('slide3_content')
+          .slide-link
+            button.btn.-landing.-inv =t('data_origin')
+  footer.footer
+    .wrap
+      .row
+        .grid-sm-12
+          .logo
+            img src= asset_path('landing-footer.png')
+      .row
+        .grid-sm-7.column
+          nav.nav role="navigation"
+            svg.icon.icon-eoworld-logo
+              use xlink:href="#icon-eoworld-logo"
+            ul
+              li = link_to t('case_studies'), "http://www.vizzuality.com"
+              li = link_to t('data sources'), "http://www.vizzuality.com"
+              li = link_to t('about'), "http://www.vizzuality.com"
+              li = link_to t('contact'), "http://www.vizzuality.com"
+        .grid-sm-5.column.partnerts
+            span.title =t('parnertship_convened')
+            .partner-list
+              = link_to 'http://www.esa.int/ESA', class: "item" do
+                svg.icon.icon-esa-logo
+                  use xlink:href="#icon-esa-logo"
+              = link_to 'http://www.esa.int/ESA', class: "item" do
+                svg.icon.icon-esa-logo
+                  use xlink:href="#icon-esa-logo"
+    .copyright
+      span © 2013 - 2015 · Terms of Service · European Space Agency and World Bank Group

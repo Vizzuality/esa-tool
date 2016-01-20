@@ -1,0 +1,28 @@
+.banner {
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  margin: 140px auto 20px;
+
+  text-align: center;
+
+  > .title {
+
+    > h1 {
+      display: inline;
+      margin:0;
+      padding: 0 2rem;
+
+      color: $font-color-landing-4;
+      background-color: $bg-color-landing-4;
+
+      text-transform: uppercase;
+    }
+  }
+
+  > .link {
+    margin: 1rem;
+    text-align: center;
+  }
+}
