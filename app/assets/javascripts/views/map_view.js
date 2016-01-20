@@ -170,7 +170,9 @@
      * @param {Object} bounds latlng
      */
     _setMapBounds: function(bounds) {
-      this.map.fitBounds(bounds);
+      if (bounds) {
+        this.map.fitBounds(bounds);
+      }
     },
 
     /**

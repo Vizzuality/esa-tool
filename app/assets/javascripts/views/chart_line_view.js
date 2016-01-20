@@ -19,6 +19,7 @@
       interpolate: 'linear',
       areaInterpolate: 'basic',
       paddingAxisLabels: 0,
+      removeTransition: 500,
       removeTimeout: 300,
       handleWidth: 50,
       margin: {
@@ -42,6 +43,7 @@
       this.interpolate = this.options.interpolate;
       this.areaInterpolate = this.options.areaInterpolate;
       this.paddingAxisLabels = this.options.paddingAxisLabels;
+      this.removeTransition = this.options.removeTransition;
       this.removeTimeout = this.options.removeTimeout;
       this.handleWidth = this.options.handleWidth;
       this.currentStep = this.options.currentStep;
@@ -200,11 +202,19 @@
         .key(function(d) { return d.category; })
         .entries(fakeData);
 
-      d3.map(this.chartData, function(d) {
-        var data = self.data[d.key][0];
+      var fakeColors = {
+        '1971': '#2B7312',
+        '1981': '#FF6600',
+        '1991': '#229A00',
+        '2001': '#7801FF',
+        '2006': '#EA01FF'
+      };
 
-        if (data) {
-          d.color = data.color;
+      d3.map(this.chartData, function(d) {
+        var dataColor = fakeColors[d.key]
+
+        if (dataColor) {
+          d.color = dataColor;
         }
       });
     },
@@ -413,12 +423,12 @@
     prepareRemove: function() {
       this.svg.selectAll('.area')
         .transition()
-        .duration(1000)
+        .duration((this.removeTransition * 2))
         .style('fill-opacity', function(d) { return 0 });
 
       this.svg.selectAll('.line')
         .transition()
-        .duration(500)
+        .duration(this.removeTransition)
         .ease('linear')
         .attr('stroke-dashoffset', function() { return this.getTotalLength(); });
 

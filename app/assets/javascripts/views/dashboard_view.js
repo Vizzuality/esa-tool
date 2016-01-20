@@ -172,16 +172,26 @@
     },
 
     _defaultTabs: function() {
-      var currentTabSelectd = this.el.querySelector('.charts-nav .-active');
+      var currentTabSelected = this.el.querySelector('.charts-nav .-active');
       var curremtContentSelected = this.el.querySelector('.charts-content .-active');
       var defaultTab = this.el.querySelector('.charts-nav li');
       var defaultTabContent = this.el.querySelector('.charts-content .tab-content');
 
-      currentTabSelectd.classList.remove('-active');
-      curremtContentSelected.classList.remove('-active');
+      if (currentTabSelected) {
+        currentTabSelected.classList.remove('-active');
+      }
 
-      defaultTab.classList.add('-active');
-      defaultTabContent.classList.add('-active');
+      if (curremtContentSelected) {
+        curremtContentSelected.classList.remove('-active');
+      }
+
+      if (defaultTab) {
+        defaultTab.classList.add('-active');
+      }
+
+      if (defaultTabContent) {
+        defaultTabContent.classList.add('-active');
+      }
     },
 
     _removeChart: function() {
