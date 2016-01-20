@@ -11,9 +11,7 @@
 - else
   .form-row.file-map-input
     = f.label :file
-    #filename.filename-selected._hidden
-      p.name
-      span.close ×
+    #filename.filename-selected
     .input-wrapper.-lg
       = f.input_field :file, as: :file, accept: ".csv"
       .placeholder

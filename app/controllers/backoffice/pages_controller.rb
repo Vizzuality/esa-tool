@@ -13,8 +13,8 @@ class Backoffice::PagesController < BackofficeController
 
     if data_layer_params.has_key?(:file)
       data_layer = DataLayer.new(page_id: @page.id)
-        .create_file(data_layer_params[:file])
-      @page.data_layer = data_layer
+      data_layer.create_file(data_layer_params[:file])
+      @page.data_layers << data_layer
     end
 
     if @page.save
@@ -28,24 +28,19 @@ class Backoffice::PagesController < BackofficeController
 
   def edit
     @charts = Chart.all
+    gon.cartodb_user = ENV["CDB_USERNAME"]
   end
 
   def update
-    # if data_layer_params.has_key?(:file)
-    #   if @page.data_layer
-    #     data_layer = @page.data_layer
-    #       .create_file(data_layer_params[:file])
-    #     data_layer.update_columns(column_selected: data_layer_params[:column_selected])
-    #   else
-    #     data_layer = DataLayer.create(page_id: @page.id, column_selected: data_layer_params[:column_selected])
-    #       .create_file(data_layer_params[:file])
-    #   end
-    #   @page.data_layer = data_layer
-    # end
 
-    if @page.data_layer
-      data_layer = @page.data_layer
-        .update_columns(column_selected: data_layer_params[:column_selected])
+    if data_layer_params.has_key?(:file)
+      @page.data_layers.create(page_id: @page.id, column_selected: data_layer_params[:column_selected])
+        .create_file(data_layer_params[:file])
+    end
+
+    if data_layer_params.has_key?(:column_selected)
+      data_layer = @page.data_layers
+        .update_all(column_selected: data_layer_params[:column_selected])
     end
 
     if @page.update(page_params)
