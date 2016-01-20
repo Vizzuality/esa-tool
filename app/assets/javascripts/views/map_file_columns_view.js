@@ -55,9 +55,35 @@
       var file = e.currentTarget.files[0];
       var extension = file.name.substr(file.name.lastIndexOf('.')+1);
       if (extension === "csv"){
-        self.addFileSelected();
+
+        var columns = self.getColums(file);
+        columns.done(function(columns){
+          if (columns.indexOf('year') === -1) {
+            alert('The selected shapefile file doesn\'t contain the year column');
+            self.removeFileSelected();
+          } else {
+            self.addFileSelected();
+          }
+        });
         // self.init(file.name.slice(0, -extension.length-1));
       }
+    },
+
+    getColums: function(file) {
+      var promise = $.Deferred();
+      var reader = new FileReader();
+
+      reader.onload = function(ev) {
+        var filePart = ev.target.result.split(0, 1)[0];
+        promise.resolve(filePart.substr(0, filePart.indexOf('\n')));
+      };
+      reader.onerror = function(error) {
+        promise.reject('There was an error reading the csv file');
+      };
+
+      reader.readAsText(file);
+
+      return promise;
     },
 
     getColumns: function(name) {
@@ -123,10 +149,10 @@
     },
 
     removeFileSelected: function(e) {
-      var el = e.currentTarget.parentElement;
-      el.parentNode.removeChild(el);
-      // this.columnListContainer.innerHTML = '';
-      // this.columnInput.value = '';
+      if (e) {
+        var el = e.currentTarget.parentElement;
+        el.parentNode.removeChild(el);
+      }
       this.fileInput.value = '';
       this.fileInput.parentElement.classList.remove('_hidden');
     },
