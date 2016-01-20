@@ -86,20 +86,24 @@
     refreshColumns: function() {
       var self = this;
       this.columnListContainer.innerHTML = '';
-      _.each(self.columns, function(element, index){
-        self.addColummn(element,index);
+      _.each(self.columns, function(element){
+        self.addColummn(element);
       });
     },
 
     addColummn: function(element) {
-      this.columnListContainer.insertAdjacentHTML("afterbegin", this._columnTemplate(element));
+      var column = {
+        value: element,
+        selectedClass: (element === this.columnInput.value) ? '_selected':''
+      };
+      var tpl = this._columnTemplate()(column);
+      this.columnListContainer.insertAdjacentHTML("afterbegin", tpl);
     },
 
-    _columnTemplate: function(element) {
-      var selected_class = (element === this.columnInput.value) ? '_selected':'';
-      return '<div class="item '+ selected_class +'" data-value="'+element+'">'+
-              '<span>'+element+'</span>'+
-            '</div>'
+    _columnTemplate: function() {
+      return _.template('<div class="item <%= selectedClass %>" data-value="<%= value %>" >'+
+                          '<span> <%= value %> </span> '+
+                        ' </div>');
     },
 
     handleColumnsError: function(error) {
@@ -108,16 +112,23 @@
 
     addFileSelected: function(e) {
       if (this.fileInput.files[0]) {
-        this.fileNameContainer.insertAdjacentHTML('beforeend', '<p class="name">'+this.fileInput.files[0].name+'<p>');
-        this.fileNameContainer.classList.remove('_hidden');
+        var tpl = this._fileTemplate()({fileName: this.fileInput.files[0].name});
+        this.fileNameContainer.insertAdjacentHTML('beforeend', tpl);
       }
+      this.fileInput.parentElement.classList.add('_hidden');
+    },
+
+    _fileTemplate: function() {
+      return _.template('<p class="name"> <%= fileName %>  <span class="close"> ×</span> </p>');
     },
 
     removeFileSelected: function(e) {
-      this.fileNameContainer.classList.add('_hidden');
+      var el = e.currentTarget.parentElement;
+      el.parentNode.removeChild(el);
       // this.columnListContainer.innerHTML = '';
       // this.columnInput.value = '';
       this.fileInput.value = '';
+      this.fileInput.parentElement.classList.remove('_hidden');
     },
 
     onClickItem: function(e) {
