@@ -30,6 +30,9 @@
       this._start();
     },
 
+    /**
+     * Starts the map controller
+     */
     _start: function() {
       var self = this;
 
@@ -37,8 +40,8 @@
         .done(function(res) {
           self._parseCategoriesData(res);
           self._initMap();
+          self._initDashboard();
         });
-
     },
 
     /**
@@ -49,6 +52,11 @@
       var mapEl = parent.querySelector('#mapView');
       var basemapEl = parent.querySelector('#basemapView');
       var defaultBaseMap = basemapEl.getAttribute('data-basemap');
+      var customBaseMapUrl = basemapEl.getAttribute('data-basemap-url');
+      var customBaseMap = {};
+
+      customBaseMap.url = defaultBaseMap === 'custom' ? 
+        customBaseMapUrl : null;
 
       if (this.map) {
         this.map.remove();
@@ -58,10 +66,9 @@
       this.map = new App.View.Map({
         el: mapEl,
         data: this.data,
-        categories: this.categoriesData,
         cartoCss: this.cartoCss,
         basemap: defaultBaseMap,
-        customBaseMap: defaultBaseMap === 'custom' ? {url:basemapEl.getAttribute('data-basemap-url')}:null
+        customBaseMap: customBaseMap
       });
 
       // Creates a CartoDB layer
@@ -75,7 +82,26 @@
     },
 
     /**
-     * Gets the needed data to pass it to the map view
+     * Initializes the dashboard
+     */
+    _initDashboard: function() {
+      var parent = this.elContent;
+      var dashboardEl = parent.querySelector('#dashboardView');
+      var data = this._getDashboardData();
+
+      if (this.dashboard) {
+        this.dashboard.remove();
+        this.dashboard = null;
+      }
+
+      this.dashboard = new App.View.Dashboard({
+        el: dashboardEl,
+        data: data
+      });
+    },
+
+    /**
+     * Gets the needed data to pass it to the map view 
     */
     _getData: function(data) {
       var formattedData = {};
@@ -93,11 +119,24 @@
 
             if (page) {
               formattedData.layer = page.data_layers[0];
+              formattedData.charts = page.charts;
             }
           }
         }
       }
       return formattedData;
+    },
+
+    /**
+     * Gets the data for the dashboard from the data object
+     */
+    _getDashboardData: function() {
+      var dashboardData = {};
+      var data = this.data;
+
+      dashboardData.charts = data.charts;
+      dashboardData.groups = data.layer.groups;
+      return dashboardData;
     },
 
     /**
@@ -110,7 +149,7 @@
       var table = data.layer.table_name;
       var column = data.layer.column_selected;
 
-      var cartoQuery = sql.execute('SELECT count({{column}}) as sum, {{column}} as category FROM {{table}} GROUP BY {{column}}',
+      var cartoQuery = sql.execute('SELECT {{column}} as category FROM {{table}} GROUP BY {{column}}', 
         { column: column, table: table });
 
       return cartoQuery;
@@ -156,6 +195,11 @@
         this.mapBasemap = null;
       }
 
+      if (this.dashboard) {
+        this.dashboard.remove();
+        this.dashboard = null;
+      }
+      
       this.stopListening();
     },
 
