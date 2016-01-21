@@ -142,7 +142,7 @@
       var query = 'SELECT {{column}} as category, year, \
         ROUND( COUNT(*) * 100.0 / SUM(count(*) ) OVER(), 2 ) AS value \
         FROM {{table}} GROUP BY {{column}}, year \
-        ORDER BY value ASC';
+        ORDER BY {{column}} ASC';
 
       var cartoQuery = sql.execute(query, 
         { column: column, table: table });
@@ -161,8 +161,10 @@
       var sql = new cartodb.SQL({ user: data.cartoUser });
       var table = layer.table_name;
       var column = layer.column_selected;
+      var query = 'SELECT {{column}} as column FROM {{table}} \
+       GROUP BY {{column}} ORDER BY {{column}}';
 
-      var cartoQuery = sql.execute('SELECT {{column}} as column FROM {{table}} GROUP BY {{column}}', 
+      var cartoQuery = sql.execute(query, 
         { column: column, table: table });
 
       return cartoQuery;
