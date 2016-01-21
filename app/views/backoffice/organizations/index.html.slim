@@ -1,0 +1,26 @@
+section.l-main
+  header.header
+    .wrap: .row
+      .grid-sm-8
+        h1 = t 'organizations'
+
+      .grid-sm-4._vcenter._right
+        .btns-toolbar
+          = link_to t('add organization'), new_backoffice_organization_path, class: 'btn'
+
+  .content
+    .wrap: .row
+      .grid-sm-8.offset-sm-2
+
+        table.data-table
+          tr
+            th = t('name')
+            th = t('actions')
+
+          - @organizations.each do |org|
+            tr
+              td = link_to org.name, edit_backoffice_organization_path(org)
+              td
+                .btns-toolbar
+                  = link_to t('edit'), edit_backoffice_organization_path(org), class: 'btn -alt'
+                  = link_to t('delete'), backoffice_organization_path(org), method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn _alt'

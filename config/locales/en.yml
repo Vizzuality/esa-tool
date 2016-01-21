@@ -55,7 +55,7 @@ en:
   login: 'Login'
   logout: 'Logout'
   map: 'Map'
-  organisation: 'Organisation'
+  organization: 'Organization'
   or: 'or'
   page: 'Page'
   parnertship_convened: 'Partnership convened by'
@@ -81,3 +81,4 @@ en:
   unpublish: "Unpublish"
   unpublished: "Unpublished"
   users: "Users"
+  organizations: "Organizations"
