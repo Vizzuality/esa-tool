@@ -34,6 +34,7 @@ en:
   contact: 'Contact'
   create_case_study: 'Create new case study'
   create_user: 'Create user'
+  create_organization: 'Create Organization'
   data: 'Data'
   data_origin: 'Data origin'
   date:
@@ -46,6 +47,7 @@ en:
   duplicate: 'Duplicate'
   edit: 'Edit'
   email: 'Email'
+  name: 'Name'
   earth_observation: 'Earth observation'
   explore_map: 'Explore the map'
   forgot_password: 'Forgot your password?'

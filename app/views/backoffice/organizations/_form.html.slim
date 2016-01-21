@@ -1,0 +1,8 @@
+.form-row
+  = f.input :name, required: true, autofocus: true
+.form-row._center
+  - unless @organization.new_record?
+    = link_to t('delete'), backoffice_organization_path(@organization),
+      method: :delete, data: { confirm: t('confirm_sure') },
+      class: 'btn -primary -alt'
+  = f.button :submit, class: 'btn -primary'
