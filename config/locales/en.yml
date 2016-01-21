@@ -49,6 +49,8 @@ en:
   explore_map: 'Explore the map'
   forgot_password: 'Forgot your password?'
   last_update: 'Last update'
+  location_latitude: 'Location latitude'
+  location_longitude: 'Location longitude'
   login: 'Login'
   logout: 'Logout'
   map: 'Map'
