@@ -22,7 +22,8 @@ if Rails.env == 'development'
 
   case_studies = [
     { title: 'Multi-hazard Vulnerability Assessment in Ho Chi Minh City and Yogyakarta',
-      published: true, organization_id: monsters.id }
+      published: true, organization_id: monsters.id,
+      lat: 38.7755940, lng: -9.1353670, template: 1 }
   ]
 
   User.create(users)
