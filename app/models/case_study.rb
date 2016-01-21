@@ -6,6 +6,7 @@ class CaseStudy < ActiveRecord::Base
 
   has_many :contacts
   has_many :pages
+  belongs_to :organization
   has_attached_file :cover_image, styles: {
     medium: '385x200#',
     large: '1920x1080#'

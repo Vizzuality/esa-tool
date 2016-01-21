@@ -8,4 +8,10 @@ class User < ActiveRecord::Base
     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   belongs_to :organization
+
+  def can_manage? case_study
+    return true if is_admin?
+    return false if !organization
+    organization_id == case_study.organization_id
+  end
 end
