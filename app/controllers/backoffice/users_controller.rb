@@ -14,7 +14,7 @@ class Backoffice::UsersController < BackofficeController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to edit_backoffice_user_path(@user),
+      redirect_to backoffice_users_path,
         notice: 'User created successfully.'
     else
       set_organizations
@@ -26,8 +26,8 @@ class Backoffice::UsersController < BackofficeController
   end
 
   def update
-    if @user.update(page_params)
-      redirect_to edit_backoffice_user_path(@user),
+    if @user.update(user_params)
+      redirect_to backoffice_users_path,
         notice: 'User updated successfully.'
     else
       set_organizations
