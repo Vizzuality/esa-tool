@@ -118,7 +118,7 @@
             var page = pages[this.page - 1];
 
             if (page) {
-              formattedData.layer = page.data_layer;
+              formattedData.layer = page.data_layers[0];
               formattedData.charts = page.charts;
             }
           }
