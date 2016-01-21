@@ -12,6 +12,8 @@ class CaseStudy < ActiveRecord::Base
   }
 
   validates :title, presence: true, length: { minimum: 2, maximum: 100 }
+  validates :lat, presence: true
+  validates :lng, presence: true
   validates :template, presence: true, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 1,
@@ -42,6 +44,10 @@ class CaseStudy < ActiveRecord::Base
     case_studies = CaseStudy.all
     case_studies = case_studies.tagged_with(options[:tags]) if options[:tags]
     case_studies
+  end
+
+  def self.search(search)
+    where("title ILIKE ?", "%#{search}%")
   end
 
 end
