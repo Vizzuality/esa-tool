@@ -34,14 +34,17 @@
      * Starts the map controller
      */
     _start: function() {
-      var self = this;
+      var layers = this.data.layers;
 
-      this._getCategories()
-        .done(function(res) {
-          self._parseCategoriesData(res);
-          self._initMap();
-          self._initDashboard();
-        });
+      // Initialize main views
+      this._initMap();
+      this._initDashboard();
+
+      // Set default layer
+      if (layers) {
+        // TODO: Specify year instead of index
+        this.renderLayer(0, true);
+      }
     },
 
     /**
@@ -71,8 +74,6 @@
         customBaseMap: customBaseMap
       });
 
-      // Creates a CartoDB layer
-      this.map.createLayer();
       this.mapBasemap = new App.View.MapBasemap({
         el: basemapEl,
         basemap: defaultBaseMap
@@ -87,7 +88,6 @@
     _initDashboard: function() {
       var parent = this.elContent;
       var dashboardEl = parent.querySelector('#dashboardView');
-      var data = this._getDashboardData();
 
       if (this.dashboard) {
         this.dashboard.remove();
@@ -95,13 +95,15 @@
       }
 
       this.dashboard = new App.View.Dashboard({
-        el: dashboardEl,
-        data: data
+        el: dashboardEl
       });
+
+      this.listenTo(this.dashboard, 'dashboard:filter', this._setFilter, this);
     },
 
     /**
-     * Gets the needed data to pass it to the map view 
+     * Gets the needed data to pass it to the map view
+     * @param {Object} raw data from the backend
     */
     _getData: function(data) {
       var formattedData = {};
@@ -118,7 +120,7 @@
             var page = pages[this.page - 1];
 
             if (page) {
-              formattedData.layer = page.data_layers[0];
+              formattedData.layers = page.data_layers;
               formattedData.charts = page.charts;
             }
           }
@@ -130,26 +132,37 @@
     /**
      * Gets the data for the dashboard from the data object
      */
-    _getDashboardData: function() {
-      var dashboardData = {};
+    _getDashboardData: function(layer) {
+      var self = this;
       var data = this.data;
 
-      dashboardData.charts = data.charts;
-      dashboardData.groups = data.layer.groups;
-      return dashboardData;
+      var sql = new cartodb.SQL({ user: data.cartoUser });
+      var table = layer.table_name;
+      var column = layer.column_selected;
+      var query = 'SELECT {{column}} as category, year, \
+        ROUND( COUNT(*) * 100.0 / SUM(count(*) ) OVER(), 2 ) AS value \
+        FROM {{table}} GROUP BY {{column}}, year \
+        ORDER BY value ASC';
+
+      var cartoQuery = sql.execute(query, 
+        { column: column, table: table });
+
+      return cartoQuery;
     },
 
     /**
      * Gets the data from CartoDB
+     * @param {Object} layer data
      */
-    _getCategories: function() {
+    _getLayerData: function(layer) {
       var self = this;
       var data = this.data;
-      var sql = new cartodb.SQL({ user: data.cartoUser });
-      var table = data.layer.table_name;
-      var column = data.layer.column_selected;
 
-      var cartoQuery = sql.execute('SELECT {{column}} as category FROM {{table}} GROUP BY {{column}}', 
+      var sql = new cartodb.SQL({ user: data.cartoUser });
+      var table = layer.table_name;
+      var column = layer.column_selected;
+
+      var cartoQuery = sql.execute('SELECT {{column}} as column FROM {{table}} GROUP BY {{column}}', 
         { column: column, table: table });
 
       return cartoQuery;
@@ -158,10 +171,11 @@
     /**
      * Parser to group the recieved data for the views
      * @param {Object} res response from CartoDB
+     * @param {Object} layer data
      */
-    _parseCategoriesData: function(res) {
+    _parseLayerData: function(res, layer) {
       var data = res.rows;
-      var groups = _.groupBy(data, 'category');
+      var groups = _.groupBy(data, 'column');
       var palette = this.cartoCss.palette;
       var numColors = palette.length;
       var count = 0;
@@ -169,7 +183,7 @@
       _.map(groups, function(g) {
         var gr = g[0];
 
-        if (count > numColors) {
+        if (count > numColors - 1) {
           count = 0;
         }
 
@@ -178,7 +192,48 @@
         count++;
       });
 
-      this.data.layer.groups = groups;
+      layer.groups = groups;
+    },
+
+    /**
+     * Renders the layer in the map
+     * @param {Number} year to filter the layer
+     * @param {Boolean} sets bounds if true
+     */
+    renderLayer: function(index, bound) {
+      var self = this;
+      var layers = this.data.layers;
+      var layer = layers[index];
+      this.data.currentLayer = layer;
+
+      this._getLayerData(layer)
+        .done(function(res) {
+          self._parseLayerData(res, layer);
+          self.map.createLayer(layer, bound);
+          self._updateDashboard(layer);
+        });
+    },
+
+    /**
+     * Updates the dashboard with the data 
+     * @param {Object} layer data
+     */
+    _updateDashboard: function(layer) {
+      var self = this;
+
+      this._getDashboardData(layer)
+        .done(function(res) {
+          self.data.currentLayer.categories = res.rows;
+          self.dashboard.update(self.data);
+        });
+    },
+
+    /**
+     * Filters the map's layers by category
+     * @param {String} category name 
+     */
+    _setFilter: function(filter) {
+      this.map.highLightCategory(filter);
     },
 
     /**
