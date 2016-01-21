@@ -27,5 +27,6 @@ section.l-main
               td = u.is_admin? ? "Admin" : "Contributor"
               td
                 .btns-toolbar
-                  = link_to t('edit'), edit_backoffice_user_path(u), class: 'btn -alt'
+                  - if current_user.is_admin? || current_user == u
+                    = link_to t('edit'), edit_backoffice_user_path(u), class: 'btn -alt'
                   = link_to t('delete'), backoffice_user_path(u), method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn _alt'

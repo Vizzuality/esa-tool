@@ -4,7 +4,7 @@ class OrganizationsController < BackofficeController
   before_action :authorize_admins!
 
   def index
-    @organizations = Organization.order(:name)
+    @organizations = Organization.all
   end
 
   def new

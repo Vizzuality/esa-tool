@@ -1,6 +1,7 @@
 class Backoffice::UsersController < BackofficeController
 
   before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_organizations, only: [:edit, :new]
 
   def index
     @users = User.where.not(id: current_user)
@@ -16,6 +17,7 @@ class Backoffice::UsersController < BackofficeController
       redirect_to edit_backoffice_user_path(@user),
         notice: 'User created successfully.'
     else
+      set_organizations
       render :new
     end
   end
@@ -28,6 +30,7 @@ class Backoffice::UsersController < BackofficeController
       redirect_to edit_backoffice_user_path(@user),
         notice: 'User updated successfully.'
     else
+      set_organizations
       render :edit
     end
   end
@@ -45,6 +48,10 @@ class Backoffice::UsersController < BackofficeController
 
     def user_params
       params.require(:user).permit!
+    end
+
+    def set_organizations
+      @organizations = Organization.all
     end
 
 end

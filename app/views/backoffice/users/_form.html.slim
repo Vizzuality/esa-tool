@@ -4,6 +4,9 @@
   = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) 
 .form-row
   = f.input :password_confirmation, required: true
+- if current_user.is_admin?
+  .form-row
+    = f.input :organization, collection: @organizations
 .form-row._center
   - if @user[:id]
     = link_to t('delete'), backoffice_user_path(@user), method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
