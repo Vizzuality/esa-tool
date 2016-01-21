@@ -8,6 +8,7 @@ class DataLayer < ActiveRecord::Base
 
   validates :table_name, presence: true
   validates :import_status, presence: true
+  validates :year, presence: true
 
   def create_file(file)
     # return false unless valid_file_headers?(file)
