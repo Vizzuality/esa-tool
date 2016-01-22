@@ -78,11 +78,67 @@ $thumb-height: rem(194px);
 
   .actions {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 5%;
+    left: 5%;
 
-    .btn {
-      padding: .1rem;
+    > .container {
+      display: none;
+      position: relative;
+      padding: 0 .2rem;
+
+      background-color: $bg-color-3;
+
+      > .action {
+        padding: 0 .2rem;
+
+        .icon {
+          width: .6rem;
+        }
+
+        .description {
+          display: none;
+          position: absolute;
+          top:0;
+          left: 100%;
+          padding: .2rem .3rem;
+
+          font-size: $font-size-small;
+
+          background-color: $font-color-4;
+        }
+        &:hover {
+          .description {
+            display: block;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      .container {
+        display: block;
+      }
+      &:after {
+        display: none;
+      }
+    }
+
+    &:after {
+      content:"···";
+      width: rem(30px);
+      height: rem(20px);
+      padding-left: 2px;
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      color: $font-color-1;
+      text-align: center;
+      letter-spacing: 3px;
+      font-size: $font-size-medium;
+      line-height: 1.25rem;
+
+      background-color: $bg-color-3;
     }
   }
 }
