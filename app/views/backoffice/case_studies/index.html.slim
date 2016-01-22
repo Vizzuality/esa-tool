@@ -24,24 +24,24 @@
                 time = l(case_study.updated_at.to_date, format: :short)
           .actions
             .container
+              = link_to duplicate_backoffice_case_study_path(case_study), method: :post, class: 'action' do 
+                svg.icon.icon-duplicate
+                  use xlink:href="#icon-duplicate"
+                span.description = t('duplicate')
+              = link_to backoffice_case_study_path(case_study),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'action' do 
+                svg.icon.icon-delete
+                  use xlink:href="#icon-delete"
+                span.description = t('delete')
               - if !case_study.published
                 = link_to backoffice_case_study_path( case_study, case_study: {published: true} ), method: :patch, class: 'action' do
-                  svg.icon.icon-zoom-in
-                    use xlink:href="#icon-zoom-in"
+                  svg.icon.icon-publish
+                    use xlink:href="#icon-publish"
                   span.description = t('publish')
               - else 
                 = link_to backoffice_case_study_path( case_study, case_study: {published: false} ), method: :patch, class: 'action' do 
-                  svg.icon.icon-zoom-in
-                    use xlink:href="#icon-zoom-in"
+                  svg.icon.icon-publish
+                    use xlink:href="#icon-publish"
                   span.description = t('unpublish')
-              = link_to duplicate_backoffice_case_study_path(case_study), method: :post, class: 'action' do 
-                svg.icon.icon-zoom-in
-                  use xlink:href="#icon-zoom-in"
-                span.description = t('duplicate')
-              = link_to backoffice_case_study_path(case_study),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'action' do 
-                svg.icon.icon-zoom-in
-                  use xlink:href="#icon-zoom-in"
-                span.description = t('delete')
         
       .grid-xs-12.grid-sm-6.grid-md-4
 
