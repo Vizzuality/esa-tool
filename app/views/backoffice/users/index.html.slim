@@ -12,21 +12,22 @@ section.l-main
   .content
     .wrap: .row
       .grid-sm-8.offset-sm-2
-        
         table.data-table
           tr
             th = t('email')
             th = t('organization')
             th = t('role')
             th = t('actions')
-            
           - @users.each do |u|
             tr
-              td = link_to u.email, edit_backoffice_user_path(u)
+              td = u.email
               td = u.organization.try(:name)
               td = u.is_admin? ? "Admin" : "Contributor"
               td
                 .btns-toolbar
                   - if current_user.is_admin? || current_user == u
                     = link_to t('edit'), edit_backoffice_user_path(u), class: 'btn -alt'
+                    = link_to t('change_password'),
+                      edit_backoffice_user_path(u, change_pwd: true),
+                      class: 'btn -alt'
                   = link_to t('delete'), backoffice_user_path(u), method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn _alt'

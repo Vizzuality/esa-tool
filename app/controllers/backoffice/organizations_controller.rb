@@ -1,4 +1,4 @@
-class OrganizationsController < BackofficeController
+class Backoffice::OrganizationsController < BackofficeController
 
   before_action :set_organization, only: [:edit, :update, :destroy]
   before_action :authorize_admins!

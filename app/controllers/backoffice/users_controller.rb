@@ -2,6 +2,8 @@ class Backoffice::UsersController < BackofficeController
 
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :set_organizations, only: [:edit, :new]
+  before_action :set_change_pwd, only: [:edit, :update]
+  before_action :restrict_access!, only: [:edit, :update, :destroy]
 
   def index
     @users = User.where.not(id: current_user)
@@ -52,6 +54,17 @@ class Backoffice::UsersController < BackofficeController
 
     def set_organizations
       @organizations = Organization.all
+    end
+
+    def set_change_pwd
+      @change_pwd = params[:change_pwd].presence || false
+    end
+
+    def restrict_access!
+      unless current_user.is_admin? || current_user == @user
+        redirect_to backoffice_users_path,
+          error: "You are not authorized to access this page."
+      end
     end
 
 end

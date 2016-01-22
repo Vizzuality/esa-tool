@@ -1,7 +1,7 @@
 class Backoffice::CaseStudiesController < BackofficeController
 
   before_action :set_case_study, only: [:show, :edit, :update, :destroy]
-  before_action :restrict_access, only: [:edit, :update, :destroy]
+  before_action :restrict_access!, only: [:edit, :update, :destroy]
 
   def index
     @case_studies = if current_user.is_admin?
@@ -80,7 +80,7 @@ class Backoffice::CaseStudiesController < BackofficeController
       )
     end
 
-    def restrict_access
+    def restrict_access!
       unless current_user.is_admin? || current_user.can_manage?(@case_study)
         redirect_to backoffice_case_studies_path,
           error: "You can only manage your Organization's case studies."
