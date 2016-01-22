@@ -15,7 +15,7 @@
     = render 'backoffice/partials/input_image_file', f: f, name: :background, image: @page.background, class_name: "-large", custom_label:'background'
 
 - else
-  .form-row
+  .form-row.file-map-input
     = f.label :files
     
     = f.simple_fields_for :data_layers do |d|
@@ -23,8 +23,8 @@
     = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
     
     #filename.list-container data-filename= @page.data_layers.first.table_name
-      = f.label :column_selected
-      = f.input_field :column_selected, as: :hidden, value: (@page.data_layers.first.column_selected or nil), class: 'input'
+      = f.simple_fields_for :data_layers do |d|
+        = d.input_field :column_selected, as: :hidden, value: (@page.data_layers.first.column_selected or nil), class: 'input', id: 'page_column_selected'
       #map-columns-list.box-list
 
   .form-row.box-selector

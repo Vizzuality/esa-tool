@@ -10,12 +10,18 @@ class DataLayer < ActiveRecord::Base
   validates :import_status, presence: true
   validates :year, presence: true
 
-  def create_file(file)
+  attr_accessor :file
+
+  before_validation :create_file
+
+  def create_file
     # return false unless valid_file_headers?(file)
-    import_status = DataLayer.import_file(file)
-    self.table_name = import_status['table_name']
-    self.import_status = import_status['state']
-    self
+    if self.file.present?
+      import_status = DataLayer.import_file(self.file)
+      self.table_name = import_status['table_name']
+      self.import_status = import_status['state']
+      self
+    end
   end
 
   private

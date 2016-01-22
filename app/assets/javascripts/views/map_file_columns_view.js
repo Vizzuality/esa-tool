@@ -8,7 +8,7 @@
 
     defaults: {
       ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
-      fileInput: 'page_file',
+      fileInput: 'map_file',
       fileNameContainer: 'filename',
       columnInput: 'page_column_selected',
       columnListContainer: 'map-columns-list',
@@ -17,7 +17,7 @@
     columns: [],
 
     events: {
-      'change #page_file': 'onInputChanged',
+      'change #map_file': 'onInputChanged',
       'click .close': 'removeFileSelected',
       'click .item': 'onClickItem'
     },
@@ -70,7 +70,7 @@
       }
     },
 
-    getColums: function(file) {
+    getCsvColums: function(file) {
       var promise = $.Deferred();
       var reader = new FileReader();
 

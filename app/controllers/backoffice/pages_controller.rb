@@ -13,18 +13,6 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = Page.new(page_params)
 
-    logger.debug "hooooola"
-    logger.debug page_params[:data_layers_attributes][:file]
-    # @page.data_layers.create_file(data_layer[:file])
-    logger.debug @page.data_layers
-
-
-    # if page_params.has_key?(:data_layers_attributes)
-    #   data_layer = DataLayer.new(page_id: @page.id)
-    #   data_layer.create_file(data_layer[:file])
-    #   @page.data_layers << data_layer
-    # end
-
     if @page.save
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
@@ -51,7 +39,7 @@ class Backoffice::PagesController < BackofficeController
     #   data_layer = @page.data_layers
     #     .update_all(column_selected: data_layer_params[:column_selected])
     # end
-
+    logger.debug page_params[:column_selected]
     if @page.update(page_params)
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
@@ -89,6 +77,7 @@ class Backoffice::PagesController < BackofficeController
         :page_type,
         :chart_type_list,
         :case_study_id,
+        :column_selected,
         data_layers_attributes: [:id, :table_name, :column_selected, :year, :file],
         interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
