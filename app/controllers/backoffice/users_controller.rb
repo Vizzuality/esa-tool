@@ -6,7 +6,7 @@ class Backoffice::UsersController < BackofficeController
   before_action :restrict_access!, only: [:edit, :update, :destroy]
 
   def index
-    @users = User.where.not(id: current_user)
+    @users = User.where.not(id: current_user).order(:email)
   end
 
   def new
