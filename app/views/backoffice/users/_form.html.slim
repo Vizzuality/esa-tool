@@ -10,6 +10,8 @@
 - if current_user.is_admin? && !@change_pwd
   .form-row
     = f.input :organization_id, collection: @organizations
+  .form-row
+    = f.input :is_admin, type: 'check-box', label: 'Admin'
 .form-row._center
   - unless @user.new_record?
     = link_to t('delete'), backoffice_user_path(@user), method: :delete,
