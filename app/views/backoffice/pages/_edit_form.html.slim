@@ -16,24 +16,16 @@
 
 - else
   .form-row.file-map-input
-    = f.label :file
-    #filename.filename-selected data-filename= @page.data_layers.first.table_name
-      - @page.data_layers.each do |layer|
-        p.name = layer[:table_name]
-    .input-wrapper
-      = f.input_field :file, as: :file, accept: ".csv"
-      .placeholder =t ('new_shapefile')
-    .list-container
-      = f.label :column_selected
-      = f.input_field :column_selected, as: :hidden, value: (@page.data_layers.first.column_selected or nil), class: 'input'
+    = f.label :files
+    
+    = f.simple_fields_for :data_layers do |d|
+      = render 'data_layers_fields', f: d
+    = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
+    
+    #filename.list-container data-filename= @page.data_layers.first.table_name
+      = f.simple_fields_for :data_layers do |d|
+        = d.input_field :column_selected, as: :hidden, value: (@page.data_layers.first.column_selected or nil), class: 'input', id: 'page_column_selected'
       #map-columns-list.box-list
-    / = f.simple_fields_for :data_layer do |c|
-    /   = render 'data_layer_fields', f: c
-    / = link_to_add_association t('add_data_layers'), f, :data_layer, class: 'btn -dotted'
-  
-  / .form-row
-  /   = f.label :map_column
-  /   = f.input_field :map_column, as: :radio_buttons
 
   .form-row.box-selector
     = f.input :basemap, as: :radio_buttons, collection: basemaps
@@ -72,7 +64,9 @@
 = f.hidden_field :page_type, value: params[:type]
 = f.hidden_field :case_study_id, value: params[:case_study_id]
 
-.form-row._center
-  - if @page[:id]
-    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
-  = f.button :submit, class: 'btn -primary', id: 'saveBtn'
+.footer.-fixed
+  .wrap: .row: .grid-sm-6.offset-sm-3
+    .actions
+      - if @page[:id]
+        = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -alt'
+      = f.button :submit, class: 'btn', id: 'saveBtn'

@@ -8,7 +8,7 @@
 
     defaults: {
       ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
-      fileInput: 'page_file',
+      fileInput: 'map_file',
       fileNameContainer: 'filename',
       columnInput: 'page_column_selected',
       columnListContainer: 'map-columns-list',
@@ -17,7 +17,7 @@
     columns: [],
 
     events: {
-      'change #page_file': 'onInputChanged',
+      'change #map_file': 'onInputChanged',
       'click .close': 'removeFileSelected',
       'click .item': 'onClickItem'
     },
@@ -56,20 +56,21 @@
       var extension = file.name.substr(file.name.lastIndexOf('.')+1);
       if (extension === "csv"){
 
-        var columns = self.getColums(file);
-        columns.done(function(columns){
-          if (columns.indexOf('year') === -1) {
-            alert('The selected shapefile file doesn\'t contain the year column');
-            self.removeFileSelected();
-          } else {
-            self.addFileSelected();
-          }
-        });
+        // var columns = self.getColums(file);
+        // columns.done(function(columns){
+        //   if (columns.indexOf('year') === -1) {
+        //     alert('The selected shapefile file doesn\'t contain the year column');
+        //     self.removeFileSelected();
+        //   } else {
+        //     self.addFileSelected();
+        //   }
+        // });
+        self.addFileSelected();
         // self.init(file.name.slice(0, -extension.length-1));
       }
     },
 
-    getColums: function(file) {
+    getCsvColums: function(file) {
       var promise = $.Deferred();
       var reader = new FileReader();
 
@@ -145,7 +146,7 @@
     },
 
     _fileTemplate: function() {
-      return _.template('<p class="name"> <%= fileName %>  <span class="close"> ×</span> </p>');
+      return _.template('<div class="row file"> <div class="name grid-xs-12"> <p> <%= fileName %> </p> <span class="close"> ×</span> </div> </div>');
     },
 
     removeFileSelected: function(e) {

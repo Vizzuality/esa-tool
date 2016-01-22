@@ -23,16 +23,62 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
-      this.data = this.options.data;
-
+      
+      this._initLegend();
       this._initChart();
       // this._initTimeline();
     },
 
     /**
-     * This intializes the charts
+     * Updates the views with new data
+     * @param {Object} raw data from the backend
+     * @param {Object} layer data
+     */
+    update: function(data, layer) {
+      var self = this;
+      this.data = data;
+
+      // TEMP: Delay loading of components
+      if (this.updateTimer) {
+        clearTimeout(this.updateTimer);
+      }
+
+      this.updateTimer = setTimeout(function() {
+        self._initSelectedChart();
+        self.legend.update(data, layer);
+      }, 3000);
+    },
+
+    /**
+     * Initializes the legend and its events
+     */
+    _initLegend: function() {
+      var parent = this.el;
+      var elem = parent.querySelector('.legend');
+
+      this.legend = new App.View.Legend({
+        el: elem
+      });
+
+      this.listenTo(this.legend, 'legend:filter', this._hightLight, this);
+    },
+
+    /**
+     * Initializes the chart container 
      */
     _initChart: function() {
+      var parent = this.el;
+      var elem = parent.querySelector('.chart');
+      elem.classList.add('_is-loading');
+    },
+
+    /**
+     * This intializes the charts
+     */
+    _initSelectedChart: function() {
+      var elem = this.el.querySelector('.chart');
+      elem.classList.remove('_is-loading');   
+
       var charts = this.data.charts;
 
       if (charts.length > 0) {
@@ -44,6 +90,9 @@
       }
     },
 
+    /**
+     * This intializes the timeline
+     */
     _initTimeline: function() {
       var parent = this.el;
       var elem = parent.querySelector('.charts-timeline');
@@ -140,6 +189,10 @@
       });
     },
 
+    /**
+     * Toggles the navigation depending on selection
+     * @param {Object} click event
+     */
     _toggleChart: function(ev) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -171,6 +224,9 @@
       }
     },
 
+    /**
+     * Sets the default tab
+     */
     _defaultTabs: function() {
       var currentTabSelected = this.el.querySelector('.charts-nav .-active');
       var curremtContentSelected = this.el.querySelector('.charts-content .-active');
@@ -194,17 +250,46 @@
       }
     },
 
+    /** 
+     * Filters the content by a category
+     */
+    _hightLight: function(category) {
+      this.trigger('dashboard:filter', category);
+    },
+
+    /** 
+     * Removes the chart instance
+     */
     _removeChart: function() {
-      if(this.chart) {
+      if (this.chart) {
         this.chart.prepareRemove();
         this.chart = null;
       }
     },
 
+    /** 
+     * Removes the legend instance
+     */
+    _removeLegend: function() {
+      if (this.legend) {
+        this.legend.remove();
+        this.legend = null;
+      }
+    },
+
+    /** 
+     * Removes the views and undelegates events
+     */
     remove: function() {
+      if (this.updateTimer) {
+        clearTimeout(this.updateTimer);
+      }
+      
       this._removeChart();
+      this._removeLegend();
       this._defaultTabs();
       this.undelegateEvents();
+      this.stopListening();
     }
 
   });
