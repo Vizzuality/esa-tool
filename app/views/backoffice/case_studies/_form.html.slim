@@ -8,10 +8,12 @@
 
 .nested-fields
   .row
+    .grid-sm-12
+      = f.label :location
     .grid-sm-6
-      = f.input :lat, label: t('location_latitude')
+      = f.input :lat, wrapper_html: {class: "input-inline"}
     .grid-sm-6
-      = f.input :lng, label: t('location_longitude')
+      = f.input :lng, wrapper_html: {class: "input-inline"}
 
 .form-row
   = f.input :tag_list, input_html: { class: 'tags' }
