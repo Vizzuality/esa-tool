@@ -34,6 +34,7 @@ en:
   contact: 'Contact'
   create_case_study: 'Create new case study'
   create_user: 'Create user'
+  change_password: 'Change password'
   create_organization: 'Create Organization'
   data: 'Data'
   data_origin: 'Data origin'
