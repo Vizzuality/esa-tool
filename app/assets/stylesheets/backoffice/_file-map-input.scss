@@ -8,16 +8,18 @@
   .name {
     margin: 0;
     position: relative;
-    padding: 0 1rem;
-
-    background-color: rgba($font-color-4, 0.3);
-    border-radius: 5px;
 
     p {
+      margin: 0;
+      padding: 1rem;
+
       font-family: $font-secondary;
       font-size: $font-size;
       line-height: 1.2;
       color: $font-color-1;
+
+      background-color: rgba(49, 98, 116, 0.3);
+      border-radius: 5px;
     }
 
     > .close {
@@ -35,20 +37,29 @@
     }
   }
 
+  &.-input {
+    .year {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+
+      input {
+        margin-top: 1rem;
+      }
+    }
+  }
+
   .year {
-    padding: 0 1rem;
+
     label {
       margin: 0;
       padding: 0;
     }
     input {
       padding: 0;
+      margin-top: rem(5px);
       margin-bottom: 0;
+      line-height: 2rem;
     }
-  }
-
-  .year-input {
-    padding: 0 1rem;
   }
 }
 

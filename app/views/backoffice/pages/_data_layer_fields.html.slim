@@ -1,9 +1,7 @@
 .nested-fields
-  .row
-    .grid-sm-9
+  .row.file.-input
+    .grid-sm-10
       = f.input :file, as: :file, accept: ".csv"
     .grid-sm-2.year
-      = f.input :year
-    .grid-sm-1
-      = link_to_remove_association '×', f, class: 'btn -delete'
+      = f.input_field :year, placeholder: "Year"
   = f.input :id, as: :hidden
