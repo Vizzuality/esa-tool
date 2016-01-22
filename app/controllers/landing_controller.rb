@@ -4,18 +4,9 @@ class LandingController < ApplicationController
 
   def index
     @tags = Tag.all
-    @case_studies = CaseStudy.get_tag_filtered(case_studies_params).limit(9)
-    respond_to do |format|
-      format.html
-      format.json{ render json: @case_studies }
-    end
+    @case_studies = CaseStudy.limit(9)
 
     gon.cartodb_user = ENV["CDB_USERNAME"]
-  end
-
-  private
-  def case_studies_params
-    params.permit(tags:[])
   end
 
 end

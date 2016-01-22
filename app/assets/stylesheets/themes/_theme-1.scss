@@ -84,6 +84,15 @@
     background-color: $dashboard-bg;
   }
 
+  .icon-legend {
+    border-width: rem(1px);
+    border-style: solid;
+
+    .icon-bg {
+      opacity: 0.3;
+    }
+  }
+
   .map {
     .basemap {
       > .action {

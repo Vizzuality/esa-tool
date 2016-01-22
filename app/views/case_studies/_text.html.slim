@@ -4,13 +4,8 @@
     .grid-xs-12
 
       article.caption
-        .row: .grid-xs-12.grid-sm-8
+        .grid-xs-12.grid-sm-8
           .title: h2 = p.title
         
-        .row
-          .column.grid-xs-12.grid-sm-4
-            p = p.body_first unless p.body_first.blank?
-          .column.grid-xs-12.grid-sm-4
-            p = p.body_second unless p.body_second.blank?
-          .column.grid-xs-12.grid-sm-4
-            p = p.body_thirth unless p.body_thirth.blank?
+        .column.grid-xs-12
+            p = p.body
