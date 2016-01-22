@@ -11,14 +11,18 @@
 - else
   .form-row.file-map-input
     = f.label :file
-    #filename.filename-selected
-    .input-wrapper.-lg
-      = f.input_field :file, as: :file, accept: ".csv"
-      .placeholder
-        span.title =t('drop_shapefile')
-        span.sub-title
-          =t('or') 
-          span.link =t('browse')
+      = f.simple_fields_for :data_layers do |d|
+        .form-row
+          = d.input :year
+        #filename
+        .form-row
+          .input-file-wrapper.-lg
+            = d.input_field :file, as: :file, id: "map_file"
+            .placeholder
+              span.title =t('drop_shapefile')
+              span.sub-title
+                =t('or') 
+                span.link =t('browse')
 
 = f.hidden_field :page_type, value: params[:type]
 = f.hidden_field :case_study_id, value: params[:case_study_id]
