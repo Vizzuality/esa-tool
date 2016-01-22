@@ -1,0 +1,18 @@
+.footer {
+  padding: 1rem 0;
+  
+  background-color: rgba($bg-color-1,0.7);
+
+  &.-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
