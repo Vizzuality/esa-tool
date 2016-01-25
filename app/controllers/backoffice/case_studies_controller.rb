@@ -21,7 +21,7 @@ class Backoffice::CaseStudiesController < BackofficeController
   end
 
   def edit
-    @contacts = @case_study.contacts.build
+    @contacts = @case_study.contacts.presence || @case_study.contacts.build
   end
 
   def create
@@ -76,7 +76,7 @@ class Backoffice::CaseStudiesController < BackofficeController
         :template,
         :cover_image,
         :tag_list,
-        contacts_attributes: [:id, :body, :logo, :website, :_destroy]
+        contacts_attributes: [:id, :body, :logo, :website, :_destroy, :delete_image]
       )
     end
 
