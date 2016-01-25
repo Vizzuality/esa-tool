@@ -1,7 +1,7 @@
 .nested-fields
   .row.file
-    .grid-sm-9.name
+    .grid-sm-10.name
       p = f.object.table_name
     .grid-sm-2.year
-      = f.input :year
+      = f.input_field :year, placeholder: "Year"
   = f.input :id, as: :hidden

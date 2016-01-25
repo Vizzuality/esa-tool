@@ -1,6 +1,6 @@
 - palettes = 2
 - palette_range = 8
-- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title"}], 
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? ? true : false}], 
               [t('satellite'), 'satellite', {class:"item detail-title"}], 
               [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"} } ]]
 
@@ -64,7 +64,9 @@
 = f.hidden_field :page_type, value: params[:type]
 = f.hidden_field :case_study_id, value: params[:case_study_id]
 
-.form-row._center
-  - if @page[:id]
-    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
-  = f.button :submit, class: 'btn -primary', id: 'saveBtn'
+.footer.-fixed
+  .wrap: .row: .grid-sm-6.offset-sm-3
+    .actions
+      - if @page[:id]
+        = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -alt'
+      = f.button :submit, class: 'btn', id: 'saveBtn'

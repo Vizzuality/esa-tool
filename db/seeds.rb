@@ -8,14 +8,22 @@
 
 if Rails.env == 'development'
 
+  vizz = Organization.create(name: 'Vizzuality')
+  monsters = Organization.create(name: 'Monsters Inc.')
+
   users = [
-    { email: 'admin@example.com', password: 'password', password_confirmation: 'password' },
-    { email: 'user1@example.com', password: 'password', password_confirmation: 'password' },
-    { email: 'user2@example.com', password: 'password', password_confirmation: 'password' }
+    { email: 'admin@example.com', password: 'password', password_confirmation: 'password',
+      is_admin: true, organization_id: vizz.id },
+    { email: 'user1@example.com', password: 'password',
+      password_confirmation: 'password', organization_id: monsters.id },
+    { email: 'user2@example.com', password: 'password',
+      password_confirmation: 'password', organization_id: monsters.id },
   ]
 
   case_studies = [
-    { title: 'Multi-hazard Vulnerability Assessment in Ho Chi Minh City and Yogyakarta', published: true }
+    { title: 'Multi-hazard Vulnerability Assessment in Ho Chi Minh City and Yogyakarta',
+      published: true, organization_id: monsters.id,
+      lat: 38.7755940, lng: -9.1353670, template: 1 }
   ]
 
   User.create(users)
@@ -23,7 +31,7 @@ if Rails.env == 'development'
 
   CaseStudy.create(case_studies)
   puts "Case studies created successfully"
-  
+
 end
 
 Chart.create([{name: 'pie'}, {name: 'bar'}, {name: 'line'}])
