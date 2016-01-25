@@ -6,6 +6,7 @@
 //= require backbone
 //= require_self
 //= require views/map_view
+//= require views/search_view
 //= require views/slider_view
 //= require views/cases_filter_view
 //= require controllers/map_controller
@@ -46,6 +47,7 @@
     _initModules: function() {
       this._initMap();
       this._initSlider();
+      this._initSearch();
       this._initCasesFilter();
     },
 
@@ -92,6 +94,15 @@
       e.preventDefault();
       e.currentTarget.classList.toggle('_active');
       this.menu.classList.toggle('_active');
+    },
+
+    /**
+    * Function to initialize the search box form
+    */
+    _initSearch: function() {
+      this.search = new App.View.Search({
+        el: '#casesSearch'
+      });
     },
 
     /**
