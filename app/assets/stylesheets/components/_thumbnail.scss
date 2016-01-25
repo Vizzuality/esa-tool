@@ -79,7 +79,7 @@ $thumb-height: rem(194px);
   .actions {
     position: absolute;
     top: 5%;
-    left: 5%;
+    left: rem(22px);
 
     > .container {
       display: none;
