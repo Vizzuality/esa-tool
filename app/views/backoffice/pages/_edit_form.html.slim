@@ -1,6 +1,6 @@
 - palettes = 2
 - palette_range = 8
-- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title"}], 
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? ? true : false}], 
               [t('satellite'), 'satellite', {class:"item detail-title"}], 
               [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"} } ]]
 
