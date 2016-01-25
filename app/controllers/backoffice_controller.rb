@@ -5,4 +5,10 @@ class BackofficeController < ActionController::Base
   before_action :authenticate_user!
 
   layout 'backoffice'
+
+  private
+
+  def authorize_admins!
+    redirect_to backoffice_case_studies_path unless current_user.is_admin?
+  end
 end

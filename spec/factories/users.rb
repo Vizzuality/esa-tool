@@ -5,5 +5,6 @@ FactoryGirl.define do
     f.email { Faker::Internet.email }
     f.password { Faker::Internet.password }
     f.password_confirmation { |u| u.password }
+    f.association :organization, factory: :organization
   end
 end

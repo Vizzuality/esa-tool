@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
 
     resources :users, except: [:show]
+    resources :organizations, except: [:show]
 
     root 'case_studies#index', as: 'dashboard'
   end

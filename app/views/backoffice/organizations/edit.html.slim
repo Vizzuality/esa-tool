@@ -3,11 +3,10 @@ section.l-main
   header.header
     .wrap: .row
       .grid-sm-6
-        h1 = @user.email
-  
+        h1 = @organization.name
+
   .content
     .wrap: .row
       .grid-sm-6.offset-sm-3
-        = simple_form_for @user, url: backoffice_user_path do |f|
-          = hidden_field_tag :change_pwd, @change_pwd
+        = simple_form_for [:backoffice, @organization] do |f|
           = render 'form', f: f
