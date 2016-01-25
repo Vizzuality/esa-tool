@@ -4,12 +4,13 @@
   font-weight: 400;
 }
 
-.file-map-input {
-  > .filename-selected {
+.file {
+  .name {
+    margin: 0;
+    position: relative;
 
-    > .name {
-      margin: .5rem 0;
-      position: relative;
+    p {
+      margin: 0;
       padding: 1rem;
 
       font-family: $font-secondary;
@@ -17,81 +18,104 @@
       line-height: 1.2;
       color: $font-color-1;
 
-      background-color: rgba($font-color-4, 0.3);
+      background-color: rgba(49, 98, 116, 0.3);
       border-radius: 5px;
-
-      > .close {
-        position:absolute;
-        top: 5px;
-        right: 10px;
-        display: block;
-
-        color: rgba($font-color-1, .5);
-        font-weight: normal;
-        font-size: rem(20px);
-        line-height: 1.8;
-
-        cursor: pointer;
-      }
     }
 
+    > .close {
+      position:absolute;
+      top: 5px;
+      right: 10px;
+      display: block;
+
+      color: rgba($font-color-1, .5);
+      font-weight: normal;
+      font-size: rem(20px);
+      line-height: 1.8;
+
+      cursor: pointer;
+    }
   }
 
-  > .input-wrapper {
-    position: relative;
-    height: rem(30px);
-    margin: .5rem 0 2rem;
-    padding: .5rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &.-input {
+    .year {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
 
-    text-align: center;
+      input {
+        margin-top: 1rem;
+      }
+    }
+  }
 
-    input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
+  .year {
+
+    label {
       margin: 0;
       padding: 0;
-      // to hide text in ff (apperars white column inside the input)
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      font-size: 0;
+    }
+    input {
+      padding: 0;
+      margin-top: rem(5px);
+      margin-bottom: 0;
+      line-height: 2rem;
+    }
+  }
+}
+
+.input-file-wrapper {
+  position: relative;
+  height: rem(30px);
+  margin: .5rem 0 2rem;
+  padding: .5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    // to hide text in ff (apperars white column inside the input)
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 0;
+  }
+
+  > .placeholder {
+    line-height: rem(30px);
+
+    > .title {
+      @extend %placeholder-font;
+      display: block;
+      color: $font-color-1;
     }
 
-    > .placeholder {
-      line-height: rem(30px);
+    > .sub-title {
+      @extend %placeholder-font;
+      color: $font-color-4;
 
-      > .title {
-        @extend %placeholder-font;
-        display: block;
-        color: $font-color-1;
-      }
+      > .link {
+        text-decoration: underline;
 
-      > .sub-title {
-        @extend %placeholder-font;
-        color: $font-color-4;
-
-        > .link {
-          text-decoration: underline;
-
-          margin: 0 5px;
-        }
-      }
-    }
-
-    &.-lg {
-      height: rem(450px);
-    }
-
-    &._has_file {
-      > .placeholder {
-        display: none;
+        margin: 0 5px;
       }
     }
   }
 
+  &.-lg {
+    height: rem(450px);
+  }
+
+  &._has_file {
+    > .placeholder {
+      display: none;
+    }
+  }
 }

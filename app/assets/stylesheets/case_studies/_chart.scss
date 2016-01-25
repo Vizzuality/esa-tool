@@ -1,7 +1,8 @@
 .chart {
   width: 100%;
-  height: rem(300px);
-
+  height: rem(270px);
+  position: relative;
+  
   .axis {
     &.y {
       .domain {

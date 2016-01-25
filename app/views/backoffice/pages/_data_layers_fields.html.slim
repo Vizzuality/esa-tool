@@ -1,7 +1,7 @@
 .nested-fields
-  .row.file.-input
-    .grid-sm-10
-      = f.input :file, as: :file, accept: ".csv"
+  .row.file
+    .grid-sm-10.name
+      p = f.object.table_name
     .grid-sm-2.year
       = f.input_field :year, placeholder: "Year"
   = f.input :id, as: :hidden

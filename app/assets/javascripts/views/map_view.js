@@ -88,16 +88,12 @@
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       this.basemap = this.options.basemap;
-      this.cartoCss = this.options.cartoCss || '';
-
       this.customBaseMap = this.options.customBaseMap;
-
-      this.template = this.options.data ? this.options.data.template : 1;
+      this.cartoCss = this.options.cartoCss || '';
       this.cartoUser = this.options.data ? this.options.data.cartoUser : '';
-      this.layerData = this.options.data ? this.options.data.layer : {};
+      this.template = this.options.data ? this.options.data.template : 1;
+      this.layers = [];
 
-      // At beginning create the map
-      this._setCartoOptions();
       this.createMap();
       this._setListeners();
     },
@@ -124,7 +120,21 @@
       if (!this.map) {
         this.map = L.map(this.el, this.options);
         this.setBasemap(this.basemap);
-        // this.createLayer();
+      }
+    },
+
+    /** 
+     * Removes the instanced layers
+     */
+    removeLayer: function() {
+      var layers = this.layers;
+
+      if (layers) {
+        for (var layer in layers) {
+          var layerInstance = layers[layer];
+          this.map.removeLayer(layerInstance);
+        }
+        this.layers = [];
       }
     },
 
@@ -132,14 +142,11 @@
      * Remove initialized map
      */
     removeMap: function() {
-      if (this.layer) {
-        this.map.removeLayer(this.layer);
-        this.layer = null;
-      }
+      this.removeLayer();
 
       if (this.map) {
         this.map.remove();
-        this.map = null;
+        this.map = [];
       }
 
       this._unsetListeners();
@@ -204,59 +211,80 @@
     },
 
     /**
-     * Sets the default CartoDB options
+     * Creates the layer and it's added to the map
+     * @param {Object} layer parameters
+     * @param {Boolean} sets bound if true
      */
-    _setCartoOptions: function() {
-      this.cartoOpts = {
-        user_name: this.cartoUser,
-        type: 'cartodb',
-        cartodb_logo: false,
-        sublayers: [{
-          sql: 'SELECT * FROM ' + this.layerData.table_name
-        }]
-      };
+    createLayer: function(params, bound) {
+      var self = this;
+      var layers = this._setLayers(params);
+
+      // Remove previous if it exists
+      this.removeLayer();
+
+      if (bound) {
+        this._setLayerBounds(params);
+      }
+
+      layers.forEach(function(layerData) {
+        var cartoOpts = {
+          user_name: self.cartoUser,
+          type: 'cartodb',
+          cartodb_logo: false,
+          sublayers: [{
+            sql: layerData.sql,
+            cartocss: layerData.cartocss
+          }]
+        };
+
+        cartodb.createLayer(self.map, cartoOpts)
+          .addTo(self.map)
+          .on('done', function(layer) {
+            layer.setZIndex(1);
+            self.layers[layerData.category] = layer;
+          })
+          .on('error', function(err) {
+            console.warn(err);
+          });
+      }); 
     },
 
     /**
-     * Creates the layer and it's added to the map
+     * Highlight a layer by category
+     * @param {String} category name
      */
-    createLayer: function() {
-      var self = this;
+    highLightCategory: function(category) {
+      var layers = this.layers;
 
-      cartodb.createLayer(this.map, this.cartoOpts)
-        .addTo(this.map)
-        .on('done', function(layer) {
-          layer.setZIndex(1);
-
-          self.layer = layer;
-          self._setCartoCss();
-          self._setLayerBounds();
-        })
-        .on('error', function(err) {
-          console.warn(err);
-        });
+      for (var layer in layers) {
+        if (category === '') {
+          layers[layer].setOpacity(1);
+        } else if (layer !== category) {
+          layers[layer].setOpacity(0.1);
+        } else {
+          layers[layer].setOpacity(1);
+        }
+      }
     },
-
     /**
      * Generates and sets the cartocss for the layer
+     * @param {Object} layer parameters
      */
-    _setCartoCss: function() {
+    _setLayers: function(params) {
       var self = this;
-      var table = this.layerData.table_name;
-      var column = this.layerData.column_selected;
+      var table = params.table_name;
+      var column = params.column_selected;
       var cartoCss = this.cartoCss;
-      var palette = cartoCss.palette;
-      var groups = this.layerData.groups;
+      var groups = params.groups;
       var defaultCarto = cartoCss['default'];
       var dataCarto = cartoCss['data'];
-      var result;
+      var layers = [];
 
-      defaultCarto = this._formatCartoCss(defaultCarto);
-      result = '#' + table + defaultCarto;
+      defaultCarto = '#' + table + this._formatCartoCss(defaultCarto);
 
       for (var group in groups) {
         var category = groups[group][0];
-        var cat = category.category;
+        var cat = category.column;
         var color = category.color;
         var index = category.index;
         var data = dataCarto[index];
@@ -265,12 +293,18 @@
           index = index + 1;
           index = index.toString();
           var carto = self._formatCartoCss(data, index, color);
-          result += '#' + table +'[' + column + '="' + cat + '"]' + carto;
+
+          layers.push({
+            category: cat,
+            sql: 'SELECT * FROM ' + params.table_name + 
+              ' WHERE ' + params.column_selected + ' = \'' + group + '\'',
+            cartocss: defaultCarto + '#' + table + 
+            '[' + column + '="' + cat + '"]' + carto
+          });
         }
       }
 
-      var sublayer = this.layer.getSubLayer(0);
-      sublayer.setCartoCSS(result);
+      return layers;
     },
 
     /**
@@ -298,11 +332,10 @@
      * Gets the layer's bounds from CartoDB
      * and then its set in the map
      */
-    _setLayerBounds: function() {
+    _setLayerBounds: function(params) {
       var self = this;
-      var opts = this.cartoOpts;
-      var sqlBounds = new cartodb.SQL({ user: opts.user_name });
-      var sql = opts.sublayers[0].sql;
+      var sqlBounds = new cartodb.SQL({ user: this.cartoUser });
+      var sql = 'SELECT the_geom FROM ' + params.table_name;
 
       sqlBounds.getBounds(sql).done(function(bounds) {
         self._setMapBounds(bounds);
