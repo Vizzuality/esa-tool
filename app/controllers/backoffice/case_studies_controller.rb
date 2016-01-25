@@ -16,7 +16,7 @@ class Backoffice::CaseStudiesController < BackofficeController
   end
 
   def edit
-    @contacts = @case_study.contacts.build
+    @contacts = @case_study.contacts.presence || @case_study.contacts.build
   end
 
   def create
