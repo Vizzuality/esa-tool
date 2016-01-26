@@ -84,9 +84,14 @@
      * Function to initialize the map
      */
     _renderCases: function() {
-      debugger;
       var self = this;
-      var markerOptions = {};
+      var myIcon = L.divIcon({
+        className: 'marker',
+        iconSize: [10, 10],
+      });
+      var markerOptions = {
+        icon:myIcon
+      };
       _.each(this.data.caseStudies, function(caseStudy){
         if (caseStudy.lat && caseStudy.lng){
           self.map.createMarker(
