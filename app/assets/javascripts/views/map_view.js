@@ -123,7 +123,7 @@
       }
     },
 
-    /** 
+    /**
      * Removes the instanced layers
      */
     removeLayer: function() {
@@ -246,7 +246,7 @@
           .on('error', function(err) {
             console.warn(err);
           });
-      }); 
+      });
     },
 
     /**
@@ -296,9 +296,9 @@
 
           layers.push({
             category: cat,
-            sql: 'SELECT * FROM ' + params.table_name + 
+            sql: 'SELECT * FROM ' + params.table_name +
               ' WHERE ' + params.column_selected + ' = \'' + group + '\'',
-            cartocss: defaultCarto + '#' + table + 
+            cartocss: defaultCarto + '#' + table +
             '[' + column + '="' + cat + '"]' + carto
           });
         }
