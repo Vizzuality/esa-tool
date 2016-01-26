@@ -39,6 +39,9 @@ gem 'featherlight'
 # Select2
 gem "select2-rails"
 
+# Text parser
+gem "redcarpet"
+
 # Active record
 gem 'pg', '~> 0.15'
 gem 'paperclip', '~> 4.3'
