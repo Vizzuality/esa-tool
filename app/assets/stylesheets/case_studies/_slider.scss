@@ -132,4 +132,15 @@
       }
     }
   }
+
+  .cover, .map, .text {
+    opacity:0;
+  }
+
+
+  &.slick-initialized {
+    .cover, .map, .text {
+      opacity:1;
+    }
+  }
 }

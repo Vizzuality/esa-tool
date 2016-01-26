@@ -56,7 +56,6 @@
      */
     _start: function() {
       this.menu = document.getElementById('menu');
-      this._initSlider();
       this._initSearch();
       this._setListeners();
       this.router.start();
@@ -66,10 +65,7 @@
      * Function to set events at beginning
      */
     _setListeners: function() {
-      this.listenTo(this.router, 'update:slider', this._setSliderPageFromUrl);
-
-      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
-      this.listenTo(this.slider, 'slider:change', this.initMap);
+      this.listenTo(this.router, 'start:slider', this._setSliderPageFromUrl);
     },
 
     /**
@@ -104,16 +100,23 @@
      * Function to update slide current page from the url
      */
     _setSliderPageFromUrl: function(page) {
-      this.slider.goToSlide(page);
+      this.sliderPage = page;
+      this._initSlider(page);
     },
 
     /**
      * Function to initialize the slider
      */
-    _initSlider: function() {
+    _initSlider: function(page) {
       this.slider = new App.View.Slider({
-        el: '#mainSlider'
+        el: '#mainSlider',
+        initialSlide: parseInt(page)
       });
+
+      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
+      this.listenTo(this.slider, 'slider:change', this.initMap);
+
+      this.initMap();
     },
 
     /**
@@ -130,7 +133,8 @@
      * else the map will be removed to improve the performance.
      * @param  {String} slideType It could be cover, text or map
      */
-    initMap: function(slideType) {
+    initMap: function() {
+      console.log('trigger receive');
       var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
 
       if (this.map) {
@@ -138,7 +142,7 @@
         this.map = null;
       }
 
-      if (slideType === 'map') {
+      if (el.firstElementChild.getAttribute('data-type') === 'map') {
         this.map = new App.Controller.Map({
           elContent: el,
           data: this.data,

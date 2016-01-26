@@ -57,6 +57,8 @@
      */
     _onInit: function(e, s) {
       this.setCurrent(s.currentSlide);
+      console.log('trigger init');
+      this.trigger('slider:init');
     },
 
     /**
@@ -106,9 +108,8 @@
      * @param  {Number} i           Current slide
      */
     _triggerChange: function(slickObject, i) {
-      var $current = $(slickObject.$slides[i]).find('div:first');
       this.trigger('slider:page', i);
-      this.trigger('slider:change', $current.data('type'));
+      this.trigger('slider:change');
     }
 
   });
