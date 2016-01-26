@@ -7,8 +7,7 @@
   root.App.Router = Backbone.Router.extend({
 
     routes: {
-      'case-studies/:id?page=:page': 'caseStudies',
-      'case-studies/:id': 'caseStudies'
+      'case-studies/:id(?page=:page)': 'caseStudies'
     },
 
     initialize: function() {

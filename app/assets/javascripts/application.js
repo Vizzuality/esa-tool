@@ -113,10 +113,11 @@
         initialSlide: parseInt(page)
       });
 
+      this.listenTo(this.slider, 'slider:initialized', this.initMap);
       this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
       this.listenTo(this.slider, 'slider:change', this.initMap);
 
-      this.initMap();
+      this.slider.start();
     },
 
     /**
@@ -134,7 +135,6 @@
      * @param  {String} slideType It could be cover, text or map
      */
     initMap: function() {
-      console.log('trigger receive');
       var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
 
       if (this.map) {

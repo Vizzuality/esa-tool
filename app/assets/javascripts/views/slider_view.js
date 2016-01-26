@@ -26,7 +26,8 @@
            dots: false
          }
        }
-     ]
+     ],
+     initialSlide: 0
     },
 
     /**
@@ -37,7 +38,13 @@
       this.options = _.extend({}, this.defaults, params || {});
       this.$page = document.getElementById('page');
       this._setListeners();
-      // At beginning initialize slick jquery plugin
+    },
+
+    /**
+     * Function to start slider
+     * @param  {Object} params
+     */
+    start: function(params) {
       this.$el.slick(this.options);
     },
 
@@ -56,9 +63,11 @@
      * @param  {Object} s Slick params
      */
     _onInit: function(e, s) {
+      var self = this;
       this.setCurrent(s.currentSlide);
-      console.log('trigger init');
-      this.trigger('slider:init');
+      self.trigger('slider:initialized');
+      // setTimeout(function () {
+      // }, 1);
     },
 
     /**
