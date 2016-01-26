@@ -29,6 +29,9 @@
     border-top: 4px solid;
     border-bottom: 4px solid;
 
+    @media screen and (min-width: $screen-sm) {
+      margin-left: 1rem;
+    }
     & > h2 {
       margin: 0;
       padding: 0;
@@ -38,8 +41,20 @@
       line-height: 1.2;
     }
 
-    @media screen and (min-width: $screen-sm) {
-      padding-right: 33%;
+  }
+  .content {
+    display: flex;
+    flex-flow: wrap row;
+    p {
+      flex-basis: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+
+      @media screen and (min-width: $screen-sm) {
+        padding: 1rem;
+        flex-basis: 33%;
+        max-width: 33%;
+      }
     }
   }
 

@@ -9,7 +9,7 @@
 
 - if params[:type].to_i == 1
   .form-row
-    = f.input :body
+    = f.input :body, input_html: {class:"-large"}
 
   .form-row
     = render 'backoffice/partials/input_image_file', f: f, name: :background, image: @page.background, class_name: "-large", custom_label:'background'
