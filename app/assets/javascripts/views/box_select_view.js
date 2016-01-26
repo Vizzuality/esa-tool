@@ -22,7 +22,6 @@
 
     checkSelecteds: function() {
       this.inputs = document.getElementsByClassName('association-input');
-      this.details = document.getElementsByClassName('detail-item');
       _.each(this.inputs,function(e){
         if (e.checked) {
           document.querySelectorAll('[data-input='+e.id+']')[0].classList.add('_selected');
@@ -54,7 +53,7 @@
           this.detailsId = this.currentItem.getAttribute('data-details');
           this.showDetail(this.detailsId);
         } else {
-          this.hideDetails();
+          this.hideDetails(this.currentItem);
         }
       }
     },
@@ -98,13 +97,10 @@
       document.getElementById(itemId).classList.remove('_hidden');
     },
 
-    hideDetails: function() {
-      _.each(this.details, function(item){
-        item.classList.add('_hidden');
-      })
+    hideDetails: function(item) {
+      this.details = $(item).parent().closest('.box-selector').find('.detail-item');
+      this.details.addClass('_hidden');
     }
-
-
   });
 
 })(window.App || {});
