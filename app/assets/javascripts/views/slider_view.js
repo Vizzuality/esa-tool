@@ -13,7 +13,8 @@
 
     defaults: {
       infinite: false,
-      speed: 150,
+      fade: true,
+      speed: 700,
       arrows: true,
       dots: true,
       adaptiveHeight: true,
