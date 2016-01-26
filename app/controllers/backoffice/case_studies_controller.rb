@@ -69,6 +69,7 @@ class Backoffice::CaseStudiesController < BackofficeController
     def case_studies_params
       params.require(:case_study).permit(
         :title,
+        :slug,
         :description,
         :published,
         :lat,

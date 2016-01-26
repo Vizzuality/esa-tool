@@ -66,7 +66,6 @@
      * Function to initialize the slider
      */
     _initSlider: function() {
-      this.sliderPage = 0;
       this.slider = new App.View.Slider({
         el: '#landingSlider',
         arrows: false,
@@ -75,6 +74,7 @@
         autoplay: true,
         autoplaySpeed: 3000
       });
+      this.slider.start();
     },
 
     /**

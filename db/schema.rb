@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126122453) do
+ActiveRecord::Schema.define(version: 20160126174015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160126122453) do
     t.decimal  "lat"
     t.decimal  "lng"
     t.integer  "organization_id"
+    t.string   "slug"
   end
 
   create_table "charts", force: :cascade do |t|
