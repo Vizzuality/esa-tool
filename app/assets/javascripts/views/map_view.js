@@ -250,6 +250,18 @@
     },
 
     /**
+     * Create marker to the map
+     */
+    createMarker: function(latLng, options, popUp) {
+      var self = this;
+      var marker = L.marker(latLng, options);
+      if (popUp) {
+        marker.bindPopup(popUp);
+      }
+      marker.addTo(this.map)
+    },
+    
+    /**
      * Highlight a layer by category
      * @param {String} category name
      */

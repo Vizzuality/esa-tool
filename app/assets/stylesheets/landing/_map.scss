@@ -17,3 +17,22 @@
     z-index: 0;
   }
 }
+
+.marker {
+  background-color: $bg-color-landing-4;
+  border-radius: 50%;
+  position: relative;
+  filter: blur(0.7px);
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    border: 2px solid $bg-color-landing-4;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
+}
