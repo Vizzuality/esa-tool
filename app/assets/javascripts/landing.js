@@ -6,6 +6,7 @@
 //= require backbone
 //= require_self
 //= require views/map_view
+//= require views/search_view
 //= require views/slider_view
 //= require views/cases_filter_view
 //= require controllers/map_controller
@@ -63,8 +64,8 @@
      */
     _initModules: function() {
       this._initMap();
-      this._renderCases();
       this._initSlider();
+      this._initSearch();
       this._initCasesFilter();
     },
 
@@ -83,6 +84,7 @@
      * Function to initialize the map
      */
     _renderCases: function() {
+      debugger;
       var self = this;
       var markerOptions = {};
       _.each(this.data.caseStudies, function(caseStudy){
@@ -118,6 +120,7 @@
         autoplay: true,
         autoplaySpeed: 3000
       });
+      this.slider.start();
     },
 
     /**
@@ -140,6 +143,15 @@
     },
 
     /**
+    * Function to initialize the search box form
+    */
+    _initSearch: function() {
+      this.search = new App.View.Search({
+        el: '#casesSearch'
+      });
+    },
+
+    /**
      * Function to open the map navigation
      * @param  {Event} e
      */
@@ -147,6 +159,8 @@
       this.banner.classList.add('_hidden');
       this.cases.el.classList.add('_expanded');
       this.map.el.classList.add('_expanded');
+
+      this._renderCases();
     }
 
   });

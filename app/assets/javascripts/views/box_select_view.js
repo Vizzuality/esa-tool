@@ -32,16 +32,29 @@
     onClickItem: function(e) {
       this.currentItem = e.currentTarget;
 
-      if (this.currentItem.getAttribute('data-multiple')!=="yes"){
+      if (this.currentItem.getAttribute('data-multiple')!=="yes") {
         this.selectCurrent();
       } else {
         this.toggleSelection();
       }
 
-      if (this.currentItem.getAttribute('data-input')){
-        this.checkInput(this.currentItem.getAttribute('data-input'));
+      if (this.currentItem.getAttribute('data-input')) {
+        if (this.currentItem.getAttribute('data-value')) {
+          this.setInputValue(this.currentItem.getAttribute('data-input'),this.currentItem.getAttribute('data-value'));
+        } else {
+          this.checkInput(this.currentItem.getAttribute('data-input'));
+        }
       } else {
         this.updateValue();
+      }
+
+      if (this.currentItem.classList.contains('detail-title')) {
+        if (this.currentItem.getAttribute('data-details')) {
+          this.detailsId = this.currentItem.getAttribute('data-details');
+          this.showDetail(this.detailsId);
+        } else {
+          this.hideDetails(this.currentItem);
+        }
       }
     },
 
@@ -65,6 +78,11 @@
       this.inputElement.value = this.currentItem.getAttribute('data-value');
     },
 
+    setInputValue: function(id, value) {
+      var input = document.getElementById(id);
+      input.value = value;
+    },
+
     checkInput: function(id) {
       var el = this.currentItem;
       var input = document.getElementById(id);
@@ -73,8 +91,16 @@
       } else {
         input.checked = false;
       }
-    }
+    },
 
+    showDetail: function(itemId) {
+      document.getElementById(itemId).classList.remove('_hidden');
+    },
+
+    hideDetails: function(item) {
+      this.details = $(item).parent().closest('.box-selector').find('.detail-item');
+      this.details.addClass('_hidden');
+    }
   });
 
 })(window.App || {});

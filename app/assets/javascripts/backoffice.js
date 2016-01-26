@@ -30,6 +30,8 @@
       this.initBoxSelects();
       this.initPreviewImage();
       this.initMapFileColumns();
+      this.initFeatherlight();
+      this.setExitWithoutSavingConfirmation();
     },
 
     /**
@@ -69,7 +71,33 @@
       if (e && e.preventDefault) {
         e.preventDefault();
       }
+      this.submitted = true;
       this.$el.find('form').submit();
+    },
+
+    initFeatherlight: function(){
+      $.featherlight.defaults.otherClose = "button.-close";
+      $.featherlight.defaults.afterContent = function(){
+        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div>');
+      };
+    },
+
+    setExitWithoutSavingConfirmation: function(){
+      var self = this;
+      this.submitted = false;
+      this.form = this.$("form.exit-saving");
+      this.cleanForm = this.form.serialize();
+      $(window).on('beforeunload', function(e){
+        e = e || window.event;
+        if(!self.submitted && self.cleanForm != self.form.serialize()) {
+          // For IE and Firefox
+          if (e) {
+            e.returnValue = "You have unsaved changes.";
+          }
+          // For Safari
+          return "You have unsaved changes.";
+        }
+      });
     }
 
   });

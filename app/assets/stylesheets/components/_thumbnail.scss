@@ -1,72 +1,145 @@
 $thumb-height: rem(194px);
 
 .thumbnail {
-  display: block;
-  max-width: 100%;
   margin-bottom: 2rem;
-  min-height: $thumb-height;
   position: relative;
 
-  text-decoration: none;
+  > .content {
+    display: block;
+    max-width: 100%;
+    min-height: $thumb-height;
+    position: relative;
 
-  outline: 2px solid transparent;
+    text-decoration: none;
 
-  transition: all .3s ease;
+    outline: 2px solid transparent;
 
-  @extend %clearfix;
+    transition: all .3s ease;
+
+    @extend %clearfix;
+
+    & > .caption {
+      position: absolute;
+      max-width: calc(100% - 20px);
+      left: rem(10px);
+      bottom: rem(10px);
+    }
+
+    .thumb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      background-color: $blue;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+
+      overflow: hidden;
+    }
+
+    .caption-item {
+      display: block;
+      float: left;
+      clear: left;
+      margin: 0;
+      padding: .5rem;
+
+      font-family: $font-main;
+      font-size: rem($font-size-medium);
+      color: $font-color-2;
+      line-height: 1.1;
+
+      background-color: $bg-color-2;
+
+      &.-secondary {
+        font-family: $font-secondary;
+        font-size: rem($font-size);
+        color: $font-color-1;
+
+        background-color: $bg-color-3;
+      }
+    }
+
+  }
 
   &:hover {
-    box-shadow: 0 0 28px rgba(0, 0, 0, 0.20);
-    outline: 2px solid $border-color-2;
-  }
-
-  & > .caption {
-    position: absolute;
-    max-width: calc(100% - 20px);
-    left: rem(10px);
-    bottom: rem(10px);
-  }
-
-  .thumb {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background-color: $blue;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-
-    overflow: hidden;
-  }
-
-  .caption-item {
-    display: block;
-    float: left;
-    clear: left;
-    margin: 0;
-    padding: .5rem;
-
-    font-family: $font-main;
-    font-size: rem($font-size-medium);
-    color: $font-color-2;
-    line-height: 1.1;
-
-    background-color: $bg-color-2;
-
-    &.-secondary {
-      font-family: $font-secondary;
-      font-size: rem($font-size);
-      color: $font-color-1;
-
-      background-color: $bg-color-3;
+    > .content {
+      box-shadow: 0 0 28px rgba(0, 0, 0, 0.20);
+      outline: 2px solid $border-color-2;
     }
   }
 
   &._unpublished .thumb {
     opacity: .5;
+  }
+
+  .actions {
+    position: absolute;
+    top: 5%;
+    left: rem(22px);
+
+    > .container {
+      display: none;
+      position: relative;
+      padding: 0 .2rem;
+
+      background-color: $bg-color-3;
+
+      > .action {
+        padding: 0 .2rem;
+
+        .icon {
+          width: .6rem;
+        }
+
+        .description {
+          display: none;
+          position: absolute;
+          top:0;
+          left: 100%;
+          padding: rem(3px) .3rem;
+
+          font-size: $font-size-small;
+
+          background-color: $font-color-4;
+        }
+        &:hover {
+          .description {
+            display: block;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      .container {
+        display: block;
+      }
+      &:after {
+        display: none;
+      }
+    }
+
+    &:after {
+      content:"···";
+      width: rem(30px);
+      height: rem(20px);
+      padding-left: 2px;
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      color: $font-color-1;
+      text-align: center;
+      letter-spacing: 3px;
+      font-size: $font-size-medium;
+      line-height: 1.25rem;
+
+      background-color: $bg-color-3;
+    }
   }
 }
 

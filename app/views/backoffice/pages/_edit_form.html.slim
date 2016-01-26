@@ -1,54 +1,55 @@
 - palettes = 2
 - palette_range = 8
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? ? true : false}], 
+              [t('satellite'), 'satellite', {class:"item detail-title"}], 
+              [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"} } ]]
 
 .form-row
   = f.input :title
 
 - if params[:type].to_i == 1
   .form-row
-    = f.input :body_first
-  
-  .form-row
-    = f.input :body_second
-    
-  .form-row
-    = f.input :body_thirth
-    
+    = f.input :body
+
   .form-row
     = render 'backoffice/partials/input_image_file', f: f, name: :background, image: @page.background, class_name: "-large", custom_label:'background'
 
 - else
   .form-row.file-map-input
-    = f.label :file
-    #filename.filename-selected data-filename= @page.data_layer.table_name
-      p.name = @page.data_layer[:table_name]
-    .input-wrapper._hidden
-      = f.input_field :file, as: :file, accept: ".csv", data: {filename: @page.data_layer.table_name}
-      .placeholder =t ('new_shapefile')
-    .list-container
-      = f.label :column_selected
-      = f.input_field :column_selected, as: :hidden, value: (@page.data_layer[:column_selected] or nil), class: 'input'
+    = f.label :files
+    
+    = f.simple_fields_for :data_layers do |d|
+      = render 'data_layers_fields', f: d
+    = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
+    
+    #filename.list-container data-filename= @page.data_layers.first.table_name
+      = f.simple_fields_for :data_layers do |d|
+        = d.input_field :column_selected, as: :hidden, value: (@page.data_layers.first.column_selected or nil), class: 'input', id: 'page_column_selected'
       #map-columns-list.box-list
-    / = f.simple_fields_for :data_layer do |c|
-    /   = render 'data_layer_fields', f: c
-    / = link_to_add_association t('add_data_layers'), f, :data_layer, class: 'btn -dotted'
-  
-  / .form-row
-  /   = f.label :map_column
-  /   = f.input_field :map_column, as: :radio_buttons
 
+  .form-row.box-selector
+    = f.input :basemap, as: :radio_buttons, collection: basemaps
   
+    #customBasemapUrl.form-row.detail-item class=('_hidden' unless @page.basemap == 'custom')
+      = f.input :basemap_url
     
   .form-row
     = f.label :color_palette
     .box-selector
       - for t in 1..palettes
-        .item.-col-2.-palette data-value="#{t}" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
+        .item.-col-3.-palette.detail-title data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
           - for r in 1..palette_range
             .range
               span.-bordered
               span
-      = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i or 1), class: 'input'
+      .item.-col-3.-palette.-range-custom.detail-title data-value="3" data-input="pallete" data-details="customBasemap"  class="#{@page.color_palette.to_i == 3 ? '_selected' : nil}"
+        - for r in 1..palette_range-2
+          .range
+            span.-bordered
+            span
+      #customBasemap.form-row.detail-item class=('_hidden' unless @page.color_palette == 3)
+        = f.input :custom_basemap, input_html: {class:"-large"}, placeholder: "CUSTOMIZED CARTOCSS \nPaste code here"
+      = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.nil? or 1), class: 'input', id:"pallete"
   / .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
   /   = f.input :custom_color_palette
   
@@ -70,7 +71,9 @@
 = f.hidden_field :page_type, value: params[:type]
 = f.hidden_field :case_study_id, value: params[:case_study_id]
 
-.form-row._center
-  - if @page[:id]
-    = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -primary -alt'
-  = f.button :submit, class: 'btn -primary'
+.footer.-fixed
+  .wrap: .row: .grid-sm-6.offset-sm-3
+    .actions
+      - if @page[:id]
+        = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -alt'
+      = f.button :submit, class: 'btn', id: 'saveBtn'

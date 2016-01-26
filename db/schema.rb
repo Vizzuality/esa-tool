@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112091756) do
+ActiveRecord::Schema.define(version: 20160126122453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 20160112091756) do
     t.string   "cover_image_content_type"
     t.integer  "cover_image_file_size"
     t.datetime "cover_image_updated_at"
+    t.decimal  "lat"
+    t.decimal  "lng"
+    t.integer  "organization_id"
   end
 
   create_table "charts", force: :cascade do |t|
@@ -64,27 +67,32 @@ ActiveRecord::Schema.define(version: 20160112091756) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "column_selected"
+    t.integer  "year"
   end
 
   add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id", using: :btree
 
   create_table "interest_points", force: :cascade do |t|
-    t.string   "name",                                 null: false
-    t.decimal  "lat",        precision: 15, scale: 10, null: false
-    t.decimal  "lng",        precision: 15, scale: 10, null: false
+    t.string   "name",                                  null: false
+    t.decimal  "lat",         precision: 15, scale: 10, null: false
+    t.decimal  "lng",         precision: 15, scale: 10, null: false
     t.float    "radius"
-    t.integer  "page_id",                              null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.integer  "page_id",                               null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "description"
   end
 
   add_index "interest_points", ["page_id"], name: "index_interest_points_on_page_id", using: :btree
 
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pages", force: :cascade do |t|
     t.string   "title",                               null: false
-    t.text     "body_first"
-    t.text     "body_second"
-    t.text     "body_thirth"
     t.integer  "page_type",               default: 1
     t.integer  "color_palette"
     t.string   "custom_color_palette"
@@ -95,6 +103,10 @@ ActiveRecord::Schema.define(version: 20160112091756) do
     t.string   "background_content_type"
     t.integer  "background_file_size"
     t.datetime "background_updated_at"
+    t.string   "basemap"
+    t.string   "basemap_url"
+    t.text     "body"
+    t.text     "custom_basemap"
   end
 
   add_index "pages", ["case_study_id"], name: "index_pages_on_case_study_id", using: :btree
@@ -120,18 +132,20 @@ ActiveRecord::Schema.define(version: 20160112091756) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "organization_id"
+    t.boolean  "is_admin",               default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -8,7 +8,7 @@
 
     defaults: {
       ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
-      fileInput: 'page_file',
+      fileInput: 'map_file',
       fileNameContainer: 'filename',
       columnInput: 'page_column_selected',
       columnListContainer: 'map-columns-list',
@@ -17,13 +17,15 @@
     columns: [],
 
     events: {
-      'change #page_file': 'onInputChanged',
+      'change #map_file': 'onInputChanged',
       'click .close': 'removeFileSelected',
       'click .item': 'onClickItem'
     },
 
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params.options || {});
+
+      this.data = this._getAppData();
       this.ignored_columns = this.options.ignored_columns;
       this.columnListContainer = document.getElementById(this.options.columnListContainer);
       this.fileInput = document.getElementById(this.options.fileInput);
@@ -53,16 +55,43 @@
       var file = e.currentTarget.files[0];
       var extension = file.name.substr(file.name.lastIndexOf('.')+1);
       if (extension === "csv"){
+
+        // var columns = self.getColums(file);
+        // columns.done(function(columns){
+        //   if (columns.indexOf('year') === -1) {
+        //     alert('The selected shapefile file doesn\'t contain the year column');
+        //     self.removeFileSelected();
+        //   } else {
+        //     self.addFileSelected();
+        //   }
+        // });
         self.addFileSelected();
         // self.init(file.name.slice(0, -extension.length-1));
       }
+    },
+
+    getCsvColums: function(file) {
+      var promise = $.Deferred();
+      var reader = new FileReader();
+
+      reader.onload = function(ev) {
+        var filePart = ev.target.result.split(0, 1)[0];
+        promise.resolve(filePart.substr(0, filePart.indexOf('\n')));
+      };
+      reader.onerror = function(error) {
+        promise.reject('There was an error reading the csv file');
+      };
+
+      reader.readAsText(file);
+
+      return promise;
     },
 
     getColumns: function(name) {
       var self = this;
       var query = 'SELECT * FROM ' + name + ' LIMIT 0';
       var defer = new $.Deferred();
-      $.getJSON('https://<%= ENV["CDB_USERNAME"] %>.cartodb.com/api/v2/sql/?q='+query)
+      $.getJSON('https://'+this.data.cartodb_user+'.cartodb.com/api/v2/sql/?q='+query)
         .done(function(data){
           $.each(data.fields, function(key, val) {
             if (!_.contains(self.ignored_columns, key)) {
@@ -84,20 +113,24 @@
     refreshColumns: function() {
       var self = this;
       this.columnListContainer.innerHTML = '';
-      _.each(self.columns, function(element, index){
-        self.addColummn(element,index);
+      _.each(self.columns, function(element){
+        self.addColummn(element);
       });
     },
 
     addColummn: function(element) {
-      this.columnListContainer.insertAdjacentHTML("afterbegin", this._columnTemplate(element));
+      var column = {
+        value: element,
+        selectedClass: (element === this.columnInput.value) ? '_selected':''
+      };
+      var tpl = this._columnTemplate()(column);
+      this.columnListContainer.insertAdjacentHTML("afterbegin", tpl);
     },
 
-    _columnTemplate: function(element) {
-      var selected_class = (element === this.columnInput.value) ? '_selected':'';
-      return '<div class="item '+ selected_class +'" data-value="'+element+'">'+
-              '<span>'+element+'</span>'+
-            '</div>'
+    _columnTemplate: function() {
+      return _.template('<div class="item <%= selectedClass %>" data-value="<%= value %>" >'+
+                          '<span> <%= value %> </span> '+
+                        ' </div>');
     },
 
     handleColumnsError: function(error) {
@@ -106,16 +139,23 @@
 
     addFileSelected: function(e) {
       if (this.fileInput.files[0]) {
-        this.fileNameContainer.getElementsByClassName('name')[0].textContent = this.fileInput.files[0].name;
-        this.fileNameContainer.classList.remove('_hidden');
+        var tpl = this._fileTemplate()({fileName: this.fileInput.files[0].name});
+        this.fileNameContainer.insertAdjacentHTML('beforeend', tpl);
       }
+      this.fileInput.parentElement.classList.add('_hidden');
+    },
+
+    _fileTemplate: function() {
+      return _.template('<div class="row file"> <div class="name grid-xs-12"> <p> <%= fileName %> </p> <span class="close"> ×</span> </div> </div>');
     },
 
     removeFileSelected: function(e) {
-      this.fileNameContainer.classList.add('_hidden');
-      // this.columnListContainer.innerHTML = '';
-      // this.columnInput.value = '';
+      if (e) {
+        var el = e.currentTarget.parentElement;
+        el.parentNode.removeChild(el);
+      }
       this.fileInput.value = '';
+      this.fileInput.parentElement.classList.remove('_hidden');
     },
 
     onClickItem: function(e) {
@@ -137,7 +177,17 @@
 
     updateValue: function() {
       this.columnInput.value = this.currentItem.getAttribute('data-value');
-    }
+    },
+
+    _getAppData: function() {
+      var data = {};
+
+      if (gon && gon.cartodb_user) {
+        data.cartodb_user = gon.cartodb_user;
+      }
+
+      return data;
+    },
 
   });
 

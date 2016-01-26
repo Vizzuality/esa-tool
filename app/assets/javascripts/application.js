@@ -3,14 +3,23 @@
 //= require slick.js/slick.js
 //= require underscore
 //= require backbone
+//= require d3
 //= require_self
 //= require router
 //= require_tree ./cartocss
 //= require views/map_view
 //= require views/map_basemap_view
+//= require views/chart_line_view
+//= require views/chart_pie_view
+//= require views/chart_bar_view
+//= require views/timeline_view
+//= require views/legend_view
+//= require views/dashboard_view
 //= require views/slider_view
+//= require views/search_view
 //= require views/tabs_view
 //= require controllers/map_controller
+//= require collections/case_study_collection
 
 'use strict';
 
@@ -47,7 +56,7 @@
      */
     _start: function() {
       this.menu = document.getElementById('menu');
-      this._initSlider();
+      this._initSearch();
       this._setListeners();
       this.router.start();
     },
@@ -56,10 +65,7 @@
      * Function to set events at beginning
      */
     _setListeners: function() {
-      this.listenTo(this.router, 'update:slider', this._setSliderPageFromUrl);
-
-      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
-      this.listenTo(this.slider, 'slider:change', this.initMap);
+      this.listenTo(this.router, 'start:slider', this._setSliderPageFromUrl);
     },
 
     /**
@@ -94,15 +100,32 @@
      * Function to update slide current page from the url
      */
     _setSliderPageFromUrl: function(page) {
-      this.slider.goToSlide(page);
+      this.sliderPage = page;
+      this._initSlider(page);
     },
 
     /**
      * Function to initialize the slider
      */
-    _initSlider: function() {
+    _initSlider: function(page) {
       this.slider = new App.View.Slider({
-        el: '#mainSlider'
+        el: '#mainSlider',
+        initialSlide: parseInt(page)
+      });
+
+      this.listenTo(this.slider, 'slider:initialized', this.initMap);
+      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
+      this.listenTo(this.slider, 'slider:change', this.initMap);
+
+      this.slider.start();
+    },
+
+    /**
+     * Function to initialize the search box form
+     */
+    _initSearch: function() {
+      this.search = new App.View.Search({
+        el: '#casesSearch'
       });
     },
 
@@ -111,7 +134,7 @@
      * else the map will be removed to improve the performance.
      * @param  {String} slideType It could be cover, text or map
      */
-    initMap: function(slideType) {
+    initMap: function() {
       var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
 
       if (this.map) {
@@ -119,7 +142,7 @@
         this.map = null;
       }
 
-      if (slideType === 'map') {
+      if (el.firstElementChild.getAttribute('data-type') === 'map') {
         this.map = new App.Controller.Map({
           elContent: el,
           data: this.data,

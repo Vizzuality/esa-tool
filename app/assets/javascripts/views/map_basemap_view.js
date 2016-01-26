@@ -16,6 +16,7 @@
     },
 
     defaults: {
+      basemap:'terrain'
     },
 
     /**
@@ -23,12 +24,13 @@
      * @param  {Object} params
      */
     initialize: function(params) {
-      this.options = _.extend({}, this.defaults, params.options || {});
+      this.options = _.extend({}, this.defaults, params || {});
+      this.basemap = this.options.basemap;
     },
 
     /**
      * Toggles the basemap menu
-     * @param {Event} 
+     * @param {Event}
      */
     _toggleBasemap: function(ev) {
       var elem = ev.currentTarget;
@@ -37,7 +39,7 @@
 
     /**
      * Selects a basemap from the menu
-     * @param {Event} 
+     * @param {Event}
      */
     _selectBasemap: function(ev) {
       ev.preventDefault();
@@ -68,10 +70,8 @@
       selector.classList.remove('active');
 
       this._clearSelected();
-
-      var items = document.querySelectorAll('.basemap .item');
-      var firstOption = items[0];
-      firstOption.classList.add('selected');
+      var defaultOption = this.$el.find('[data-value="' + this.basemap + '"]');
+      defaultOption.addClass('selected');
     },
 
     /**

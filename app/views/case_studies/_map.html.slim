@@ -1,108 +1,46 @@
 .map data-type="map": .container
 
     .vis#mapView
-    #basemapView
+    #basemapView data-basemap=p.basemap data-basemap-url= p.basemap_url
       .basemap
         button.action Basemap
         ul.list
-          li.item.selected data-value=("terrain") Terrain
-          li.item data-value=("satellite") Satellite
-
+          li.item class=('selected' if p.basemap == 'terrain') data-value=("terrain") Terrain
+          li.item class=('selected' if p.basemap == 'satellite') data-value=("satellite") Satellite
+          - if p.basemap == 'custom'
+            li.item.selected data-value=("custom") Custom
     .wrap: .row: .grid-xs-12.grid-sm-4.offset-sm-8
         
-      .dashboard
+      #dashboardView.dashboard
         .title
           h2 = p.title
-      / .legend.tabs-wrapper
-      /   .legend-nav
-      /     ul.tabs
-      /       li.tab-title.-active 
-      /         a href="#" By number of slums
-      /       li.tab-title 
-      /         a href="#" By area
-              
-      /   .legend-content
-      /     ul.content-list.tab-content.-active
-      /       li.content-item 
-      /         span.icon-legend.-color-1
-      /         span.description Continuous
-      /         span.value 2%
-      /       li.content-item 
-      /         span.icon-legend.-color-2
-      /         span.description Discontinuous high density
-      /         span.value 8%
-      /       li.content-item 
-      /         span.icon-legend.-color-3
-      /         span.description Discontinuous medium density
-      /         span.value 10%
-      /       li.content-item 
-      /         span.icon-legend.-color-4
-      /         span.description Discontinuous low density
-      /         span.value 20%
-      /       li.content-item 
-      /         span.icon-legend.-color-5
-      /         span.description Discontinuous very low density
-      /         span.value 25%
-      /       li.content-item 
-      /         span.icon-legend.-color-6
-      /         span.description Others
-      /         span.value 35%
-              
-      /     ul.content-list.tab-content
-      /       li.content-item 
-      /         span.icon-legend.-color-6
-      /         span.description Others
-      /         span.value 35%
-      /       li.content-item 
-      /         span.icon-legend.-color-4
-      /         span.description Discontinuous low density
-      /         span.value 20%
-      /       li.content-item 
-      /         span.icon-legend.-color-5
-      /         span.description Discontinuous very low density
-      /         span.value 25%
-      /       li.content-item 
-      /         span.icon-legend.-color-3
-      /         span.description Discontinuous medium density
-      /         span.value 10%
-      /       li.content-item 
-      /         span.icon-legend.-color-2
-      /         span.description Discontinuous high density
-      /         span.value 8%
-      /       li.content-item
-      /         span.icon-legend.-color-1
-      /         span.description Continuous
-      /         span.value 2%
-        
-      / .charts.tabs-wrapper
-      /   .charts-nav
-      /     h3.title Chart:
-      /     ul.tabs
-      /       li.tab-title.-active
-      /         a href="#"
-      /           svg.icon-chart.-line
-      /             use xlink:href="#icon-chart-line"
-      /       li.tab-title
-      /         a href="#"
-      /           svg.icon-chart.-pie
-      /             use xlink:href="#icon-chart-pie"
-      /       li.tab-title
-      /         a href="#"
-      /           svg.icon-chart.-bar
-      /             use xlink:href="#icon-chart-bar"
-                  
-      /   .charts-content
-      /     .tab-content.-active
-      /       p TODO LINE CHAR
-      /     .tab-content
-      /       p TODO PIE CHAR
-      /     .tab-content
-      /       p TODO BAR CHAR
-      /   / .charts-timeline
-      /   /   ul.times
-      /   /     li 1990
-      /   /     li 1995
-      /   /     li 2010
-      /   /     li 2014
-      /   /   button.btn PLAY
-      
+        .legend.tabs-wrapper
+          .legend-nav
+            / ul.tabs
+            /   li.tab-title.-active 
+            /     a href="#" By number of slums
+            /   li.tab-title 
+            /     a href="#" By area
+                
+          .legend-content
+             ul.list.tab-content.-active
+ 
+        .charts.tabs-wrapper
+          .charts-nav
+            h3.title Chart:
+            ul.tabs
+              - p.charts.each.with_index do |chart, index|
+                li data-tab="#{chart.name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)
+                  a href="#"
+                    svg class=("icon-chart -#{chart.name}")
+                      use xlink:href="#icon-chart-#{chart.name}"
+
+          .charts-content
+            - p.charts.each.with_index do |chart, index|
+              div data-tab-content="#{chart.name}" class=("tab-content -active" if index == 0) class=("tab-content" if index > 0) 
+                div id=("#{chart.name}-chart") class=("chart #{chart.name}")
+          .charts-timeline.timeline
+            ul.list
+            / button.action
+            /   svg.icon-play.icon
+            /     use xlink:href="#icon-play"

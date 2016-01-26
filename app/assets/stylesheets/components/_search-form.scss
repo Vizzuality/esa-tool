@@ -1,17 +1,27 @@
 .search-form {
   padding: .625rem 0;
-  position: relative;
+  padding-right: 1rem;
 
-  > .icon-search {
+  .form {
+    position: relative;
+
+    &.open {
+      .results, .close {
+        display: block;
+      }
+    }
+  }
+
+  .icon-search {
     position: absolute;
-    top: rem(13px);
+    top: rem(3px);
     left: rem(5px);
   }
 
-  > input {
+  input[type="search"] {
     height: rem(34px);
-    width: 87%;
-    padding-left: 40px;
+    width: calc(100% - 43px);
+    padding-left: 2.5rem;
 
     color: $font-color-1;
     line-height: rem(34px);
@@ -19,10 +29,55 @@
     background-color: transparent;
     border: 1px solid rgba($gray,0.2);
 
+    text-transform: uppercase;
+
     @include placeholder {
       font-size: rem($font-size-small);
       letter-spacing: rem(1.3px);
       color: $font-color-1;
+    }
+  }
+
+  .close {
+    display: none;
+    position:absolute;
+    top: 11px;
+    right: 10px;
+
+    color: rgba($font-color-1, .5);
+    font-weight: normal;
+    font-size: 1.5rem;
+    line-height: rem($font-size);
+
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  .results {
+    display: none;
+    margin:0;
+    padding:1rem;
+    padding-left: 2.5rem;
+    position: absolute;
+    left:0;
+    right: 0;
+
+    background-color: $bg-color-3;
+    border: 1px solid rgba($gray,0.2);
+    border-top: 0;
+
+    list-style: none;
+
+    .result {
+      padding: .7rem 0;
+
+      font-family: $font-secondary;
+      color: $font-color-1;
+      font-size: $font-size-small;
+      line-height: .685rem;
+      letter-spacing: 1.3px;
+
+      text-transform: uppercase;
     }
   }
 }

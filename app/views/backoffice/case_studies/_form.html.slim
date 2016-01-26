@@ -6,6 +6,15 @@
 .form-row
   = f.input :published, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
 
+.nested-fields
+  .row
+    .grid-sm-12
+      = f.label :location
+    .grid-sm-6
+      = f.input :lat, wrapper_html: {class: "input-inline"}
+    .grid-sm-6
+      = f.input :lng, wrapper_html: {class: "input-inline"}
+
 .form-row
   = f.input :tag_list, input_html: { class: 'tags' }
 
@@ -29,5 +38,7 @@
 .form-row
   = render 'backoffice/partials/input_image_file', f: f, name: :cover_image, image: @case_study.cover_image, class_name: '-large', custom_label: 'thumbnail'
 
-.form-row._center
-  = f.button :submit, class: 'btn -primary'
+.footer.-fixed
+  .wrap: .row: .grid-sm-6.offset-sm-3
+    .actions
+      = f.button :submit, class: 'btn', id: "saveBtn"

@@ -7,7 +7,7 @@
   root.App.Router = Backbone.Router.extend({
 
     routes: {
-      'case-studies/:id?page=:page': 'caseStudies'
+      'case-studies/:id(?page=:page)': 'caseStudies'
     },
 
     initialize: function() {
@@ -31,7 +31,7 @@
      */
     updateParams: function(params) {
       var current = window.location.pathname;
-      
+
       if (params && params.page) {
         this.navigate(current + '?page=' + params.page, {
           trigger: false, replace: true
@@ -43,7 +43,8 @@
      * Router for Case Studies
      */
     caseStudies: function(id, page) {
-      this.trigger('update:slider', page);
+      page = page || 0;
+      this.trigger('start:slider', page);
     }
 
   });

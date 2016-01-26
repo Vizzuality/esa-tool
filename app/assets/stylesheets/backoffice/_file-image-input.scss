@@ -21,6 +21,10 @@
       width: 100%;
       height: 100%;
       font-size: 0;
+      // to hide text in ff (apperars white column inside the input)
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
       z-index: 1;
 
       cursor: pointer;

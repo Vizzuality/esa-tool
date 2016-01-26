@@ -13,7 +13,8 @@
 
     defaults: {
       infinite: false,
-      speed: 150,
+      fade: true,
+      speed: 700,
       arrows: true,
       dots: true,
       adaptiveHeight: true,
@@ -26,7 +27,8 @@
            dots: false
          }
        }
-     ]
+     ],
+     initialSlide: 0
     },
 
     /**
@@ -37,7 +39,13 @@
       this.options = _.extend({}, this.defaults, params || {});
       this.$page = document.getElementById('page');
       this._setListeners();
-      // At beginning initialize slick jquery plugin
+    },
+
+    /**
+     * Function to start slider
+     * @param  {Object} params
+     */
+    start: function(params) {
       this.$el.slick(this.options);
     },
 
@@ -56,7 +64,11 @@
      * @param  {Object} s Slick params
      */
     _onInit: function(e, s) {
+      var self = this;
       this.setCurrent(s.currentSlide);
+      self.trigger('slider:initialized');
+      // setTimeout(function () {
+      // }, 1);
     },
 
     /**
@@ -106,9 +118,8 @@
      * @param  {Number} i           Current slide
      */
     _triggerChange: function(slickObject, i) {
-      var $current = $(slickObject.$slides[i]).find('div:first');
       this.trigger('slider:page', i);
-      this.trigger('slider:change', $current.data('type'));
+      this.trigger('slider:change');
     }
 
   });

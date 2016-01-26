@@ -9,4 +9,5 @@ section.l-main
     .wrap: .row
       .grid-sm-6.offset-sm-3
         = simple_form_for @user, url: backoffice_user_path do |f|
+          = hidden_field_tag :change_pwd, @change_pwd
           = render 'form', f: f

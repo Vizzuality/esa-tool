@@ -27,6 +27,7 @@
 .icon-map, .icon-text {
   width: rem(149px);
   height: rem(91px);
+  fill: $blue;
 }
 
 .icon-legend {
@@ -35,29 +36,10 @@
   display: inline-block;
   box-sizing: border-box;
 
-  &.-color-1 {
-    background-color: rgba($legend-1, 0.30);
-    border: 1px solid $legend-1;
-  }
-  &.-color-2 {
-    background-color: rgba($legend-2, 0.30);
-    border: 1px solid $legend-2;
-  }
-  &.-color-3 {
-    background-color: rgba($legend-3, 0.30);
-    border: 1px solid $legend-3;
-  }
-  &.-color-4 {
-    background-color: rgba($legend-4, 0.30);
-    border: 1px solid $legend-4;
-  }
-  &.-color-5 {
-    background-color: rgba($legend-5, 0.30);
-    border: 1px solid $legend-5;
-  }
-  &.-color-6 {
-    background-color: rgba($legend-6, 0.30);
-    border: 1px solid $legend-6;
+  .icon-bg {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 }
 
@@ -99,6 +81,15 @@
 .icon-search {
   width: rem(32px);
   height: rem(32px);
+
+  fill: $font-color-1;
+}
+
+.icon-publish,
+.icon-duplicate,
+.icon-delete {
+  width: rem(12px);
+  height: rem(12px);
 
   fill: $font-color-1;
 }

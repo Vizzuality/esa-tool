@@ -14,9 +14,13 @@
       .search
         h2 = t('case_studies')
         .search-form
-          svg.icon-search
-            use xlink:href="#icon-search"
-          input type="search" placeholder="SEARCH CASE"
+          = form_tag case_studies_path, :method => 'get', :id => "casesSearch", :enforce_utf8 => false, class: "form" do
+            svg.icon-search
+              use xlink:href="#icon-search"
+            input id="caseInputSearch" name="search" type="search" placeholder="SEARCH CASE" autocomplete="off"
+            span.close × 
+            ul#resultsContainer.results
+        
         .tags.-light
           span.tag URBAN
           span.tag SLUMS

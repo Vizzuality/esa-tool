@@ -5,17 +5,13 @@ class Backoffice::PagesController < BackofficeController
 
   def new
     @page = Page.new
+    @page.data_layers.build
+
     @charts = Chart.all
   end
 
   def create
     @page = Page.new(page_params)
-
-    if data_layer_params.has_key?(:file)
-      data_layer = DataLayer.new(page_id: @page.id)
-        .create_file(data_layer_params[:file])
-      @page.data_layer = data_layer
-    end
 
     if @page.save
       redirect_to edit_backoffice_case_study_page_path(
@@ -23,31 +19,27 @@ class Backoffice::PagesController < BackofficeController
       ), notice: 'Page created successfully.'
     else
       render :new
+      logger.debug @page.errors.full_messages
     end
   end
 
   def edit
     @charts = Chart.all
+    gon.cartodb_user = ENV["CDB_USERNAME"]
   end
 
   def update
+    #
     # if data_layer_params.has_key?(:file)
-    #   if @page.data_layer
-    #     data_layer = @page.data_layer
-    #       .create_file(data_layer_params[:file])
-    #     data_layer.update_columns(column_selected: data_layer_params[:column_selected])
-    #   else
-    #     data_layer = DataLayer.create(page_id: @page.id, column_selected: data_layer_params[:column_selected])
-    #       .create_file(data_layer_params[:file])
-    #   end
-    #   @page.data_layer = data_layer
+    #   @page.data_layers.create(page_id: @page.id, column_selected: data_layer_params[:column_selected])
+    #     .create_file(data_layer_params[:file])
     # end
-
-    if @page.data_layer
-      data_layer = @page.data_layer
-        .update_columns(column_selected: data_layer_params[:column_selected])
-    end
-
+    #
+    # if data_layer_params.has_key?(:column_selected)
+    #   data_layer = @page.data_layers
+    #     .update_all(column_selected: data_layer_params[:column_selected])
+    # end
+    logger.debug page_params[:column_selected]
     if @page.update(page_params)
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
@@ -76,22 +68,20 @@ class Backoffice::PagesController < BackofficeController
     def page_params
       params.require(:page).permit(
         :title,
-        :body_first,
-        :body_second,
-        :body_thirth,
+        :basemap,
+        :basemap_url,
+        :body,
         :background,
         :color_palette,
-        # :custom_color_palette,
+        :custom_basemap,
         :page_type,
         :chart_type_list,
         :case_study_id,
-        interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy],
+        :column_selected,
+        data_layers_attributes: [:id, :table_name, :column_selected, :year, :file],
+        interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )
-    end
-
-    def data_layer_params
-      params.require(:page).permit(:file, :column_selected)
     end
 
 end
