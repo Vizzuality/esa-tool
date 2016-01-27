@@ -201,6 +201,9 @@
         .data(areas)
         .enter().append('path')
           .attr('class', 'area')
+          .attr('data-category', function(d) {
+            return d.key;
+          })
           .transition()
           .duration(self.areaAnimation) 
           .attr('d', function(d) { return area(d.values); })
@@ -222,6 +225,9 @@
         lineGroup.append('path')
           .attr('d', line(d.values))
           .attr('class', 'line')
+          .attr('data-category', function() {
+            return d.key;
+          })
           .style('stroke', d.color);
       });
 
@@ -360,6 +366,30 @@
       var year = fullDate.getFullYear();
 
       this.trigger('timeline:change:year', year);
+    },
+
+    highlight: function(category) {
+      var elems = this.el.querySelectorAll('.area');
+      var elemsLine = this.el.querySelectorAll('.line');
+
+      for (var el in elems) {
+        var current = elems[el];
+        var currentLine = elemsLine[el];
+
+        if (current && current.getAttribute) {
+          var cat = current.getAttribute('data-category');
+          if (category === '') {
+            current.classList.remove('unHighLight');
+            currentLine.classList.remove('unHighLight');
+          } else if (cat !== category) {
+            current.classList.add('unHighLight');
+            currentLine.classList.add('unHighLight');
+          } else {
+            current.classList.remove('unHighLight');
+            currentLine.classList.remove('unHighLight');
+          }
+        }
+      }
     },
 
     remove: function() {

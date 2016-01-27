@@ -31,6 +31,7 @@
 
     _setChartListeners: function() {
       this.listenTo(this.chart, 'timeline:change:year', this._onTimelineChanged);
+      this.listenTo(this, 'chart:filter', this.chart.highlight);
     },
 
     /**
@@ -272,6 +273,7 @@
      */
     _hightLight: function(category) {
       this.trigger('dashboard:filter', category);
+      this.trigger('chart:filter', category);
     },
 
     _onTimelineChanged: function(year) {

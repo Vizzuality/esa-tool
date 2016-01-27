@@ -156,13 +156,13 @@
 
       if (layers) {
         layers.forEach(function(layer, i) {
-          var column = layers[0].column_selected;
+          var column = layer.column_selected;
           var table = layer.table_name;
 
           subquery += '(SELECT ' + column + ' as category, year, ' +
             'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
             'FROM ' + table + ' GROUP BY ' + column + ', year ' +
-            'ORDER BY ' + column + ' ASC)';
+            'ORDER BY ' + column + ' ASC, value DESC LIMIT 6)';
 
           if (i < layers.length - 1) {
             subquery += ' UNION ';

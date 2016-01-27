@@ -115,6 +115,9 @@
       this.pie = container.selectAll('.arc')
         .data(pie(this.chartData))
         .enter().append('g')
+          .attr('data-category', function(d) {
+            return d.data.category;
+          })
           .attr('class', 'arc');
 
       this.pie.append('path')
@@ -124,6 +127,25 @@
         .transition()
         .duration(this.animationTime)
         .attrTween('d', this._tweenPie.bind(this));
+    },
+
+    highlight: function(category) {
+      var elems = this.el.querySelectorAll('.arc');
+
+      for (var el in elems) {
+        var current = elems[el];
+        
+        if (current && current.getAttribute) {
+          var cat = current.getAttribute('data-category');
+          if (category === '') {
+            current.classList.remove('unHighLight');
+          } else if (cat !== category) {
+            current.classList.add('unHighLight');
+          } else {
+            current.classList.remove('unHighLight');
+          }
+        }
+      }
     },
 
     prepareRemove: function() {

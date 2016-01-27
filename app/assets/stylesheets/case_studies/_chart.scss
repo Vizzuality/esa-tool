@@ -42,6 +42,12 @@
       stroke-width: 1;
       fill-opacity: 0.3;
       shape-rendering: crispEdges;
+      transition: opacity .2s ease-in-out;
+      transform: translate3d(0, 0, 0);
+
+      &.unHighLight {
+        opacity: 0.15;
+      }
     }
 
     .axis {
@@ -59,6 +65,12 @@
     .arc {
       fill-opacity: 0.3;
       stroke-width: 2;
+      transition: opacity .2s ease-in-out;
+      transform: translate3d(0, 0, 0);
+
+      &.unHighLight {
+        opacity: 0.15;
+      }
     }
   }
 
@@ -86,12 +98,24 @@
       shape-rendering: crispEdges;
       fill-opacity: 0.3;
       stroke-width: 0;
+      transition: opacity .2s ease-in-out;
+      transform: translate3d(0, 0, 0);
+
+      &.unHighLight {
+        opacity: 0.15;
+      }
     }
 
     .line {
       shape-rendering: optimizeSpeed;
       fill: transparent;
       stroke-width: 2;
+      transition: opacity .2s ease-in-out;
+      transform: translate3d(0, 0, 0);
+
+      &.unHighLight {
+        opacity: 0.15;
+      }
     }
 
     text {

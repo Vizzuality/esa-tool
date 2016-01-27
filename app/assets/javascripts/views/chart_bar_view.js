@@ -114,6 +114,9 @@
         .data(this.chartData)
         .enter().append('rect')
           .attr('class', 'bar')
+          .attr('data-category', function(d) {
+            return d.category;
+          }) 
           .style('fill', function(d) { return d.color; })
           .style('stroke', function(d) { return d.color; })
           .attr('x', function(d) { return self.x(d.x); })
@@ -129,6 +132,25 @@
           .ease(self.animationType)
           .attr('y', function(d) { return self.y(d.y); })
           .attr('height', function(d) { return self.cHeight - self.y(d.y); });
+    },
+
+    highlight: function(category) {
+      var elems = this.el.querySelectorAll('.bar');
+
+      for (var el in elems) {
+        var current = elems[el];
+        
+        if (current && current.getAttribute) {
+          var cat = current.getAttribute('data-category');
+          if (category === '') {
+            current.classList.remove('unHighLight');
+          } else if (cat !== category) {
+            current.classList.add('unHighLight');
+          } else {
+            current.classList.remove('unHighLight');
+          }
+        }
+      }
     },
 
     prepareRemove: function() {
