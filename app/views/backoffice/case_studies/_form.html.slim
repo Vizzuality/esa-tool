@@ -2,9 +2,9 @@
 
 .form-row
   = f.input :title, input_html: { maxlength: 100 }
-  
+
 .form-row
-  = f.input :slug, placeholder: @case_study.title.parameterize
+  = f.input :slug, placeholder: @case_study.title.blank? ? '' : @case_study.title.parameterize
 
 .form-row
   = f.input :published, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]
