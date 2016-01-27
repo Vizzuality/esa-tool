@@ -66,35 +66,7 @@
     },
 
     _parseData: function() {
-      var self = this;
-
-      this.chartData = [
-        {
-          category: '1971',
-          value: 10,
-          color: '#EA01FF'
-        },
-        {
-          category: '2001',
-          value: 40,
-          color: '#FF6600'
-        },
-        {
-          category: '2005',
-          value: 10,
-          color: '#229A00'
-        },
-        {
-          category: '2010',
-          value: 30,
-          color: '#7801FF'
-        },
-        {
-          category: '2010',
-          value: 30,
-          color: '#ffc600'
-        }
-      ];
+      this.chartData = this.data;
     },
 
     _tweenPie: function(finish) {

@@ -19,6 +19,8 @@
       interpolate: 'linear',
       areaInterpolate: 'basic',
       paddingAxisLabels: 0,
+      areaAnimation: 700,
+      lineAnimation: 300,
       removeTransition: 500,
       removeTimeout: 300,
       handleWidth: 50,
@@ -37,6 +39,7 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
       this.margin = this.options.margin;
       this.dateFormat = this.options.dateFormat;
@@ -47,6 +50,8 @@
       this.removeTimeout = this.options.removeTimeout;
       this.handleWidth = this.options.handleWidth;
       this.currentStep = this.options.currentStep;
+      this.areaAnimation = this.options.areaAnimation;
+      this.lineAnimation = this.options.lineAnimation;
 
       this._render();
     },
@@ -80,148 +85,48 @@
 
     _parseData: function() {
       var self = this;
-      var data = this.data;
-      this.chartData = [];
+      this.chartData = this.data;
 
-      var fakeData = [
-        {
-          category: '1971',
-          x: '2001',
-          y: 0
-        },
-        {
-          category: '1971',
-          x: '2005',
-          y: 40
-        },
-        {
-          category: '1971',
-          x: '2008',
-          y: 10
-        },
-        {
-          category: '1971',
-          x: '2010',
-          y: 30
-        },
-        {
-          category: '1981',
-          x: '2001',
-          y: 30
-        },
-        {
-          category: '1981',
-          x: '2005',
-          y: 60
-        },
-        {
-          category: '1981',
-          x: '2008',
-          y: 10
-        },
-        {
-          category: '1981',
-          x: '2010',
-          y: 30
-        },
-        {
-          category: '1991',
-          x: '2001',
-          y: 5
-        },
-        {
-          category: '1991',
-          x: '2005',
-          y: 20
-        },
-        {
-          category: '1991',
-          x: '2008',
-          y: 40
-        },
-        {
-          category: '1991',
-          x: '2010',
-          y: 10
-        },
-        {
-          category: '2001',
-          x: '2001',
-          y: 25
-        },
-        {
-          category: '2001',
-          x: '2005',
-          y: 0
-        },
-        {
-          category: '2001',
-          x: '2008',
-          y: 45
-        },
-        {
-          category: '2001',
-          x: '2010',
-          y: 90
-        },
-        {
-          category: '2006',
-          x: '2001',
-          y: 55
-        },
-        {
-          category: '2006',
-          x: '2005',
-          y: 40
-        },
-        {
-          category: '2006',
-          x: '2008',
-          y: 65
-        },
-        {
-          category: '2006',
-          x: '2010',
-          y: 10
-        }
-      ];
+      _.map(this.chartData, function(d) {
+        d.x = d.year;
+        d.y = d.value;
+      });
 
-      fakeData.forEach(function(d) {
+      this.chartData.forEach(function(d) {
         d.x = self.parseDate(d.x);
       });
 
-      this.min = d3.min(fakeData, function(d) {
+      this.min = d3.min(this.chartData, function(d) {
         return d.x;
       });
 
-      this.max = d3.max(fakeData, function(d) {
+      this.max = d3.max(this.chartData, function(d) {
         return d.x;
       });
+
+      this.yearsSteps = _.uniq(_.pluck(this.chartData, 'year')); 
+
+      this.years = _.uniq(_.pluck(this.chartData, 'x'), function(y) {
+        var date = new Date(y);
+        return date.valueOf();
+      }); 
 
       this.chartData = d3.nest()
         .key(function(d) { return d.category; })
-        .entries(fakeData);
-
-      var fakeColors = {
-        '1971': '#2B7312',
-        '1981': '#FF6600',
-        '1991': '#229A00',
-        '2001': '#7801FF',
-        '2006': '#EA01FF'
-      };
+        .entries(this.chartData);
 
       d3.map(this.chartData, function(d) {
-        var dataColor = fakeColors[d.key]
+        var dataColor = _.findWhere(self.data, { category: d.key });
 
         if (dataColor) {
-          d.color = dataColor;
+          d.color = dataColor.color;
         }
       });
     },
 
     _setAxisScale: function() {
       this.x = d3.time.scale()
-        .range([0, this.cWidth]).nice();
+        .range([0, this.cWidth]);
 
       this.y = d3.scale.linear()
         .range([this.cHeight, 0]);
@@ -230,7 +135,7 @@
         .scale(this.x)
         .orient('bottom')
         .innerTickSize(-this.cHeight)
-        .ticks(d3.time.years, 3)
+        .tickValues(this.years)
         .outerTickSize(0)
         .tickFormat(d3.time.format(this.dateFormat));
     },
@@ -297,7 +202,7 @@
         .enter().append('path')
           .attr('class', 'area')
           .transition()
-          .duration(700) 
+          .duration(self.areaAnimation) 
           .attr('d', function(d) { return area(d.values); })
           .style('fill', function(d) { return d.color; });
     },
@@ -327,7 +232,7 @@
         })
         .attr('stroke-dashoffset', function() { return this.getTotalLength(); })
         .transition()
-          .duration(300)
+          .duration(self.lineAnimation)
           .ease('linear')
           .attr('stroke-dashoffset', 0);
 
@@ -381,7 +286,14 @@
             extent1[0] = self.max;
           }
 
+          if(self.yearsSteps.indexOf(extent1[0].getFullYear().toString()) === -1) {
+            extent1[0] = self.currentYear;
+          } else {
+            self.currentYear = extent1[0];
+          }
+
           self.currentStep = extent1[0];
+          self._filterByDate();
 
           d3.select(this).transition()
             .duration(0) 
@@ -411,7 +323,10 @@
       var self = this;
 
       if (!this.currentStep) {
-        this.currentStep = this.max;
+        var year = this.parseDate(this.selectedYear);
+
+        this.currentStep = year;
+        this.currentYear = year;
       }
 
       this.handle.attr('transform', function() {
@@ -438,6 +353,13 @@
       }
 
       this.removeTimer = setTimeout(this.remove.bind(this), this.removeTimeout);
+    },
+
+    _filterByDate: function() {
+      var fullDate = new Date(this.currentStep);
+      var year = fullDate.getFullYear();
+
+      this.trigger('timeline:change:year', year);
     },
 
     remove: function() {

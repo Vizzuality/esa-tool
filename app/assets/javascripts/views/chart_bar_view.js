@@ -71,35 +71,12 @@
     },
 
     _parseData: function() {
-      var self = this;
+      this.chartData = this.data;
 
-      this.chartData = [
-        {
-          x: '1971',
-          y: 10,
-          color: '#EA01FF'
-        },
-        {
-          x: '2001',
-          y: 40,
-          color: '#FF6600'
-        },
-        {
-          x: '2010',
-          y: 50,
-          color: '#7801FF'
-        },
-        {
-          x: '2012',
-          y: 20,
-          color: '#ffc600'
-        },
-        {
-          x: '2014',
-          y: 35,
-          color: '#229A00'
-        }
-      ];
+      _.map(this.chartData, function(d) {
+        d.x = d.category;
+        d.y = d.value;
+      });
     },
 
     _setAxisScale: function() {

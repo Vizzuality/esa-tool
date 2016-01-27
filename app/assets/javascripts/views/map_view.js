@@ -215,14 +215,14 @@
      * @param {Object} layer parameters
      * @param {Boolean} sets bound if true
      */
-    createLayer: function(params, bound) {
+    createLayer: function(params) {
       var self = this;
       var layers = this._setLayers(params);
 
       // Remove previous if it exists
       this.removeLayer();
 
-      if (bound) {
+      if (params.setBounds) {
         this._setLayerBounds(params);
       }
 
@@ -284,10 +284,10 @@
      */
     _setLayers: function(params) {
       var self = this;
-      var table = params.table_name;
-      var column = params.column_selected;
+      var table = params.layer.table_name;
+      var column = params.layer.column_selected;
       var cartoCss = this.cartoCss;
-      var groups = params.groups;
+      var groups = params.data.categories;
       var defaultCarto = cartoCss['default'];
       var dataCarto = cartoCss['data'];
       var layers = [];
@@ -308,8 +308,8 @@
 
           layers.push({
             category: cat,
-            sql: 'SELECT * FROM ' + params.table_name +
-              ' WHERE ' + params.column_selected + ' = \'' + group + '\'',
+            sql: 'SELECT * FROM ' + params.layer.table_name +
+              ' WHERE ' + params.layer.column_selected + ' = \'' + group + '\'',
             cartocss: defaultCarto + '#' + table +
             '[' + column + '="' + cat + '"]' + carto
           });
@@ -347,7 +347,7 @@
     _setLayerBounds: function(params) {
       var self = this;
       var sqlBounds = new cartodb.SQL({ user: this.cartoUser });
-      var sql = 'SELECT the_geom FROM ' + params.table_name;
+      var sql = 'SELECT the_geom FROM ' + params.layer.table_name;
 
       sqlBounds.getBounds(sql).done(function(bounds) {
         self._setMapBounds(bounds);
