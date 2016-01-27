@@ -36,9 +36,6 @@ end
 # Lightbox
 gem 'featherlight'
 
-# Select2
-gem "select2-rails"
-
 # Text parser
 gem "redcarpet"
 

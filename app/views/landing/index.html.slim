@@ -8,10 +8,13 @@
     .link
       button#exploreMap.btn.-landing =t('explore_map')
   section#cases.cases
-    .search
-      select#searchBox.select2 multiple="multiple"
-        - @tags.each do |t|
-          option value="#{t.name}" =t.name
+    .wrap: .row._right
+      .search
+        span.select2-title = t('filter_cases_by')
+        select#searchBox.select2 style="width: auto"
+          option
+          - @tags.each do |t|
+            option value="#{t.name}" =t.name
     .wrap
       #casesArticles.row
         - @case_studies.each do |c|

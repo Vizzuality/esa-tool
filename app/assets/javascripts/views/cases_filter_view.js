@@ -7,12 +7,14 @@
   App.View.CasesFilter = Backbone.View.extend({
 
     defaults: {
-      filterName: 'tags[]'
+      filterName: 'tags[]',
+      placeholder: 'Select filter'
     },
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       this.filterName = this.options.filterName;
+      this.placeholder = this.options.placeholder;
       this.casesContainer = document.getElementById('casesArticles');
 
       this.cases = new App.Collection.CaseStudyCollection();
@@ -27,7 +29,11 @@
      */
     _initSearchBox: function() {
       this.search = this.$('#searchBox');
-      this.search.select2();
+      this.search.select2({
+        theme: "esa",
+        placeholder: this.placeholder,
+        minimumResultsForSearch: Infinity
+      });
     },
 
     /**
@@ -79,3 +85,7 @@
   });
 
 })(window.App || {});
+
+var myFunction = function () {
+  debugger;
+};

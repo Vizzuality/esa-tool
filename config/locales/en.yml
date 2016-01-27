@@ -51,6 +51,7 @@ en:
   name: 'Name'
   earth_observation: 'Earth observation'
   explore_map: 'Explore the map'
+  filter_cases_by : 'Filter cases by'
   forgot_password: 'Forgot your password?'
   last_update: 'Last update'
   location_latitude: 'Location latitude'
