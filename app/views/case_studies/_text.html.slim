@@ -7,5 +7,5 @@
         .grid-xs-12.grid-sm-8
           .title: h2 = p.title
         
-        .column.grid-xs-12
-            p = p.body
+        .content.grid-xs-12
+          = markdown(p.body)
