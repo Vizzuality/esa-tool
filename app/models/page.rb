@@ -19,4 +19,6 @@ class Page < ActiveRecord::Base
 
   validates_attachment_content_type :background, content_type: /\Aimage\/.*\Z/
 
+  attr_accessor :column_selected
+
 end

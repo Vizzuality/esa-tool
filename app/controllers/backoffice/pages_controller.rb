@@ -29,18 +29,10 @@ class Backoffice::PagesController < BackofficeController
   end
 
   def update
-    #
-    # if data_layer_params.has_key?(:file)
-    #   @page.data_layers.create(page_id: @page.id, column_selected: data_layer_params[:column_selected])
-    #     .create_file(data_layer_params[:file])
-    # end
-    #
-    # if data_layer_params.has_key?(:column_selected)
-    #   data_layer = @page.data_layers
-    #     .update_all(column_selected: data_layer_params[:column_selected])
-    # end
-    logger.debug page_params[:column_selected]
     if @page.update(page_params)
+      if @page.data_layers
+        @page.data_layers.update_all(column_selected: page_params[:column_selected])
+      end
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
       ), notice: 'Page updated successfully.'

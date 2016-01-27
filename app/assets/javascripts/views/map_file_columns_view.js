@@ -19,7 +19,8 @@
     events: {
       'change #map_file': 'onInputChanged',
       'click .close': 'removeFileSelected',
-      'click .item': 'onClickItem'
+      'click .item': 'onClickItem',
+      'click .add_fields': 'onAddItem'
     },
 
     initialize: function(params) {
@@ -156,6 +157,10 @@
       }
       this.fileInput.value = '';
       this.fileInput.parentElement.classList.remove('_hidden');
+    },
+
+    onAddItem: function(e) {
+      e.currentTarget.classList.add('_hidden');
     },
 
     onClickItem: function(e) {
