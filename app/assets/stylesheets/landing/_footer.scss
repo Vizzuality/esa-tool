@@ -34,13 +34,17 @@
 
         > a {
           color: $font-color-landing-1;
-          font-size: $font-size;
+          font-size: rem($font-size);
           font-family: $font-secondary;
           font-weight: 700;
           line-height: 1.5rem;
 
           text-decoration: none;
           text-transform: uppercase;
+
+          &:hover {
+            font-size: rem($font-size + 3px);
+          }
         }
       }
     }

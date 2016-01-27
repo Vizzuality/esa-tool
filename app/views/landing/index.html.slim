@@ -11,7 +11,7 @@
     .wrap: .row._right
       .search
         span.select2-title = t('filter_cases_by')
-        select#searchBox.select2 style="width: auto"
+        select#searchBox.select2 style="width: 10rem"
           option
           - @tags.each do |t|
             option value="#{t.name}" =t.name
