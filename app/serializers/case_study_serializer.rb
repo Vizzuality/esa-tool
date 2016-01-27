@@ -5,6 +5,6 @@ class CaseStudySerializer < ActiveModel::Serializer
     object.cover_image.url(:medium)
   end
   def case_path
-    case_study_path(object.id)
+    case_study_path(object.slug)
   end
 end

@@ -116,7 +116,6 @@
      * Function to initialize the slider
      */
     _initSlider: function() {
-      this.sliderPage = 0;
       this.slider = new App.View.Slider({
         el: '#landingSlider',
         arrows: false,

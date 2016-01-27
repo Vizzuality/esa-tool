@@ -17,7 +17,7 @@ class CaseStudiesController < ApplicationController
   end
 
   def show
-    @case_study = CaseStudy.find_published(params[:id])
+    @case_study = CaseStudy.find_published(params[:slug])
     gon.case_study = @case_study.to_json(include: [:contacts, {pages: {include: [:data_layers, :charts]}}])
     gon.cartodb_user = ENV["CDB_USERNAME"]
   end
