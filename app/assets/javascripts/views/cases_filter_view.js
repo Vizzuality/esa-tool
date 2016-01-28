@@ -8,11 +8,13 @@
 
     defaults: {
       filterName: 'tags[]',
-      placeholder: 'Select filter'
+      placeholder: 'Select filter',
+      initialTag: false
     },
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
+      this.initialTag = this.options.initialTag;
       this.filterName = this.options.filterName;
       this.placeholder = this.options.placeholder;
       this.casesContainer = document.getElementById('casesArticles');
@@ -22,15 +24,22 @@
       this._initSearchBox();
       this._setListeners();
 
+
+      if (this.initialTag) {
+        this.updateTag(this.initialTag);
+      }
+
+      this.casesContainer.classList.remove('_is-loading');
+
     },
 
     /**
      * Function to initialize the searchBox
      */
     _initSearchBox: function() {
-      this.search = this.$('#searchBox');
-      this.search.select2({
-        theme: "esa",
+      this.tags = this.$('#searchBox');
+      this.tags.select2({
+        theme: 'esa',
         placeholder: this.placeholder,
         minimumResultsForSearch: Infinity
       });
@@ -40,7 +49,24 @@
      * Function to set searchBox event listeners
      */
     _setListeners: function() {
-      this.search.on("select2:close", _.debounce(_.bind(this._getCases, this), 500));
+      this.tags.on('change', _.bind(this._onSelectChange, this) );
+    },
+
+    /**
+     * Function to change the tag filter value
+     */
+    updateTag: function(value) {
+      if (this.tags.val()!== value){
+        this.tags.val(value).trigger('change');
+      }
+    },
+
+    /**
+     * Function to change the tag filter value
+     */
+    _onSelectChange: function() {
+      this.trigger('tag:update', this.tags.val());
+      this._getCases();
     },
 
     /**
@@ -48,12 +74,11 @@
      */
     _getCases: function() {
       var self = this;
-      var params = this.search.val()? this.filterName+'='+this.search.val(): '';
+      var params = this.tags.val()? this.filterName+'='+this.tags.val(): '';
+
+      this.casesContainer.classList.add('_is-loading');
       this.cases.fetch({data:params}).done(function(data){
-        if (!_.isEqual(self.casesOriginal , data.case_studies)) {
-          self.casesOriginal = data.case_studies;
-          self._refreshCases(data.case_studies);
-        }
+        self._refreshCases(data.case_studies);
       });
     },
 
@@ -62,10 +87,15 @@
      */
     _refreshCases: function(studyCases) {
       var self = this;
-      self.casesContainer.innerHTML = '';
-      _.each(studyCases,function(studyCase){
-        self.casesContainer.insertAdjacentHTML("beforeend", self._caseTemplate(studyCase));
-      });
+      if (studyCases.length) {
+        self.casesContainer.innerHTML = '';
+        _.each(studyCases,function(studyCase){
+          self.casesContainer.insertAdjacentHTML("beforeend", self._caseTemplate(studyCase));
+        });
+      } else {
+        self.casesContainer.innerHTML = '<p class="empty"> There are no results with the selected tag <p>';
+      }
+      this.casesContainer.classList.remove('_is-loading');
     },
 
     /**
@@ -79,13 +109,9 @@
                   '</div>'+
                 '</a>'+
               '<article>';
-    },
+    }
 
 
   });
 
 })(window.App || {});
-
-var myFunction = function () {
-  debugger;
-};
