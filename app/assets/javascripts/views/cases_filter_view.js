@@ -30,7 +30,7 @@
     _initSearchBox: function() {
       this.search = this.$('#searchBox');
       this.search.select2({
-        theme: "esa",
+        theme: 'esa',
         placeholder: this.placeholder,
         minimumResultsForSearch: Infinity
       });
@@ -41,6 +41,15 @@
      */
     _setListeners: function() {
       this.search.on("select2:close", _.debounce(_.bind(this._getCases, this), 500));
+
+      this.listenTo(Backbone,'menuTag:update',_.bind(this._updateTag, this));
+    },
+
+    /**
+     * Function to change the tag filter value
+     */
+    _updateTag: function(value) {
+      this.search.val(value).trigger('change');
     },
 
     /**
@@ -85,7 +94,3 @@
   });
 
 })(window.App || {});
-
-var myFunction = function () {
-  debugger;
-};

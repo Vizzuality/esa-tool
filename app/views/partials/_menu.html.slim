@@ -21,10 +21,6 @@
             span.close × 
             ul#resultsContainer.results
         
-        .tags.-light
-          span.tag URBAN
-          span.tag SLUMS
-          span.tag PHILIPPINES
-          span.tag MANILA
-          span.tag WORLDBANK
-          span.tag INTDEV
+        #tagList.tags
+          - @tags.each do |t|
+            span.tag data-value="#{t.name}" =t.name

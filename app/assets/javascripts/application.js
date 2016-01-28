@@ -16,7 +16,7 @@
 //= require views/legend_view
 //= require views/dashboard_view
 //= require views/slider_view
-//= require views/search_view
+//= require views/menu_view
 //= require views/tabs_view
 //= require controllers/map_controller
 //= require collections/case_study_collection
@@ -33,10 +33,6 @@
   };
 
   var ApplicationView = Backbone.View.extend({
-
-    events: {
-      'click #btnBurguer': '_toggleMenu',
-    },
 
     /**
      * This function will be executed when the instance is created
@@ -55,8 +51,7 @@
      * starting the router.
      */
     _start: function() {
-      this.menu = document.getElementById('menu');
-      this._initSearch();
+      this._initMenu();
       this._setListeners();
       this.router.start();
     },
@@ -121,11 +116,11 @@
     },
 
     /**
-     * Function to initialize the search box form
+     * Function to initialize the menu
      */
-    _initSearch: function() {
-      this.search = new App.View.Search({
-        el: '#casesSearch'
+    _initMenu: function() {
+      this.menu = new App.View.Menu({
+        el: document.body
       });
     },
 
@@ -149,16 +144,6 @@
           page: this.sliderPage
         });
       }
-    },
-
-    /**
-     * Function to open or close the navigation element
-     * @param  {Event} e
-     */
-    _toggleMenu: function(e) {
-      e.preventDefault();
-      e.currentTarget.classList.toggle('_active');
-      this.menu.classList.toggle('_active');
     }
 
   });

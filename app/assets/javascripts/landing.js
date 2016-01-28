@@ -6,7 +6,7 @@
 //= require backbone
 //= require_self
 //= require views/map_view
-//= require views/search_view
+//= require views/menu_view
 //= require views/slider_view
 //= require views/cases_filter_view
 //= require controllers/map_controller
@@ -27,7 +27,6 @@
   var LandingView = Backbone.View.extend({
 
     events: {
-      'click #btnBurguer': '_toggleMenu',
       'click #exploreMap': '_exploreMap',
     },
 
@@ -65,7 +64,7 @@
     _initModules: function() {
       this._initMap();
       this._initSlider();
-      this._initSearch();
+      this._initMenu();
       this._initCasesFilter();
     },
 
@@ -137,21 +136,11 @@
     },
 
     /**
-     * Function to open or close the navigation element
-     * @param  {Event} e
+     * Function to initialize the menu
      */
-    _toggleMenu: function(e) {
-      e.preventDefault();
-      e.currentTarget.classList.toggle('_active');
-      this.menu.classList.toggle('_active');
-    },
-
-    /**
-    * Function to initialize the search box form
-    */
-    _initSearch: function() {
-      this.search = new App.View.Search({
-        el: '#casesSearch'
+    _initMenu: function() {
+      this.menu = new App.View.Menu({
+        el: document.body
       });
     },
 
