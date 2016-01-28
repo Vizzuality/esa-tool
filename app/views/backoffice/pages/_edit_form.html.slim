@@ -49,8 +49,6 @@
       #customBasemap.form-row.detail-item class=('_hidden' unless @page.color_palette == 3)
         = f.input :custom_basemap, input_html: {class:"-large"}, placeholder: "CUSTOMIZED CARTOCSS \nPaste code here"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.nil? or 1), class: 'input', id:"pallete"
-  / .form-row#customPalette class="#{@page.color_palette.nil? ? nil : '_hidden'}"
-  /   = f.input :custom_color_palette
   
   .form-row
     = f.label :charts
