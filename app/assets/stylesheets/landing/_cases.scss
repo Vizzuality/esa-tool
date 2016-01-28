@@ -30,10 +30,12 @@
     background-repeat: no-repeat;
     background-size: cover;
 
+    background-color: $bg-color-4;
+
       > .caption {
         position: absolute;
         left: 2.5%;
-        bottom: 5%;
+        bottom: 7%;
 
         h2 {
           display: inline;

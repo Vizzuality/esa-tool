@@ -51,7 +51,7 @@
       .logo
     .wrap
       .row
-        .grid-sm-7.column
+        .grid-xs-7.grid-md-7.column
           nav.nav role="navigation"
             svg.icon.icon-eoworld-logo
               use xlink:href="#icon-eoworld-logo"
@@ -60,7 +60,7 @@
               li = link_to t('data sources'), "http://www.vizzuality.com"
               li = link_to t('about'), "http://www.vizzuality.com"
               li = link_to t('contact'), "http://www.vizzuality.com"
-        .grid-sm-5.column.partnerts
+        .grid-xs-12.grid-md-5.column.partnerts
             span.title =t('parnertship_convened')
             .partner-list
               = link_to 'http://www.esa.int/ESA', class: "item" do
