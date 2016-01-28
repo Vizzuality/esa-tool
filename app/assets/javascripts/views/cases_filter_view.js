@@ -29,6 +29,8 @@
         this.updateTag(this.initialTag);
       }
 
+      this.casesContainer.classList.remove('_is-loading');
+
     },
 
     /**
@@ -73,6 +75,8 @@
     _getCases: function() {
       var self = this;
       var params = this.tags.val()? this.filterName+'='+this.tags.val(): '';
+
+      this.casesContainer.classList.add('_is-loading');
       this.cases.fetch({data:params}).done(function(data){
         self._refreshCases(data.case_studies);
       });
@@ -91,6 +95,7 @@
       } else {
         self.casesContainer.innerHTML = '<p class="empty"> There are no results with the selected tag <p>';
       }
+      this.casesContainer.classList.remove('_is-loading');
     },
 
     /**

@@ -12,8 +12,10 @@
     margin-top: 0;
   }
 
-  .search {
-    
+  ._is-loading {
+    .case {
+      visibility: hidden;
+    }
   }
 
   .case {

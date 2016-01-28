@@ -16,7 +16,7 @@
           - @tags.each do |t|
             option value="#{t.name}" =t.name
     .wrap
-      #casesArticles.row
+      #casesArticles.row._is-loading
         - @case_studies.each do |c|
           article.grid-xs-12.grid-sm-6.grid-md-4.case
             =link_to case_study_path(c.slug), style: "background-image: url(#{c.cover_image.url(:medium)})"
