@@ -31,7 +31,6 @@
      * @param {Object} params Parameters for the url
      */
     updateParam: function(params) {
-      console.log('updating: '+ params);
       var current = window.location.pathname;
 
       if (params && params.name && params.value) {

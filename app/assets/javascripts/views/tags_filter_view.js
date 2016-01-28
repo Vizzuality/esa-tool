@@ -26,9 +26,11 @@
     },
 
     _onClickTag: function(e) {
-      this.currentTag = e.currentTarget;
-      this._setFilter(this.currentTag.getAttribute('data-value'));
-      this.selectCurrent();
+      if (this.currentTag.getAttribute('data-value') !== e.currentTarget.getAttribute('data-value')){
+        this.currentTag = e.currentTarget;
+        this._setFilter(this.currentTag.getAttribute('data-value'));
+        this.selectCurrent();
+      }
     },
 
     selectCurrent: function() {
@@ -43,10 +45,12 @@
     },
 
     checkSelected: function(tag) {
+      var self = this;
       this.inputs = this.el.getElementsByClassName('tag');
       _.each(this.inputs,function(item){
         if (item.getAttribute('data-value')===tag) {
           item.classList.add('_selected');
+          self.currentTag = item;
         } else {
           item.classList.remove('_selected');
         }
