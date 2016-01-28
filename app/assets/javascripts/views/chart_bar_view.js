@@ -71,35 +71,12 @@
     },
 
     _parseData: function() {
-      var self = this;
+      this.chartData = this.data;
 
-      this.chartData = [
-        {
-          x: '1971',
-          y: 10,
-          color: '#EA01FF'
-        },
-        {
-          x: '2001',
-          y: 40,
-          color: '#FF6600'
-        },
-        {
-          x: '2010',
-          y: 50,
-          color: '#7801FF'
-        },
-        {
-          x: '2012',
-          y: 20,
-          color: '#ffc600'
-        },
-        {
-          x: '2014',
-          y: 35,
-          color: '#229A00'
-        }
-      ];
+      _.map(this.chartData, function(d) {
+        d.x = d.category;
+        d.y = d.value;
+      });
     },
 
     _setAxisScale: function() {
@@ -137,6 +114,9 @@
         .data(this.chartData)
         .enter().append('rect')
           .attr('class', 'bar')
+          .attr('data-category', function(d) {
+            return d.category;
+          }) 
           .style('fill', function(d) { return d.color; })
           .style('stroke', function(d) { return d.color; })
           .attr('x', function(d) { return self.x(d.x); })
@@ -152,6 +132,25 @@
           .ease(self.animationType)
           .attr('y', function(d) { return self.y(d.y); })
           .attr('height', function(d) { return self.cHeight - self.y(d.y); });
+    },
+
+    highlight: function(category) {
+      var elems = this.el.querySelectorAll('.bar');
+
+      for (var el in elems) {
+        var current = elems[el];
+        
+        if (current && current.getAttribute) {
+          var cat = current.getAttribute('data-category');
+          if (category === '') {
+            current.classList.remove('unHighLight');
+          } else if (cat !== category) {
+            current.classList.add('unHighLight');
+          } else {
+            current.classList.remove('unHighLight');
+          }
+        }
+      }
     },
 
     prepareRemove: function() {

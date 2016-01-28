@@ -49,7 +49,8 @@
      * @param {Object} layer data
      */
     update: function(data, layer) {
-      this.data = data;
+      this.data = data.data;
+      this.currentData = data.currentData;
 
       this._updateList();
     },
@@ -66,11 +67,10 @@
      * Updates the list with the stored data
      */
     _updateList: function() {
-      var categories = this.data.currentLayer.categories;
-      var groups = this.data.currentLayer.groups;
+      var categories = this.currentData;
 
       if (categories) {
-        this._renderList(categories, groups);
+        this._renderList(categories);
       }
     },
 
@@ -79,23 +79,21 @@
      * @param {Object} categories raw data
      * @param {Object} groupped categories with their data
      */
-    _renderList: function(categories, groups) {
+    _renderList: function(categories) {
       var container = this.el.querySelector('.list');
       container.innerHTML = '';
 
       categories.forEach(function(cat) {
-        var group = groups[cat.category][0];
-
         var itemContainer = document.createElement('li');
         itemContainer.dataset.category = cat.category;
         itemContainer.classList.add('item');
 
         var iconBgEl = document.createElement('span');
-        iconBgEl.style.background = group.color;
+        iconBgEl.style.background = cat.color;
         iconBgEl.classList.add('icon-bg');
 
         var iconEl = document.createElement('span');
-        iconEl.style.borderColor = group.color;
+        iconEl.style.borderColor = cat.color;
         iconEl.classList.add('icon-legend');
         iconEl.appendChild(iconBgEl);
 
