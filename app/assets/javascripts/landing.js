@@ -5,6 +5,7 @@
 //= require underscore
 //= require backbone
 //= require_self
+//= require router
 //= require views/map_view
 //= require views/menu_view
 //= require views/slider_view
@@ -35,10 +36,9 @@
      */
     initialize: function() {
       this.data = this._getAppData();
-      this.menu = document.getElementById('menu');
       this.banner = document.getElementById('banner');
-      // At beginning instance slider view
-      this._initModules();
+
+      this._initRouter();
     },
 
     /**
@@ -59,13 +59,49 @@
     },
 
     /**
-     * Function to initialize modules
+     * Function to initialize the router
      */
-    _initModules: function() {
+    _initRouter: function() {
+      this.router = new root.App.Router();
+
+      this.listenTo(this.router, 'start:landing', _.bind(this._initModules, this));
+
+      this.router.start();
+    },
+
+    /**
+    * Function to initialize modules
+    */
+    _initModules: function(tag) {
+      this._initMenu(tag);
+      this._initCasesFilter(tag);
       this._initMap();
       this._initSlider();
-      this._initMenu();
-      this._initCasesFilter();
+    },
+
+    /**
+     * Function to initialize the menu
+     */
+    _initMenu: function(tag) {
+      this.menu = new App.View.Menu({
+        el: document.body,
+        initialTag: tag
+      });
+
+      this.listenTo(this.menu, 'tag:update', _.bind(this._updateRouter, this));
+    },
+
+    /**
+     * Function to initialize the landing
+     */
+    _initCasesFilter: function(tag) {
+      this.cases = new App.View.CasesFilter({
+        el: '#cases',
+        initialTag: tag
+      });
+
+      this.listenTo(this.cases, 'tag:update', _.bind(this._updateRouter, this));
+      this.listenTo(this.router, 'rooter:updated', _.bind(this._updateTag, this));
     },
 
     /**
@@ -80,7 +116,7 @@
     },
 
     /**
-     * Function to initialize the map
+     * Function to initialize the map cases location
      */
     _renderCases: function() {
       var self = this;
@@ -103,7 +139,7 @@
     },
 
     /**
-     * Function to initialize the map
+     * Function to get the popup case
      */
     _popUpTemplate: function(caseStudy) {
       return  '<div class="content"><p>'+caseStudy.title+'</p>'+
@@ -129,26 +165,27 @@
     /**
      * Function to initialize the cases filter view
      */
-    _initCasesFilter: function() {
-      this.cases = new App.View.CasesFilter({
-        el: '#cases'
-      });
+    _updateRouter: function(tag) {
+      var params = {
+        name: this.cases.filterName,
+        value: tag
+      };
+      this.router.trigger('route:updateParam', params);
     },
 
     /**
-     * Function to initialize the menu
+     * Function to update the tag filter
      */
-    _initMenu: function() {
-      this.menu = new App.View.Menu({
-        el: document.body
-      });
+    _updateTag: function(tag) {
+      this.cases.updateTag(tag);
+      this.menu.updateTag(tag);
     },
 
     /**
      * Function to open the map navigation
      * @param  {Event} e
      */
-    _exploreMap: function(e) {
+    _exploreMap: function() {
       this.banner.classList.add('_hidden');
       this.cases.el.classList.add('_expanded');
       this.map.el.classList.add('_expanded');

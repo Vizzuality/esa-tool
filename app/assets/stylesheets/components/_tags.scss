@@ -30,6 +30,12 @@ $bg-tags: #0a3c57;
     color: $font-color-2;
 
     background-color: rgba($font-color-1, 0.6);
+
+    cursor:pointer;
+
+    &._selected {
+      background-color: $font-color-landing-5;
+    }
   }
 }
 

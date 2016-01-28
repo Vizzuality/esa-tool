@@ -86,8 +86,9 @@
      */
     _setCurrentSliderPage: function(page) {
       this.sliderPage = page;
-      this.router.trigger('route:update', {
-        page: page.toString()
+      this.router.trigger('route:updateParam', {
+        name: 'page',
+        value: page.toString()
       });
     },
 

@@ -9,14 +9,16 @@
 
   App.View.Menu = Backbone.View.extend({
 
-    defaults: {},
+    defaults: {
+      initialTag: false
+    },
 
     events: {
       'click #btnBurguer': '_toggleMenu',
     },
 
-    initialize: function(params) {
-      this.options = _.extend({}, this.defaults, params.options || {});
+    initialize: function(options) {
+      this.options = _.extend({}, this.defaults, options || {});
       this.menu = document.getElementById('menu');
       this.btnBurger = document.getElementById('btnBurguer');
 
@@ -29,8 +31,6 @@
     _initModules: function() {
       this._initSearch();
       this._initTagsFilter();
-      
-      this._setListeners();
     },
 
     /**
@@ -47,15 +47,26 @@
      */
     _initTagsFilter: function() {
       this.tags = new App.View.TagsFilter({
-        el: '#tagList'
+        el: '#tagList',
+        initialTag: this.options.initialTag
       });
+
+      this.listenTo(this.tags,'tag:update', this._triggerUpdateTag);
+      this.listenTo(this.tags,'menu:close', this._toggleMenu);
     },
 
     /**
-     * Function to set child view listeners
+     * Function to initialize the search box form
      */
-    _setListeners: function() {
-      this.listenTo(this.tags,'menu:close', this._toggleMenu);
+    _triggerUpdateTag: function(tag) {
+      this.trigger('tag:update', tag);
+    },
+
+    /**
+     * Function to update the tag selected
+     */
+    updateTag: function(tag) {
+      this.tags.checkSelected(tag);
     },
 
     /**
