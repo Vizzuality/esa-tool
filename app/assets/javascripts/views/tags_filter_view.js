@@ -26,7 +26,7 @@
     },
 
     _onClickTag: function(e) {
-      if (this.currentTag.getAttribute('data-value') !== e.currentTarget.getAttribute('data-value')){
+      if (!this.currentTag || (this.currentTag.getAttribute('data-value') !== e.currentTarget.getAttribute('data-value') )){
         this.currentTag = e.currentTarget;
         this._setFilter(this.currentTag.getAttribute('data-value'));
         this.selectCurrent();
