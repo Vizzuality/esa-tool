@@ -7,7 +7,7 @@ class Backoffice::CaseStudiesController < BackofficeController
     @case_studies = if current_user.is_admin?
                       CaseStudy.all
                     else
-                      current_user.organization.case_studies
+                      current_user.organization.try(:case_studies) || []
                     end
   end
 
