@@ -143,7 +143,7 @@
      */
     _popUpTemplate: function(caseStudy) {
       return  '<div class="content"><p>'+caseStudy.title+'</p>'+
-                '<a class="link" href='+'#'+'> Learn more </>'+
+                '<a class="link" href='+caseStudy.case_path+'> Learn more </>'+
               '</div>';
     },
 
