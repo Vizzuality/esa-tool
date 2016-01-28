@@ -22,7 +22,6 @@
       this.elContent = this.options.elContent;
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
-      window.esa = this.data;
 
       this.basemap = this.data.basemap;
       this.template = this.data.template;
