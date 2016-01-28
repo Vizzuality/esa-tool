@@ -8,10 +8,13 @@
     .link
       button#exploreMap.btn.-landing =t('explore_map')
   section#cases.cases
-    .search
-      select#searchBox.select2 multiple="multiple"
-        - @tags.each do |t|
-          option value="#{t.name}" =t.name
+    .wrap: .row._right
+      .search
+        span.select2-title = t('filter_cases_by')
+        select#searchBox.select2 style="width: 10rem"
+          option
+          - @tags.each do |t|
+            option value="#{t.name}" =t.name
     .wrap
       #casesArticles.row
         - @case_studies.each do |c|
@@ -42,12 +45,11 @@
             p.content = t('slide3_content')
           .slide-link
             button.btn.-landing.-inv =t('data_origin')
+
   footer.footer
+    .pre-footer
+      .logo
     .wrap
-      .row
-        .grid-sm-12
-          .logo
-            img src= asset_path('landing-footer.png')
       .row
         .grid-sm-7.column
           nav.nav role="navigation"

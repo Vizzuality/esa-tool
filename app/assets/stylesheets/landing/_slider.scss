@@ -5,7 +5,13 @@
 
   .slide {
 
+    display: none;
+
     outline: none;
+
+    &:first-child {
+      display: block;
+    }
 
     &:hover, &:focus {
       outline: none;
@@ -31,9 +37,15 @@
 
     > .slide-link {
       text-align: center;
+      margin: 1rem;
     }
   }
 
+  .slick-initialized {
+    .slide {
+      display: block;
+    }
+  }
 
   .slick-dots {
     padding: 0;

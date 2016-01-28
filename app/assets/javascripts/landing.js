@@ -1,7 +1,7 @@
 //= require jquery2
 //= require jquery_ujs
 //= require slick.js/slick.js
-//= require select2
+//= require select2.js
 //= require underscore
 //= require backbone
 //= require_self
