@@ -87,15 +87,19 @@
     top: .9rem;
     left: 0;
     right: 0;
-    padding: 0;
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-
-    text-align: center;
 
     list-style: none;
     z-index: 3;
+
+    //wrap
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% - 40px);
+    max-width: calc(1200px);
+
+    transform: translateX(4rem);
 
     > li {
       display: inline-block;
