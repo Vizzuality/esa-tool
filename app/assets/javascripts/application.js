@@ -4,6 +4,7 @@
 //= require underscore
 //= require backbone
 //= require d3
+//= require featherlight
 //= require_self
 //= require router
 //= require_tree ./cartocss

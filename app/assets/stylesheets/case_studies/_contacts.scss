@@ -1,0 +1,51 @@
+.contacts{
+  padding: 2rem;
+
+  display: flex;
+  flex-flow: wrap row;
+
+  @media screen and (max-width: $screen-sm) {
+    padding: 0;
+  }
+
+  > .contact {
+    flex-basis: 50%;
+    max-width: 50%;
+    padding: 3rem;
+
+    box-sizing: border-box;
+
+    @media screen and (max-width: $screen-sm) {
+      flex-basis: 100%;
+      max-width: 100%;
+      padding: 1rem;
+    }
+
+    > .title {
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+
+      font-family: $font-main;
+      font-size: $font-size-large;
+      color: $font-color-1;
+
+      border-bottom: 4px solid $font-color-1;
+    }
+
+    > .content {
+      p {
+        margin: .5rem 0;
+        padding: 0.5rem 0;
+
+        font-family: $font-secondary;
+        font-size: $font-size;
+        color: $font-color-1;
+        line-height: 1;
+      }
+    }
+
+    > .link {
+      margin: .5rem 0;
+    }
+  }
+}

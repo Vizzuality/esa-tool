@@ -78,22 +78,28 @@
 
       this.casesContainer.classList.add('_is-loading');
       this.cases.fetch({data:params}).done(function(data){
-        self._refreshCases(data.case_studies);
+        self._refreshCases(data.case_studies, false);
+      }).fail(function(error){
+        self._refreshCases(error,true);
       });
     },
 
     /**
      * Function to paint the filtered study cases
      */
-    _refreshCases: function(studyCases) {
+    _refreshCases: function(studyCases, error) {
       var self = this;
-      if (studyCases.length) {
-        self.casesContainer.innerHTML = '';
-        _.each(studyCases,function(studyCase){
-          self.casesContainer.insertAdjacentHTML("beforeend", self._caseTemplate(studyCase));
-        });
+      if (error) {
+        self.casesContainer.innerHTML = '<p class="empty"> There was an error getting the cases <p>';
       } else {
-        self.casesContainer.innerHTML = '<p class="empty"> There are no results with the selected tag <p>';
+        if (studyCases.length) {
+          self.casesContainer.innerHTML = '';
+          _.each(studyCases,function(studyCase){
+            self.casesContainer.insertAdjacentHTML("beforeend", self._caseTemplate(studyCase));
+          });
+        } else {
+          self.casesContainer.innerHTML = '<p class="empty"> There are no results with the selected tag <p>';
+        }
       }
       this.casesContainer.classList.remove('_is-loading');
     },
