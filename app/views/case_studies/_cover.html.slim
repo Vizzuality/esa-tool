@@ -12,7 +12,7 @@
         .partners
           - if !case_study.contacts.empty?
             - case_study.contacts.each do |c|
-              = link_to c.website, class: 'partner' do
+              = link_to c.website, class: 'partner', target: "_blank" do
                 = image_tag c.logo.url(:thumb)
             a.btn.-transparent href="#" data-featherlight="#contacts"
               = t 'project_contact'
@@ -26,5 +26,5 @@
                     .content
                       p = markdown(c.body)
                     .link
-                      = link_to c.website do
+                      = link_to c.website, target: "_blank" do
                         = image_tag c.logo.url(:thumb)
