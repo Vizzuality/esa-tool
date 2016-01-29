@@ -38,6 +38,7 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.$page = document.getElementById('page');
+      this.menu = document.getElementById('menu');
       this._setListeners();
     },
 
@@ -67,6 +68,8 @@
       var self = this;
       this.setCurrent(s.currentSlide);
       self.trigger('slider:initialized');
+
+      this.$('.slick-dots').on('click', _.bind(this._checkMenu, this));
       // setTimeout(function () {
       // }, 1);
     },
@@ -109,6 +112,16 @@
     updatePage: function(i) {
       if (this.$page) {
         this.$page.innerHTML = i + 1;
+      }
+    },
+
+    /**
+     * Check if menu is opened to close it
+     * @param  {Number} i Current slide
+     */
+    _checkMenu: function() {
+      if (this.menu.classList.contains('_active')) {
+        this.trigger('menu:close');
       }
     },
 

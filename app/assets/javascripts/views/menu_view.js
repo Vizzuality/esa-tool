@@ -14,7 +14,7 @@
     },
 
     events: {
-      'click #btnBurguer': '_toggleMenu',
+      'click #btnBurguer': 'toggleMenu',
     },
 
     initialize: function(options) {
@@ -52,7 +52,7 @@
       });
 
       this.listenTo(this.tags,'tag:update', this._triggerUpdateTag);
-      this.listenTo(this.tags,'menu:close', this._toggleMenu);
+      this.listenTo(this.tags,'menu:close', this.toggleMenu);
     },
 
     /**
@@ -72,7 +72,7 @@
     /**
      * Function to open or close the navigation element
      */
-    _toggleMenu: function() {
+    toggleMenu: function() {
       this.btnBurger.classList.toggle('_active');
       this.menu.classList.toggle('_active');
     }

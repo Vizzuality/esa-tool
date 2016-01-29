@@ -114,6 +114,15 @@
       this.listenTo(this.slider, 'slider:change', this.initMap);
 
       this.slider.start();
+
+      this.listenTo(this.slider,'menu:close', this._toggleMenu);
+    },
+
+    /**
+     * Function to toggle menu
+     */
+    _toggleMenu: function() {
+      this.menu.toggleMenu();
     },
 
     /**
