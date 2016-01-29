@@ -10,7 +10,21 @@
             span.tag = t
           
         .partners
-          - case_study.contacts.each do |c|
-            = link_to c.website, class: 'partner' do
-              = image_tag c.logo.url(:thumb)
-          button.btn.-transparent = t 'project_contact'
+          - if !case_study.contacts.empty?
+            - case_study.contacts.each do |c|
+              = link_to c.website, class: 'partner' do
+                = image_tag c.logo.url(:thumb)
+            a.btn.-transparent href="#" data-featherlight="#contacts"
+              = t 'project_contact'
+              
+            ._hidden
+              #contacts.contacts
+                - case_study.contacts.each_with_index do |c, index|
+                  .contact
+                    .title
+                      span = "Project contact #{index+1}"
+                    .content
+                      p = markdown(c.body)
+                    .link
+                      = link_to c.website do
+                        = image_tag c.logo.url(:thumb)
