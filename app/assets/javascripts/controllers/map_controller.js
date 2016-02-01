@@ -70,7 +70,7 @@
       var customBaseMapUrl = basemapEl.getAttribute('data-basemap-url');
       var customBaseMap = {};
 
-      customBaseMap.url = defaultBaseMap === 'custom' ? 
+      customBaseMap.url = defaultBaseMap === 'custom' ?
         customBaseMapUrl : null;
 
       if (this.map) {
@@ -133,6 +133,7 @@
             var page = pages[this.page - 1];
 
             if (page) {
+              formattedData.columnSelected = page.column_selected;
               formattedData.layers = page.data_layers;
               formattedData.charts = page.charts;
             }
@@ -155,7 +156,7 @@
 
       if (layers) {
         layers.forEach(function(layer, i) {
-          var column = layer.column_selected;
+          var column = data.columnSelected;
           var table = layer.table_name;
 
           subquery += '(SELECT ' + column + ' as category, year, ' +
@@ -188,11 +189,11 @@
 
       var sql = new cartodb.SQL({ user: data.cartoUser });
       var table = layer.table_name;
-      var column = layer.column_selected;
+      var column = data.columnSelected;
       var query = 'SELECT {{column}} as column FROM {{table}} \
        GROUP BY {{column}} ORDER BY {{column}}';
 
-      var cartoQuery = sql.execute(query, 
+      var cartoQuery = sql.execute(query,
         { column: column, table: table });
 
       return cartoQuery;
@@ -243,7 +244,7 @@
     },
 
     /**
-     * Updates the dashboard with the data 
+     * Updates the dashboard with the data
      * @param {Object} layer data
      */
     _updateDashboard: function() {
@@ -255,7 +256,7 @@
         this._getDashboardData()
           .done(function(res) {
             self._parseDashboardData(res);
-          });        
+          });
       }
     },
 
@@ -296,7 +297,7 @@
 
     /**
      * Filters the map's layers by category
-     * @param {String} category name 
+     * @param {String} category name
      */
     _setFilter: function(filter) {
       this.map.highLightCategory(filter);
@@ -305,7 +306,7 @@
     _updateByYear: _.debounce(function(year) {
       if (year !== this.currentYear) {
         this.currentYear = year;
-        
+
         this._updateLayer({
           setBounds: false
         });
@@ -332,7 +333,7 @@
         this.dashboard.remove();
         this.dashboard = null;
       }
-      
+
       this.stopListening();
     },
 
