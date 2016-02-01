@@ -5,7 +5,6 @@ class DataLayer < ActiveRecord::Base
   REQUIRED_HEADERS = []
 
   belongs_to :page
-  delegate :column_selected, to: :page
 
   validates :table_name, presence: true
   validates :import_status, presence: true
