@@ -36,10 +36,11 @@
     _start: function() {
       // Initialize main views
       this._initMap();
-      this._startMap();
-      this._initDashboard();
     },
 
+    /**
+     * Starts the map with the data
+     */
     _startMap: function() {
       var self = this;
       var layers = this.data.layers;
@@ -54,10 +55,18 @@
             self._updateLayer({
               setBounds: true
             });
-            self._updateDashboard();
           });
       }
+
+      this._initDashboard();
     },
+
+    /**
+     * Starts the dashboard with the data
+     */
+    _startDashboard: _.debounce(function() {
+      this._updateDashboard();
+    }, 200),
 
     /**
      * Initializes the map
@@ -91,6 +100,8 @@
         basemap: defaultBaseMap
       });
 
+      this.listenTo(this.map, 'map:tile:loaded', this._startMap);
+      this.listenTo(this.map, 'map:layers:loaded', this._startDashboard);
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
     },
 

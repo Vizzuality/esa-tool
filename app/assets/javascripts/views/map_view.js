@@ -93,6 +93,8 @@
       this.cartoUser = this.options.data ? this.options.data.cartoUser : '';
       this.template = this.options.data ? this.options.data.template : 1;
       this.layers = [];
+      this.loadQueue = [];
+      this.tileLoaded = false;
 
       this.createMap();
       this._setListeners();
@@ -173,6 +175,7 @@
      * @param {String} type of basemap terrain | satellite
      */
     setBasemap: function(type) {
+      var self = this;
       var tile, attribution, attributionUrl;
 
       if (type === 'custom') {
@@ -197,6 +200,21 @@
         this.tileLayer = L.tileLayer(tile[type].tileUrl, {
           attribution: attributionUrl
         }).addTo(this.map);
+
+        this.tileLayer.on('load', function() {
+          self._onTileLoaded();
+        });
+      }
+    },
+
+    /**
+     * Sets the tile loaded state
+     * and triggers an event
+     */
+    _onTileLoaded: function() {
+      if (!this.tileLoaded) {
+        this.tileLoaded = true;
+        this.trigger('map:tile:loaded');
       }
     },
 
@@ -211,20 +229,28 @@
     },
 
     /**
-     * Creates the layer and it's added to the map
+     * Creates the layer with or without bounds
      * @param {Object} layer parameters
-     * @param {Boolean} sets bound if true
      */
     createLayer: function(params) {
-      var self = this;
-      var layers = this._setLayers(params);
 
       // Remove previous if it exists
       this.removeLayer();
 
       if (params.setBounds) {
         this._setLayerBounds(params);
+      } else {
+        this._addLayers(params);
       }
+    },
+
+    /**
+     * Adds the layers in the map
+     * @param {Object} layer parameters
+     */
+    _addLayers: function(params) {
+      var self = this;
+      var layers = this._setLayers(params);
 
       layers.forEach(function(layerData) {
         var cartoOpts = {
@@ -237,10 +263,15 @@
           }]
         };
 
+        self._addToLoadingQueue(layerData.category);
+
         cartodb.createLayer(self.map, cartoOpts)
           .addTo(self.map)
           .on('done', function(layer) {
             layer.setZIndex(1);
+            layer.bind('load', function() {
+              self._removeFromLoadingQueue(layerData.category);
+            });
             self.layers[layerData.category] = layer;
           })
           .on('error', function(err) {
@@ -343,6 +374,7 @@
     /**
      * Gets the layer's bounds from CartoDB
      * and then its set in the map
+     * @param {Object} layer parameters
      */
     _setLayerBounds: function(params) {
       var self = this;
@@ -351,7 +383,52 @@
 
       sqlBounds.getBounds(sql).done(function(bounds) {
         self._setMapBounds(bounds);
+        self._addLayers(params);
       });
+    },
+
+    /**
+     * Adds a layer to the loading queue
+     * @param {String} layer category
+     */
+    _addToLoadingQueue: function(category) {
+      var queue = _.clone(this.loadQueue);
+      var index = queue.indexOf(category);
+
+      if(index === -1) {
+        queue.push(category);
+        this.loadQueue = queue;
+        this._checkLoadQueue();
+      }
+    },
+
+    /**
+     * Removes a layer to the loading queue
+     * @param {String} layer category
+     */
+    _removeFromLoadingQueue: function(category) {
+      var queue = _.clone(this.loadQueue);
+      var index = queue.indexOf(category);
+
+      if(index > -1) {
+        queue.splice(index, 1);
+        this.loadQueue = queue;
+        this._checkLoadQueue();
+      }
+    },
+
+    /**
+     * Checks the loading queue to check
+     * if all layers have loaded or not
+     */
+    _checkLoadQueue: function() {
+      var queue = this.loadQueue;
+
+      if(queue.length > 0) {
+        // Show a loader while the layers are loading
+      } else {
+        this.trigger('map:layers:loaded');
+      }
     }
 
   });
