@@ -14,16 +14,13 @@
       .search
         h2 = t('case_studies')
         .search-form
-          = form_tag case_studies_path, :method => 'get', :id => "casesSearch", :enforce_utf8 => false do
+          = form_tag case_studies_path, :method => 'get', :id => "casesSearch", :enforce_utf8 => false, class: "form" do
             svg.icon-search
               use xlink:href="#icon-search"
             input id="caseInputSearch" name="search" type="search" placeholder="SEARCH CASE" autocomplete="off"
-          ul#resultsContainer.results
+            span.close × 
+            ul#resultsContainer.results
         
-        .tags.-light
-          span.tag URBAN
-          span.tag SLUMS
-          span.tag PHILIPPINES
-          span.tag MANILA
-          span.tag WORLDBANK
-          span.tag INTDEV
+        #tagList.tags
+          - @tags.each do |t|
+            span.tag data-value="#{t.name}" =t.name

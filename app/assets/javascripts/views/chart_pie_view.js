@@ -66,35 +66,7 @@
     },
 
     _parseData: function() {
-      var self = this;
-
-      this.chartData = [
-        {
-          category: '1971',
-          value: 10,
-          color: '#EA01FF'
-        },
-        {
-          category: '2001',
-          value: 40,
-          color: '#FF6600'
-        },
-        {
-          category: '2005',
-          value: 10,
-          color: '#229A00'
-        },
-        {
-          category: '2010',
-          value: 30,
-          color: '#7801FF'
-        },
-        {
-          category: '2010',
-          value: 30,
-          color: '#ffc600'
-        }
-      ];
+      this.chartData = this.data;
     },
 
     _tweenPie: function(finish) {
@@ -143,6 +115,9 @@
       this.pie = container.selectAll('.arc')
         .data(pie(this.chartData))
         .enter().append('g')
+          .attr('data-category', function(d) {
+            return d.data.category;
+          })
           .attr('class', 'arc');
 
       this.pie.append('path')
@@ -152,6 +127,25 @@
         .transition()
         .duration(this.animationTime)
         .attrTween('d', this._tweenPie.bind(this));
+    },
+
+    highlight: function(category) {
+      var elems = this.el.querySelectorAll('.arc');
+
+      for (var el in elems) {
+        var current = elems[el];
+        
+        if (current && current.getAttribute) {
+          var cat = current.getAttribute('data-category');
+          if (category === '') {
+            current.classList.remove('unHighLight');
+          } else if (cat !== category) {
+            current.classList.add('unHighLight');
+          } else {
+            current.classList.remove('unHighLight');
+          }
+        }
+      }
     },
 
     prepareRemove: function() {

@@ -32,6 +32,10 @@
       width: 49%;
     }
 
+    &.-col-3 {
+      width: 32%;
+    }
+
     &._selected {
       border-color: $font-color-1;
 
@@ -56,12 +60,31 @@
 
       > span {
         display: block;
-        width: rem(24px);
-        height: rem(24px);
+        width: 1rem;
+        height: 1.5rem;
         margin: .7em 0;
 
         box-sizing: border-box;
       }
     }
+
+    &.-range-custom {
+      @for $i from 1 through length($paletteCustom) {
+      	.range:nth-child(#{$i}) {
+          span {
+            background-color: rgba(nth($paletteCustom, $i), 0.3);
+
+            &.-bordered {
+              border: 1px solid nth($paletteCustom, $i);
+            }
+          }
+      	}
+      }
+    }
   }
+}
+
+.detail-item {
+  display: block;
+  width: 100%;
 }

@@ -12,14 +12,10 @@
     margin-top: 0;
   }
 
-  .search {
-    display: block;
-    position: absolute;
-    top: -15px;
-    left: 0;
-    right: 0;
-    width: 10rem;
-    margin: 0 auto;
+  ._is-loading {
+    .case {
+      visibility: hidden;
+    }
   }
 
   .case {
@@ -34,10 +30,12 @@
     background-repeat: no-repeat;
     background-size: cover;
 
+    background-color: $bg-color-4;
+
       > .caption {
         position: absolute;
         left: 2.5%;
-        bottom: 5%;
+        bottom: 7%;
 
         h2 {
           display: inline;

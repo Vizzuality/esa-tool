@@ -110,8 +110,7 @@
 
     &:hover, &:active {
       border-color: transparent;
-      color: $bg-color-landing-2;
-      background-color: $font-color-landing-3;
+      background-color: $bg-color-landing-4;
     }
 
     &.-inv {
@@ -119,8 +118,7 @@
       background-color: $bg-color-landing-3;
 
       &:hover, &:active {
-        color: $bg-color-landing-3;
-        background-color: $font-color-landing-2;
+        color: $font-color-landing-5;
       }
     }
   }

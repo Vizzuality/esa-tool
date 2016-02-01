@@ -30,6 +30,7 @@
       this.initBoxSelects();
       this.initPreviewImage();
       this.initMapFileColumns();
+      this.initFeatherlight();
       this.setExitWithoutSavingConfirmation();
     },
 
@@ -72,6 +73,13 @@
       }
       this.submitted = true;
       this.$el.find('form').submit();
+    },
+
+    initFeatherlight: function(){
+      $.featherlight.defaults.otherClose = "button.-close";
+      $.featherlight.defaults.afterContent = function(){
+        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div>');
+      };
     },
 
     setExitWithoutSavingConfirmation: function(){

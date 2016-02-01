@@ -10,6 +10,10 @@
       searchTag: 'search'
     },
 
+    events: {
+      'click .close': '_hideResults'
+    },
+
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       this.searchTag = this.options.searchTag;
@@ -43,7 +47,16 @@
         this.cases.fetch({data:params}).done(function(data){
           self._refreshCases(data.case_studies);
         });
+      } else {
+        self._hideResults();
       }
+    },
+
+    /**
+     * Function to hide the cases search results
+     */
+    _hideResults: function() {
+      this.el.classList.remove('open');
     },
 
     /**
@@ -52,12 +65,13 @@
     _refreshCases: function(studyCases) {
       var self = this;
       self.resultsContainer.innerHTML = '';
+      self.el.classList.add('open');
       if (studyCases.length) {
         _.each(studyCases,function(studyCase){
-          self.resultsContainer.insertAdjacentHTML("beforeend", self._caseTemplate(studyCase));
+          self.resultsContainer.insertAdjacentHTML('beforeend', self._caseTemplate(studyCase));
         });
       } else {
-        self.resultsContainer.insertAdjacentHTML("beforeend", "<span> There are no results </span>");
+        self.resultsContainer.insertAdjacentHTML('beforeend', '<span class="result"> There are no results </span>');
       }
     },
 
@@ -67,8 +81,7 @@
     _caseTemplate: function(studyCase) {
       return '<li >'+
                 '<a class="result" href="'+ studyCase.case_path+'">'+
-                  '<div style="background-image: url('+ studyCase.cover_path + '" class="caption"></div>'+
-                  '<span class="title">'+studyCase.title+'</span>'+
+                  studyCase.title +
                 '</a>'+
               '</li>';
     },

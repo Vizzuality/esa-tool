@@ -1,0 +1,38 @@
+.featherlight{
+  padding: 4rem 2rem;
+
+  .featherlight-content {
+    width: 90%;
+    max-width: rem(800px);
+    
+    background-color: $bg-color-5;
+    border: none;
+    overflow: visible;
+
+    @media screen and (max-width: $screen-sm) {
+      height: 100%;
+    }
+
+    .featherlight-inner {
+      display: flex;
+      overflow: auto;
+      @media screen and (max-width: $screen-sm) {
+        height: 100%;
+      }
+    }
+
+
+    .featherlight-close-icon {
+      width: rem(40px);
+      top:.5rem;
+
+      color: $font-color-1;
+      font-size: rem(25px);
+      background-color: transparent;
+
+      @media screen and (max-width: $screen-sm) {
+        top: rem(- 30px);
+      }
+    }
+  }
+}

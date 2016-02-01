@@ -7,7 +7,7 @@ class Backoffice::CaseStudiesController < BackofficeController
     @case_studies = if current_user.is_admin?
                       CaseStudy.all
                     else
-                      current_user.organization.case_studies
+                      current_user.organization.try(:case_studies) || []
                     end
   end
 
@@ -21,7 +21,7 @@ class Backoffice::CaseStudiesController < BackofficeController
   end
 
   def edit
-    @contacts = @case_study.contacts.build
+    @contacts = @case_study.contacts.presence || @case_study.contacts.build
   end
 
   def create
@@ -69,6 +69,7 @@ class Backoffice::CaseStudiesController < BackofficeController
     def case_studies_params
       params.require(:case_study).permit(
         :title,
+        :slug,
         :description,
         :published,
         :lat,
@@ -76,7 +77,7 @@ class Backoffice::CaseStudiesController < BackofficeController
         :template,
         :cover_image,
         :tag_list,
-        contacts_attributes: [:id, :body, :logo, :website, :_destroy]
+        contacts_attributes: [:id, :body, :logo, :website, :_destroy, :delete_image]
       )
     end
 

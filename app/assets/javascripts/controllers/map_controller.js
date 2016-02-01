@@ -34,16 +34,28 @@
      * Starts the map controller
      */
     _start: function() {
-      var layers = this.data.layers;
-
       // Initialize main views
       this._initMap();
+      this._startMap();
       this._initDashboard();
+    },
 
-      // Set default layer
-      if (layers) {
-        // TODO: Specify year instead of index
-        this.renderLayer(0, true);
+    _startMap: function() {
+      var self = this;
+      var layers = this.data.layers;
+      var layer = layers[layers.length -1];
+
+      if (layer) {
+        this.currentYear = layer.year;
+
+        this._getLayerData()
+          .done(function(res) {
+            self._parseLayerData(res);
+            self._updateLayer({
+              setBounds: true
+            });
+            self._updateDashboard();
+          });
       }
     },
 
@@ -98,7 +110,8 @@
         el: dashboardEl
       });
 
-      this.listenTo(this.dashboard, 'dashboard:filter', this._setFilter, this);
+      this.listenTo(this.dashboard, 'dashboard:filter', this._setFilter);
+      this.listenTo(this.dashboard, 'dashboard:update:year', this._updateByYear);
     },
 
     /**
@@ -132,20 +145,33 @@
     /**
      * Gets the data for the dashboard from the data object
      */
-    _getDashboardData: function(layer) {
+    _getDashboardData: function() {
       var self = this;
       var data = this.data;
+      var layers = data.layers;
+      var subquery = '';
+      var query = 'SELECT * FROM (%1) ' +
+        't ORDER BY year, value ASC';
 
+      if (layers) {
+        layers.forEach(function(layer, i) {
+          var column = layer.column_selected;
+          var table = layer.table_name;
+
+          subquery += '(SELECT ' + column + ' as category, year, ' +
+            'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
+            'FROM ' + table + ' GROUP BY ' + column + ', year ' +
+            'ORDER BY ' + column + ' ASC, value DESC LIMIT 6)';
+
+          if (i < layers.length - 1) {
+            subquery += ' UNION ';
+          }
+        });
+      }
+
+      query = query.replace('%1', subquery);
       var sql = new cartodb.SQL({ user: data.cartoUser });
-      var table = layer.table_name;
-      var column = layer.column_selected;
-      var query = 'SELECT {{column}} as category, year, \
-        ROUND( COUNT(*) * 100.0 / SUM(count(*) ) OVER(), 2 ) AS value \
-        FROM {{table}} GROUP BY {{column}}, year \
-        ORDER BY {{column}} ASC';
-
-      var cartoQuery = sql.execute(query, 
-        { column: column, table: table });
+      var cartoQuery = sql.execute(query);
 
       return cartoQuery;
     },
@@ -154,9 +180,11 @@
      * Gets the data from CartoDB
      * @param {Object} layer data
      */
-    _getLayerData: function(layer) {
-      var self = this;
+    _getLayerData: function() {
+      var year = this.currentYear;
       var data = this.data;
+      var layers = this.data.layers;
+      var layer = _.findWhere(layers, { year: year });
 
       var sql = new cartodb.SQL({ user: data.cartoUser });
       var table = layer.table_name;
@@ -194,40 +222,76 @@
         count++;
       });
 
-      layer.groups = groups;
+      this.data.categories = groups;
     },
 
-    /**
-     * Renders the layer in the map
-     * @param {Number} year to filter the layer
-     * @param {Boolean} sets bounds if true
-     */
-    renderLayer: function(index, bound) {
-      var self = this;
-      var layers = this.data.layers;
-      var layer = layers[index];
-      this.data.currentLayer = layer;
+    _updateLayer: function(params) {
+      var data = this.data;
+      var year = this.currentYear;
+      var layers = data.layers;
+      var layer = _.findWhere(layers, { year: year });
 
-      this._getLayerData(layer)
-        .done(function(res) {
-          self._parseLayerData(res, layer);
-          self.map.createLayer(layer, bound);
-          self._updateDashboard(layer);
+      if (layer) {
+        this.currentYear = year;
+
+        this.map.createLayer({
+          layer: layer,
+          data: data,
+          setBounds: params.setBounds
         });
+      }
     },
 
     /**
      * Updates the dashboard with the data 
      * @param {Object} layer data
      */
-    _updateDashboard: function(layer) {
+    _updateDashboard: function() {
       var self = this;
 
-      this._getDashboardData(layer)
-        .done(function(res) {
-          self.data.currentLayer.categories = res.rows;
-          self.dashboard.update(self.data);
+      if (this.data && this.data.dashboard) {
+        this._updateDashboardData();
+      } else {
+        this._getDashboardData()
+          .done(function(res) {
+            self._parseDashboardData(res);
+          });        
+      }
+    },
+
+    _parseDashboardData: function(data) {
+      data = data.rows;
+
+      if (data) {
+        var groups = this.data.categories;
+
+        _.map(data, function(d) {
+          var group = groups[d.category];
+
+          if (group && group[0]) {
+            d.color = group[0].color;
+          }
         });
+
+        var categories = _.keys(_.groupBy(data, 'category'));
+        var dataByYear = _.groupBy(data, 'year');
+
+        this.data.dashboard = dataByYear;
+        this.data.categoriesData = categories;
+      }
+
+      this._updateDashboardData();
+    },
+
+    _updateDashboardData: function() {
+      var currentYearData = this.data.dashboard[this.currentYear];
+      var selectedYear = this.currentYear.toString();
+
+      this.dashboard.update({
+        data: this.data,
+        currentData: currentYearData,
+        currentYear: selectedYear
+      });
     },
 
     /**
@@ -237,6 +301,18 @@
     _setFilter: function(filter) {
       this.map.highLightCategory(filter);
     },
+
+    _updateByYear: _.debounce(function(year) {
+      if (year !== this.currentYear) {
+        this.currentYear = year;
+        
+        this._updateLayer({
+          setBounds: false
+        });
+
+        this._updateDashboard();
+      }
+    }, 30),
 
     /**
      * Removes the map and basemap view and the listening events.

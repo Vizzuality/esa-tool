@@ -92,6 +92,11 @@ textarea {
 
   border: 1px solid $border-color-1;
   box-sizing: border-box;
+
+  &.-large {
+    width: 100%;
+    height: rem(230px);
+  }
 }
 
 .form-row {

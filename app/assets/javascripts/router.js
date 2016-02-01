@@ -7,7 +7,8 @@
   root.App.Router = Backbone.Router.extend({
 
     routes: {
-      'case-studies/:id?page=:page': 'caseStudies'
+      '(?tags[]=:tag)': 'landing',
+      'case-studies/:id(?page=:page)': 'caseStudies'
     },
 
     initialize: function() {
@@ -15,7 +16,7 @@
     },
 
     setListeners: function() {
-      this.listenTo(this, 'route:update', this.updateParams);
+      this.listenTo(this, 'route:updateParam', this.updateParam);
     },
 
     /**
@@ -27,23 +28,38 @@
 
     /**
      * Updates the url with the params
-     * @param {Object} params Parameters for th url
+     * @param {Object} params Parameters for the url
      */
-    updateParams: function(params) {
+    updateParam: function(params) {
       var current = window.location.pathname;
-      
-      if (params && params.page) {
-        this.navigate(current + '?page=' + params.page, {
+
+      if (params && params.name && params.value) {
+        this.navigate(current + '?'+ params.name + '=' + params.value, {
+          trigger: false, replace: true
+        });
+      } else {
+        this.navigate(current, {
           trigger: false, replace: true
         });
       }
+
+      this.trigger('rooter:updated', params.value);
+    },
+
+    /**
+     * Router for Landing
+     */
+    landing: function(tag) {
+      tag = tag || false;
+      this.trigger('start:landing', tag);
     },
 
     /**
      * Router for Case Studies
      */
     caseStudies: function(id, page) {
-      this.trigger('update:slider', page);
+      page = page || 0;
+      this.trigger('start:slider', page);
     }
 
   });

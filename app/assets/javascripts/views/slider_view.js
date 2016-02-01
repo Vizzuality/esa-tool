@@ -13,7 +13,8 @@
 
     defaults: {
       infinite: false,
-      speed: 150,
+      fade: true,
+      speed: 700,
       arrows: true,
       dots: true,
       adaptiveHeight: true,
@@ -26,7 +27,8 @@
            dots: false
          }
        }
-     ]
+     ],
+     initialSlide: 0
     },
 
     /**
@@ -36,8 +38,15 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.$page = document.getElementById('page');
+      this.menu = document.getElementById('menu');
       this._setListeners();
-      // At beginning initialize slick jquery plugin
+    },
+
+    /**
+     * Function to start slider
+     * @param  {Object} params
+     */
+    start: function(params) {
       this.$el.slick(this.options);
     },
 
@@ -56,7 +65,13 @@
      * @param  {Object} s Slick params
      */
     _onInit: function(e, s) {
+      var self = this;
       this.setCurrent(s.currentSlide);
+      self.trigger('slider:initialized');
+
+      this.$('.slick-dots').on('click', _.bind(this._checkMenu, this));
+      // setTimeout(function () {
+      // }, 1);
     },
 
     /**
@@ -101,14 +116,23 @@
     },
 
     /**
+     * Check if menu is opened to close it
+     * @param  {Number} i Current slide
+     */
+    _checkMenu: function() {
+      if (this.menu.classList.contains('_active')) {
+        this.trigger('menu:close');
+      }
+    },
+
+    /**
      * Trigger an event when the slide has changed
      * @param  {Object} slickObject Slick params
      * @param  {Number} i           Current slide
      */
     _triggerChange: function(slickObject, i) {
-      var $current = $(slickObject.$slides[i]).find('div:first');
       this.trigger('slider:page', i);
-      this.trigger('slider:change', $current.data('type'));
+      this.trigger('slider:change');
     }
 
   });

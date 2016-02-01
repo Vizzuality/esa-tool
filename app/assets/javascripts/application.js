@@ -4,6 +4,7 @@
 //= require underscore
 //= require backbone
 //= require d3
+//= require featherlight
 //= require_self
 //= require router
 //= require_tree ./cartocss
@@ -16,7 +17,7 @@
 //= require views/legend_view
 //= require views/dashboard_view
 //= require views/slider_view
-//= require views/search_view
+//= require views/menu_view
 //= require views/tabs_view
 //= require controllers/map_controller
 //= require collections/case_study_collection
@@ -33,10 +34,6 @@
   };
 
   var ApplicationView = Backbone.View.extend({
-
-    events: {
-      'click #btnBurguer': '_toggleMenu',
-    },
 
     /**
      * This function will be executed when the instance is created
@@ -55,9 +52,7 @@
      * starting the router.
      */
     _start: function() {
-      this.menu = document.getElementById('menu');
-      this._initSlider();
-      this._initSearch();
+      this._initMenu();
       this._setListeners();
       this.router.start();
     },
@@ -66,10 +61,7 @@
      * Function to set events at beginning
      */
     _setListeners: function() {
-      this.listenTo(this.router, 'update:slider', this._setSliderPageFromUrl);
-
-      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
-      this.listenTo(this.slider, 'slider:change', this.initMap);
+      this.listenTo(this.router, 'start:slider', this._setSliderPageFromUrl);
     },
 
     /**
@@ -95,8 +87,9 @@
      */
     _setCurrentSliderPage: function(page) {
       this.sliderPage = page;
-      this.router.trigger('route:update', {
-        page: page.toString()
+      this.router.trigger('route:updateParam', {
+        name: 'page',
+        value: page.toString()
       });
     },
 
@@ -104,24 +97,41 @@
      * Function to update slide current page from the url
      */
     _setSliderPageFromUrl: function(page) {
-      this.slider.goToSlide(page);
+      this.sliderPage = page;
+      this._initSlider(page);
     },
 
     /**
      * Function to initialize the slider
      */
-    _initSlider: function() {
+    _initSlider: function(page) {
       this.slider = new App.View.Slider({
-        el: '#mainSlider'
+        el: '#mainSlider',
+        initialSlide: parseInt(page)
       });
+
+      this.listenTo(this.slider, 'slider:initialized', this.initMap);
+      this.listenTo(this.slider, 'slider:page', this._setCurrentSliderPage);
+      this.listenTo(this.slider, 'slider:change', this.initMap);
+
+      this.slider.start();
+
+      this.listenTo(this.slider,'menu:close', this._toggleMenu);
     },
 
     /**
-     * Function to initialize the search box form
+     * Function to toggle menu
      */
-    _initSearch: function() {
-      this.search = new App.View.Search({
-        el: '#casesSearch'
+    _toggleMenu: function() {
+      this.menu.toggleMenu();
+    },
+
+    /**
+     * Function to initialize the menu
+     */
+    _initMenu: function() {
+      this.menu = new App.View.Menu({
+        el: document.body
       });
     },
 
@@ -130,7 +140,7 @@
      * else the map will be removed to improve the performance.
      * @param  {String} slideType It could be cover, text or map
      */
-    initMap: function(slideType) {
+    initMap: function() {
       var el = document.querySelectorAll("[data-slick-index='"+ this.sliderPage +"']")[0];
 
       if (this.map) {
@@ -138,23 +148,13 @@
         this.map = null;
       }
 
-      if (slideType === 'map') {
+      if (el.firstElementChild.getAttribute('data-type') === 'map') {
         this.map = new App.Controller.Map({
           elContent: el,
           data: this.data,
           page: this.sliderPage
         });
       }
-    },
-
-    /**
-     * Function to open or close the navigation element
-     * @param  {Event} e
-     */
-    _toggleMenu: function(e) {
-      e.preventDefault();
-      e.currentTarget.classList.toggle('_active');
-      this.menu.classList.toggle('_active');
     }
 
   });

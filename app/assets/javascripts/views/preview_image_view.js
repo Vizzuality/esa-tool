@@ -40,6 +40,7 @@
       var target = e.currentTarget.parentNode;
       target.classList.remove('_has_file');
       target.querySelectorAll('input[type="file"]')[0].value = "";
+      target.getElementsByClassName('delete_image')[0].value = true;
     }
 
   });

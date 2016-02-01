@@ -22,12 +22,13 @@ $screen-xl: 1920px !default;
 // Colors
 $white: #fff;
 $black: #000;
-$dark: #040205;
+$dark: #1c1c1c;
 $light-dark: #4a4a4a;
 $dark-gray: #363636;
 $gray: #D7D7D7;
 $light-gray: #f0f4f8;
 $blue: #316274;
+$medium-blue: #1f5268;
 $light-blue: #12e9e4;
 $dark-blue: #00324f;
 
@@ -36,11 +37,13 @@ $font-color-landing-1: $light-dark;
 $font-color-landing-2: $light-blue;
 $font-color-landing-3: $dark-blue;
 $font-color-landing-4: $black;
+$font-color-landing-5: $white;
 
 $bg-color-landing-1: $light-gray;
 $bg-color-landing-2: $light-blue;
 $bg-color-landing-3: $dark-blue;
 $bg-color-landing-4: $white;
+$bg-color-landing-5: $medium-blue;
 
 // Theme
 $font-color-1: $white;
@@ -52,6 +55,7 @@ $bg-color-1: $dark-blue;
 $bg-color-2: $white;
 $bg-color-3: $black;
 $bg-color-4: $blue;
+$bg-color-5: $dark;
 
 $border-color-1: $blue;
 $border-color-2: $white;
@@ -63,5 +67,7 @@ $notice-color: #00a600;
 $palette1: #ff9000, #fff500, #57d700, #00a600, #1dcfb4, #3f7eff, #5034ff, #8f37ff;
 
 $palette2: #8f37ff, #5034ff, #3f7eff, #1dcfb4, #00a600, #57d700, #fff500, #ff9000;
+
+$paletteCustom: #ffc602, #ff6602, #ff2a60, #ea3eff, #7836ff, #b8b8b8;
 
 $palette-reds: #ff9999, #ff6666, #ff3333, #ff0000, #cc0000, #990000, #660000, #330000;

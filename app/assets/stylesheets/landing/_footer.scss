@@ -1,18 +1,32 @@
+
+
 .footer {
   background-color: $bg-color-landing-1;
 
+  .pre-footer {
+    .logo {
+      height: rem(300px);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-image: url(#{asset_path('landing-footer.png')});
+      //To add image with different ratio in large screens
+      @media screen and (min-width: $screen-md) {
+        background-image: url(#{asset_path('landing-footer.png')});
+      }
+    }
+  }
+
   .column {
     padding: 3rem;
+    @media screen and (max-width: $screen-md) {
+      padding: 1.5rem;
+      text-align: center;
+      margin: 0 auto;
+    }
   }
 
   .icon {
     fill: $font-color-landing-1;
-  }
-
-  .logo {
-    > img {
-      width: 100%;
-    }
   }
 
   .nav {
@@ -25,13 +39,17 @@
 
         > a {
           color: $font-color-landing-1;
-          font-size: $font-size;
+          font-size: rem($font-size);
           font-family: $font-secondary;
           font-weight: 700;
           line-height: 1.5rem;
 
           text-decoration: none;
           text-transform: uppercase;
+
+          &:hover {
+            font-size: rem($font-size + 3px);
+          }
         }
       }
     }
@@ -64,10 +82,11 @@
   }
 
   > .copyright {
-    padding: .5rem;
+    padding: .5rem 5rem;
 
     font-size: $font-size-small;
     font-family: $font-secondary;
+    line-height: 1rem;
     font-weight: 400;
 
     background-color: $bg-color-landing-3;

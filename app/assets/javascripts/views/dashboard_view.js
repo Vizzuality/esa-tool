@@ -29,6 +29,11 @@
       // this._initTimeline();
     },
 
+    _setChartListeners: function() {
+      this.listenTo(this.chart, 'timeline:change:year', this._onTimelineChanged);
+      this.listenTo(this, 'chart:filter', this.chart.highlight);
+    },
+
     /**
      * Updates the views with new data
      * @param {Object} raw data from the backend
@@ -36,17 +41,26 @@
      */
     update: function(data, layer) {
       var self = this;
-      this.data = data;
+      this.data = data.data;
+      this.animate = data.animate;
+      this.currentData = data.currentData;
+      this.currentYear = data.currentYear;
 
       // TEMP: Delay loading of components
       if (this.updateTimer) {
         clearTimeout(this.updateTimer);
       }
 
-      this.updateTimer = setTimeout(function() {
-        self._initSelectedChart();
+      // this.updateTimer = setTimeout(function() {
+      //   self._initSelectedChart();
+      //   self.legend.update(data, layer);
+      // }, 3000);
+        if (this.selectedChart !== 'line') {
+          self._initSelectedChart();          
+        }
+
         self.legend.update(data, layer);
-      }, 3000);
+
     },
 
     /**
@@ -80,12 +94,19 @@
       elem.classList.remove('_is-loading');   
 
       var charts = this.data.charts;
+      var chart;
 
       if (charts.length > 0) {
-        var chart = charts[0] && charts[0].name ? charts[0].name : null;
+        if (this.selectedChart) {
+          chart = _.findWhere(charts, { name: this.selectedChart });
+        } else {
+          chart = charts[0];
+          this.selectedChart = chart.name;
+        }
 
-        if (chart) {
-          this._renderChart(chart);
+        if (chart.name) {
+          this._renderChart(chart.name);
+          this.listenTo(this.chart, 'timeline:change:year', this._onTimelineChanged);
         }
       }
     },
@@ -135,18 +156,18 @@
     _renderChartLine: function() {
       var parent = this.el;
       var chartEl = parent.querySelector('#line-chart');
+      var data = _.flatten(_.values(this.data.dashboard));
 
-      var data = this.data.groups;
-
-      if (this.chart) {
-        this.chart.remove();
-        this.chart = null;
-      }
+      this._removeChart();
 
       this.chart = new App.View.ChartLine({
         el: chartEl,
-        data: data
+        data: data,
+        currentYear: this.currentYear,
+        animate: this.animate
       });
+
+      this._setChartListeners();
     },
 
     /** 
@@ -155,18 +176,16 @@
     _renderChartPie: function() {
       var parent = this.el;
       var chartEl = parent.querySelector('#pie-chart');
+      var data = this.currentData;
 
-      var data = this.data.groups;
-
-      if (this.chart) {
-        this.chart.remove();
-        this.chart = null;
-      }
+      this._removeChart();
 
       this.chart = new App.View.ChartPie({
         el: chartEl,
         data: data
       });
+
+      this._setChartListeners();
     },
 
     /** 
@@ -175,18 +194,16 @@
     _renderChartBar: function() {
       var parent = this.el;
       var chartEl = parent.querySelector('#bar-chart');
+      var data = this.currentData;
 
-      var data = this.data.groups;
-
-      if (this.chart) {
-        this.chart.remove();
-        this.chart = null;
-      }
+      this._removeChart();
 
       this.chart = new App.View.ChartBar({
         el: chartEl,
         data: data
       });
+
+      this._setChartListeners();
     },
 
     /**
@@ -206,6 +223,7 @@
         var previousTabSelected = this.el.querySelector('.charts-nav .-active');
         var previousContentSelected = this.el.querySelector('.charts-content .-active');
 
+        this.selectedChart = currentTab;
         this._removeChart();
 
         if (this.tabContentTimer) {
@@ -255,6 +273,11 @@
      */
     _hightLight: function(category) {
       this.trigger('dashboard:filter', category);
+      this.trigger('chart:filter', category);
+    },
+
+    _onTimelineChanged: function(year) {
+      this.trigger('dashboard:update:year', year);
     },
 
     /** 
@@ -262,7 +285,15 @@
      */
     _removeChart: function() {
       if (this.chart) {
-        this.chart.prepareRemove();
+        this.chart.stopListening();
+
+        if (this.isRemoving) {
+          this.isRemoving = false;
+          this.chart.prepareRemove();
+        } else {
+          this.chart.remove();
+        }
+
         this.chart = null;
       }
     },
@@ -285,6 +316,7 @@
         clearTimeout(this.updateTimer);
       }
       
+      this.isRemoving = true;
       this._removeChart();
       this._removeLegend();
       this._defaultTabs();
