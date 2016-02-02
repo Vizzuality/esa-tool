@@ -255,6 +255,7 @@
         this._getDashboardData()
           .done(function(res) {
             self._parseDashboardData(res);
+            self.dashboard.start();
           });        
       }
     },
@@ -303,6 +304,7 @@
     },
 
     _updateByYear: _.debounce(function(year) {
+      console.log(year, this.currentYear);
       if (year !== this.currentYear) {
         this.currentYear = year;
         

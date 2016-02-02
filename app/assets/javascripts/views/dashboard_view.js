@@ -26,12 +26,15 @@
       
       this._initLegend();
       this._initChart();
-      // this._initTimeline();
     },
 
     _setChartListeners: function() {
       this.listenTo(this.chart, 'timeline:change:year', this._onTimelineChanged);
       this.listenTo(this, 'chart:filter', this.chart.highlight);
+    },
+
+    start: function() {
+      this._initTimeline();
     },
 
     /**
@@ -40,27 +43,16 @@
      * @param {Object} layer data
      */
     update: function(data, layer) {
-      var self = this;
       this.data = data.data;
       this.animate = data.animate;
       this.currentData = data.currentData;
       this.currentYear = data.currentYear;
 
-      // TEMP: Delay loading of components
-      if (this.updateTimer) {
-        clearTimeout(this.updateTimer);
+      if (this.selectedChart !== 'line') {
+        this._initSelectedChart();          
       }
 
-      // this.updateTimer = setTimeout(function() {
-      //   self._initSelectedChart();
-      //   self.legend.update(data, layer);
-      // }, 3000);
-        if (this.selectedChart !== 'line') {
-          self._initSelectedChart();          
-        }
-
-        self.legend.update(data, layer);
-
+      this.legend.update(data, layer);
     },
 
     /**
@@ -117,7 +109,7 @@
     _initTimeline: function() {
       var parent = this.el;
       var elem = parent.querySelector('.charts-timeline');
-      var data = this.data.groups;
+      var data = _.flatten(_.values(this.data.dashboard));
 
       if (this.timeline) {
         this.timeline.remove();
@@ -126,8 +118,11 @@
 
       this.timeline = new App.View.Timeline({
         el: elem,
+        currentYear: this.currentYear,
         data: data
       });
+
+      this.listenTo(this.timeline, 'timeline:change:year', this._onTimelineChanged);
     },
 
     /**
@@ -176,13 +171,16 @@
     _renderChartPie: function() {
       var parent = this.el;
       var chartEl = parent.querySelector('#pie-chart');
-      var data = this.currentData;
+      var legendEl = parent.querySelector('.pie-legend');
+      var data = _.flatten(_.values(this.data.dashboard));
 
       this._removeChart();
 
       this.chart = new App.View.ChartPie({
         el: chartEl,
-        data: data
+        legendEl: legendEl,
+        data: data,
+        currentYear: this.currentYear
       });
 
       this._setChartListeners();
@@ -194,13 +192,16 @@
     _renderChartBar: function() {
       var parent = this.el;
       var chartEl = parent.querySelector('#bar-chart');
-      var data = this.currentData;
+      var legendEl = parent.querySelector('.bar-legend');
+      var data = _.flatten(_.values(this.data.dashboard));
 
       this._removeChart();
 
       this.chart = new App.View.ChartBar({
         el: chartEl,
-        data: data
+        legendEl: legendEl,
+        data: data,
+        currentYear: this.currentYear
       });
 
       this._setChartListeners();
@@ -311,11 +312,7 @@
     /** 
      * Removes the views and undelegates events
      */
-    remove: function() {
-      if (this.updateTimer) {
-        clearTimeout(this.updateTimer);
-      }
-      
+    remove: function() {      
       this.isRemoving = true;
       this._removeChart();
       this._removeLegend();

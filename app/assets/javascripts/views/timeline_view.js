@@ -11,9 +11,11 @@
   App.View.Timeline = Backbone.View.extend({
 
     events: {
+      'click .action': '_togglePlay'
     },
 
     defaults: {
+      interval: 4000
     },
 
     /**
@@ -23,33 +25,72 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.interval = this.options.interval;
+      this.selectedYear= this.options.currentYear;
+      this.isPlaying = false;
 
-      this._render();
+      this._start();
     },
 
-    _render: function() {
+    _start: function() {
+      this.years = _.uniq(_.pluck(this.data, 'year'));
+    },
+
+    _togglePlay: function() {
+      if (!this.isPlaying) {
+        console.log('play');
+        this._play();
+      } else {
+        console.log('pause');
+        this._pause();
+      }
+    },
+
+    _play: function() {
       var self = this;
-      var years = _.keys(this.data);
-      var container = this.el.querySelector('.list');
-      container.innerHTML = '';
-      
-      _.each(years, function(year) {
-        self._addYearToTimeline(year);
-      });
+      this.isPlaying = true;
+
+      if (this.playInterval) {
+        clearInterval(this.playInterval);
+        this.playInterval = null;
+      }
+
+      this.playInterval = setInterval(function() {
+        self._changeYear();
+      }, this.interval);
     },
 
-    _addYearToTimeline: function(year) {
-      var container = this.el.querySelector('.list');
-      var yearElement = document.createElement('li');
-      var yearText = document.createTextNode(year);
+    _pause: function() {
+      this.isPlaying = false;
 
-      yearElement.appendChild(yearText);
-      yearElement.classList.add('item');
-      container.appendChild(yearElement);
+      if (this.playInterval) {
+        clearInterval(this.playInterval);
+        this.playInterval = null;
+      }
+    },
+
+    _changeYear: function() {
+      var current = this.selectedYear;
+      var years = _.clone(this.years);
+      var numYears = years.length - 1;
+      var currentPos = years.indexOf(current);
+      
+      currentPos++;
+
+      if (currentPos > numYears) {
+        currentPos = 0;
+      }
+      
+      var newYear = years.slice(currentPos, (currentPos + 1));
+      newYear = newYear.toString();
+      this.selectedYear = newYear;
+      this.trigger('timeline:change:year', newYear);
     },
 
     remove: function() {
-      this._unsetListeners();
+      this.undelegateEvents();
+      this.stopListening();
+      this.remove();
     }
 
   });
