@@ -100,20 +100,21 @@
     }
 
     .basemap {
-      > .action {
-        color: $main-color;
-        background-color: $map-basemap-bg;
-        box-shadow: $map-basemap-shadow;
-      }
+      > .content {
+        > .action {
+          color: $main-color;
+          background-color: $map-basemap-bg;
+        }
 
-      > .list {
-        background-color: $map-basemap-bg;
+        > .list {
+          background-color: $map-basemap-bg;
 
-        > .item {
-          color: $map-basemap-unselected;
+          > .item {
+            color: $map-basemap-unselected;
 
-          &.selected {
-            color: $main-color;
+            &.selected {
+              color: $main-color;
+            }
           }
         }
       }

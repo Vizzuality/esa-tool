@@ -1,4 +1,4 @@
-.map {
+  .map {
   position: relative;
   height: 100vh;
 
@@ -37,52 +37,59 @@
   }
 
   .basemap {
+    width: rem(90px);
+    overflow: hidden;
     position: absolute;
     z-index: 1;
     bottom: rem(40px);
-    left: rem(100px);
+    transform: translate3d(0, 0, 0);
+    transition: width .3s;
 
-    > .action {
-      font-size: rem($font-size-small);
-      font-family: $font-secondary;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: rem(1px);
-      padding: rem(10px) rem(15px);
-      float: left;
-    }
+    > .content {
+      width: rem(290px);
+      display: inline-block;
 
-    > .list {
-      width: rem(0px);
-      height: rem(31px);
-      list-style: none;
-      float: left;
-      padding: 0;
-      margin: 0;
-      padding: rem(0px);
-      overflow: hidden;
-      transition: all .2s ease-in-out;
-
-      > .item {
-        float: left;
+      > .action {
         font-size: rem($font-size-small);
         font-family: $font-secondary;
         font-weight: 700;
-        line-height: $font-size-small;
         text-transform: uppercase;
+        letter-spacing: rem(1px);
         padding: rem(10px) rem(15px);
-        cursor: pointer;
+        float: left;
+      }
 
-        &.selected {
-          cursor: default;
+      > .list {
+        width: rem(170px);
+        height: rem(31px);
+        list-style: none;
+        float: left;
+        padding: rem(0px) rem(15px);
+        margin: 0;
+        overflow: hidden;
+
+        > .item {
+          float: left;
+          font-size: rem($font-size-small);
+          font-family: $font-secondary;
+          font-weight: 700;
+          line-height: $font-size-small;
+          text-transform: uppercase;
+          padding: rem(10px) rem(15px);
+          cursor: pointer;
+
+          &.selected {
+            cursor: default;
+          }
         }
       }
     }
 
     &.active {
+      width: rem(300px);
+
       > .list {
-        width: auto;
-        padding: rem(0px) rem(15px);
+        width: rem(170px);
       }
     }
   }
