@@ -15,14 +15,15 @@ class DataLayer < ActiveRecord::Base
   before_validation :create_file
 
   def create_file
-    # return false unless valid_file_headers?(file)
     if self.file.present?
       import_status = DataLayer.import_file(self.file)
       self.table_name = import_status['table_name']
       self.import_status = import_status['state']
       self
+    else
+      self.errors[:file] = "You need to provide a file"
     end
-  end
+   end
 
   private
 
