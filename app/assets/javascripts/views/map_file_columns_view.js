@@ -9,6 +9,7 @@
     defaults: {
       ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
       fileInput: 'map_file',
+      fileInputWrapper: 'input-file-wrapper',
       fileNameContainer: 'filename',
       columnInput: 'page_column_selected',
       columnListContainer: 'map-columns-list',
@@ -30,6 +31,7 @@
       this.ignored_columns = this.options.ignored_columns;
       this.columnListContainer = document.getElementById(this.options.columnListContainer);
       this.fileInput = document.getElementById(this.options.fileInput);
+      this.fileInputWrapper = document.getElementById(this.options.fileInputWrapper);
       this.columnInput = document.getElementById(this.options.columnInput);
       this.fileNameContainer = document.getElementById(this.options.fileNameContainer);
 
@@ -143,7 +145,7 @@
         var tpl = this._fileTemplate()({fileName: this.fileInput.files[0].name});
         this.fileNameContainer.insertAdjacentHTML('beforeend', tpl);
       }
-      this.fileInput.parentElement.classList.add('_hidden');
+      this.fileInputWrapper.classList.add('_hidden');
     },
 
     _fileTemplate: function() {

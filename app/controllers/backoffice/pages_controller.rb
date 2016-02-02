@@ -12,15 +12,10 @@ class Backoffice::PagesController < BackofficeController
 
   def create
     @page = Page.new(page_params)
-
-    if (page_params[:data_layers_attributes]['0'][:file])
-      if @page.save
-        redirect_to edit_backoffice_case_study_page_path(
-          @case_study, @page, type: @page[:page_type]
-        ), notice: 'Page created successfully.'
-      else
-        render :new
-      end
+    if @page.save
+      redirect_to edit_backoffice_case_study_page_path(
+        @case_study, @page, type: @page[:page_type]
+      ), notice: 'Page created successfully.'
     else
       render :new
     end
