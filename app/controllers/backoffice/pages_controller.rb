@@ -12,14 +12,12 @@ class Backoffice::PagesController < BackofficeController
 
   def create
     @page = Page.new(page_params)
-
     if @page.save
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
       ), notice: 'Page created successfully.'
     else
       render :new
-      logger.debug @page.errors.full_messages
     end
   end
 
@@ -30,9 +28,6 @@ class Backoffice::PagesController < BackofficeController
 
   def update
     if @page.update(page_params)
-      if @page.data_layers
-        @page.data_layers.update_all(column_selected: page_params[:column_selected])
-      end
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]
       ), notice: 'Page updated successfully.'
@@ -70,7 +65,7 @@ class Backoffice::PagesController < BackofficeController
         :chart_type_list,
         :case_study_id,
         :column_selected,
-        data_layers_attributes: [:id, :table_name, :column_selected, :year, :file],
+        data_layers_attributes: [:id, :table_name, :year, :file],
         interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )
