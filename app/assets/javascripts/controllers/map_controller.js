@@ -22,6 +22,7 @@
       this.elContent = this.options.elContent;
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
+      this.layersLoaded = false;
 
       this.basemap = this.data.basemap;
       this.template = this.data.template;
@@ -53,7 +54,8 @@
           .done(function(res) {
             self._parseLayerData(res);
             self._updateLayer({
-              setBounds: true
+              setBounds: true,
+              autoUpdate: true
             });
           });
       }
@@ -101,7 +103,7 @@
       });
 
       this.listenTo(this.map, 'map:tile:loaded', this._startMap);
-      this.listenTo(this.map, 'map:layers:loaded', this._startDashboard);
+      this.listenTo(this.map, 'map:layers:loaded', this._onLayersLoaded);
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
     },
 
@@ -245,11 +247,13 @@
 
       if (layer) {
         this.currentYear = year;
+        this.layersLoaded = false;
 
         this.map.createLayer({
           layer: layer,
           data: data,
-          setBounds: params.setBounds
+          setBounds: params.setBounds,
+          autoUpdate: params.autoUpdate
         });
       }
     },
@@ -316,17 +320,30 @@
     },
 
     _updateByYear: _.debounce(function(year) {
-      console.log(year, this.currentYear);
       if (year !== this.currentYear) {
         this.currentYear = year;
 
         this._updateLayer({
-          setBounds: false
+          setBounds: false,
+          autoUpdate: false
         });
 
         this._updateDashboard();
       }
     }, 30),
+
+    _onLayersLoaded: function(params) {
+      this.layersLoaded = true;
+
+      if (params.autoUpdate) {
+        this._startDashboard();
+      }
+
+      params.layersLoaded = true;
+      params.currentYear = this.currentYear;
+
+      this.dashboard.updateState(params);
+    },
 
     /**
      * Removes the map and basemap view and the listening events.

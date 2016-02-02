@@ -23,9 +23,10 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
-      
+
       this._initLegend();
       this._initChart();
+      this._initTimeline();
     },
 
     _setChartListeners: function() {
@@ -34,7 +35,11 @@
     },
 
     start: function() {
-      this._initTimeline();
+      var data = _.flatten(_.values(this.data.dashboard));
+
+      this.timeline.start({
+        data: data
+      });
     },
 
     /**
@@ -50,9 +55,15 @@
 
       if (this.selectedChart !== 'line') {
         this._initSelectedChart();          
+      } else {
+        this.chart.updateTimeline(this.currentYear);
       }
 
       this.legend.update(data, layer);
+    },
+
+    updateState: function(params) {
+      this.timeline.updateState(params);
     },
 
     /**
@@ -109,7 +120,6 @@
     _initTimeline: function() {
       var parent = this.el;
       var elem = parent.querySelector('.charts-timeline');
-      var data = _.flatten(_.values(this.data.dashboard));
 
       if (this.timeline) {
         this.timeline.remove();
@@ -118,8 +128,7 @@
 
       this.timeline = new App.View.Timeline({
         el: elem,
-        currentYear: this.currentYear,
-        data: data
+        currentYear: this.currentYear
       });
 
       this.listenTo(this.timeline, 'timeline:change:year', this._onTimelineChanged);

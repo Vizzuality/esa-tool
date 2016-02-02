@@ -27,7 +27,6 @@ class Backoffice::PagesController < BackofficeController
   end
 
   def update
-    debugger
     if @page.update(page_params)
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page[:page_type]

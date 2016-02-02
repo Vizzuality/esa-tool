@@ -340,6 +340,13 @@
           (self.handleWidth / 2)) + ', ' + -(self.margin.top / 2) + ')';
       });
     },
+
+    updateTimeline: function(year) {
+      var date = new Date(year);
+      this.currentStep = date;
+
+      this._setHandlePosition();
+    },
     
     prepareRemove: function() {
       this.svg.selectAll('.area')

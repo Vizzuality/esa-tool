@@ -15,7 +15,7 @@
     },
 
     defaults: {
-      interval: 4000
+      interval: 3000
     },
 
     /**
@@ -24,24 +24,19 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
-      this.data = this.options.data;
       this.interval = this.options.interval;
-      this.selectedYear= this.options.currentYear;
       this.isPlaying = false;
-
-      this._start();
     },
 
-    _start: function() {
+    start: function(params) {
+      this.data = params.data;
       this.years = _.uniq(_.pluck(this.data, 'year'));
     },
 
     _togglePlay: function() {
       if (!this.isPlaying) {
-        console.log('play');
         this._play();
       } else {
-        console.log('pause');
         this._pause();
       }
     },
@@ -69,22 +64,30 @@
       }
     },
 
-    _changeYear: function() {
-      var current = this.selectedYear;
-      var years = _.clone(this.years);
-      var numYears = years.length - 1;
-      var currentPos = years.indexOf(current);
-      
-      currentPos++;
+    updateState: function(params) {
+      this.layersLoaded = params.layersLoaded;
+      this.selectedYear = params.currentYear;
+    },
 
-      if (currentPos > numYears) {
-        currentPos = 0;
+    _changeYear: function() {
+      if (this.layersLoaded) {
+        var current = this.selectedYear.toString();
+        var years = _.clone(this.years);
+        var numYears = years.length - 1;
+        var currentPos = years.indexOf(current);
+        
+        currentPos++;
+
+        if (currentPos > numYears) {
+          currentPos = 0;
+        }
+        
+        var newYear = years.slice(currentPos, (currentPos + 1));
+        newYear = parseInt(newYear, 10);
+        this.selectedYear = newYear;
+        this.layersLoaded = false;
+        this.trigger('timeline:change:year', newYear);
       }
-      
-      var newYear = years.slice(currentPos, (currentPos + 1));
-      newYear = newYear.toString();
-      this.selectedYear = newYear;
-      this.trigger('timeline:change:year', newYear);
     },
 
     remove: function() {
