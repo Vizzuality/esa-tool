@@ -291,7 +291,7 @@
       }
       marker.addTo(this.map)
     },
-    
+
     /**
      * Highlight a layer by category
      * @param {String} category name
@@ -316,7 +316,7 @@
     _setLayers: function(params) {
       var self = this;
       var table = params.layer.table_name;
-      var column = params.layer.column_selected;
+      var column = params.data.columnSelected;
       var cartoCss = this.cartoCss;
       var groups = params.data.categories;
       var defaultCarto = cartoCss['default'];
@@ -339,8 +339,8 @@
 
           layers.push({
             category: cat,
-            sql: 'SELECT * FROM ' + params.layer.table_name +
-              ' WHERE ' + params.layer.column_selected + ' = \'' + group + '\'',
+            sql: 'SELECT * FROM ' + table +
+              ' WHERE ' + column + ' = \'' + group + '\'',
             cartocss: defaultCarto + '#' + table +
             '[' + column + '="' + cat + '"]' + carto
           });
