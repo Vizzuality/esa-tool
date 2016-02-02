@@ -18,7 +18,4 @@ class Page < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 2 }
 
   validates_attachment_content_type :background, content_type: /\Aimage\/.*\Z/
-
-  attr_accessor :column_selected
-
 end

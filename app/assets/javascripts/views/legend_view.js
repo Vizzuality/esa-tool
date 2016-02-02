@@ -33,7 +33,7 @@
      * Set listeners
      */
     _setListeners: function() {
-      this.$el.delegate('.item', 'mouseenter', this._filter.bind(this));
+      this.$el.delegate('.item', 'mouseenter', this._activateInteraction.bind(this));
     },
 
     /**
@@ -121,18 +121,29 @@
      * Filters the data by a category
      * @param {Object} event
      */
-    _filter: function(ev) {
+    _filter: _.debounce(function(ev) {
       var current = ev.currentTarget;
       var category = current.dataset.category;
 
-      this.trigger('legend:filter', category);
-    },
+      if (this.interactionEnabled) {  
+        this.trigger('legend:filter', category);
+      }
+    }, 100),
 
     /**
      * Clears the filtered content
      */
     _clearFilter: function() {
+      this.interactionEnabled = false;
       this.trigger('legend:filter', '');
+    },
+
+    /**
+     * Activates the interaction on hover
+     */
+    _activateInteraction: function(ev) {
+      this.interactionEnabled = true;
+      this._filter(ev);
     },
 
     /**
