@@ -16,8 +16,8 @@
           = d.input :year
         #filename
         .form-row
-          .input-file-wrapper.-lg
-            = d.input_field :file, as: :file, id: "map_file"
+          #input-file-wrapper.input-file-wrapper.-lg
+            = d.input :file, as: :file, input_html: { id: 'map_file' }
             .placeholder
               span.title =t('drop_shapefile')
               span.sub-title
