@@ -63,6 +63,10 @@
       this.timeline.show();
     },
 
+    /**
+     * Updates the childs views state
+     * @param {Object} parameters
+     */
     updateState: function(params) {
       this.timeline.updateState(params);
     },
@@ -285,12 +289,17 @@
 
     /** 
      * Filters the content by a category
+     * @param {String} category
      */
     _hightLight: function(category) {
       this.trigger('dashboard:filter', category);
       this.trigger('chart:filter', category);
     },
 
+    /** 
+     * Triggered when the year have changed
+     * @param {Number} year
+     */
     _onTimelineChanged: function(year) {
       this.trigger('dashboard:update:year', year);
     },

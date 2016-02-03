@@ -28,16 +28,26 @@
       this.isPlaying = false;
     },
 
+    /**
+     * Sets the data for the view
+     * @param  {Object} params
+     */
     start: function(params) {
       this.data = params.data;
       this.years = _.uniq(_.pluck(this.data, 'year'));
     },
 
+    /**
+     * Shows the UI of the view
+     */
     show: function() {
       this.el.classList.add('enabled');
       this.el.classList.remove('disabled');
     },
 
+    /**
+     * Hides the UI of the view
+     */
     hide: function() {
       var button = this.el.querySelector('.action');
       button.classList.remove('playing');
@@ -47,6 +57,10 @@
       this.el.classList.add('disabled');
     },
 
+    /**
+     * Toggles the play / pause functionality
+     * @param {Object} event
+     */
     _togglePlay: function(ev) {
       var elem = ev.currentTarget;
 
@@ -61,6 +75,9 @@
       }
     },
 
+    /**
+     * Starts the timeline animation
+     */
     _play: function() {
       var self = this;
       this.isPlaying = true;
@@ -72,17 +89,27 @@
       }, this.interval);
     },
 
+    /**
+     * Stops the timeline animation
+     */
     _pause: function() {
       this.isPlaying = false;
 
       this._resetInterval();
     },
 
+    /**
+     * Updates the state of the view
+     * @param {Object} parameters
+     */
     updateState: function(params) {
       this.layersLoaded = params.layersLoaded;
       this.selectedYear = params.currentYear;
     },
 
+    /**
+     * Changes the year and triggers the event
+     */
     _changeYear: function() {
       if (this.layersLoaded) {
         var current = this.selectedYear.toString();
@@ -104,6 +131,9 @@
       }
     },
 
+    /**
+     * Resets the animaton interval
+     */
     _resetInterval: function() {
       if (this.playInterval) {
         clearInterval(this.playInterval);
@@ -111,13 +141,15 @@
       }
     },
 
+    /**
+     * Unsets the events and animation
+     */
     remove: function() {
       this.hide();
       this._pause();
       this.undelegateEvents();
       this.stopListening();
     }
-
   });
 
 })(window.App || {});

@@ -32,10 +32,9 @@
     },
 
     /**
-     * Starts the map controller
+     * Starts the map controller's main views
      */
     _start: function() {
-      // Initialize main views
       this._initMap();
     },
 
@@ -241,6 +240,11 @@
       this.data.categories = groups;
     },
 
+    /**
+     * Sets the current year
+     * and updates the layers
+     * @param {Object} parameters
+     */
     _updateLayer: function(params) {
       var data = this.data;
       var year = this.currentYear;
@@ -278,6 +282,12 @@
       }
     },
 
+    /**
+     * Dashboard data parser
+     * prepares the data for the view
+     * @param {Object} response data
+     * @param {Object} parameters
+     */
     _parseDashboardData: function(data, params) {
       data = data.rows;
 
@@ -302,6 +312,10 @@
       this._updateDashboardData(params);
     },
 
+    /**
+     * Updates the dashboard's view data
+     * @param {Object} parameters
+     */
     _updateDashboardData: function(params) {
       var currentYearData = this.data.dashboard[this.currentYear];
       var selectedYear = this.currentYear.toString();
@@ -323,6 +337,11 @@
       this.map.highLightCategory(filter);
     },
 
+    /**
+     * Triggered when the year has changed
+     * and updates the layer and dashboard
+     * @param {Number} year
+     */
     _updateByYear: _.debounce(function(year) {
       if (year !== this.currentYear) {
         this.currentYear = year;
@@ -338,6 +357,12 @@
       }
     }, 30),
 
+    /**
+     * Triggered when all of the
+     * layer's tiles have loaded
+     * then updates the dashboard state
+     * @param {Object} parameters
+     */
     _onLayersLoaded: function(params) {
       this.layersLoaded = true;
 
