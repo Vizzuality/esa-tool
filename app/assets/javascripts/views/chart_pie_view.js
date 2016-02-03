@@ -33,6 +33,7 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.animate = this.options.animate;
       this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
       this.legendEl = this.options.legendEl;
@@ -62,6 +63,7 @@
     _render: function() {
       this._setUpGraph();
       this._parseData();
+      this._checkParams();
       this._renderGraph();
       this._renderLegend();
     },
@@ -114,6 +116,12 @@
       return function(t) {
         return self.arc(i(t)); 
       };
+    },
+
+    _checkParams: function() {
+      if (!this.animate) {
+        this.animationTime = 0;
+      }
     },
 
     _renderGraph: function() {
@@ -204,6 +212,8 @@
     },
 
     prepareRemove: function() {
+      this.animationTime = this.defaults.animationTime;
+
       this.svg.selectAll('path').transition()
         .duration(this.animationTime)
         .attrTween('d', this._tweenPieOut.bind(this));

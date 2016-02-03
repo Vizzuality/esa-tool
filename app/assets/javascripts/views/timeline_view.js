@@ -33,11 +33,31 @@
       this.years = _.uniq(_.pluck(this.data, 'year'));
     },
 
-    _togglePlay: function() {
+    show: function() {
+      this.el.classList.add('enabled');
+      this.el.classList.remove('disabled');
+    },
+
+    hide: function() {
+      var button = this.el.querySelector('.action');
+      button.classList.remove('playing');
+      button.classList.add('paused');
+
+      this.el.classList.remove('enabled');
+      this.el.classList.add('disabled');
+    },
+
+    _togglePlay: function(ev) {
+      var elem = ev.currentTarget;
+
       if (!this.isPlaying) {
         this._play();
+        elem.classList.remove('paused');
+        elem.classList.add('playing');
       } else {
         this._pause();
+        elem.classList.remove('playing');
+        elem.classList.add('paused');
       }
     },
 
@@ -45,10 +65,7 @@
       var self = this;
       this.isPlaying = true;
 
-      if (this.playInterval) {
-        clearInterval(this.playInterval);
-        this.playInterval = null;
-      }
+      this._resetInterval();
 
       this.playInterval = setInterval(function() {
         self._changeYear();
@@ -58,10 +75,7 @@
     _pause: function() {
       this.isPlaying = false;
 
-      if (this.playInterval) {
-        clearInterval(this.playInterval);
-        this.playInterval = null;
-      }
+      this._resetInterval();
     },
 
     updateState: function(params) {
@@ -90,10 +104,18 @@
       }
     },
 
+    _resetInterval: function() {
+      if (this.playInterval) {
+        clearInterval(this.playInterval);
+        this.playInterval = null;
+      }
+    },
+
     remove: function() {
+      this.hide();
+      this._pause();
       this.undelegateEvents();
       this.stopListening();
-      this.remove();
     }
 
   });

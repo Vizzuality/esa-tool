@@ -67,7 +67,9 @@
      * Starts the dashboard with the data
      */
     _startDashboard: _.debounce(function() {
-      this._updateDashboard();
+      this._updateDashboard({
+        animate: true
+      });
     }, 200),
 
     /**
@@ -175,7 +177,7 @@
           subquery += '(SELECT ' + column + ' as category, year, ' +
             'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
             'FROM ' + table + ' GROUP BY ' + column + ', year ' +
-            'ORDER BY ' + column + ' ASC, value DESC LIMIT 6)';
+            'ORDER BY ' + column + ' ASC, value DESC LIMIT 7)';
 
           if (i < layers.length - 1) {
             subquery += ' UNION ';
@@ -262,21 +264,21 @@
      * Updates the dashboard with the data
      * @param {Object} layer data
      */
-    _updateDashboard: function() {
+    _updateDashboard: function(params) {
       var self = this;
 
       if (this.data && this.data.dashboard) {
-        this._updateDashboardData();
+        this._updateDashboardData(params);
       } else {
         this._getDashboardData()
           .done(function(res) {
-            self._parseDashboardData(res);
+            self._parseDashboardData(res, params);
             self.dashboard.start();
           });
       }
     },
 
-    _parseDashboardData: function(data) {
+    _parseDashboardData: function(data, params) {
       data = data.rows;
 
       if (data) {
@@ -297,17 +299,19 @@
         this.data.categoriesData = categories;
       }
 
-      this._updateDashboardData();
+      this._updateDashboardData(params);
     },
 
-    _updateDashboardData: function() {
+    _updateDashboardData: function(params) {
       var currentYearData = this.data.dashboard[this.currentYear];
       var selectedYear = this.currentYear.toString();
+      var animate = params.animate;
 
       this.dashboard.update({
         data: this.data,
         currentData: currentYearData,
-        currentYear: selectedYear
+        currentYear: selectedYear,
+        animate: animate
       });
     },
 
@@ -328,7 +332,9 @@
           autoUpdate: false
         });
 
-        this._updateDashboard();
+        this._updateDashboard({
+          animate: false
+        });
       }
     }, 30),
 

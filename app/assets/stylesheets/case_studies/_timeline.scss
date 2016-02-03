@@ -1,4 +1,13 @@
 .timeline {
+
+  &.disabled {
+    display: none;
+  }
+
+  &.enabled {
+    display: block;
+  }
+
   .list {
     width: 100%;
     margin: 0;
@@ -37,6 +46,18 @@
       width: rem(18px);
       height: rem(22px);
       fill: $white;
+    }
+
+    &.playing {
+      .icon-play {
+        display: none;
+      }
+    }
+
+    &.paused {
+      .icon-pause {
+        display: none;
+      }
     }
   }
 }

@@ -60,6 +60,7 @@
       }
 
       this.legend.update(data, layer);
+      this.timeline.show();
     },
 
     updateState: function(params) {
@@ -189,7 +190,8 @@
         el: chartEl,
         legendEl: legendEl,
         data: data,
-        currentYear: this.currentYear
+        currentYear: this.currentYear,
+        animate: this.animate
       });
 
       this._setChartListeners();
@@ -210,7 +212,8 @@
         el: chartEl,
         legendEl: legendEl,
         data: data,
-        currentYear: this.currentYear
+        currentYear: this.currentYear,
+        animate: this.animate
       });
 
       this._setChartListeners();
@@ -234,6 +237,8 @@
         var previousContentSelected = this.el.querySelector('.charts-content .-active');
 
         this.selectedChart = currentTab;
+        this.animate = true;
+        this.isRemoving = true;
         this._removeChart();
 
         if (this.tabContentTimer) {
@@ -319,12 +324,23 @@
     },
 
     /** 
+     * Removes the timeline instance
+     */
+    _removeTimeline: function() {
+      if (this.timeline) {
+        this.timeline.remove();
+        this.timeline = null;
+      }
+    },
+
+    /** 
      * Removes the views and undelegates events
      */
     remove: function() {      
       this.isRemoving = true;
       this._removeChart();
       this._removeLegend();
+      this._removeTimeline();
       this._defaultTabs();
       this.undelegateEvents();
       this.stopListening();

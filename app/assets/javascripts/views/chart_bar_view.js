@@ -34,6 +34,7 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.animate = this.options.animate;
       this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
       this.legendEl = this.options.legendEl;
@@ -67,6 +68,7 @@
       this._parseData();
       this._setAxisScale();
       this._setDomain();
+      this._checkParams();
       this._drawAxis();
       this._drawGraph();
       this._renderLegend();
@@ -118,6 +120,12 @@
     _setDomain: function() {
       this.x.domain(this.chartData.map(function(d) { return d.x; }));
       this.y.domain([0, d3.max(this.chartData, function(d) { return d.y; })]);
+    },
+
+    _checkParams: function() {
+      if (!this.animate) {
+        this.animationTime = 0;
+      }
     },
 
     _drawAxis: function() {
@@ -212,6 +220,8 @@
     prepareRemove: function() {
       var self = this;
 
+      this.animationTime = this.defaults.animationTime;
+      
       this.svg.selectAll('.bar')
         .transition()
         .duration(self.animationTime)

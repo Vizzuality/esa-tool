@@ -44,8 +44,10 @@
                 div id=("#{chart.name}-chart") class=("chart #{chart.name}")
                 - if chart.name != 'line'
                   div class=("chart-legend #{chart.name}-legend")
-          .charts-timeline.timeline
+          .charts-timeline.timeline.disabled
             ul.list
-            button.action
+            button.action.paused
               svg.icon-play.icon
                 use xlink:href="#icon-play"
+              svg.icon-pause.icon
+                use xlink:href="#icon-pause"

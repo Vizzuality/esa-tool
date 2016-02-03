@@ -1,50 +1,56 @@
 {
 	"metadata": {
 		"name": "ESA",
-		"lastOpened": 1453201633462,
-		"created": 1453201632202
+		"lastOpened": 1454492833837,
+		"created": 1454492832578
 	},
 	"iconSets": [
 		{
 			"selection": [
 				{
-					"order": 11,
+					"order": 8,
+					"id": 7,
+					"prevSize": 32,
+					"name": "pause"
+				},
+				{
+					"order": 7,
 					"id": 6,
 					"prevSize": 32,
 					"name": "play"
 				},
 				{
-					"order": 12,
+					"order": 1,
 					"id": 5,
 					"prevSize": 32,
 					"name": "esa-logo"
 				},
 				{
-					"order": 13,
+					"order": 2,
 					"id": 4,
 					"prevSize": 32,
 					"name": "chart-pie"
 				},
 				{
-					"order": 14,
+					"order": 3,
 					"id": 3,
 					"prevSize": 32,
 					"name": "chart-line"
 				},
 				{
-					"order": 15,
+					"order": 4,
 					"id": 2,
 					"prevSize": 32,
 					"name": "chart-bar"
 				},
 				{
-					"order": 16,
+					"order": 5,
 					"id": 1,
 					"prevSize": 32,
 					"name": "search"
 				},
 				{
-					"order": 17,
+					"order": 6,
 					"id": 0,
 					"prevSize": 32,
 					"name": "eoworld-logo"
@@ -54,13 +60,25 @@
 			"metadata": {
 				"name": "Front",
 				"importSize": {
-					"width": 19,
-					"height": 23
+					"width": 20,
+					"height": 20
 				}
 			},
 			"height": 1024,
 			"prevSize": 32,
 			"icons": [
+				{
+					"id": 7,
+					"paths": [
+						"M614.4 0v1024h409.6v-1024h-409.6zM0 0v1024h409.6v-1024h-409.6zM102.4 102.4h204.8v819.2h-204.8v-819.2zM716.8 102.4h204.8v819.2h-204.8v-819.2z"
+					],
+					"attrs": [],
+					"isMulticolor": false,
+					"grid": 0,
+					"tags": [
+						"pause"
+					]
+				},
 				{
 					"id": 6,
 					"paths": [
@@ -348,7 +366,6 @@
 			"invisible": false
 		}
 	],
-	"uid": -1,
 	"preferences": {
 		"showGlyphs": true,
 		"showCodes": true,
@@ -374,5 +391,6 @@
 		},
 		"historySize": 100,
 		"gridSize": 16
-	}
+	},
+	"uid": -1
 }
