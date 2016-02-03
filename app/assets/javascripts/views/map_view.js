@@ -95,6 +95,7 @@
       this.layers = [];
       this.loadQueue = [];
       this.tileLoaded = false;
+      this.autoUpdate = true;
 
       this.createMap();
       this._setListeners();
@@ -236,6 +237,8 @@
 
       // Remove previous if it exists
       this.removeLayer();
+
+      this.autoUpdate = params.autoUpdate;
 
       if (params.setBounds) {
         this._setLayerBounds(params);
@@ -427,7 +430,11 @@
       if(queue.length > 0) {
         // Show a loader while the layers are loading
       } else {
-        this.trigger('map:layers:loaded');
+        var params = {
+          autoUpdate: this.autoUpdate
+        };
+
+        this.trigger('map:layers:loaded', params);
       }
     }
 

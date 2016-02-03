@@ -20,9 +20,9 @@
       animationTime: 200,
       removeTimeout: 350,      
       margin: {
-        top: 30,
+        top: 10,
         right: 40,
-        bottom: 40,
+        bottom: 20,
         left: 40
       }
     },
@@ -34,7 +34,10 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.animate = this.options.animate;
+      this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
+      this.legendEl = this.options.legendEl;
       this.margin = this.options.margin;
       this.barsRange = this.options.barsRange;
       this.animationType = this.options.animationType;
@@ -42,15 +45,33 @@
       this.removeTimeout = this.options.removeTimeout;
 
       this._render();
+      this._setListeners();
     },
+
+    /**
+     * Set listeners
+     */
+    _setListeners: function() {
+      $(this.legendEl).delegate('.action', 'click', this._filterByDate.bind(this));
+    },
+
+    /**
+     * Unset listeners
+     */
+    _unsetListeners: function() {
+      $(this.legendEl).undelegate('.action', 'click');
+    },
+
 
     _render: function() {
       this._setUpGraph();
       this._parseData();
       this._setAxisScale();
       this._setDomain();
+      this._checkParams();
       this._drawAxis();
       this._drawGraph();
+      this._renderLegend();
     },
 
     _setUpGraph: function() {
@@ -71,7 +92,8 @@
     },
 
     _parseData: function() {
-      this.chartData = this.data;
+      this.chartData = _.where(this.data, { year: this.selectedYear });
+      this.years = _.uniq(_.pluck(this.data, 'year'));
 
       _.map(this.chartData, function(d) {
         d.x = d.category;
@@ -98,6 +120,12 @@
     _setDomain: function() {
       this.x.domain(this.chartData.map(function(d) { return d.x; }));
       this.y.domain([0, d3.max(this.chartData, function(d) { return d.y; })]);
+    },
+
+    _checkParams: function() {
+      if (!this.animate) {
+        this.animationTime = 0;
+      }
     },
 
     _drawAxis: function() {
@@ -134,6 +162,42 @@
           .attr('height', function(d) { return self.cHeight - self.y(d.y); });
     },
 
+    _renderLegend: function() {
+      var self = this;
+      var years = this.years;
+      var container = this.legendEl;
+
+      container.innerHTML = '';
+
+      years.forEach(function(year) {
+        var itemEl = document.createElement('div');
+        var itemText = document.createTextNode(year);
+        itemEl.classList.add('action');
+        itemEl.dataset.year = year;
+        itemEl.appendChild(itemText);
+
+        if (year === self.selectedYear) {
+          itemEl.classList.add('selected');
+        }
+
+        container.appendChild(itemEl);
+      });
+    },
+
+    _resetLegend: function() {
+      var container = this.legendEl;
+      container.innerHTML = '';
+    },
+
+    _filterByDate: function(ev) {
+      var element = ev.currentTarget;
+      var selectedYear = element.dataset.year;
+      var fullDate = new Date(selectedYear);
+      var year = fullDate.getFullYear();
+
+      this.trigger('timeline:change:year', year);
+    },
+
     highlight: function(category) {
       var elems = this.el.querySelectorAll('.bar');
 
@@ -156,6 +220,8 @@
     prepareRemove: function() {
       var self = this;
 
+      this.animationTime = this.defaults.animationTime;
+      
       this.svg.selectAll('.bar')
         .transition()
         .duration(self.animationTime)
@@ -178,6 +244,10 @@
         this.svg.remove();
         this.svg = null;
         this.el.removeChild(svgContainer);
+        this._resetLegend();
+
+        this._unsetListeners();
+        this.undelegateEvents();
       }
     }
   });

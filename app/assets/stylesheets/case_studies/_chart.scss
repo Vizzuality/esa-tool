@@ -61,7 +61,9 @@
   }
 
   &.pie {
-    height: rem(300px);
+    height: auto;
+    min-height: rem(230px);
+
     .arc {
       fill-opacity: 0.3;
       stroke-width: 2;

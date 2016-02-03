@@ -19,9 +19,9 @@
       outerRadius: 40,
       removeTimeout: 300,
       margin: {
-        top: 30,
+        top: 0,
         right: 40,
-        bottom: 40,
+        bottom: 0,
         left: 40
       }
     },
@@ -33,19 +33,39 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.animate = this.options.animate;
+      this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
+      this.legendEl = this.options.legendEl;
       this.margin = this.options.margin;
       this.outerRadius = this.options.outerRadius;
       this.animationTime = this.options.animationTime;
       this.removeTimeout = this.options.removeTimeout;
 
       this._render();
+      this._setListeners();
+    },
+
+    /**
+     * Set listeners
+     */
+    _setListeners: function() {
+      $(this.legendEl).delegate('.action', 'click', this._filterByDate.bind(this));
+    },
+
+    /**
+     * Unset listeners
+     */
+    _unsetListeners: function() {
+      $(this.legendEl).undelegate('.action', 'click');
     },
 
     _render: function() {
       this._setUpGraph();
       this._parseData();
+      this._checkParams();
       this._renderGraph();
+      this._renderLegend();
     },
 
     _setUpGraph: function() {
@@ -66,7 +86,8 @@
     },
 
     _parseData: function() {
-      this.chartData = this.data;
+      this.chartData = _.where(this.data, { year: this.selectedYear });
+      this.years = _.uniq(_.pluck(this.data, 'year'));
     },
 
     _tweenPie: function(finish) {
@@ -95,6 +116,12 @@
       return function(t) {
         return self.arc(i(t)); 
       };
+    },
+
+    _checkParams: function() {
+      if (!this.animate) {
+        this.animationTime = 0;
+      }
     },
 
     _renderGraph: function() {
@@ -129,6 +156,42 @@
         .attrTween('d', this._tweenPie.bind(this));
     },
 
+    _renderLegend: function() {
+      var self = this;
+      var years = this.years;
+      var container = this.legendEl;
+
+      container.innerHTML = '';
+
+      years.forEach(function(year) {
+        var itemEl = document.createElement('div');
+        var itemText = document.createTextNode(year);
+        itemEl.classList.add('action');
+        itemEl.dataset.year = year;
+        itemEl.appendChild(itemText);
+
+        if (year === self.selectedYear) {
+          itemEl.classList.add('selected');
+        }
+
+        container.appendChild(itemEl);
+      });
+    },
+
+    _resetLegend: function() {
+      var container = this.legendEl;
+      container.innerHTML = '';
+    },
+
+    _filterByDate: function(ev) {
+      var element = ev.currentTarget;
+      var selectedYear = element.dataset.year;
+      var fullDate = new Date(selectedYear);
+      var year = fullDate.getFullYear();
+
+      this.trigger('timeline:change:year', year);
+    },
+
     highlight: function(category) {
       var elems = this.el.querySelectorAll('.arc');
 
@@ -149,6 +212,8 @@
     },
 
     prepareRemove: function() {
+      this.animationTime = this.defaults.animationTime;
+
       this.svg.selectAll('path').transition()
         .duration(this.animationTime)
         .attrTween('d', this._tweenPieOut.bind(this));
@@ -168,6 +233,10 @@
         this.svg.remove();
         this.svg = null;
         this.el.removeChild(svgContainer);
+        this._resetLegend();
+        
+        this._unsetListeners();
+        this.undelegateEvents();
       }
     }
   });
