@@ -1,9 +1,9 @@
-.-theme-2 {
+.-theme-4 {
   // Colors
-  $t-black: #3A518C;
-  $t-white: #FFFFFF;
-  $t-secondary: #222222;
-  $basemap-color: #293568;
+  $t-black: #FFF7EC;
+  $t-white: #715F4C;
+  $t-secondary: #FFFFFF;
+  $basemap-color: #B4C3BB;
 
   // Theme definition
   $t-bg-color-1: $t-black;
@@ -29,7 +29,7 @@
   $title-border-width: 4px;
 
   // Menu
-  $menu-dash-color: $t-secondary;
+  $menu-dash-color: $white;
 
   // Slick arrows
   $arrow-color: $t-font-color-1;
@@ -43,7 +43,7 @@
   $tag-bg: rgba($t-font-color-1, $default-opacity);
 
   // Dashboard
-  $dashboard-bg: $t-bg-color-1;
+  $dashboard-bg: rgba($t-bg-color-1, $default-opacity);
 
   // Map
   $map-background: $basemap-color;
@@ -61,7 +61,7 @@
 
   ._is-loading {
     &:after {
-      border-top-color: $t-bg-color-1;
+      border-top-color: $t-bg-color-2;
     }
   }
 
@@ -193,11 +193,8 @@
 
     &.pie {
       .arc {
-        path {
-          fill-opacity: 1;
-          stroke-width: 2;
-          stroke: $t-bg-color-1 !important;
-        }
+        fill-opacity: 1;
+        stroke-width: 2;
       }
     }
 

@@ -22,4 +22,13 @@
       margin: .5rem 0;
     }
   }
+
+  .charts-nav {
+    display: flex;
+    align-items: center;
+
+    > h3 {
+      display: inline-block;
+    }
+  }
 }
