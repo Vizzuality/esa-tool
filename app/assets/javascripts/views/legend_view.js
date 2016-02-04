@@ -51,6 +51,7 @@
     update: function(data, layer) {
       this.data = data.data;
       this.currentData = data.currentData;
+      this.unit = data.unit;
 
       this._updateList();
     },
@@ -63,7 +64,7 @@
       container.classList.add('_is-loading');
     },
 
-    /**
+    /** 
      * Updates the list with the stored data
      */
     _updateList: function() {
@@ -80,6 +81,7 @@
      * @param {Object} groupped categories with their data
      */
     _renderList: function(categories) {
+      var self = this;
       var container = this.el.querySelector('.list');
       container.innerHTML = '';
 
@@ -103,7 +105,7 @@
         itemEl.classList.add('description');
 
         var itemValueEl = document.createElement('span');
-        var itemValueText = document.createTextNode(cat.value);
+        var itemValueText = document.createTextNode(cat.value + self.unit);
         itemValueEl.appendChild(itemValueText);
         itemValueEl.classList.add('value');
         

@@ -325,7 +325,8 @@
         data: this.data,
         currentData: currentYearData,
         currentYear: selectedYear,
-        animate: animate
+        animate: animate,
+        unit: '%'
       });
     },
 
