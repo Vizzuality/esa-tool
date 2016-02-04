@@ -1,12 +1,9 @@
 .tabs {
   padding: rem($font-size-small/2) 1.5rem;
-  margin: 1.5rem 0;
+  margin: rem(18px) 0;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border: 1px solid rgba($white, 0.2);
-
   list-style: none;
 
   > .tab-title {
@@ -21,11 +18,8 @@
       font-family: $font-secondary;
       font-size: rem($font-size-small);
       letter-spacing: rem(1.3px);
-      color: $font-color-1;
       text-decoration: none;
       text-transform: uppercase;
-
-      opacity: 0.2;
     }
     &.-active {
       a {

@@ -22,6 +22,7 @@
       this.elContent = this.options.elContent;
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
+      this.layersLoaded = false;
 
       this.basemap = this.data.basemap;
       this.template = this.data.template;
@@ -31,10 +32,9 @@
     },
 
     /**
-     * Starts the map controller
+     * Starts the map controller's main views
      */
     _start: function() {
-      // Initialize main views
       this._initMap();
     },
 
@@ -53,7 +53,8 @@
           .done(function(res) {
             self._parseLayerData(res);
             self._updateLayer({
-              setBounds: true
+              setBounds: true,
+              autoUpdate: true
             });
           });
       }
@@ -65,7 +66,9 @@
      * Starts the dashboard with the data
      */
     _startDashboard: _.debounce(function() {
-      this._updateDashboard();
+      this._updateDashboard({
+        animate: true
+      });
     }, 200),
 
     /**
@@ -101,7 +104,7 @@
       });
 
       this.listenTo(this.map, 'map:tile:loaded', this._startMap);
-      this.listenTo(this.map, 'map:layers:loaded', this._startDashboard);
+      this.listenTo(this.map, 'map:layers:loaded', this._onLayersLoaded);
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
     },
 
@@ -173,7 +176,7 @@
           subquery += '(SELECT ' + column + ' as category, year, ' +
             'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
             'FROM ' + table + ' GROUP BY ' + column + ', year ' +
-            'ORDER BY ' + column + ' ASC, value DESC LIMIT 6)';
+            'ORDER BY ' + column + ' ASC, value DESC LIMIT 7)';
 
           if (i < layers.length - 1) {
             subquery += ' UNION ';
@@ -237,6 +240,11 @@
       this.data.categories = groups;
     },
 
+    /**
+     * Sets the current year
+     * and updates the layers
+     * @param {Object} parameters
+     */
     _updateLayer: function(params) {
       var data = this.data;
       var year = this.currentYear;
@@ -245,11 +253,13 @@
 
       if (layer) {
         this.currentYear = year;
+        this.layersLoaded = false;
 
         this.map.createLayer({
           layer: layer,
           data: data,
-          setBounds: params.setBounds
+          setBounds: params.setBounds,
+          autoUpdate: params.autoUpdate
         });
       }
     },
@@ -258,20 +268,27 @@
      * Updates the dashboard with the data
      * @param {Object} layer data
      */
-    _updateDashboard: function() {
+    _updateDashboard: function(params) {
       var self = this;
 
       if (this.data && this.data.dashboard) {
-        this._updateDashboardData();
+        this._updateDashboardData(params);
       } else {
         this._getDashboardData()
           .done(function(res) {
-            self._parseDashboardData(res);
+            self._parseDashboardData(res, params);
+            self.dashboard.start();
           });
       }
     },
 
-    _parseDashboardData: function(data) {
+    /**
+     * Dashboard data parser
+     * prepares the data for the view
+     * @param {Object} response data
+     * @param {Object} parameters
+     */
+    _parseDashboardData: function(data, params) {
       data = data.rows;
 
       if (data) {
@@ -292,17 +309,24 @@
         this.data.categoriesData = categories;
       }
 
-      this._updateDashboardData();
+      this._updateDashboardData(params);
     },
 
-    _updateDashboardData: function() {
+    /**
+     * Updates the dashboard's view data
+     * @param {Object} parameters
+     */
+    _updateDashboardData: function(params) {
       var currentYearData = this.data.dashboard[this.currentYear];
       var selectedYear = this.currentYear.toString();
+      var animate = params.animate;
 
       this.dashboard.update({
         data: this.data,
         currentData: currentYearData,
-        currentYear: selectedYear
+        currentYear: selectedYear,
+        animate: animate,
+        unit: '%'
       });
     },
 
@@ -314,17 +338,44 @@
       this.map.highLightCategory(filter);
     },
 
+    /**
+     * Triggered when the year has changed
+     * and updates the layer and dashboard
+     * @param {Number} year
+     */
     _updateByYear: _.debounce(function(year) {
       if (year !== this.currentYear) {
         this.currentYear = year;
 
         this._updateLayer({
-          setBounds: false
+          setBounds: false,
+          autoUpdate: false
         });
 
-        this._updateDashboard();
+        this._updateDashboard({
+          animate: false
+        });
       }
     }, 30),
+
+    /**
+     * Triggered when all of the
+     * layer's tiles have loaded
+     * then updates the dashboard state
+     * @param {Object} parameters
+     */
+    _onLayersLoaded: function(params) {
+      this.layersLoaded = true;
+
+      if (params.autoUpdate) {
+        this._startDashboard();
+      }
+
+      params.layersLoaded = true;
+      params.currentYear = this.currentYear;
+
+      this.dashboard.updateState(params);
+    },
 
     /**
      * Removes the map and basemap view and the listening events.

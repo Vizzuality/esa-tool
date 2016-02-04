@@ -3,8 +3,7 @@
 
   .list {
     width: 100%;
-    height: rem(165px);
-    overflow: scroll;
+    min-height: rem(165px);
     list-style: none;
     margin: 0;
     padding: rem(10px) 0;
@@ -25,12 +24,12 @@
         width: 85%;
         font-family: $font-secondary;
         font-size: rem($font-size-small);
-        font-weight: 700;
+        font-weight: 400;
         letter-spacing: rem(1px);
       }
 
       .value {
-        width: 10%;
+        width: 15%;
         font-family: $font-secondary;
         font-size: rem($font-size-small);
         font-weight: 400;

@@ -47,7 +47,6 @@
   width: rem(22px);
   height: rem(22px);
   display: inline-block;
-  fill: rgba($white,0.5);
 
   &.-line {
     width: rem(32px);
@@ -56,10 +55,6 @@
 
   &.-bar {
     width: rem(32px);
-  }
-
-  &.-active {
-    fill: $white;
   }
 
   &.-bo {

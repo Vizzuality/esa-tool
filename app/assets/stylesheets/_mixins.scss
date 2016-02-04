@@ -78,7 +78,7 @@
     width: $size;
     position: absolute;
     top: 50%;
-    left: calc(50% - (#{$size} / 3));
+    left: calc(50% - (#{$size} / 2));
     margin: -($size/2) 0 0 -($size/2);
     transition: all .75s ease 0s;
     border-radius: 100%;

@@ -42,8 +42,11 @@
             - p.charts.each.with_index do |chart, index|
               div data-tab-content="#{chart.name}" class=("tab-content -active" if index == 0) class=("tab-content" if index > 0) 
                 div id=("#{chart.name}-chart") class=("chart #{chart.name}")
-          .charts-timeline.timeline
-            ul.list
-            / button.action
-            /   svg.icon-play.icon
-            /     use xlink:href="#icon-play"
+                - if chart.name != 'line'
+                  div class=("chart-legend #{chart.name}-legend")
+          .charts-timeline.timeline.disabled
+            button.action.paused
+              svg.icon-play.icon
+                use xlink:href="#icon-play"
+              svg.icon-pause.icon
+                use xlink:href="#icon-pause"

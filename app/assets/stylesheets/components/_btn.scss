@@ -39,7 +39,7 @@
 
   font-family: $font-secondary;
   font-size: rem($font-size-small);
-  font-weight: bold;
+  font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
@@ -177,16 +177,12 @@
 
   border-radius: 100%;
 
-  background-color: $bg-color-2;
-
   span {
     position: absolute;
     display: block;
     width: 14px;
     height: 2px;
     left: 8px;
-
-    background-color: $bg-color-3;
 
     transform: rotate(0deg);
 
