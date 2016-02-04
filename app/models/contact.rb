@@ -13,6 +13,7 @@ class Contact < ActiveRecord::Base
   validates :website, presence: true
 
   has_attached_file :logo, styles: { thumb: '100>x40>', medium: '230x100>' }
+  validates_attachment_presence :logo
   validates_attachment_content_type :logo, content_type: /\Aimage\/.*\Z/
 
   def delete_image= delete_image

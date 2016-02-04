@@ -19,7 +19,7 @@
       = f.input :lng, wrapper_html: {class: "input-inline"}
 
 .form-row
-  = f.input :tag_list, input_html: { class: 'tags' }
+  = f.input :tag_list, input_html: { class: 'tags', value: f.object.tag_list.to_s }
 
 .form-row
   = f.label :contacts

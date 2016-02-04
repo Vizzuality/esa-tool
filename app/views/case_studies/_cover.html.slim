@@ -21,10 +21,8 @@
               #contacts.contacts
                 - case_study.contacts.each_with_index do |c, index|
                   .contact
-                    .title
-                      span = "Project contact #{index+1}"
                     .content
-                      p = markdown(c.body)
+                      = markdown(c.body)
                     .link
                       = link_to c.website, target: "_blank" do
                         = image_tag c.logo.url(:thumb)

@@ -6,7 +6,7 @@
 
 - class_name = class_name ? class_name : nil
 
-- input_style = image.exists? ? "background-image: url(#{image})" : nil
+- input_style = image.exists? ? "background-image: url(#{image.url(:medium)})" : nil
 - input_class = image.exists? ? "_has_file" : nil
 .file-image.file-image-input class= "#{class_name} #{input_class} #{custom_label_class}"
   - if custom_label
