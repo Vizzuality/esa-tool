@@ -2,9 +2,10 @@
   padding: 4rem 2rem;
 
   .featherlight-content {
+    padding: rem(20px);
     width: 90%;
     max-width: rem(800px);
-    
+
     background-color: $bg-color-5;
     border: none;
     overflow: visible;
@@ -23,15 +24,21 @@
 
 
     .featherlight-close-icon {
-      width: rem(40px);
-      top:.5rem;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: rem(30px);
+      height: rem(30px);
+      top: rem(10px);
+      right: rem(10px);
 
       color: $font-color-1;
       font-size: rem(25px);
       background-color: transparent;
 
       @media screen and (max-width: $screen-sm) {
-        top: rem(- 30px);
+        top: rem(-30px);
       }
     }
   }

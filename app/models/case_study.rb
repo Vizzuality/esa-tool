@@ -26,8 +26,11 @@ class CaseStudy < ActiveRecord::Base
   validates_inclusion_of :published, in: [true, false]
   validates_attachment_content_type :cover_image, content_type: /\Aimage\/.*\Z/
 
-
   accepts_nested_attributes_for :contacts, reject_if: :all_blank, allow_destroy: true
+
+  def self.published
+    where(published: true)
+  end
 
   def self.find_published(slug)
     find_by(slug: slug, published: true)

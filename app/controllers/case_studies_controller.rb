@@ -18,7 +18,6 @@ class CaseStudiesController < ApplicationController
 
   def show
     @tags = Tag.all
-
     @case_study = CaseStudy.find_published(params[:slug])
 
     gon.case_study = @case_study.
@@ -28,7 +27,12 @@ class CaseStudiesController < ApplicationController
 
   def preview
     if user_signed_in?
-      @case_study = CaseStudy.find(params[:id])
+      @tags = Tag.all
+      @case_study = CaseStudy.find_by(slug: params[:slug])
+      
+      gon.case_study = @case_study.
+        to_json(include: [:contacts, {pages: {include: [:data_layers, :charts]}}])
+      gon.cartodb_user = ENV["CDB_USERNAME"]
     else
       not_found
     end

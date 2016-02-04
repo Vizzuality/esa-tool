@@ -29,7 +29,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-d3'
   gem 'rails-assets-underscore'
   gem 'rails-assets-backbone'
-  gem 'rails-assets-jquery.tagsinput'
+  gem 'rails-assets-jquery.tagsinput', '~> 1.3.6'
   gem 'rails-assets-slick.js'
 end
 

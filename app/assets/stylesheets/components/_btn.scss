@@ -177,6 +177,8 @@
 
   border-radius: 100%;
 
+  background-color: white;
+
   span {
     position: absolute;
     display: block;
@@ -184,8 +186,9 @@
     height: 2px;
     left: 8px;
 
-    transform: rotate(0deg);
+    background-color: $bg-color-3;
 
+    transform: rotate(0deg);
     transition: .25s ease-in-out;
 
     &:nth-child(1) {

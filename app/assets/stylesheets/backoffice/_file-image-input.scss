@@ -16,6 +16,10 @@
     background-size: cover;
     background-repeat: no-repeat;
 
+    &.case_study_contacts_logo {
+      background-size: contain;
+    }
+
     > input[type="file"] {
       position: absolute;
       width: 100%;

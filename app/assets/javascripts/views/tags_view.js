@@ -14,7 +14,6 @@
     defaults: {
       width: '100%',
       height: 'auto',
-      delimiter: [' '],
       defaultText: 'Add tag'
     },
 
