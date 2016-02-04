@@ -2,15 +2,21 @@
   // Colors
   $t-black: #000;
   $t-white: #fff;
+  $t-secondary: #333333;
+  $basemap-color: #242426;
 
   // Theme definition
   $t-bg-color-1: $t-black;
+  $t-bg-color-2: $t-white; 
+  $t-bg-color-3: $t-secondary;  
   $t-font-color-1: $t-white;
   $t-font-color-2: $t-black;
+  $t-font-color-3: $t-secondary;
   $t-border-color-1: $t-white;
 
   $default-opacity: 0.7;
   $arrows-opacity: 0.2;
+  $chart-icon-opacity: 0.3; 
   $map-basemap-opacity: 0.8;
   $map-basemap-shadow-opacity: 0.8;
   $map-basemap-selected-opacity: 0.5;
@@ -22,6 +28,9 @@
   $main-color: $t-font-color-1;
   $title-border-color: $t-border-color-1;
   $title-border-width: 4px;
+
+  // Menu
+  $menu-dash-color: $t-bg-color-1;
 
   // Slick arrows
   $arrow-color: $t-font-color-1;
@@ -38,13 +47,45 @@
   $dashboard-bg: rgba($t-bg-color-1, $default-opacity);
 
   // Map
-  $map-background: #242426;
+  $map-background: $basemap-color;
   $map-basemap-bg: rgba($t-bg-color-1, $map-basemap-opacity);
   $map-basemap-shadow: 0px 10px 30px 0px rgba($t-bg-color-1, $map-basemap-shadow-opacity);
   $map-basemap-unselected: rgba($main-color, $map-basemap-selected-opacity);
 
+  // Chart navigation
+  $chart-icon: rgba($t-font-color-1, $chart-icon-opacity);
+
   color: $main-color;
   background-color: $body-color;
+
+  // Loader
+
+  ._is-loading {
+    &:after {
+      border-top-color: $t-bg-color-3;
+    }
+  }
+
+  // Brand
+
+  .brands {
+    .brand {
+      svg {
+        fill: $t-font-color-1;
+      }
+    }
+  }
+
+  // Menu
+
+  .btn-burguer {
+    background-color: $t-white;
+    span {
+      background-color: $menu-dash-color;
+    }
+  }
+
+  // Slider
 
   .main-slider {
     .slick-arrow {
@@ -55,6 +96,16 @@
       }
       &::after {
         background-color: $arrow-bg;
+      }
+    }
+
+    .slick-dots {
+      > li {
+        &.slick-active {
+          button {
+            background-color: $t-bg-color-2;
+          }
+        }
       }
     }
   }
@@ -76,23 +127,30 @@
     }
   }
 
+  // Tags
+
   .tags .tag {
     color: $tag-color;
     background-color: $tag-bg;
   }
 
+  // Cover
+
+  .partners {
+    .action {
+      background-color: transparent;
+      color: $t-font-color-1;
+      border-color: $t-border-color-1;
+    }
+  }
+
+  // Dashboard
+
   .dashboard {
     background-color: $dashboard-bg;
   }
 
-  .icon-legend {
-    border-width: rem(1px);
-    border-style: solid;
-
-    .icon-bg {
-      opacity: 0.3;
-    }
-  }
+  // Map
 
   .map {
     .map-container {
@@ -117,6 +175,95 @@
             }
           }
         }
+      }
+    }
+  }
+
+  // Charts
+
+  .chart {
+    .axis {
+      &.x {
+        .tick {
+          text {
+            fill: $t-font-color-1;
+          }
+        }
+      }
+    }
+
+    &.pie {
+      .arc {
+        fill-opacity: 0.3;
+        stroke-width: 2;
+      }
+    }
+
+    &.bar {
+      .bar {
+        stroke-width: 1;
+        fill-opacity: 0.3;
+      }
+    }
+
+    &.line {
+      .handle {
+        stroke: $t-border-color-1;
+      }
+      .area {
+        fill-opacity: 0.3;
+        stroke-width: 0;
+      }
+      .line-path {
+        stroke-width: 2;
+      }
+      text {
+        fill: $t-font-color-1;
+      }
+    }
+  }
+
+  // Charts Navigation
+
+  .tabs {
+    .tab-title {
+      .icon-chart {
+        fill: $chart-icon;
+      }
+
+      &.-active {
+        .icon-chart {
+          fill: $t-font-color-1;
+        }
+      }
+    }
+  }
+
+  // Charts legend
+
+  .icon-legend {
+    border-width: rem(1px);
+    border-style: solid;
+
+    .icon-bg {
+      opacity: 0.3;
+    }
+  }
+
+  .chart-legend {
+    > .action {
+      &.selected {
+        border-color: $t-border-color-1;
+      }
+    }
+  }
+
+  // Timeline
+
+  .timeline {
+    > .action {
+      > .icon {
+        fill: $t-font-color-1;
       }
     }
   }

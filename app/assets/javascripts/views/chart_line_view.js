@@ -25,7 +25,7 @@
       removeTimeout: 300,
       handleWidth: 50,
       margin: {
-        top: 30,
+        top: 10,
         right: 40,
         bottom: 40,
         left: 40
@@ -204,10 +204,11 @@
           .attr('data-category', function(d) {
             return d.key;
           })
+          .style('fill', function(d) { return d.color; })
+          .style('stroke', function(d) { return d.color; })          
           .transition()
           .duration(self.areaAnimation) 
-          .attr('d', function(d) { return area(d.values); })
-          .style('fill', function(d) { return d.color; });
+          .attr('d', function(d) { return area(d.values); });
     },
 
     _drawGraph: function() {
@@ -224,14 +225,14 @@
       this.chartData.forEach(function(d, i) {
         lineGroup.append('path')
           .attr('d', line(d.values))
-          .attr('class', 'line')
+          .attr('class', 'line-path')
           .attr('data-category', function() {
             return d.key;
           })
           .style('stroke', d.color);
       });
 
-      this.svg.selectAll('.line').transition()
+      this.svg.selectAll('.line-path').transition()
         .attr('stroke-dasharray', function() { 
           var total = this.getTotalLength(); 
           return total + ' ' + total;
@@ -337,7 +338,7 @@
 
       this.handle.attr('transform', function() {
         return 'translate('+ (self.x(self.currentStep) - 
-          (self.handleWidth / 2)) + ', ' + -(self.margin.top / 2) + ')';
+          (self.handleWidth / 2)) + ', ' + -((self.margin.top / 2) + 1) + ')';
       });
     },
 
@@ -354,7 +355,7 @@
         .duration((this.removeTransition * 2))
         .style('fill-opacity', function(d) { return 0 });
 
-      this.svg.selectAll('.line')
+      this.svg.selectAll('.line-path')
         .transition()
         .duration(this.removeTransition)
         .ease('linear')
@@ -377,7 +378,7 @@
 
     highlight: function(category) {
       var elems = this.el.querySelectorAll('.area');
-      var elemsLine = this.el.querySelectorAll('.line');
+      var elemsLine = this.el.querySelectorAll('.line-path');
 
       for (var el in elems) {
         var current = elems[el];

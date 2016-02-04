@@ -20,7 +20,7 @@
       animationTime: 200,
       removeTimeout: 350,      
       margin: {
-        top: 10,
+        top: 0,
         right: 40,
         bottom: 20,
         left: 40

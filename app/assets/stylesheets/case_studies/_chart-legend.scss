@@ -13,9 +13,5 @@
     letter-spacing: rem(1.3px);
     border: 2px solid transparent;
     cursor: pointer;
-
-    &.selected {
-      border-color: $white;
-    }
   }
 }
