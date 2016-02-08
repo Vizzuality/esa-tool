@@ -51,7 +51,7 @@
       this.data = data.data;
       this.animate = data.animate;
       this.currentData = data.currentData;
-      this.currentYear = data.currentYear;
+      this.currentYear = parseInt(data.currentYear, 10);
 
       if (this.selectedChart !== 'line') {
         this._initSelectedChart();          
