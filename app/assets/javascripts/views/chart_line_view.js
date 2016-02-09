@@ -345,6 +345,7 @@
     },
 
     updateTimeline: function(year) {
+      year = year.toString();
       var date = new Date(year);
       this.currentStep = date;
 

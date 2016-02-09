@@ -86,8 +86,14 @@
     },
 
     _parseData: function() {
-      this.chartData = _.where(this.data, { year: this.selectedYear });
-      this.years = _.uniq(_.pluck(this.data, 'year'));
+      var allData = this.data;
+
+      _.map(allData, function(d) {
+        d.year = parseInt(d.year, 10);
+      });
+
+      this.chartData = _.where(allData, { year: this.selectedYear });
+      this.years = _.uniq(_.pluck(allData, 'year'));
     },
 
     _tweenPie: function(finish) {
