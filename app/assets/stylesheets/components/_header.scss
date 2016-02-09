@@ -8,6 +8,7 @@
   color: $font-color-1;
 
   z-index: 3;
+  pointer-events: none;
 
   .brands {
     display: flex;
