@@ -7,7 +7,14 @@
   App.View.MapFileColumns = Backbone.View.extend({
 
     defaults: {
-      ignored_columns: ['cartodb_id','the_geom','the_geom_webmercator'],
+      ignored_columns: [
+        'cartodb_id',
+        'the_geom',
+        'the_geom_webmercator',
+        'updated_at',
+        'created_at',
+        'year'
+      ],
       fileInput: 'map_file',
       fileInputWrapper: 'input-file-wrapper',
       fileNameContainer: 'filename',
