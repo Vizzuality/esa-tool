@@ -112,7 +112,7 @@
      */
     _changeYear: function() {
       if (this.layersLoaded) {
-        var current = this.selectedYear.toString();
+        var current = this.selectedYear;
         var years = _.clone(this.years);
         var numYears = years.length - 1;
         var currentPos = years.indexOf(current);
