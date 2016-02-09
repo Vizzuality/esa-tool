@@ -18,4 +18,11 @@ class Page < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 2 }
 
   validates_attachment_content_type :background, content_type: /\Aimage\/.*\Z/
+
+  attr_accessor :delete_image
+
+  def delete_image= delete_image
+    self.background.clear if delete_image == "true"
+  end
+
 end
