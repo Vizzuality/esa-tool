@@ -8,7 +8,6 @@
   color: $font-color-1;
 
   z-index: 3;
-  pointer-events: none;
 
   .brands {
     display: flex;
@@ -43,5 +42,9 @@
     box-shadow: 0 7px 18px rgba(0, 0, 0, 0.20);
 
     z-index: 2;
+  }
+
+  &.-no-events {
+    pointer-events: none;
   }
 }
