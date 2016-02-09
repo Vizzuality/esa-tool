@@ -86,8 +86,10 @@
     _parseData: function() {
       var self = this;
       this.chartData = this.data;
+      this.selectedYear = this.selectedYear.toString();
 
       _.map(this.chartData, function(d) {
+        d.year = d.year.toString();
         d.x = d.year;
         d.y = d.value;
       });
