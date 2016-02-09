@@ -176,8 +176,9 @@
   width: 30px;
 
   border-radius: 100%;
-
   background-color: white;
+
+  pointer-events: all;
 
   span {
     position: absolute;
