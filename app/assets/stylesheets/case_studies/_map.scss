@@ -46,7 +46,7 @@
     transition: width .3s;
 
     > .content {
-      width: rem(290px);
+      width: rem(300px);
       display: inline-block;
 
       > .action {
@@ -55,7 +55,7 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: rem(1px);
-        padding: rem(10px) rem(15px);
+        padding: rem(10px) rem(15px) rem(9px) rem(15px);
         float: left;
       }
 
