@@ -7,7 +7,7 @@
         .tags
           h2 = "#{t('tags')}:"
           - case_study.tags.each do |t|
-            span.tag = t
+            a.tag href="/?tags[]=#{t}" = t
           
         .partners
           - if !case_study.contacts.empty?
