@@ -90,7 +90,7 @@
 
       _.map(this.chartData, function(d) {
         d.year = d.year.toString();
-        d.x = d.year.toString();
+        d.x = d.year;
         d.y = d.value;
       });
 
