@@ -5,6 +5,7 @@
   root.App.CartoCSS = root.App.CartoCSS || {};
 
   root.App.CartoCSS.Theme3 = {
+    'main': '#000000',
     'palette': [
       '#add2ed',
       '#556b80',
