@@ -30,6 +30,8 @@
         this.currentTag = e.currentTarget;
         this._setFilter(this.currentTag.getAttribute('data-value'));
         this.selectCurrent();
+      } else {
+        this.trigger('menu:close');
       }
     },
 
