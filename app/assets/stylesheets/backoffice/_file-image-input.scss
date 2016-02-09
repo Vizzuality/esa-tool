@@ -95,9 +95,10 @@
     > .close {
       display: block;
     }
-    > .placeholder {
+    > .placeholder, .error {
       display: none;
     }
+
   }
 
   &._has_label {
