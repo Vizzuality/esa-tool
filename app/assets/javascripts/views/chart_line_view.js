@@ -90,7 +90,7 @@
 
       _.map(this.chartData, function(d) {
         d.year = d.year.toString();
-        d.x = d.year;
+        d.x = d.year.toString();
         d.y = d.value;
       });
 
@@ -345,6 +345,7 @@
     },
 
     updateTimeline: function(year) {
+      year = year.toString();
       var date = new Date(year);
       this.currentStep = date;
 
