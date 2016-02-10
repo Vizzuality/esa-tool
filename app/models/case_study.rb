@@ -28,6 +28,12 @@ class CaseStudy < ActiveRecord::Base
 
   accepts_nested_attributes_for :contacts, reject_if: :all_blank, allow_destroy: true
 
+  attr_accessor :delete_image
+
+  def delete_image= delete_image
+    self.cover_image.clear if delete_image == "true"
+  end
+
   def self.published
     where(published: true)
   end
