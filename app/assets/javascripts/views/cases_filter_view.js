@@ -1,3 +1,5 @@
+//= require views/static_map_view
+
 'use strict';
 
 (function(App) {
@@ -14,6 +16,7 @@
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
+      this.data = this.options.data;
       this.initialTag = this.options.initialTag;
       this.filterName = this.options.filterName;
       this.placeholder = this.options.placeholder;
@@ -79,6 +82,7 @@
       this.casesContainer.classList.add('_is-loading');
       this.cases.fetch({data:params}).done(function(data){
         self._refreshCases(data.case_studies, false);
+        self.staticMapsView(data.case_studies);
       }).fail(function(error){
         self._refreshCases(error,true);
       });
@@ -108,14 +112,30 @@
      * Function to get the case with template
      */
     _caseTemplate: function(studyCase) {
-      return '<article class="grid-xs-12 grid-sm-6 grid-md-4 case">'+
-                '<a style="background-image: url('+ studyCase.cover_path + '" href="'+ studyCase.case_path+'">'+
+      return '<article id="case-'+studyCase.id+'" class="grid-xs-12 grid-sm-6 grid-md-4 case">'+
+                '<a href="'+ studyCase.case_path+'">'+
+                  '<div class="map-image"></div>'+
                   '<div class="caption">'+
                     '<h2>'+studyCase.title+'</h2>'+
                   '</div>'+
                 '</a>'+
               '<article>';
-    }
+    },
+
+    /**
+     * Function to render the case studies images
+     */
+    staticMapsView: function(studyCases) {
+      var self = this;
+      this.casesMaps = [];
+      _.each(studyCases,function(studyCase, index){
+        self.casesMaps[index] = new App.View.StaticMapView({
+          el: document.getElementById('case-'+studyCase.id),
+          data: self.data
+        });
+      });
+    },
+
 
 
   });

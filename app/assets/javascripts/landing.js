@@ -97,7 +97,8 @@
     _initCasesFilter: function(tag) {
       this.cases = new App.View.CasesFilter({
         el: '#cases',
-        initialTag: tag
+        initialTag: tag,
+        data: this.data
       });
 
       this.listenTo(this.cases, 'tag:update', _.bind(this._updateRouter, this));
