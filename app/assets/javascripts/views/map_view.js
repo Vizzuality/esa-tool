@@ -146,8 +146,7 @@
      */
     removeMap: function() {
       this.removeLayer();
-
-      if (this.map) {
+      if (this.map && this.map.length) {
         this.map.remove();
         this.map = [];
       }
@@ -293,6 +292,13 @@
         marker.bindPopup(popUp);
       }
       marker.addTo(this.map)
+    },
+
+    /**
+     * Create marker to the map
+     */
+    setView: function(latLng, zoom) {
+      this.map.setView(latLng, zoom);
     },
 
     /**

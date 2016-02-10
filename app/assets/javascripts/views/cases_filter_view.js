@@ -18,6 +18,7 @@
       this.filterName = this.options.filterName;
       this.placeholder = this.options.placeholder;
       this.casesContainer = document.getElementById('casesArticles');
+      this.articleMaps = [];
 
       this.cases = new App.Collection.CaseStudyCollection();
 
@@ -79,6 +80,7 @@
       this.casesContainer.classList.add('_is-loading');
       this.cases.fetch({data:params}).done(function(data){
         self._refreshCases(data.case_studies, false);
+        self.renderCasesMap(data.case_studies);
       }).fail(function(error){
         self._refreshCases(error,true);
       });
@@ -108,14 +110,37 @@
      * Function to get the case with template
      */
     _caseTemplate: function(studyCase) {
-      return '<article class="grid-xs-12 grid-sm-6 grid-md-4 case">'+
-                '<a style="background-image: url('+ studyCase.cover_path + '" href="'+ studyCase.case_path+'">'+
+      return '<article id= "case-'+studyCase.id+'" class="grid-xs-12 grid-sm-6 grid-md-4 case">'+
+                '<a href="'+ studyCase.case_path+'">'+
+                  '<div class="article-map"></div>'+
                   '<div class="caption">'+
                     '<h2>'+studyCase.title+'</h2>'+
                   '</div>'+
                 '</a>'+
               '<article>';
-    }
+    },
+
+    /**
+     * Function to render the study cases maps
+     */
+    renderCasesMap: function(caseStudies) {
+      var self = this;
+      if (this.articleMaps.length) {
+        _.each(this.articleMaps, function(articleMap){
+          articleMap.remove();
+        });
+      }
+      _.each(caseStudies, function(caseStudy, index){
+        var el = document.getElementById('case-'+caseStudy.id).getElementsByClassName('article-map')[0];
+        self.articleMaps[index] = new App.View.Map({
+          el: el,
+          template: 0,
+          basemap: 'satellite',
+          dragging: false
+        });
+        self.articleMaps[index].setView([caseStudy.lat,caseStudy.lng], 13);
+      });
+    },
 
 
   });

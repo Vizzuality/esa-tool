@@ -99,6 +99,7 @@
         el: '#cases',
         initialTag: tag
       });
+      this.cases.renderCasesMap(this.data.caseStudies);
 
       this.listenTo(this.cases, 'tag:update', _.bind(this._updateRouter, this));
       this.listenTo(this.router, 'rooter:updated', _.bind(this._updateTag, this));

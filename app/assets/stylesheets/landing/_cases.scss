@@ -19,18 +19,17 @@
   }
 
   .case {
-
-    > a {
     position: relative;
-    display: block;
-    width: 100%;
     height: rem(250px);
     margin: 1rem 0;
 
-    background-repeat: no-repeat;
-    background-size: cover;
+    > a {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
 
-    background-color: $bg-color-4;
+      background-color: $bg-color-4;
 
       > .caption {
         position: absolute;
@@ -51,10 +50,28 @@
 
       }
 
+      > .article-map {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        
+        @include veil;
+        &:after {
+          content: "";
+          background-color: rgba($bg-color-landing-2, 0.5);
+          display: none;
+        }
+      }
+
+
       &:hover {
-        background-blend-mode: hard-light;
-        background-color: rgba($bg-color-landing-2, 0.7);
         box-shadow: 0px 5px 18px 4px rgba($font-color-landing-4, 0.5);
+
+        .article-map {
+          &:after {
+            display: block;
+          }
+        }
 
         > .caption {
           h2 {
