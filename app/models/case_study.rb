@@ -51,7 +51,9 @@ class CaseStudy < ActiveRecord::Base
   end
 
   def self.clone(id)
-    find(id).deep_clone include: :pages
+    c_study = find(id).deep_clone include: :pages
+    c_study.slug = c_study.slug+"-"+Time.now.to_i.to_s
+    c_study
   end
 
   def self.get_tag_filtered(options={})
