@@ -436,8 +436,89 @@
 
         this.trigger('map:layers:loaded', params);
       }
-    }
+    },
 
+    /**
+     * Returns the point that is a distance and heading away from
+     * the given origin point.
+     * https://github.com/makinacorpus/Leaflet.GeometryUtil
+     * @param {L.LatLng} latlng: origin point
+     * @param {float}: heading in degrees, clockwise from 0 degrees north.
+     * @param {float}: distance in meters
+     * @returns {L.latLng} the destination point.
+     * Many thanks to Chris Veness at http://www.movable-type.co.uk/scripts/latlong.html
+     * for a great reference and examples.
+     */
+    destination: function(latlng, heading, distance) {
+      heading = (heading + 360) % 360;
+      var rad = Math.PI / 180,
+          radInv = 180 / Math.PI,
+          R = 6378137, // Aprox Earth Radius in meters
+          lon1 = latlng.lng * rad,
+          lat1 = latlng.lat * rad,
+          rheading = heading * rad,
+          sinLat1 = Math.sin(lat1),
+          cosLat1 = Math.cos(lat1),
+          cosDistR = Math.cos(distance / R),
+          sinDistR = Math.sin(distance / R),
+          lat2 = Math.asin(sinLat1 * cosDistR + cosLat1 *
+            sinDistR * Math.cos(rheading)),
+          lon2 = lon1 + Math.atan2(Math.sin(rheading) * sinDistR *
+            cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
+        
+      lon2 = lon2 * radInv;
+      lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
+
+      return L.latLng([lat2 * radInv, lon2]);
+    },
+
+    /**
+     * Adds the points of interest in the map
+     * @param {Object} points data
+     */
+
+    addPointInterests: function(data) {
+      var self = this;
+      var pointsInterest = data.pointsInterest;
+      var styles = this.cartoCss;
+
+      pointsInterest.forEach(function(point) {
+        var latLng = L.latLng(point.lat, point.lng);
+        var radius = point.radius * 1000;
+        var newPoint = L.circle(latLng, radius, {
+          fill: false,
+          color: styles.main,
+          weight: 1
+        });
+
+        var textLatLng = self.destination(latLng, 180, radius);
+
+        var myTextLabel = L.marker(textLatLng, {
+            icon: L.divIcon({
+                className: 'pointInterestText',
+                iconSize: [100, 16],
+                html: '<div class="label">' + point.name + '</div>'
+            }),
+            zIndexOffset: 1000
+        });
+
+        var group = L.featureGroup([newPoint, myTextLabel]);
+
+        group.on('click', function(e) {
+          var layers = this.getLayers();
+          var layer = layers[0];
+          
+          if (layer) {
+            var bounds = layer.getBounds();
+            self.map.fitBounds(bounds, {
+              paddingBottomRight: [400, 0]
+            });
+          }
+        });
+
+        group.addTo(self.map);
+      });
+    }
   });
 
 })(window.App || {});

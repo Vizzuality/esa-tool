@@ -65,6 +65,7 @@ class Backoffice::PagesController < BackofficeController
         :chart_type_list,
         :case_study_id,
         :column_selected,
+        :delete_image,
         data_layers_attributes: [:id, :table_name, :year, :file],
         interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []

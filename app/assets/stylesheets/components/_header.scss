@@ -43,4 +43,8 @@
 
     z-index: 2;
   }
+
+  &.-no-events {
+    pointer-events: none;
+  }
 }

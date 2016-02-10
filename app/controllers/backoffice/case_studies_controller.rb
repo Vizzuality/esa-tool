@@ -77,6 +77,7 @@ class Backoffice::CaseStudiesController < BackofficeController
         :template,
         :cover_image,
         :tag_list,
+        :delete_image,
         contacts_attributes: [:id, :body, :logo, :website, :_destroy, :delete_image]
       )
     end
