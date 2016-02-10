@@ -1,4 +1,4 @@
-  .map {
+.map {
   position: relative;
   height: 100vh;
 
@@ -101,5 +101,24 @@
   .leaflet-right {
     left: 0;
     right: auto;
+  }
+
+  .pointInterestText {
+    display: block;
+    padding-top: rem(15px);
+
+    .label {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+      display: inline-block;
+      font-family: $font-secondary;
+      font-size: $font-size-small;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      background: rgba(#000, 0.5);
+    }
   }
 }

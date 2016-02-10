@@ -150,6 +150,7 @@
               formattedData.columnSelected = page.column_selected;
               formattedData.layers = page.data_layers;
               formattedData.charts = page.charts;
+              formattedData.pointsInterest = page.interest_points;
             }
           }
         }
@@ -365,6 +366,7 @@
      * @param {Object} parameters
      */
     _onLayersLoaded: function(params) {
+      var data = this.data;
       this.layersLoaded = true;
 
       if (params.autoUpdate) {
@@ -375,6 +377,7 @@
       params.currentYear = this.currentYear;
 
       this.dashboard.updateState(params);
+      this.map.addPointInterests(data);
     },
 
     /**
