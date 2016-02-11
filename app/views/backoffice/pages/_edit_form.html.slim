@@ -22,10 +22,10 @@
       = render 'data_layers_fields', f: d
     
     - if params[:type].to_i == 2
-    .nested-fields
-      list-container data-filename= @page.data_layers.first.table_name
-        = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-0"
-        .box-list data-input="0"
+      .nested-fields
+        list-container data-filename= @page.data_layers.first.table_name
+          = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-0"
+          .box-list data-input="0"
 
     .nested-fields
       = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
