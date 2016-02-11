@@ -32,6 +32,7 @@ class Backoffice::PagesController < BackofficeController
         @case_study, @page, type: @page[:page_type]
       ), notice: 'Page updated successfully.'
     else
+      debugger
       render :edit
     end
   end
@@ -66,7 +67,7 @@ class Backoffice::PagesController < BackofficeController
         :case_study_id,
         :column_selected,
         :delete_image,
-        data_layers_attributes: [:id, :table_name, :year, :file],
+        data_layers_attributes: [:id, :table_name, :year, :file, :layer_column, :layer_column_alias],
         interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )

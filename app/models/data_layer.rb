@@ -8,11 +8,11 @@ class DataLayer < ActiveRecord::Base
 
   validates :table_name, presence: true
   validates :import_status, presence: true
-  validates :year, presence: true
+  # validates :year, presence: true
 
   attr_accessor :file
 
-  before_validation :create_file
+  before_validation :create_file, on: :create
 
   def create_file
     if self.file.present?
