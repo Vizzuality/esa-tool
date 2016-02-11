@@ -9,6 +9,8 @@
 //= require views/map_view
 //= require views/menu_view
 //= require views/slider_view
+//= require views/static_map_view
+//= require views/cases_list_view
 //= require views/cases_filter_view
 //= require controllers/map_controller
 //= require collections/case_study_collection
@@ -75,6 +77,7 @@
     _initModules: function(tag) {
       this._initMenu(tag);
       this._initCasesFilter(tag);
+      this._initCasesList();
       this._initMap();
       this._initSlider();
     },
@@ -89,6 +92,18 @@
       });
 
       this.listenTo(this.menu, 'tag:update', _.bind(this._updateRouter, this));
+    },
+
+    _initCasesList: function() {
+      this.casesList = new App.View.CasesList({
+        el: '#cases',
+        data: this.data
+      });
+
+      var caseStudies = this.data.caseStudies;
+      this.casesList.staticMapsView(caseStudies);
+
+      this.listenTo(this.cases, 'list:update', this.casesList.staticMapsView.bind(this.casesList));
     },
 
     /**
