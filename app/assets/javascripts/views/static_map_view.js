@@ -45,20 +45,21 @@
       this.cartoOpt.layers.push({
         type: 'cartodb',
         options: {
-          sql: 'SELECT * FROM barrios_16',
-          cartocss: '#barrios_16{polygon-fill: #FF6600;polygon-opacity: 0.7;line-color: #FFF;line-width: 0.5;  line-opacity: 1;}',
+          sql: 'SELECT * FROM barrios',
+          cartocss: '#barrios{polygon-fill: #FF6600;polygon-opacity: 0.7;line-color: #FFF;line-width: 0.5;  line-opacity: 1;}',
           cartocss_version: '2.1.1'
         }
       });
 
       var sql = new cartodb.SQL({ user: this.cartodbUser });
-      sql.getBounds('select * from barrios_16').done(function(bounds) {
+      sql.getBounds('select * from barrios').done(function(bounds) {
         self._getImage(bounds);
       });
 
     },
 
     _getImage: function(bounds) {
+      debugger;
       var image = cartodb.Image(this.cartoOpt)
       .size(400, 300)
       .bbox(bounds);
