@@ -1,4 +1,4 @@
-- if params[:type].to_i == 2
+- if @page.page_type == 2
   .nested-fields
     .row.file.-input
       .grid-sm-10
@@ -10,5 +10,5 @@
     .row.file.-input
       .grid-sm-12
         = f.input :file, as: :file
-      
+
   = f.input :id, as: :hidden
