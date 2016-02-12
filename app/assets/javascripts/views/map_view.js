@@ -517,6 +517,15 @@
 
         group.addTo(self.map);
       });
+    },
+
+    /**
+     * Fit the map in the bounds passed
+     * @param {Object} bounds
+     */
+
+    fitBounds: function(bounds, options) {
+      this.map.fitBounds(bounds, options);
     }
   });
 

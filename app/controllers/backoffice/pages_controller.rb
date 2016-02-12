@@ -32,7 +32,6 @@ class Backoffice::PagesController < BackofficeController
         @case_study, @page, type: @page[:page_type]
       ), notice: 'Page updated successfully.'
     else
-      debugger
       render :edit
     end
   end
