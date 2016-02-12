@@ -19,11 +19,11 @@
           h2 = p.title
         .legend.tabs-wrapper
           .legend-nav
-            / ul.tabs
-            /   li.tab-title.-active 
-            /     a href="#" By number of slums
-            /   li.tab-title 
-            /     a href="#" By area
+            - if (p.page_type == 3)
+              ul.tabs
+                - p.data_layers.each do |layer|
+                  li.tab-title.-active 
+                    a href="#" =layer.layer_column_alias
                 
           .legend-content
              ul.list.tab-content.-active
