@@ -1,8 +1,10 @@
 .box-list {
+  position: relative;
   display: flex;
   justify-content: flex-start;
   flex-flow: row wrap;
   padding: 1rem 2rem;
+  min-height: 5rem;
 
   border: 1px solid $border-color-1;
 
