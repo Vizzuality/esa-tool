@@ -19,6 +19,7 @@
   }
 
   .case {
+    position: relative;
 
     > a {
     position: relative;
@@ -31,6 +32,16 @@
     background-size: cover;
 
     background-color: $bg-color-4;
+    background-blend-mode: luminosity;
+    background-color: rgba(#003a55, 1);
+
+      &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(#0a425c, 0.6);
+      }
 
       > .caption {
         position: absolute;
@@ -52,8 +63,6 @@
       }
 
       &:hover {
-        background-blend-mode: hard-light;
-        background-color: rgba($bg-color-landing-2, 0.7);
         box-shadow: 0px 5px 18px 4px rgba($font-color-landing-4, 0.5);
 
         > .caption {
@@ -63,5 +72,11 @@
         }
       }
     }
-  }
+
+    &._is-loading {
+      > a {
+        background-size: 0;
+      }
+    }
+  }  
 }

@@ -239,7 +239,6 @@
       this.removeLayer();
 
       this.autoUpdate = params.autoUpdate;
-
       if (params.setBounds) {
         this._setLayerBounds(params);
       } else {
@@ -465,7 +464,7 @@
             sinDistR * Math.cos(rheading)),
           lon2 = lon1 + Math.atan2(Math.sin(rheading) * sinDistR *
             cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
-        
+
       lon2 = lon2 * radInv;
       lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
 
@@ -507,7 +506,7 @@
         group.on('click', function(e) {
           var layers = this.getLayers();
           var layer = layers[0];
-          
+
           if (layer) {
             var bounds = layer.getBounds();
             self.map.fitBounds(bounds, {
