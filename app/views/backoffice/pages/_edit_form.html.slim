@@ -19,7 +19,10 @@
     = f.label :files
 
     = f.simple_fields_for :data_layers do |d|
-      = render 'data_layers_fields', f: d
+      - if d.object.new_record?
+        = render 'data_layer_fields', f: d
+      - else
+        = render 'data_layers_fields', f: d
 
     - if @page.page_type == 2
       .nested-fields
