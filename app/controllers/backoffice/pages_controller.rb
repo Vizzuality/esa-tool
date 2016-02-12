@@ -5,15 +5,15 @@ class Backoffice::PagesController < BackofficeController
   before_action :set_charts, only: [:new, :edit]
 
   def new
-    @page = Page.new
+    @page = @case_study.pages.new(page_type: params[:type])
     @page.data_layers.build
   end
 
   def create
-    @page = Page.new(page_params)
+    @page = @case_study.pages.new(page_params)
     if @page.save
       redirect_to edit_backoffice_case_study_page_path(
-        @case_study, @page, type: @page[:page_type]
+        @case_study, @page, type: @page.page_type
       ), notice: 'Page created successfully.'
     else
       @page.data_layers.build if @page.data_layers.empty?
@@ -29,7 +29,7 @@ class Backoffice::PagesController < BackofficeController
   def update
     if @page.update(page_params)
       redirect_to edit_backoffice_case_study_page_path(
-        @case_study, @page, type: @page[:page_type]
+        @case_study, @page, type: @page.page_type
       ), notice: 'Page updated successfully.'
     else
       @page.data_layers.build if @page.data_layers.empty?
