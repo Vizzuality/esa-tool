@@ -33,6 +33,7 @@ class Backoffice::PagesController < BackofficeController
       ), notice: 'Page updated successfully.'
     else
       @page.data_layers.build if @page.data_layers.empty?
+      gon.cartodb_user = ENV["CDB_USERNAME"]
       set_charts
       render :edit
     end

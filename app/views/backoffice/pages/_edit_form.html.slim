@@ -1,13 +1,13 @@
 - palettes = 2
 - palette_range = 8
-- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? || @page.basemap=="terrain" ? true : false }], 
-              [t('satellite'), 'satellite', {class:"item detail-title", checked: @page.basemap=="satellite" ? true : false }], 
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? || @page.basemap=="terrain" ? true : false }],
+              [t('satellite'), 'satellite', {class:"item detail-title", checked: @page.basemap=="satellite" ? true : false }],
               [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"}, checked: @page.basemap=="custom" ? true : false } ]]
 
 .form-row
   = f.input :title
 
-- if params[:type].to_i == 1
+- if @page.page_type == 1
   .form-row
     = f.input :body, input_html: {class:"-large"}
 
@@ -17,11 +17,11 @@
 - else
   .form-row.file-map-input
     = f.label :files
-    
+
     = f.simple_fields_for :data_layers do |d|
       = render 'data_layers_fields', f: d
-    
-    - if params[:type].to_i == 2
+
+    - if @page.page_type == 2
       .nested-fields
         .list-container data-filename= @page.data_layers.first.table_name
           = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-0"
@@ -31,10 +31,10 @@
       = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   .form-row.box-selector
     = f.input :basemap, as: :radio_buttons, collection: basemaps
-  
+
     #customBasemapUrl.form-row.detail-item class=('_hidden' unless @page.basemap == 'custom')
       = f.input :basemap_url
-    
+
   .form-row
     = f.label :color_palette
     .box-selector
@@ -52,30 +52,32 @@
       #customBasemap.form-row.detail-item class=('_hidden' unless @page.color_palette == 3)
         = f.input :custom_basemap, input_html: {class:"-large"}, placeholder: "CUSTOMIZED CARTOCSS \nPaste code here"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.nil? or 1), class: 'input', id:"pallete"
-  
+
   .form-row
     = f.label :charts
     .box-selector
       - for chart in @charts
-        - if chart.name=="line" and params[:type].to_i == 3
-        - else 
+        - if chart.name=="line" && @page.page_type == 3
+        - else
           .item.checkbox data={input: "chart-#{chart.name}", multiple: "yes"}
             svg.icon-chart.-bo
               use xlink:href="#icon-chart-#{chart.name}"
     ._hidden
-      = f.association :charts, as: :check_boxes, label:false, collection: @charts.map { |r| [r.name, r.id, {class: 'association-input', id: "chart-#{r.name}"}] }  
-    
+      = f.association :charts, as: :check_boxes, label:false, collection: @charts.map { |r| [r.name, r.id, {class: 'association-input', id: "chart-#{r.name}"}] }
+
   .form-row
     = f.simple_fields_for :interest_points do |c|
       = render 'interest_point_fields', f: c
     = link_to_add_association t('add_interest_points'), f, :interest_points, class: 'btn -dotted'
 
-= f.hidden_field :page_type, value: params[:type]
-= f.hidden_field :case_study_id, value: params[:case_study_id]
+= f.hidden_field :page_type
 
 .footer.-fixed
   .wrap: .row: .grid-sm-6.offset-sm-3
     .actions
-      - if @page[:id]
-        = link_to t('delete'), backoffice_case_study_page_path(case_study_id: params[:case_study_id], id: @page[:id]),  method: :delete, data: { confirm: t('confirm_sure') }, class: 'btn -alt'
+      - unless @page.new_record?
+        = link_to t('delete'),
+          backoffice_case_study_page_path(case_study_id: @page.case_study.id,
+          id: @page.id),  method: :delete,
+          data: { confirm: t('confirm_sure') }, class: 'btn -alt'
       = f.button :submit, class: 'btn', id: 'saveBtn'
