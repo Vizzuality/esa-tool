@@ -44,7 +44,7 @@
       _.each(this.filesContainer, function(item) {
         var promise = self.getColumns(item.getAttribute('data-filename'));
         promise.done(function(columns){
-          self.refreshColumns(columns,item);
+          self.refreshColumns(columns, item);
         });
         promise.fail(function(error){
           self.handleColumnsError(error);
@@ -113,14 +113,15 @@
       return defer;
     },
 
-    refreshColumns: function(columns, file) {
+    refreshColumns: function(columns, container) {
       var self = this;
-      var columnsContainer = file.getElementsByClassName('box-list')[0];
-      var valueSelected = file.querySelectorAll('input')[0].value;
+      var columnsContainer = container.getElementsByClassName('box-list')[0];
+      var valueSelected = container.querySelectorAll('input')[0].value;
       columnsContainer.innerHTML = '';
       _.each(columns, function(element) {
         columnsContainer.insertAdjacentHTML('afterbegin', self.getColummn(element, valueSelected));
       });
+      columnsContainer.classList.remove('_is-loading');
     },
 
     getColummn: function(element, valueSelected) {
