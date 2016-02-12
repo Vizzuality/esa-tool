@@ -1,7 +1,22 @@
-.nested-fields
-  .row.file
-    .grid-sm-10.name
-      p = f.object.table_name
-    .grid-sm-2.year
-      = f.input_field :year, placeholder: "Year"
+- if params[:type].to_i == 2
+  .nested-fields
+    .row.file
+      .grid-sm-10.name
+        p = f.object.table_name
+      .grid-sm-2.year
+        = f.input_field :year, placeholder: "Year"
+- else 
+  .nested-fields
+    .row.file
+      .grid-sm-6.name
+        p = f.object.table_name
+      .grid-sm-6
+        = f.input_field :layer_column_alias, placeholder: "Column alias"
+  .nested-fields
+    .row
+      .grid-sm-12
+        .list-container data-filename= f.object.table_name
+          = f.input_field :layer_column, as: :hidden, id: "column-input-#{f.object.id}"
+          .box-list._is-loading data-input=f.object.id
+      
   = f.input :id, as: :hidden

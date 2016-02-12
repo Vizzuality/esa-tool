@@ -23,6 +23,7 @@
       if (file && file.type.match('image.*')) {
         reader.readAsDataURL(file);
       }
+      e.currentTarget.parentNode.getElementsByClassName('delete_image')[0].value = false;
     },
 
     cleanImage: function(e) {

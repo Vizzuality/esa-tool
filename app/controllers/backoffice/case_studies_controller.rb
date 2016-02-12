@@ -55,7 +55,7 @@ class Backoffice::CaseStudiesController < BackofficeController
       redirect_to edit_backoffice_case_study_path(@case_study),
         notice: 'Case study duplicated successfully.'
     else
-      redirect_to edit_backoffice_case_study_path(@case_study),
+      redirect_to request.referrer || backoffice_dashboard_path,
         alert: 'Case study duplication failed.'
     end
   end

@@ -15,11 +15,7 @@
         'created_at',
         'year'
       ],
-      fileInput: 'map_file',
-      fileInputWrapper: 'input-file-wrapper',
-      fileNameContainer: 'filename',
-      columnInput: 'page_column_selected',
-      columnListContainer: 'map-columns-list',
+      fileInput: 'map_file'
     },
 
     columns: [],
@@ -36,28 +32,24 @@
 
       this.data = this._getAppData();
       this.ignored_columns = this.options.ignored_columns;
-      this.columnListContainer = document.getElementById(this.options.columnListContainer);
       this.fileInput = document.getElementById(this.options.fileInput);
-      this.fileInputWrapper = document.getElementById(this.options.fileInputWrapper);
-      this.columnInput = document.getElementById(this.options.columnInput);
-      this.fileNameContainer = document.getElementById(this.options.fileNameContainer);
 
-      if (this.fileNameContainer && this.fileNameContainer.getAttribute('data-filename')) {
-        this.init(this.fileNameContainer.getAttribute('data-filename'));
-      }
+      this.init();
     },
 
     init: function(fileName) {
       var self = this
-      self.columns = [];
-      // self.addFileSelected();
-      var promise = self.getColumns(fileName);
-      promise.done(function(){
-        self.refreshColumns();
-      });
-      promise.fail(function(error){
-        self.handleColumnsError(error);
-      });
+
+      this.filesContainer = document.querySelectorAll('[data-filename]');
+      _.each(this.filesContainer, function(item) {
+        var promise = self.getColumns(item.getAttribute('data-filename'));
+        promise.done(function(columns){
+          self.refreshColumns(columns, item);
+        });
+        promise.fail(function(error){
+          self.handleColumnsError(error);
+        });
+      })
     },
 
     onInputChanged: function(e) {
@@ -101,15 +93,16 @@
       var self = this;
       var query = 'SELECT * FROM ' + name + ' LIMIT 0';
       var defer = new $.Deferred();
+      var columns = [];
       $.getJSON('https://'+this.data.cartodb_user+'.cartodb.com/api/v2/sql/?q='+query)
         .done(function(data){
-          $.each(data.fields, function(key, val) {
+          $.each(data.fields, function(key) {
             if (!_.contains(self.ignored_columns, key)) {
-              self.columns.push(key);
+              columns.push(key);
             }
           });
-          if (self.columns.length){
-            defer.resolve();
+          if (columns.length){
+            defer.resolve(columns);
           } else {
             defer.reject('there are not columns');
           }
@@ -120,21 +113,23 @@
       return defer;
     },
 
-    refreshColumns: function() {
+    refreshColumns: function(columns, container) {
       var self = this;
-      this.columnListContainer.innerHTML = '';
-      _.each(self.columns, function(element){
-        self.addColummn(element);
+      var columnsContainer = container.getElementsByClassName('box-list')[0];
+      var valueSelected = container.querySelectorAll('input')[0].value;
+      columnsContainer.innerHTML = '';
+      _.each(columns, function(element) {
+        columnsContainer.insertAdjacentHTML('afterbegin', self.getColummn(element, valueSelected));
       });
+      columnsContainer.classList.remove('_is-loading');
     },
 
-    addColummn: function(element) {
+    getColummn: function(element, valueSelected) {
       var column = {
         value: element,
-        selectedClass: (element === this.columnInput.value) ? '_selected':''
+        selectedClass: (element === valueSelected) ? '_selected':''
       };
-      var tpl = this._columnTemplate()(column);
-      this.columnListContainer.insertAdjacentHTML("afterbegin", tpl);
+      return this._columnTemplate()(column);
     },
 
     _columnTemplate: function() {
@@ -150,9 +145,10 @@
     addFileSelected: function(e) {
       if (this.fileInput.files[0]) {
         var tpl = this._fileTemplate()({fileName: this.fileInput.files[0].name});
-        this.fileNameContainer.insertAdjacentHTML('beforeend', tpl);
+        document.getElementById('filename').insertAdjacentHTML('beforeend', tpl);
       }
-      this.fileInputWrapper.classList.add('_hidden');
+      this.inputWrapper = document.getElementById('input-file-wrapper');
+      this.inputWrapper.classList.add('_hidden');
     },
 
     _fileTemplate: function() {
@@ -165,7 +161,7 @@
         el.parentNode.removeChild(el);
       }
       this.fileInput.value = '';
-      this.fileInput.parentElement.classList.remove('_hidden');
+      this.inputWrapper.classList.remove('_hidden');
     },
 
     onAddItem: function(e) {
@@ -174,11 +170,11 @@
 
     onClickItem: function(e) {
       this.currentItem = e.currentTarget;
-      this.selectCurrent();
-      this.updateValue();
+      this.selectCurrent(e);
+      this.updateValue(e);
     },
 
-    selectCurrent: function() {
+    selectCurrent: function(e) {
       var el = this.currentItem;
       var siblings = [].filter.call(el.parentNode.children, function(child) {
         return child.localName == 'div' && child !== el;
@@ -189,8 +185,10 @@
       });
     },
 
-    updateValue: function() {
-      this.columnInput.value = this.currentItem.getAttribute('data-value');
+    updateValue: function(e) {
+      var target = e.currentTarget;
+      document.getElementById('column-input-'+target.parentElement.getAttribute('data-input'))
+        .value = e.currentTarget.getAttribute('data-value');
     },
 
     _getAppData: function() {

@@ -5,13 +5,13 @@ class CaseStudiesController < ApplicationController
 
   def index
     if case_studies_params[:search]
-      @case_study = CaseStudy.search(case_studies_params[:search])
+      @case_study = CaseStudy.published.search(case_studies_params[:search])
       render json: @case_study
     elsif case_studies_params[:tags]
-      @case_study = CaseStudy.get_tag_filtered(case_studies_params).limit(9)
+      @case_study = CaseStudy.published.get_tag_filtered(case_studies_params).limit(9)
       render json: @case_study
     else
-      @case_study = CaseStudy.limit(9)
+      @case_study = CaseStudy.published.limit(9)
       render json: @case_study
     end
   end

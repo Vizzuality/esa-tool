@@ -25,7 +25,8 @@
   = f.label :contacts
   = f.simple_fields_for :contacts do |c|
     = render 'contact_fields', f: c
-  = link_to_add_association t('add_contact'), f, :contacts, class: 'btn -dotted'
+  div 
+    = link_to_add_association t('add_contact'), f, :contacts, class: 'btn -dotted'
 
 .form-row
   = f.label :template
