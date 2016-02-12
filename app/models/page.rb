@@ -11,7 +11,7 @@ class Page < ActiveRecord::Base
     large: '1920x1080#'
   }
 
-  accepts_nested_attributes_for :data_layers, reject_if: :all_blank, allow_destroy: false
+  accepts_nested_attributes_for :data_layers, allow_destroy: false
   accepts_nested_attributes_for :interest_points, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :charts, reject_if: :all_blank, allow_destroy: true
 
