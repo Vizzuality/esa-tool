@@ -3,7 +3,14 @@
   
   - for page in @case_study.pages
     - active = params.has_key?(:type) && (params[:type].to_i == page.page_type.to_i) && (page.id == params[:id].to_i) ? 'sidebar-item _active' : 'sidebar-item'
-    - page_type = page.page_type.to_i == 1 ? 'text' : 'map'
+    - case page.page_type.to_i
+      - when 1
+        - page_type = 'text'
+      - when 2
+        - page_type = 'timeline'
+      - else
+        - page_type = 'map'
+      end
     = link_to edit_backoffice_case_study_page_path(id: page.id, type: page.page_type.to_i, case_study_id: @case_study.id), class: active do
       svg class="icon icon-#{page_type}"
         use xlink:href="#icon-#{page_type}"

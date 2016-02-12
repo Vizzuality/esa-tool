@@ -1,7 +1,14 @@
-.nested-fields
-  .row.file.-input
-    .grid-sm-10
-      = f.input :file, as: :file, accept: ".csv"
-    .grid-sm-2.year
-      = f.input_field :year, placeholder: "Year"
+- if params[:type].to_i == 2
+  .nested-fields
+    .row.file.-input
+      .grid-sm-10
+        = f.input :file, as: :file, accept: ".csv"
+      .grid-sm-2.year
+        = f.input_field :year, placeholder: "Year"
+- else
+  .nested-fields
+    .row.file.-input
+      .grid-sm-12
+        = f.input :file, as: :file
+      
   = f.input :id, as: :hidden

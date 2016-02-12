@@ -23,4 +23,11 @@ section.l-main
 
           svg class="icon icon-map"
             use xlink:href="#icon-map"
+          span.label = t('Timeline')
+      
+      .grid-sm-3
+        = link_to new_backoffice_case_study_page_path(@case_study, type: 3), class: 'select-type-item' do
+
+          svg class="icon icon-map"
+            use xlink:href="#icon-map"
           span.label = t('map')
