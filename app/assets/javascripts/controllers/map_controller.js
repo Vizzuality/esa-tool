@@ -149,6 +149,7 @@
               formattedData.layers = page.data_layers;
               formattedData.charts = page.charts;
               formattedData.pointsInterest = page.interest_points;
+              formattedData.colorPalette = page.color_palette;
             }
           }
         }
@@ -295,7 +296,12 @@
     _parseLayerData: function(res, layer) {
       var data = res.rows;
       var groups = _.groupBy(data, 'column');
-      var palette = this.cartoCss.palette;
+      var palette;
+      if (this.data.colorPalette === 2) {
+        palette = this.cartoCss.palette2;
+      } else {
+        palette = this.cartoCss.palette1;
+      }
       var numColors = palette.length;
       var count = 0;
 

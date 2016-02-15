@@ -47,7 +47,8 @@
             .range
               span.-bordered
               span
-      .item.-col-3.-palette.-range-custom.detail-title data-value="3" data-input="pallete" data-details="customBasemap"  class="#{@page.color_palette.to_i == 3 ? '_selected' : nil}"
+      .item.-col-3.-center.detail-title data-value="3" data-input="pallete" data-details="customBasemap"  class="#{@page.color_palette.to_i == 3 ? '_selected' : nil}"
+        label =t('custom')
         - for r in 1..palette_range-2
           .range
             span.-bordered

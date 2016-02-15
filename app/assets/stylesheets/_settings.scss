@@ -63,11 +63,15 @@ $border-color-2: $white;
 $error-color: #fff500;
 $notice-color: #00a600;
 
-// Palettes
-$palette1: #ff9000, #fff500, #57d700, #00a600, #1dcfb4, #3f7eff, #5034ff, #8f37ff;
+// Palettes from javascripts/cartocss 
+$palette1-1: #2B7312, #FF6600, #229A00, #7801FF, #EA01FF, #FF0060, #FF6602, #ffc600, #ffffff;
+$palette1-2: #2B7312, #FF6600, #229A00, #7801FF, #EA01FF, #FF0060, #FF6602, #ffc600, #ffffff;
 
-$palette2: #8f37ff, #5034ff, #3f7eff, #1dcfb4, #00a600, #57d700, #fff500, #ff9000;
+$palette2-1: #2B7312, #FF6600, #229A00, #FFFFFF, #00D0D6, #779FF6, #00D398, #ADD4A0, #ffffff;
+$palette2-2: #2B7312, #FF6600, #229A00, #FFFFFF, #00D0D6, #779FF6, #00D398, #ADD4A0, #ffffff;
 
-$paletteCustom: #ffc602, #ff6602, #ff2a60, #ea3eff, #7836ff, #b8b8b8;
+$palette3-1: #add2ed, #556b80, #67537c, #baa2cc, #e8a1cf, #4e6a59, #aadbc2, #cccccc, #698460, #e0ba8c, #8e6b6b;
+$palette3-2: #add2ed, #556b80, #67537c, #baa2cc, #e8a1cf, #4e6a59, #aadbc2, #cccccc, #698460, #e0ba8c, #8e6b6b;
 
-$palette-reds: #ff9999, #ff6666, #ff3333, #ff0000, #cc0000, #990000, #660000, #330000;
+$palette4-1: #8e4d3b, #aa0b10, #f7ba47, #ffb86a, #c38458, #4f776f, #cb5027, #d7d9c3, #6fa79a, #fc912f;
+$palette4-2: #8e4d3b, #aa0b10, #f7ba47, #ffb86a, #c38458, #4f776f, #cb5027, #d7d9c3, #6fa79a, #fc912f;
