@@ -43,21 +43,15 @@
      */
     _startMap: function() {
       var self = this;
-      var layers = this.data.layers;
-      var layer = layers[layers.length -1];
 
-      if (layer) {
-        this.currentYear = layer.year;
-
-        this._getLayerData()
-          .done(function(res) {
-            self._parseLayerData(res);
-            self._updateLayer({
-              setBounds: true,
-              autoUpdate: true
-            });
+      this._getLayerData()
+        .done(function(res) {
+          self._parseLayerData(res);
+          self._updateLayer({
+            setBounds: true,
+            autoUpdate: true
           });
-      }
+        });
 
       this._initDashboard();
     },
@@ -125,6 +119,7 @@
       });
 
       this.listenTo(this.dashboard, 'dashboard:filter', this._setFilter);
+      this.listenTo(this.dashboard, 'dashboard:update:layer', this._updateByLayer);
       this.listenTo(this.dashboard, 'dashboard:update:year', this._updateByYear);
     },
 
@@ -148,6 +143,7 @@
 
             if (page) {
               formattedData.columnSelected = page.column_selected;
+              formattedData.pageType = page.page_type;
               formattedData.layers = page.data_layers;
               formattedData.charts = page.charts;
               formattedData.pointsInterest = page.interest_points;
@@ -162,6 +158,37 @@
      * Gets the data for the dashboard from the data object
      */
     _getDashboardData: function() {
+      // Page type 3 = Map
+      // Page type 2 = Timeline
+      var pageType = this.data.pageType;
+
+      if (pageType === 3) {
+        return this._getDashboardMapData();
+      } else if(pageType === 2) {
+        return this._getDashboardTimelineData();
+      }
+    },
+
+    _getDashboardMapData: function() {
+      var self = this;
+      var data = this.data;
+      var layers = data.layers;
+      var currentLayer = this.currentLayer;
+      var layer = _.findWhere(layers, { table_name: currentLayer });
+      var column = layer.layer_column;
+      var table = layer.table_name;
+
+      var query = 'SELECT ' + column + ' as category, ' +
+            'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
+            'FROM ' + table + ' GROUP BY ' + column + ' ' +
+            'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
+
+      query = query.replace('%1', query);
+
+      return this._getCartoDashboardData(query, data);
+    },
+
+    _getDashboardTimelineData: function() {
       var self = this;
       var data = this.data;
       var layers = data.layers;
@@ -186,6 +213,11 @@
       }
 
       query = query.replace('%1', subquery);
+
+      return this._getCartoDashboardData(query, data);
+    },
+
+    _getCartoDashboardData: function(query, data) {
       var sql = new cartodb.SQL({ user: data.cartoUser });
       var cartoQuery = sql.execute(query);
 
@@ -197,14 +229,53 @@
      * @param {Object} layer data
      */
     _getLayerData: function() {
-      var year = this.currentYear;
+      // Page type 3 = Map
+      // Page type 2 = Timeline
+      var pageType = this.data.pageType;
+
+      if (pageType === 3) {
+        return this._getLayerDataMap();
+      } else if(pageType === 2) {
+        return this._getLayerDataTimeline();
+      }
+    },
+
+    _getLayerDataTimeline: function() {
       var data = this.data;
       var layers = this.data.layers;
-      var layer = _.findWhere(layers, { year: year });
 
+      if (!this.currentYear) {
+        var layer = layers[layers.length -1];
+        this.currentYear = layer.year;
+      }
+
+      var year = this.currentYear;
+      var layer = _.findWhere(layers, { year: year });
+      layer.layer_column = this.data.columnSelected;
+
+      return this._getCartoData(data, layer);
+    },
+
+    _getLayerDataMap: function() {
+      var data = this.data;
+      var layers = this.data.layers;
+
+      if (!this.currentLayer) {
+        var layer = _.first(layers);
+        this.currentLayer = layer.table_name;
+      }
+
+      var currentLayer = this.currentLayer;
+      var layer = _.findWhere(layers, { table_name: currentLayer });
+
+      return this._getCartoData(data, layer);
+    },
+
+    _getCartoData: function(data, layer) {
       var sql = new cartodb.SQL({ user: data.cartoUser });
       var table = layer.table_name;
-      var column = data.columnSelected;
+      var column = layer.layer_column;
+
       var query = 'SELECT {{column}} as column FROM {{table}} \
        GROUP BY {{column}} ORDER BY {{column}}';
 
@@ -248,9 +319,14 @@
      */
     _updateLayer: function(params) {
       var data = this.data;
-      var year = this.currentYear;
       var layers = data.layers;
-      var layer = _.findWhere(layers, { year: year });
+      var year = this.currentYear;
+      var currentLayer = this.currentLayer;
+      var layer = _.findWhere(layers, { table_name: currentLayer });
+
+      if (this.currentYear) {
+        layer = _.findWhere(layers, { year: year });
+      } 
 
       if (layer) {
         this.currentYear = year;
@@ -303,11 +379,15 @@
           }
         });
 
-        var categories = _.keys(_.groupBy(data, 'category'));
-        var dataByYear = _.groupBy(data, 'year');
 
-        this.data.dashboard = dataByYear;
+        var categories = _.keys(_.groupBy(data, 'category'));
         this.data.categoriesData = categories;
+        this.data.dashboard = data;
+
+        if (this.currentYear) {
+          var dataByYear = _.groupBy(data, 'year');
+          this.data.dashboard = dataByYear;
+        }
       }
 
       this._updateDashboardData(params);
@@ -318,13 +398,18 @@
      * @param {Object} parameters
      */
     _updateDashboardData: function(params) {
-      var currentYearData = this.data.dashboard[this.currentYear];
-      var selectedYear = this.currentYear.toString();
+      var selectedYear;
+      var currentData = this.data.dashboard;
       var animate = params.animate;
+
+      if (this.currentYear) {
+        currentData = this.data.dashboard[this.currentYear];
+        selectedYear = this.currentYear.toString(); 
+      }
 
       this.dashboard.update({
         data: this.data,
-        currentData: currentYearData,
+        currentData: currentData,
         currentYear: selectedYear,
         animate: animate,
         unit: '%'
@@ -356,6 +441,19 @@
         this._updateDashboard({
           animate: false
         });
+      }
+    }, 30),
+
+    /**
+     * Triggered when the layer has changed
+     * and updates the layer and dashboard
+     * @param {String} layer table name
+     */
+    _updateByLayer: _.debounce(function(layer) {
+      if (layer !== this.currentLayer) {
+        this.currentLayer = layer;
+
+        this._startMap();
       }
     }, 30),
 

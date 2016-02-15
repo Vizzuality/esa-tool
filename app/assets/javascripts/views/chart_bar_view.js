@@ -94,12 +94,16 @@
     _parseData: function() {
       var allData = this.data;
 
-      _.map(allData, function(d) {
-        d.year = parseInt(d.year, 10);
-      });
-      
-      this.chartData = _.where(allData, { year: this.selectedYear });
-      this.years = _.uniq(_.pluck(allData, 'year'));
+      if (this.selectedYear) {
+        _.map(allData, function(d) {
+          d.year = parseInt(d.year, 10);
+        });
+        
+        this.chartData = _.where(allData, { year: this.selectedYear });
+        this.years = _.uniq(_.pluck(allData, 'year'));
+      } else {
+        this.chartData = allData;
+      }
 
       _.map(this.chartData, function(d) {
         d.x = d.category;
@@ -169,25 +173,27 @@
     },
 
     _renderLegend: function() {
-      var self = this;
-      var years = this.years;
-      var container = this.legendEl;
+      if (this.selectedYear) {
+        var self = this;
+        var years = this.years;
+        var container = this.legendEl;
 
-      container.innerHTML = '';
+        container.innerHTML = '';
 
-      years.forEach(function(year) {
-        var itemEl = document.createElement('div');
-        var itemText = document.createTextNode(year);
-        itemEl.classList.add('action');
-        itemEl.dataset.year = year;
-        itemEl.appendChild(itemText);
+        years.forEach(function(year) {
+          var itemEl = document.createElement('div');
+          var itemText = document.createTextNode(year);
+          itemEl.classList.add('action');
+          itemEl.dataset.year = year;
+          itemEl.appendChild(itemText);
 
-        if (year === self.selectedYear) {
-          itemEl.classList.add('selected');
-        }
+          if (year === self.selectedYear) {
+            itemEl.classList.add('selected');
+          }
 
-        container.appendChild(itemEl);
-      });
+          container.appendChild(itemEl);
+        });
+      }
     },
 
     _resetLegend: function() {

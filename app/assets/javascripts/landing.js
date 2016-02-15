@@ -124,10 +124,15 @@
      * Function to initialize the map
      */
     _initMap: function() {
+      var southWest = L.latLng(85, -180),
+          northEast = L.latLng(-85, 180),
+          bounds = L.latLngBounds(southWest, northEast);
       this.map = new App.View.Map({
         el: '#map',
         template: 0,
-        basemap: 'satellite'
+        basemap: 'satellite',
+        maxBounds: bounds,
+        minZoom: 3
       });
     },
 
@@ -136,6 +141,7 @@
      */
     _renderCases: function() {
       var self = this;
+      var markers = [];
       var myIcon = L.divIcon({
         className: 'marker',
         iconSize: [10, 10],
@@ -150,7 +156,12 @@
             markerOptions,
             self._popUpTemplate(caseStudy)
           );
+          markers.push([caseStudy.lat,caseStudy.lng]);
         }
+      });
+      var bounds = L.latLngBounds(markers);
+      this.map.fitBounds(bounds, {
+        animate: true
       });
     },
 
