@@ -318,7 +318,7 @@
     _setLayers: function(params) {
       var self = this;
       var table = params.layer.table_name;
-      var column = params.data.columnSelected;
+      var column =  params.layer.layer_column || params.data.columnSelected;
       var cartoCss = this.cartoCss;
       var groups = params.data.categories;
       var defaultCarto = cartoCss['default'];

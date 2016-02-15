@@ -11,7 +11,8 @@
   App.View.Dashboard = Backbone.View.extend({
 
     events: {
-      'click .charts-nav li.tab-title': '_toggleChart'
+      'click .charts-nav li.tab-title': '_toggleChart',
+      'click .legend-nav li.tab-title': '_toggleLayer'
     },
 
     defaults: {
@@ -37,9 +38,11 @@
     start: function() {
       var data = _.flatten(_.values(this.data.dashboard));
 
-      this.timeline.start({
-        data: data
-      });
+      if (this.currentYear) {
+        this.timeline.start({
+          data: data
+        });
+      }
     },
 
     /**
@@ -60,7 +63,10 @@
       }
 
       this.legend.update(data, layer);
-      this.timeline.show();
+
+      if (this.currentYear) {
+        this.timeline.show();
+      }
     },
 
     /**
@@ -90,7 +96,7 @@
      */
     _initChart: function() {
       var parent = this.el;
-      var elem = parent.querySelector('.chart');
+      var elem = parent.querySelector('.charts');
       elem.classList.add('_is-loading');
     },
 
@@ -98,7 +104,7 @@
      * This intializes the charts
      */
     _initSelectedChart: function() {
-      var elem = this.el.querySelector('.chart');
+      var elem = this.el.querySelector('.charts');
       elem.classList.remove('_is-loading');   
 
       var charts = this.data.charts;
@@ -258,6 +264,28 @@
           currentTabContent.classList.add('-active');
           self._renderChart(currentTab);
         }, 300);
+      }
+    },
+
+    /**
+     * Toggles the layer depending on selection
+     * @param {Object} click event
+     */
+    _toggleLayer: function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      var self = this;
+      var elem = ev.currentTarget;
+
+      if (!elem.classList.contains('-active')) {
+        var currentTab = elem.getAttribute('data-tab');
+        var previousTabSelected = this.el.querySelector('.legend-nav .-active');
+
+        previousTabSelected.classList.remove('-active');
+        elem.classList.add('-active');
+
+        this.trigger('dashboard:update:layer', currentTab);
       }
     },
 
