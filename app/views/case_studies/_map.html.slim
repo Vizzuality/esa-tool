@@ -20,9 +20,9 @@
         .legend.tabs-wrapper
           .legend-nav
             - if (p.page_type == 3)
-              ul.tabs
-                - p.data_layers.each do |layer|
-                  li.tab-title.-active 
+              ul.tabs.-wb
+                - p.data_layers.each.with_index do |layer, index|
+                  li data-tab="#{layer.table_name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)
                     a href="#" =layer.layer_column_alias
                 
           .legend-content

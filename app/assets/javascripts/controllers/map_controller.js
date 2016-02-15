@@ -119,6 +119,7 @@
       });
 
       this.listenTo(this.dashboard, 'dashboard:filter', this._setFilter);
+      this.listenTo(this.dashboard, 'dashboard:update:layer', this._updateByLayer);
       this.listenTo(this.dashboard, 'dashboard:update:year', this._updateByYear);
     },
 
@@ -181,8 +182,6 @@
             'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
             'FROM ' + table + ' GROUP BY ' + column + ' ' +
             'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
-
-      console.log(query);
 
       query = query.replace('%1', query);
 
@@ -252,6 +251,7 @@
 
       var year = this.currentYear;
       var layer = _.findWhere(layers, { year: year });
+      layer.layer_column = this.data.columnSelected;
 
       return this._getCartoData(data, layer);
     },
@@ -379,11 +379,15 @@
           }
         });
 
-        var categories = _.keys(_.groupBy(data, 'category'));
-        var dataByYear = _.groupBy(data, 'year');
 
-        this.data.dashboard = dataByYear;
+        var categories = _.keys(_.groupBy(data, 'category'));
         this.data.categoriesData = categories;
+        this.data.dashboard = data;
+
+        if (this.currentYear) {
+          var dataByYear = _.groupBy(data, 'year');
+          this.data.dashboard = dataByYear;
+        }
       }
 
       this._updateDashboardData(params);
@@ -394,14 +398,18 @@
      * @param {Object} parameters
      */
     _updateDashboardData: function(params) {
-      console.log(this.data.dashboard);
-      var currentYearData = this.data.dashboard[this.currentYear];
-      var selectedYear = this.currentYear.toString();
+      var selectedYear;
+      var currentData = this.data.dashboard;
       var animate = params.animate;
+
+      if (this.currentYear) {
+        currentData = this.data.dashboard[this.currentYear];
+        selectedYear = this.currentYear.toString(); 
+      }
 
       this.dashboard.update({
         data: this.data,
-        currentData: currentYearData,
+        currentData: currentData,
         currentYear: selectedYear,
         animate: animate,
         unit: '%'
@@ -433,6 +441,19 @@
         this._updateDashboard({
           animate: false
         });
+      }
+    }, 30),
+
+    /**
+     * Triggered when the layer has changed
+     * and updates the layer and dashboard
+     * @param {String} layer table name
+     */
+    _updateByLayer: _.debounce(function(layer) {
+      if (layer !== this.currentLayer) {
+        this.currentLayer = layer;
+
+        this._startMap();
       }
     }, 30),
 

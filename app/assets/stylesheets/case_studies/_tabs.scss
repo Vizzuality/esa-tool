@@ -21,11 +21,23 @@
       text-decoration: none;
       text-transform: uppercase;
     }
-    &.-active {
-      a {
-        opacity: 1;
+  }
+
+  &.-wb {
+    > .tab-title {
+      > a {
+        opacity: 0.3;
+      }
+
+      &.-active {
+        a {
+          opacity: 1;
+        }
       }
     }
+
+    border-width: 1px;
+    border-style: solid;
   }
 }
 

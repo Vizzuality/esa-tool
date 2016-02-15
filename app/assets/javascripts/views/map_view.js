@@ -316,7 +316,6 @@
      * @param {Object} layer parameters
      */
     _setLayers: function(params) {
-      console.log(params);
       var self = this;
       var table = params.layer.table_name;
       var column =  params.layer.layer_column || params.data.columnSelected;
