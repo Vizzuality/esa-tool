@@ -277,7 +277,7 @@
       var column = layer.layer_column;
 
       var query = 'SELECT {{column}} as column FROM {{table}} \
-       GROUP BY {{column}} ORDER BY {{column}}';
+       GROUP BY {{column}} ORDER BY {{column}} LIMIT 15';
 
       var cartoQuery = sql.execute(query,
         { column: column, table: table });
@@ -404,7 +404,7 @@
 
       if (this.currentYear) {
         currentData = this.data.dashboard[this.currentYear];
-        selectedYear = this.currentYear.toString(); 
+        selectedYear = this.currentYear.toString();
       }
 
       this.dashboard.update({
