@@ -453,6 +453,7 @@
       if (layer !== this.currentLayer) {
         this.currentLayer = layer;
 
+        this.data.dashboard = null;
         this._startMap();
       }
     }, 30),
