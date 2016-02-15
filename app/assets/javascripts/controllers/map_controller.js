@@ -53,7 +53,9 @@
           });
         });
 
-      this._initDashboard();
+      this._initDashboard({
+        refresh: false
+      });
     },
 
     /**
@@ -105,12 +107,12 @@
     /**
      * Initializes the dashboard
      */
-    _initDashboard: function() {
+    _initDashboard: function(params) {
       var parent = this.elContent;
       var dashboardEl = parent.querySelector('#dashboardView');
 
       if (this.dashboard) {
-        this.dashboard.remove();
+        this.dashboard.remove(params);
         this.dashboard = null;
       }
 
@@ -451,10 +453,23 @@
      */
     _updateByLayer: _.debounce(function(layer) {
       if (layer !== this.currentLayer) {
-        this.currentLayer = layer;
+        var self = this;
 
+        this.currentLayer = layer;
         this.data.dashboard = null;
-        this._startMap();
+
+        this._getLayerData()
+          .done(function(res) {
+            self._parseLayerData(res);
+            self._updateLayer({
+              setBounds: true,
+              autoUpdate: true
+            });
+          });
+
+        this._initDashboard({
+          refresh: true
+        });
       }
     }, 30),
 
@@ -494,7 +509,9 @@
       }
 
       if (this.dashboard) {
-        this.dashboard.remove();
+        this.dashboard.remove({
+          refresh: false
+        });
         this.dashboard = null;
       }
 

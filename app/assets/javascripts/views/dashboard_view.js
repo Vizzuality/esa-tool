@@ -315,6 +315,23 @@
       }
     },
 
+    /**
+     * Sets the default tab
+     */
+    _defaultLegendTab: function() {
+      var currentLegendTabSelected = this.el.querySelector('.legend-nav .-active');
+      var defaultLegendTab = this.el.querySelector('.legend-nav li');
+
+      if (currentLegendTabSelected) {
+        currentLegendTabSelected.classList.remove('-active');
+      }
+
+      if (defaultLegendTab) {
+        defaultLegendTab.classList.add('-active'); 
+      }
+
+    },
+
     /** 
      * Filters the content by a category
      * @param {String} category
@@ -373,12 +390,17 @@
     /** 
      * Removes the views and undelegates events
      */
-    remove: function() {      
+    remove: function(params) {      
       this.isRemoving = true;
       this._removeChart();
       this._removeLegend();
       this._removeTimeline();
       this._defaultTabs();
+
+      if (!params.refresh) {
+        this._defaultLegendTab();
+      }
+
       this.undelegateEvents();
       this.stopListening();
     }
