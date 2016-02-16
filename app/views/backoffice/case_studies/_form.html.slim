@@ -32,7 +32,7 @@
   = f.label :template
   .box-selector
     - for t in 1..templates
-      .item data-value="#{t}" class="#{@case_study.template.to_i == t ? '_selected' : nil}"
+      .item.-col-2 data-value="#{t}" class="#{@case_study.template.to_i == t ? '_selected' : nil}"
         = image_tag "template-#{t}.jpg"
         a.icon href="#" data-featherlight= image_path("template-#{t}.jpg")
           svg.icon-zoom-in

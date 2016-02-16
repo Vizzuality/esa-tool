@@ -9,6 +9,10 @@
     display: none;
   }
 
+  .leaflet-popup-content-wrapper {
+    border-radius: rem(3px);
+  }
+
   .leaflet-popup-content {
     background-color: $bg-color-landing-4;
     p {

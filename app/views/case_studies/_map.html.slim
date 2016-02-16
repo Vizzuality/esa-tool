@@ -23,7 +23,11 @@
               ul.tabs.-wb
                 - p.data_layers.each.with_index do |layer, index|
                   li data-tab="#{layer.table_name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)
-                    a href="#" =layer.layer_column_alias
+                    a href="#" 
+                      - if layer.layer_column_alias?
+                        =layer.layer_column_alias
+                      - else
+                        =layer.layer_column
                 
           .legend-content
              ul.list.tab-content.-active

@@ -47,6 +47,12 @@
     &._selected::after {
       @include checked();
     }
+    
+    &.-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   & > .-palette {
@@ -68,19 +74,6 @@
       }
     }
 
-    &.-range-custom {
-      @for $i from 1 through length($paletteCustom) {
-      	.range:nth-child(#{$i}) {
-          span {
-            background-color: rgba(nth($paletteCustom, $i), 0.3);
-
-            &.-bordered {
-              border: 1px solid nth($paletteCustom, $i);
-            }
-          }
-      	}
-      }
-    }
   }
 }
 

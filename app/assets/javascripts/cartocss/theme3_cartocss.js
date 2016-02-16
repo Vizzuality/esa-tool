@@ -6,11 +6,24 @@
 
   root.App.CartoCSS.Theme3 = {
     'main': '#000000',
-    'palette': [
+    'palette1': [
       '#add2ed',
       '#556b80',
       '#67537c',
-      '#baa2cc',      
+      '#baa2cc',
+      '#e8a1cf',
+      '#4e6a59',
+      '#aadbc2',
+      '#cccccc',
+      '#698460',
+      '#e0ba8c',
+      '#8e6b6b'
+    ],
+    'palette2': [
+      '#add2ed',
+      '#556b80',
+      '#67537c',
+      '#baa2cc',
       '#e8a1cf',
       '#4e6a59',
       '#aadbc2',

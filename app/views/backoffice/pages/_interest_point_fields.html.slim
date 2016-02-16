@@ -1,13 +1,13 @@
 .nested-fields
   .row
-    .grid-sm-3
+    .grid-sm-4
       = f.input :name
-    .grid-sm-3
-      = f.input :lat
-    .grid-sm-3
-      = f.input :lng
     .grid-sm-2
-      = f.input :radius
+      = f.input :lat
+    .grid-sm-2
+      = f.input :lng
+    .grid-sm-3
+      = f.input :radius, :label => 'Radius (km)'
     .grid-sm-1
       = link_to_remove_association '×', f, class: 'btn -delete'
     .grid-sm-12
