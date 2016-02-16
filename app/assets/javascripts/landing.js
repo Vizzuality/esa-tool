@@ -144,11 +144,12 @@
       var markers = [];
       var myIcon = L.divIcon({
         className: 'marker',
-        iconSize: [10, 10],
+        iconSize: [12, 12],
       });
       var markerOptions = {
         icon:myIcon
       };
+
       _.each(this.data.caseStudies, function(caseStudy){
         if (caseStudy.lat && caseStudy.lng){
           self.map.createMarker(
@@ -159,9 +160,11 @@
           markers.push([caseStudy.lat,caseStudy.lng]);
         }
       });
+
       var bounds = L.latLngBounds(markers);
       this.map.fitBounds(bounds, {
-        animate: true
+        animate: true,
+        maxZoom: 5
       });
     },
 
