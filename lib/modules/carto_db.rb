@@ -37,7 +37,8 @@ module CartoDb
       post('/v1/imports/',
         query: {
           api_key: API_KEY,
-          file: file
+          file: file,
+          privacy: "link"
         }
       ).body
     end
