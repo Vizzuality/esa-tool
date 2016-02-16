@@ -8,7 +8,7 @@
 //= require_self
 //= require views/tags_view
 //= require views/box_select_view
-//= require views/preview_image_view
+//= require views/image_views
 //= require views/map_file_columns_view
 
 'use strict';
@@ -28,7 +28,7 @@
     initialize: function() {
       this.initTags();
       this.initBoxSelects();
-      this.initPreviewImage();
+      this.initImageView();
       this.initMapFileColumns();
       this.initFeatherlight();
       this.setExitWithoutSavingConfirmation();
@@ -55,8 +55,8 @@
       }
     },
 
-    initPreviewImage: function() {
-      new App.View.PreviewImage({
+    initImageView: function() {
+      new App.View.ImageViews({
         el: this.el.querySelectorAll('.file-image-input')
       });
     },
@@ -76,7 +76,7 @@
     },
 
     initFeatherlight: function(){
-      $.featherlight.defaults.otherClose = "button.-close";
+      $.featherlight.defaults.otherClose = "button.-close, .uploaded-images";
       $.featherlight.defaults.afterContent = function(){
         this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div>');
       };

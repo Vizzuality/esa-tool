@@ -23,6 +23,7 @@
 
 .form-row
   = f.label :contacts
+
   = f.simple_fields_for :contacts do |c|
     = render 'contact_fields', f: c
   div 
@@ -46,3 +47,9 @@
   .wrap: .row: .grid-sm-6.offset-sm-3
     .actions
       = f.button :submit, class: 'btn', id: "saveBtn"
+      
+._hidden
+  #logos.wrap: .row
+    - @existing_contacts.each do |c|
+      .grid-xs-4.uploaded-images
+        = image_tag c.logo.url(:medium), data: { contact: c.id }
