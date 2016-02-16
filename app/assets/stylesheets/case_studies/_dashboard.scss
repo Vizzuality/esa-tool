@@ -31,4 +31,9 @@
       display: inline-block;
     }
   }
+
+  .charts {
+    position: relative;
+    min-height: rem(250px);
+  }
 }

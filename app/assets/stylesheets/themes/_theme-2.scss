@@ -229,6 +229,9 @@
 
   .tabs {
     .tab-title {
+      > a {
+        color: $t-font-color-1;
+      }
       .icon-chart {
         fill: $chart-icon;
       }
