@@ -15,7 +15,7 @@
     = render 'backoffice/partials/input_image_file', f: f, name: :background, image: @page.background, class_name: "-large", custom_label:'background'
 
 - else
-  .form-row.file-map-input
+  .form-row
     = f.label :files
     = f.simple_fields_for :data_layers do |d|
       - if d.object.new_record?
@@ -54,13 +54,20 @@
             span.-bordered
             span
       #customBasemap.form-row.detail-item class=('_hidden' unless @page.color_palette == 3)
-        = f.simple_fields_for :data_layers do |d|
-          .row
-            .grid-sm-12
-              label = "Select the columns color for #{d.object.table_name}"
-              .list-container id="custom-column-layer-#{d.object.id}" data={table:d.object.table_name, column:d.object.layer_column}
+        .row
+          .grid-sm-12
+            - if @page.page_type == 2
+              label = "Select the columns color for #{@page.data_layers.first.table_name}"
+              .list-container id="custom-column-layer-0" data= {table:@page.data_layers.first.table_name, column: @page.column_selected}
+                = f.simple_fields_for :data_layers do |d|
+                  = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
                 .box-list._is-loading
-                = d.input_field :custom_columns_colors, as: :hidden
+            - else 
+              = f.simple_fields_for :data_layers do |d|
+                label = "Select the columns color for #{d.object.table_name}"
+                .list-container id="custom-column-layer-#{d.object.id}" data={table:d.object.table_name, column: d.object.layer_column}
+                  .box-list._is-loading
+                  = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
         / = f.input :custom_basemap, input_html: {class:"-large"}, placeholder: "CUSTOMIZED CARTOCSS \nPaste code here"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.nil? or 1), class: 'input', id:"pallete"
 

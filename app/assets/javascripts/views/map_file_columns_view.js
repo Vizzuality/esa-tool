@@ -46,13 +46,10 @@
 
     init: function() {
       var self = this;
-
-      if (this.list){
-        this.category = new App.View.MapFileCategories({
-          el: document.getElementById('custom-column-layer-'+this.layerId)
-        });
-        this.category.init();
-      }
+      this.category = new App.View.MapFileCategories({
+        el: document.getElementById('custom-column-layer-'+this.layerId)
+      });
+      this.category.init();
 
       var promise = self.getColumns(this.fileName);
       promise.done(function(columns){
