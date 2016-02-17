@@ -17,7 +17,6 @@
 - else
   .form-row.file-map-input
     = f.label :files
-
     = f.simple_fields_for :data_layers do |d|
       - if d.object.new_record?
         = render 'data_layer_fields', f: d
@@ -26,10 +25,11 @@
 
     - if @page.page_type == 2
       .nested-fields
-        .list-container data-filename= @page.data_layers.first.table_name
+        .list-container data= {layerId:0, filename: @page.data_layers.first.table_name}
           = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-0"
-          .box-list._is-loading data-input="0"
-
+          .box-list.-selectable._is-loading
+          
+    #filename
     .nested-fields
       = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   .form-row.box-selector
@@ -54,12 +54,19 @@
             span.-bordered
             span
       #customBasemap.form-row.detail-item class=('_hidden' unless @page.color_palette == 3)
-        = f.input :custom_basemap, input_html: {class:"-large"}, placeholder: "CUSTOMIZED CARTOCSS \nPaste code here"
+        = f.simple_fields_for :data_layers do |d|
+          .row
+            .grid-sm-12
+              label = "Select the columns color for #{d.object.table_name}"
+              .list-container id="custom-column-layer-#{d.object.id}" data={table:d.object.table_name, column:d.object.layer_column}
+                .box-list._is-loading
+                = d.input_field :custom_columns_colors, as: :hidden
+        / = f.input :custom_basemap, input_html: {class:"-large"}, placeholder: "CUSTOMIZED CARTOCSS \nPaste code here"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.nil? or 1), class: 'input', id:"pallete"
 
   .form-row
     = f.label :charts
-    .box-selector
+    .box-selector.-around
       - for chart in @charts
         - if chart.name=="line" && @page.page_type == 3
         - else

@@ -3,6 +3,7 @@
 //= require cocoon
 //= require jquery.tagsinput/jquery.tagsinput
 //= require featherlight
+//= require spectrum.js
 //= require underscore
 //= require backbone
 //= require_self
@@ -62,8 +63,11 @@
     },
 
     initMapFileColumns: function() {
-      new App.View.MapFileColumns({
-        el: document.querySelectorAll('.file-map-input')
+      this.filesContainer = document.getElementsByClassName('file-map-input');
+      _.each(this.filesContainer, function(item) {
+        new App.View.MapFileColumns({
+          el: item
+        });
       });
     },
 

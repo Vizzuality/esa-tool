@@ -1,3 +1,5 @@
+//= require views/map_file_categories_view
+
 'use strict';
 
 (function(App) {
@@ -14,8 +16,7 @@
         'updated_at',
         'created_at',
         'year'
-      ],
-      fileInput: 'map_file'
+      ]
     },
 
     columns: [],
@@ -24,32 +25,43 @@
       'change #map_file': 'onInputChanged',
       'click .close': 'removeFileSelected',
       'click .item': 'onClickItem',
-      'click .add_fields': 'onAddItem'
+      'cocoon:after-insert': 'onAddNewItem',
+      'cocoon:after-remove': 'onRemoveNewItem'
     },
 
     initialize: function(params) {
-      this.options = _.extend({}, this.defaults, params.options || {});
+      this.options = _.extend({}, this.defaults, params || {});
 
       this.data = this._getAppData();
       this.ignored_columns = this.options.ignored_columns;
-      this.fileInput = document.getElementById(this.options.fileInput);
 
-      this.init();
+      if (this.el.querySelectorAll('[data-filename]').length){
+        this.list = this.el.querySelectorAll('[data-filename]')[0];
+        this.layerId = this.list.getAttribute('data-layerid');
+        this.fileName = this.list.getAttribute('data-filename');
+        this.init();
+      }
+
     },
 
-    init: function(fileName) {
-      var self = this
+    init: function() {
+      var self = this;
 
-      this.filesContainer = document.querySelectorAll('[data-filename]');
-      _.each(this.filesContainer, function(item) {
-        var promise = self.getColumns(item.getAttribute('data-filename'));
-        promise.done(function(columns){
-          self.refreshColumns(columns, item);
+      if (this.list){
+        this.category = new App.View.MapFileCategories({
+          el: document.getElementById('custom-column-layer-'+this.layerId)
         });
-        promise.fail(function(error){
-          self.handleColumnsError(error);
-        });
-      })
+        this.category.init();
+      }
+
+      var promise = self.getColumns(this.fileName);
+      promise.done(function(columns){
+        self.refreshColumns(columns);
+      });
+      promise.fail(function(error){
+        self.handleColumnsError(error);
+      });
+
     },
 
     onInputChanged: function(e) {
@@ -67,7 +79,7 @@
         //     self.addFileSelected();
         //   }
         // });
-        self.addFileSelected();
+        self.addFileSelected(e);
         // self.init(file.name.slice(0, -extension.length-1));
       }
     },
@@ -113,10 +125,10 @@
       return defer;
     },
 
-    refreshColumns: function(columns, container) {
+    refreshColumns: function(columns) {
       var self = this;
-      var columnsContainer = container.getElementsByClassName('box-list')[0];
-      var valueSelected = container.querySelectorAll('input')[0].value;
+      var columnsContainer = this.list.getElementsByClassName('box-list')[0];
+      var valueSelected = this.list.querySelectorAll('input')[0].value;
       columnsContainer.innerHTML = '';
       _.each(columns, function(element) {
         columnsContainer.insertAdjacentHTML('afterbegin', self.getColummn(element, valueSelected));
@@ -143,12 +155,12 @@
     },
 
     addFileSelected: function(e) {
+      this.fileInput = e.currentTarget;
       if (this.fileInput.files[0]) {
         var tpl = this._fileTemplate()({fileName: this.fileInput.files[0].name});
         document.getElementById('filename').insertAdjacentHTML('beforeend', tpl);
       }
-      this.inputWrapper = document.getElementById('input-file-wrapper');
-      this.inputWrapper.classList.add('_hidden');
+      this.el.getElementsByClassName('input-wrapper')[0].classList.add('_hidden');
     },
 
     _fileTemplate: function() {
@@ -161,17 +173,23 @@
         el.parentNode.removeChild(el);
       }
       this.fileInput.value = '';
-      this.inputWrapper.classList.remove('_hidden');
+      this.el.getElementsByClassName('input-wrapper')[0].classList.remove('_hidden');
     },
 
-    onAddItem: function(e) {
-      e.currentTarget.classList.add('_hidden');
+    onAddNewItem: function(e) {
+      e.currentTarget.getElementsByClassName('add_fields')[0].classList.add('_hidden');
+    },
+
+    onRemoveNewItem: function(e) {
+      e.currentTarget.getElementsByClassName('add_fields')[0].classList.remove('_hidden');
     },
 
     onClickItem: function(e) {
       this.currentItem = e.currentTarget;
       this.selectCurrent(e);
       this.updateValue(e);
+
+      this.category.init(e.currentTarget.getAttribute('data-value'));
     },
 
     selectCurrent: function(e) {
@@ -187,7 +205,7 @@
 
     updateValue: function(e) {
       var target = e.currentTarget;
-      document.getElementById('column-input-'+target.parentElement.getAttribute('data-input'))
+      document.getElementById('column-input-'+this.layerId)
         .value = e.currentTarget.getAttribute('data-value');
     },
 
