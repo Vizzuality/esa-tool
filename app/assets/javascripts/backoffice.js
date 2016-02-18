@@ -13,6 +13,7 @@
 //= require views/box_select_view
 //= require views/preview_image_view
 //= require views/map_file_columns_view
+//= require views/map_file_categories_view
 
 'use strict';
 

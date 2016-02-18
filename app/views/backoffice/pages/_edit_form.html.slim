@@ -22,6 +22,11 @@
         = render 'data_layer_fields', f: d, p:f
       - else
         = render 'data_layers_fields', f: d, p:f
+  - if @page.page_type == 2
+    .nested-fields.file-map-input
+      .list-container data= {layerId:0, filename: @page.data_layers.first.table_name}
+        = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-0"
+        .box-list.-selectable._is-loading
           
     #filename
     .nested-fields

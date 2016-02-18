@@ -1,5 +1,3 @@
-//= require views/map_file_categories_view
-
 'use strict';
 
 (function(App) {
@@ -174,6 +172,7 @@
     },
 
     onAddNewItem: function(e) {
+      debugger;
       e.currentTarget.getElementsByClassName('add_fields')[0].classList.add('_hidden');
     },
 
