@@ -63,20 +63,17 @@
       var self = this;
       var file = e.currentTarget.files[0];
       var extension = file.name.substr(file.name.lastIndexOf('.')+1);
-      if (extension === "csv"){
-
-        // var columns = self.getColums(file);
-        // columns.done(function(columns){
-        //   if (columns.indexOf('year') === -1) {
-        //     alert('The selected shapefile file doesn\'t contain the year column');
-        //     self.removeFileSelected();
-        //   } else {
-        //     self.addFileSelected();
-        //   }
-        // });
-        self.addFileSelected(e);
-        // self.init(file.name.slice(0, -extension.length-1));
-      }
+      // var columns = self.getColums(file);
+      // columns.done(function(columns){
+      //   if (columns.indexOf('year') === -1) {
+      //     alert('The selected shapefile file doesn\'t contain the year column');
+      //     self.removeFileSelected();
+      //   } else {
+      //     self.addFileSelected();
+      //   }
+      // });
+      // self.init(file.name.slice(0, -extension.length-1
+      self.addFileSelected();
     },
 
     getCsvColums: function(file) {
