@@ -38,7 +38,7 @@ module CartoDb
         query: {
           api_key: API_KEY,
           file: file,
-          privacy: "link"
+          # privacy: "link"
         }
       ).body
     end

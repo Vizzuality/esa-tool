@@ -3,13 +3,17 @@
 //= require cocoon
 //= require jquery.tagsinput/jquery.tagsinput
 //= require featherlight
+//= require spectrum.js
 //= require underscore
 //= require backbone
 //= require_self
+//= require helpers/helper
+//= require_tree ./cartocss
 //= require views/tags_view
 //= require views/box_select_view
 //= require views/preview_image_view
 //= require views/map_file_columns_view
+//= require views/map_file_categories_view
 
 'use strict';
 
@@ -62,8 +66,11 @@
     },
 
     initMapFileColumns: function() {
-      new App.View.MapFileColumns({
-        el: document.querySelectorAll('.file-map-input')
+      this.filesContainer = document.getElementsByClassName('file-map-input');
+      _.each(this.filesContainer, function(item) {
+        new App.View.MapFileColumns({
+          el: item
+        });
       });
     },
 

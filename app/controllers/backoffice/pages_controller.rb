@@ -24,6 +24,7 @@ class Backoffice::PagesController < BackofficeController
 
   def edit
     gon.cartodb_user = ENV["CDB_USERNAME"]
+    gon.case_study = @case_study.to_json
   end
 
   def update
@@ -73,7 +74,7 @@ class Backoffice::PagesController < BackofficeController
         :case_study_id,
         :column_selected,
         :delete_image,
-        data_layers_attributes: [:id, :table_name, :year, :file, :layer_column, :layer_column_alias],
+        data_layers_attributes: [:id, :table_name, :year, :file, :layer_column, :layer_column_alias, :custom_columns_colors],
         interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )

@@ -3,6 +3,9 @@
   justify-content: space-between;
   flex-wrap: wrap;
 
+  &.-around {
+    justify-content: space-around;
+  }
   & > .item {
     display: inline-block;
     width: 30%;
@@ -47,7 +50,7 @@
     &._selected::after {
       @include checked();
     }
-    
+
     &.-center {
       display: flex;
       align-items: center;
