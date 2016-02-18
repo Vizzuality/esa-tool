@@ -7,6 +7,7 @@
 //= require featherlight
 //= require_self
 //= require router
+//= require helpers/helper
 //= require_tree ./cartocss
 //= require views/map_view
 //= require views/map_basemap_view

@@ -297,27 +297,39 @@
       var data = res.rows;
       var groups = _.groupBy(data, 'column');
       var palette;
-      if (this.data.colorPalette === 2) {
-        palette = this.cartoCss.palette2;
-      } else {
-        palette = this.cartoCss.palette1;
-      }
-      var numColors = palette.length;
       var count = 0;
-
-      _.map(groups, function(g) {
-        var gr = g[0];
-
-        if (count > numColors - 1) {
-          count = 0;
+      if (this.data.colorPalette === 3) {
+        var layer = _.findWhere(this.data.layers, { table_name: this.currentLayer });
+        var colors = App.Helper.deserialize(layer.custom_columns_colors);
+        _.map(groups, function(g) {
+          count ++;
+          var gr = g[0];
+          gr.color = colors[gr.column];
+          gr.index = count;
+        });
+        this.data.categories = groups;
+      } else {
+        if (this.data.colorPalette === 2) {
+          palette = this.cartoCss.palette2;
+        } else {
+          palette = this.cartoCss.palette1;
         }
+        var numColors = palette.length;
 
-        gr.color = palette[count];
-        gr.index = count;
-        count++;
-      });
+        _.map(groups, function(g) {
+          var gr = g[0];
 
-      this.data.categories = groups;
+          if (count > numColors - 1) {
+            count = 0;
+          }
+
+          gr.color = palette[count];
+          gr.index = count;
+          count++;
+        });
+        this.data.categories = groups;
+      }
+
     },
 
     /**

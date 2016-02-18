@@ -78,7 +78,7 @@
         table: table,
         limit: 15
       };
-      sql.execute('SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} LIMIT {{limit}}', queryOpt)
+      sql.execute('SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}', queryOpt)
         .done(function(data) {
           if (data.rows.length){
             defer.resolve(data.rows);
