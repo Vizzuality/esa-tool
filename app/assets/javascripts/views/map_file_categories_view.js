@@ -6,16 +6,7 @@
 
   App.View.MapFileCategories = Backbone.View.extend({
 
-    defaults: {
-      ignored_categories: [
-        'cartodb_id',
-        'the_geom',
-        'the_geom_webmercator',
-        'updated_at',
-        'created_at',
-        'year'
-      ]
-    },
+    defaults: { },
 
     columns: [],
 
@@ -80,16 +71,22 @@
     },
 
     getCategories: function(table, column) {
-      var query = 'SELECT DISTINCT ' + column +' AS CATEGORY FROM ' + table + ' LIMIT 15';
       var defer = new $.Deferred();
-      $.getJSON('https://'+this.data.cartodb_user+'.cartodb.com/api/v2/sql/?q='+query)
-        .done(function(data){
+      var sql = new cartodb.SQL({ user: this.data.cartodbUser });
+      var queryOpt = {
+        column: column,
+        table: table,
+        limit: 15
+      };
+      sql.execute('SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} LIMIT {{limit}}', queryOpt)
+        .done(function(data) {
           if (data.rows.length){
             defer.resolve(data.rows);
           } else {
             defer.reject('there are not categories');
           }
-        }).fail(function(){
+        })
+        .error(function() {
           defer.reject('fail getting categories');
         });
 
@@ -149,7 +146,7 @@
 
       if (gon) {
         if (gon.cartodb_user) {
-          data.cartodb_user = gon.cartodb_user;
+          data.cartodbUser = gon.cartodb_user;
         }
         if (gon.case_study) {
           data.caseStudy = JSON.parse(gon.case_study);

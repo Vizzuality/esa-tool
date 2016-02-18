@@ -98,10 +98,14 @@
 
     getColumns: function(name) {
       var self = this;
-      var query = 'SELECT * FROM ' + name + ' LIMIT 0';
-      var defer = new $.Deferred();
       var columns = [];
-      $.getJSON('https://'+this.data.cartodb_user+'.cartodb.com/api/v2/sql/?q='+query)
+      var defer = new $.Deferred();
+      var sql = new cartodb.SQL({ user: this.data.cartodbUser });
+      var queryOpt = {
+        table: name,
+        limit: 0
+      };
+      sql.execute('SELECT * FROM {{table}} LIMIT {{limit}}', queryOpt)
         .done(function(data){
           $.each(data.fields, function(key) {
             if (!_.contains(self.ignored_columns, key)) {
@@ -113,7 +117,8 @@
           } else {
             defer.reject('there are not columns');
           }
-        }).fail(function(){
+        })
+        .error(function(){
           defer.reject('fail getting columns');
         });
 
@@ -209,7 +214,7 @@
       var data = {};
 
       if (gon && gon.cartodb_user) {
-        data.cartodb_user = gon.cartodb_user;
+        data.cartodbUser = gon.cartodb_user;
       }
 
       return data;
