@@ -174,7 +174,6 @@
     },
 
     onAddNewItem: function(e) {
-      debugger;
       e.currentTarget.getElementsByClassName('add_fields')[0].classList.add('_hidden');
     },
 
