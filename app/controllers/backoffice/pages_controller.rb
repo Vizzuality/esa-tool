@@ -24,6 +24,7 @@ class Backoffice::PagesController < BackofficeController
 
   def edit
     gon.cartodb_user = ENV["CDB_USERNAME"]
+    gon.case_study = @case_study.to_json
   end
 
   def update

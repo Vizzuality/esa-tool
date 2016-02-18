@@ -29,6 +29,7 @@
       this.ignored_categories = this.options.ignored_categories;
       this.columnsContainer = this.el.getElementsByClassName('box-list')[0];
       this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors')[0];
+      this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
     },
 
     init: function(column) {
@@ -54,27 +55,24 @@
     initColorPicker: function() {
       var self = this;
       $('.colorpicker').each(function(index, item){
-        var $item = $(item);
+        var $item = $(item),
+            borderColor;
         $item.spectrum({
+		      showAlpha: true,
           showInput: true,
           showInitial: true,
           showPalette: true,
           showSelectionPalette: true,
           maxSelectionSize: 10,
-          preferredFormat: 'hex',
-          palette: [
-            '#2B7312',
-            '#FF6600',
-            '#229A00',
-            '#7801FF',
-            '#EA01FF',
-            '#FF0060',
-            '#FF6602',
-            '#ffc600'
-          ]
+          preferredFormat: 'rgb',
+          palette: self.palette
         });
+        borderColor = $(item).spectrum('get').toHex();
+        $(item).siblings('.sp-replacer').css('border','1px solid #'+borderColor);
 
         $(item).on('change.spectrum', function(e, color){
+          var borderContainer = e.currentTarget.parentElement.getElementsByClassName('sp-replacer')[0];
+          borderContainer.style.border = '1px solid #'+color.toHex();
           self.updateColumnsColor(color);
         });
       });
@@ -100,15 +98,23 @@
 
     refreshCategories: function(columns) {
       var self = this;
-      var colors = this.deserialize(this.customColumsInput.value);
+      var colors = App.Helper.deserialize(this.customColumsInput.value);
+      var paletteLenght = this.palette.length;
+      var count = 0;
 
       _.each(columns, function(element) {
-        if (colors) {
-          self.columnsContainer.insertAdjacentHTML('afterbegin', self.getCategory(element.category, colors[element.category]));
+        var category, color;
+        if (colors && colors[element.category]) {
+          color = colors[element.category];
         } else {
-          // TODO add palette of theme
-          self.columnsContainer.insertAdjacentHTML('afterbegin', self.getCategory(element.category, '#fff'));
+          if (count > paletteLenght -1) {
+            count = 0;
+          }
+          color = App.Helper.hexToRgba(self.palette[count], 30);
+          count++;
         }
+        category = self.getCategory(element.category, color);
+        self.columnsContainer.insertAdjacentHTML('beforeend', category);
       });
       this.initColorPicker();
       this.columnsValues = this.$('.colorpicker');
@@ -134,35 +140,20 @@
       console.log(error);
     },
 
-    updateColumnsColor: function(color) {
+    updateColumnsColor: function() {
       this.customColumsInput.value = this.columnsValues.serialize();
-    },
-
-    deserialize: function(string) {
-      var obj = {},
-          fields = [];
-      string = string.replace(/\+/g, '%20');
-
-      if (string){
-        fields = string.split('&');
-
-        _.each(fields, function(item){
-          var nameValue = item.split('=');
-          var name = decodeURIComponent(nameValue[0]);
-          var value = decodeURIComponent(nameValue[1]);
-          obj[name] = value;
-        });
-        return obj;
-      } else {
-        return null;
-      }
     },
 
     _getAppData: function() {
       var data = {};
 
-      if (gon && gon.cartodb_user) {
-        data.cartodb_user = gon.cartodb_user;
+      if (gon) {
+        if (gon.cartodb_user) {
+          data.cartodb_user = gon.cartodb_user;
+        }
+        if (gon.case_study) {
+          data.caseStudy = JSON.parse(gon.case_study);
+        }
       }
 
       return data;

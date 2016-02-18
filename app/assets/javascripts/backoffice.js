@@ -7,6 +7,8 @@
 //= require underscore
 //= require backbone
 //= require_self
+//= require helpers/helper
+//= require_tree ./cartocss
 //= require views/tags_view
 //= require views/box_select_view
 //= require views/preview_image_view

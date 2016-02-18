@@ -6,6 +6,10 @@
           p = f.object.table_name
         .grid-sm-2.year
           = f.input_field :year, placeholder: "Year"
+    .nested-fields
+      .list-container data= {layerId:0, filename: @page.data_layers.first.table_name}
+        = p.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-0"
+        .box-list.-selectable._is-loading
   - else
     .nested-fields
       .row.file
