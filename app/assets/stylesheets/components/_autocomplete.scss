@@ -1,0 +1,26 @@
+.ui-widget-content {
+  background: $bg-color-1;
+  border: none;
+  color: $font-color-1;
+  margin-top: .8rem;
+}
+.ui-menu {
+  .ui-menu-item {
+    padding: .2rem .4rem;
+    margin: 5px 0;
+    color: $font-color-1;
+
+    border: 2px dashed rgba($border-color-2, .2);
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    background-color: transparent;
+
+    &.ui-state-focus {
+      border: 2px dashed $border-color-2;
+      color: $font-color-1;
+
+      background: transparent;
+    }
+  }
+}

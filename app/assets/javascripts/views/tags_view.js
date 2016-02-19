@@ -14,12 +14,33 @@
     defaults: {
       width: '100%',
       height: 'auto',
-      defaultText: 'Add tag'
+      defaultText: 'Add tag',
+      autocomplete_url:'/tags'
     },
 
     initialize: function(params) {
+      var self = this;
       this.options = _.extend({}, this.defaults, params.options || {});
+      this.options.autocomplete = {
+        response: function( e, data ) {
+          if (data.content.length) {
+            _.each(data.content, function(item, index){
+              if (self.$el.tagExist(item.label)) {
+                data.content.splice(index, 1);
+              }
+            });
+          }
+          return data.content;
+        }
+      };
+      // this.getTags().done(function(data){
+      //   self.tags = data.tags;
+      // });
       this.$el.tagsInput(this.options);
+    },
+
+    getTags:function(){
+      return $.getJSON('/tags');
     }
 
   });

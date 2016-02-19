@@ -1,4 +1,3 @@
-
 class CaseStudiesController < ApplicationController
 
   after_action :check_case_study
@@ -29,7 +28,7 @@ class CaseStudiesController < ApplicationController
     if user_signed_in?
       @tags = Tag.all
       @case_study = CaseStudy.find_by(slug: params[:slug])
-      
+
       gon.case_study = @case_study.
         to_json(include: [:contacts, {pages: {include: [:data_layers, :charts]}}])
       gon.cartodb_user = ENV["CDB_USERNAME"]
