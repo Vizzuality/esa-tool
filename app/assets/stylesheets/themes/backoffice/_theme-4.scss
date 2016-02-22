@@ -10,7 +10,7 @@
       @for $i from 1 through length($t-palette1) {
       	.range:nth-child(#{$i}) {
           span {
-            background-color: rgba(nth($t-palette1, $i), 0.3);
+            background-color: rgba(nth($t-palette1, $i), 1);
 
             &.-bordered {
               border: 1px solid nth($t-palette1, $i);
@@ -24,7 +24,7 @@
       @for $i from 1 through length($t-palette2) {
       	.range:nth-child(#{$i}) {
           span {
-            background-color: rgba(nth($t-palette2, $i), 0.3);
+            background-color: rgba(nth($t-palette2, $i), 1);
 
             &.-bordered {
               border: 1px solid nth($t-palette2, $i);

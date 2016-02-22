@@ -298,6 +298,8 @@
       var groups = _.groupBy(data, 'column');
       var palette, currentLayer;
       var count = 0;
+
+      //ColorPalette 3 = custom color palette
       if (this.data.colorPalette === 3) {
         if (this.data.pageType === 3) {
           currentLayer = _.findWhere(this.data.layers, { table_name: this.currentLayer });

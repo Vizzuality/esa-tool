@@ -107,7 +107,7 @@
           if (count > paletteLenght -1) {
             count = 0;
           }
-          color = App.Helper.hexToRgba(self.palette[count], 30);
+          color = App.Helper.hexToRgba(self.palette[count], 100);
           count++;
         }
         category = self.getCategory(element.category, color);
