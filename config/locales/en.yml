@@ -60,6 +60,7 @@ en:
   login: 'Login'
   logout: 'Logout'
   map: 'Map'
+  no_logos_uploaded: "There aren't logos uploaded"
   organization: 'Organization'
   or: 'or'
   page: 'Page'

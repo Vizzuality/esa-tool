@@ -52,11 +52,11 @@ ActiveRecord::Schema.define(version: 20160217095220) do
     t.integer  "case_study_id",     null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-    t.datetime "logo_updated_at"
     t.string   "website"
+    t.datetime "logo_updated_at"
+    t.integer  "logo_file_size"
+    t.string   "logo_content_type"
+    t.string   "logo_file_name"
   end
 
   add_index "contacts", ["case_study_id"], name: "index_contacts_on_case_study_id", using: :btree

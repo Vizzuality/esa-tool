@@ -11,7 +11,7 @@
 .file-image.file-image-input class= "#{class_name} #{input_class} #{custom_label_class}"
   - if custom_label
     = f.label name, custom_label
-  = f.input name, as: :file, label:false, wrapper_html: {class:"file", style: input_style}
+  = f.input name, as: :file, label:false, wrapper_html: {class:"file", style: input_style}, input_html: {id: "input-image-contact-#{f.object.id}"}
   = f.hidden_field :delete_image, value: image.exists? ? 'false' : 'true', class: "delete_image"
   .placeholder
     span.title = placeholder_title.html_safe

@@ -1,6 +1,7 @@
 class Backoffice::CaseStudiesController < BackofficeController
 
   before_action :set_case_study, only: [:show, :edit, :update, :destroy]
+  before_action :set_existing_contacts, only: [:edit]
   before_action :restrict_access!, only: [:edit, :update, :destroy]
 
   def index
@@ -36,9 +37,10 @@ class Backoffice::CaseStudiesController < BackofficeController
 
   def update
     if @case_study.update(case_studies_params)
-      redirect_to backoffice_case_studies_path,
+      redirect_to [:backoffice, @case_study],
         notice: 'Case study updated successfully.'
     else
+      set_existing_contacts
       render :edit
     end
   end
@@ -66,6 +68,11 @@ class Backoffice::CaseStudiesController < BackofficeController
       @case_study = CaseStudy.find(params[:id])
     end
 
+    def set_existing_contacts
+      @existing_contacts = Contact.all.where.not(logo_file_name: nil).to_a
+      @existing_contacts.uniq!{|c| c.logo_file_name}
+    end
+
     def case_studies_params
       params.require(:case_study).permit(
         :title,
@@ -78,7 +85,8 @@ class Backoffice::CaseStudiesController < BackofficeController
         :cover_image,
         :tag_list,
         :delete_image,
-        contacts_attributes: [:id, :body, :logo, :website, :_destroy, :delete_image]
+        contacts_attributes: [:id, :body, :logo, :website, :_destroy,
+          :delete_image, :logo_from_contact_id]
       )
     end
 
