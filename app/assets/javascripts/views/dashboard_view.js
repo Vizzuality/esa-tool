@@ -24,12 +24,16 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
-      this.charts = this.options.charts.length? true:false;
+      this.layers = this.options.data.layers;
+      this.charts = this.options.data.charts.length ? true:false;
 
       this._initLegend();
+
       if (this.charts){
         this._initChart();
-        this._initTimeline();
+        if (this.layers.length>1){
+          this._initTimeline();
+        }
       }
     },
 
@@ -41,7 +45,7 @@
     start: function() {
       var data = _.flatten(_.values(this.data.dashboard));
 
-      if (this.currentYear) {
+      if (this.timeline && this.currentYear) {
         this.timeline.start({
           data: data
         });
@@ -69,7 +73,7 @@
 
       this.legend.update(data, layer);
 
-      if (this.currentYear) {
+      if (this.timeline && this.currentYear) {
         this.timeline.show();
       }
     },

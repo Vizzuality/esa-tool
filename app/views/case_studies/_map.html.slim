@@ -38,10 +38,11 @@
               h3.title Chart:
               ul.tabs
                 - p.charts.each.with_index do |chart, index|
-                  li data-tab="#{chart.name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)
-                    a href="#"
-                      svg class=("icon-chart -#{chart.name}")
-                        use xlink:href="#icon-chart-#{chart.name}"
+                  - if (chart.name != "line") or (chart.name=="line" and p.data_layers.length>1)
+                    li data-tab="#{chart.name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)
+                      a href="#"
+                        svg class=("icon-chart -#{chart.name}")
+                          use xlink:href="#icon-chart-#{chart.name}"
 
             .charts-content
               - p.charts.each.with_index do |chart, index|
