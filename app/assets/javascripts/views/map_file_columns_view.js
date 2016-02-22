@@ -73,7 +73,7 @@
       //   }
       // });
       // self.init(file.name.slice(0, -extension.length-1
-      self.addFileSelected();
+      self.addFileSelected(e);
     },
 
     getCsvColums: function(file) {

@@ -64,7 +64,7 @@
         $(item).on('change.spectrum', function(e, color){
           var borderContainer = e.currentTarget.parentElement.getElementsByClassName('sp-replacer')[0];
           borderContainer.style.border = '1px solid #'+color.toHex();
-          self.updateColumnsColor(color);
+          self.updateColumnsColor();
         });
       });
 
@@ -115,6 +115,7 @@
       });
       this.initColorPicker();
       this.columnsValues = this.$('.colorpicker');
+      this.updateColumnsColor();
       this.columnsContainer.classList.remove('_is-loading');
     },
 

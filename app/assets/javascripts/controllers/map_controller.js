@@ -296,11 +296,15 @@
     _parseLayerData: function(res, layer) {
       var data = res.rows;
       var groups = _.groupBy(data, 'column');
-      var palette;
+      var palette, currentLayer;
       var count = 0;
       if (this.data.colorPalette === 3) {
-        var layer = _.findWhere(this.data.layers, { table_name: this.currentLayer });
-        var colors = App.Helper.deserialize(layer.custom_columns_colors);
+        if (this.data.pageType === 3) {
+          currentLayer = _.findWhere(this.data.layers, { table_name: this.currentLayer });
+        } else {
+          currentLayer = _.findWhere(this.data.layers, { year: this.currentYear });
+        }
+        var colors = App.Helper.deserialize(currentLayer.custom_columns_colors);
         _.map(groups, function(g) {
           count ++;
           var gr = g[0];
