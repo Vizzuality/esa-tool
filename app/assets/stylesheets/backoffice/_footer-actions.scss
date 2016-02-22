@@ -9,12 +9,21 @@
     left: 0;
     right: 0;
     width: 100%;
-    
+
     z-index: 2;
   }
 
   .actions {
     display: flex;
     justify-content: flex-end;
+
+    &._is-loading {
+      min-height: 40px;
+      position: relative;
+
+      .btn {
+        display: none;
+      }
+    }
   }
 }
