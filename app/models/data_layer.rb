@@ -35,13 +35,13 @@ class DataLayer < ActiveRecord::Base
 
     def self.import_file(file)
       queue_id = CartoDb.upload(file)
-      sleep(120) # give CartoDB time to do its thing
+      sleep(1) # give CartoDB time to do its thing
       logger.info "My queue id is #{queue_id}"
       i = 0
       import_status = CartoDb.import_status(queue_id)
-      while i < 240
+      while i < 10
         return import_status if import_status["state"] == "complete"
-        sleep(120)
+        sleep(5)
         import_status = CartoDb.import_status(queue_id)
         i += 1
         logger.info "Upload not done yet. will wait a bit longer. This was try number #{i}"
