@@ -23,24 +23,17 @@
       this.options = _.extend({}, this.defaults, params.options || {});
       this.options.autocomplete = {
         response: function( e, data ) {
-          if (data.content.length) {
-            _.each(data.content, function(item, index){
-              if (self.$el.tagExist(item.label)) {
-                data.content.splice(index, 1);
-              }
-            });
+          var i = data.content.length - 1;
+          while (i >= 0) {
+            if (self.$el.tagExist(data.content[i].label)){
+              data.content.splice(i, 1);
+            }
+            i--;
           }
-          return data.content;
         }
       };
-      // this.getTags().done(function(data){
-      //   self.tags = data.tags;
-      // });
-      this.$el.tagsInput(this.options);
-    },
 
-    getTags:function(){
-      return $.getJSON('/tags');
+      this.$el.tagsInput(this.options);
     }
 
   });
