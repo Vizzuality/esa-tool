@@ -41,7 +41,13 @@
     = f.input_field :template, as: :hidden, value: (@case_study.template.to_i or 1), class: 'input'
 
 .form-row
-  = render 'backoffice/partials/input_image_file', f: f, name: :cover_image, image: @case_study.cover_image, class_name: '-large', custom_label: 'thumbnail'
+  = render 'backoffice/partials/input_image_file', f: f, 
+    name: :cover_image, 
+    image: @case_study.cover_image, 
+    class_name: '-large', 
+    custom_label: 'thumbnail',
+    size_recommendations: '600x400'
+  
 
 .footer.-fixed
   .wrap: .row: .grid-sm-6.offset-sm-3
