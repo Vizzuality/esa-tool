@@ -41,7 +41,7 @@ class DataLayer < ActiveRecord::Base
       import_status = CartoDb.import_status(queue_id)
       while i < 10
         return import_status if import_status["state"] == "complete"
-        sleep(5)
+        sleep(50)
         import_status = CartoDb.import_status(queue_id)
         i += 1
         logger.info "Upload not done yet. will wait a bit longer. This was try number #{i}"
