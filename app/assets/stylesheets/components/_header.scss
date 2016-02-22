@@ -1,13 +1,22 @@
 .l-header {
 
   position: fixed;
-  top: rem(30px);
+  top: 0;
   left: 0;
   width: 100%;
 
   color: $font-color-1;
 
   z-index: 3;
+
+  .btn-container, .brands-container {
+    padding-top: rem(30px);
+    padding-bottom: rem(30px);
+  }
+
+  .brands-container {
+    margin: 0 -.2rem;
+  }
 
   .brands {
     display: flex;

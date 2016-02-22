@@ -1,16 +1,16 @@
 header.l-header.-no-events
   .wrap: .row
-    .grid-sm-8
-      button.btn-burguer#btnBurguer
-        span
-        span
-        span
+    .grid-sm-8.btn-container 
+        button.btn-burguer#btnBurguer
+          span
+          span
+          span
         
-    .grid-sm-4._right
-      .brands
-        = link_to root_path, class: 'brand',target: "_blank" do
-          svg.icon.icon-eoworld-logo
-            use xlink:href="#icon-eoworld-logo"
-        = link_to 'http://www.esa.int/ESA', class: 'brand', target: "_blank" do
-          svg.icon.icon-esa-logo
-            use xlink:href="#icon-esa-logo"
+    .grid-sm-4._right.brands-container
+        .brands
+          = link_to root_path, class: 'brand',target: "_blank" do
+            svg.icon.icon-eoworld-logo
+              use xlink:href="#icon-eoworld-logo"
+          = link_to 'http://www.esa.int/ESA', class: 'brand', target: "_blank" do
+            svg.icon.icon-esa-logo
+              use xlink:href="#icon-esa-logo"

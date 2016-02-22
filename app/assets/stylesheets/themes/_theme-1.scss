@@ -7,8 +7,8 @@
 
   // Theme definition
   $t-bg-color-1: $t-black;
-  $t-bg-color-2: $t-white; 
-  $t-bg-color-3: $t-secondary;  
+  $t-bg-color-2: $t-white;
+  $t-bg-color-3: $t-secondary;
   $t-font-color-1: $t-white;
   $t-font-color-2: $t-black;
   $t-font-color-3: $t-secondary;
@@ -16,7 +16,7 @@
 
   $default-opacity: 0.7;
   $arrows-opacity: 0.2;
-  $chart-icon-opacity: 0.3; 
+  $chart-icon-opacity: 0.3;
   $map-basemap-opacity: 0.8;
   $map-basemap-shadow-opacity: 0.8;
   $map-basemap-selected-opacity: 0.5;
@@ -64,6 +64,12 @@
     &:after {
       border-top-color: $t-bg-color-3;
     }
+  }
+
+  // Header
+
+  .brands-container {
+    background: linear-gradient(to bottom, rgba($t-bg-color-1, 1), rgba($t-bg-color-1, 0));
   }
 
   // Brand
