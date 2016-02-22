@@ -19,7 +19,7 @@
       this.data = this._getAppData();
       this.ignored_categories = this.options.ignored_categories;
       this.columnsContainer = this.el.getElementsByClassName('box-list')[0];
-      this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors')[0];
+      this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors');
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
     },
 
@@ -64,7 +64,7 @@
         $(item).on('change.spectrum', function(e, color){
           var borderContainer = e.currentTarget.parentElement.getElementsByClassName('sp-replacer')[0];
           borderContainer.style.border = '1px solid #'+color.toHex();
-          self.updateColumnsColor(color);
+          self.updateColumnsColor();
         });
       });
 
@@ -78,7 +78,7 @@
         table: table,
         limit: 15
       };
-      sql.execute('SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} LIMIT {{limit}}', queryOpt)
+      sql.execute('SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}', queryOpt)
         .done(function(data) {
           if (data.rows.length){
             defer.resolve(data.rows);
@@ -95,7 +95,7 @@
 
     refreshCategories: function(columns) {
       var self = this;
-      var colors = App.Helper.deserialize(this.customColumsInput.value);
+      var colors = App.Helper.deserialize(this.customColumsInput[0].value);
       var paletteLenght = this.palette.length;
       var count = 0;
 
@@ -107,7 +107,7 @@
           if (count > paletteLenght -1) {
             count = 0;
           }
-          color = App.Helper.hexToRgba(self.palette[count], 30);
+          color = App.Helper.hexToRgba(self.palette[count], 100);
           count++;
         }
         category = self.getCategory(element.category, color);
@@ -115,6 +115,7 @@
       });
       this.initColorPicker();
       this.columnsValues = this.$('.colorpicker');
+      this.updateColumnsColor();
       this.columnsContainer.classList.remove('_is-loading');
     },
 
@@ -138,7 +139,10 @@
     },
 
     updateColumnsColor: function() {
-      this.customColumsInput.value = this.columnsValues.serialize();
+      var self = this;
+      _.each(this.customColumsInput, function(item) {
+        item.value = self.columnsValues.serialize();
+      });
     },
 
     _getAppData: function() {

@@ -324,7 +324,6 @@
       var defaultCarto = cartoCss['default'];
       var dataCarto = cartoCss['data'];
       var layers = [];
-
       defaultCarto = '#' + table + this._formatCartoCss(defaultCarto);
 
       for (var group in groups) {
