@@ -24,10 +24,17 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
+      this.layers = this.options.data.layers;
+      this.charts = this.options.data.charts.length ? true:false;
 
       this._initLegend();
-      this._initChart();
-      this._initTimeline();
+
+      if (this.charts){
+        this._initChart();
+        if (this.layers.length>1){
+          this._initTimeline();
+        }
+      }
     },
 
     _setChartListeners: function() {
@@ -38,7 +45,7 @@
     start: function() {
       var data = _.flatten(_.values(this.data.dashboard));
 
-      if (this.currentYear) {
+      if (this.timeline && this.currentYear) {
         this.timeline.start({
           data: data
         });
@@ -56,15 +63,17 @@
       this.currentData = data.currentData;
       this.currentYear = parseInt(data.currentYear, 10);
 
-      if (this.selectedChart !== 'line') {
-        this._initSelectedChart();          
-      } else {
-        this.chart.updateTimeline(this.currentYear);
+      if (this.charts) {
+        if (this.selectedChart !== 'line') {
+          this._initSelectedChart();
+        } else {
+          this.chart.updateTimeline(this.currentYear);
+        }
       }
 
       this.legend.update(data, layer);
 
-      if (this.currentYear) {
+      if (this.timeline && this.currentYear) {
         this.timeline.show();
       }
     },
@@ -74,7 +83,9 @@
      * @param {Object} parameters
      */
     updateState: function(params) {
-      this.timeline.updateState(params);
+      if (this.timeline) {
+        this.timeline.updateState(params);
+      }
     },
 
     /**
@@ -92,7 +103,7 @@
     },
 
     /**
-     * Initializes the chart container 
+     * Initializes the chart container
      */
     _initChart: function() {
       var parent = this.el;
@@ -105,7 +116,7 @@
      */
     _initSelectedChart: function() {
       var elem = this.el.querySelector('.charts');
-      elem.classList.remove('_is-loading');   
+      elem.classList.remove('_is-loading');
 
       var charts = this.data.charts;
       var chart;
@@ -165,7 +176,7 @@
       }
     },
 
-    /** 
+    /**
      * Renders the area chart
      */
     _renderChartLine: function() {
@@ -185,7 +196,7 @@
       this._setChartListeners();
     },
 
-    /** 
+    /**
      * Renders the pie chart
      */
     _renderChartPie: function() {
@@ -207,7 +218,7 @@
       this._setChartListeners();
     },
 
-    /** 
+    /**
      * Renders the bar chart
      */
     _renderChartBar: function() {
@@ -327,12 +338,12 @@
       }
 
       if (defaultLegendTab) {
-        defaultLegendTab.classList.add('-active'); 
+        defaultLegendTab.classList.add('-active');
       }
 
     },
 
-    /** 
+    /**
      * Filters the content by a category
      * @param {String} category
      */
@@ -341,7 +352,7 @@
       this.trigger('chart:filter', category);
     },
 
-    /** 
+    /**
      * Triggered when the year have changed
      * @param {Number} year
      */
@@ -349,7 +360,7 @@
       this.trigger('dashboard:update:year', year);
     },
 
-    /** 
+    /**
      * Removes the chart instance
      */
     _removeChart: function() {
@@ -367,7 +378,7 @@
       }
     },
 
-    /** 
+    /**
      * Removes the legend instance
      */
     _removeLegend: function() {
@@ -377,7 +388,7 @@
       }
     },
 
-    /** 
+    /**
      * Removes the timeline instance
      */
     _removeTimeline: function() {
@@ -387,10 +398,10 @@
       }
     },
 
-    /** 
+    /**
      * Removes the views and undelegates events
      */
-    remove: function(params) {      
+    remove: function(params) {
       this.isRemoving = true;
       this._removeChart();
       this._removeLegend();

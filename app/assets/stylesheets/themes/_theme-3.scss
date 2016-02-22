@@ -199,8 +199,9 @@
 
     &.pie {
       .arc {
-        fill-opacity: 1;
-        stroke-width: 2;
+        path {
+          fill-opacity: 1;
+        }
       }
     }
 
