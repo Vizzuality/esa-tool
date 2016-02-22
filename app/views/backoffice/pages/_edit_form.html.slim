@@ -28,9 +28,9 @@
         = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-0"
         .box-list.-selectable._is-loading
           
-    #filename
-    .nested-fields
-      = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
+  #filename
+  .nested-fields
+    = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   .form-row.box-selector
     = f.input :basemap, as: :radio_buttons, collection: basemaps
 
