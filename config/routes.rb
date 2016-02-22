@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     get 'preview', on: :member
   end
 
+  resources :tags, defaults: { format: 'json' }
+  get '/tags', to: 'tags#index'
+
+
   root 'landing#index', as: 'root'
 
 end

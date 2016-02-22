@@ -1,5 +1,6 @@
 //= require jquery2
 //= require jquery_ujs
+//= require jquery-ui.min.js
 //= require cocoon
 //= require jquery.tagsinput/jquery.tagsinput
 //= require featherlight
