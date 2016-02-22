@@ -117,7 +117,8 @@
       }
 
       this.dashboard = new App.View.Dashboard({
-        el: dashboardEl
+        el: dashboardEl,
+        charts: this.data.charts
       });
 
       this.listenTo(this.dashboard, 'dashboard:filter', this._setFilter);
