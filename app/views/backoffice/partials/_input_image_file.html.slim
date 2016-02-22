@@ -5,6 +5,7 @@
 - custom_label_class = custom_label ? "_has_label" : nil
 
 - class_name = class_name ? class_name : nil
+- size_recommendations = size_recommendations ? size_recommendations : nil
 
 - input_style = image.exists? ? "background-image: url(#{image.url(:medium)})" : nil
 - input_class = image.exists? ? "_has_file" : nil
@@ -17,3 +18,6 @@
     span.title = placeholder_title.html_safe
     span.sub-title = placeholder_subtitle.html_safe
   span.close ×
+  - if size_recommendations
+    span.caption ="Optimal size: #{size_recommendations} px"
+    
