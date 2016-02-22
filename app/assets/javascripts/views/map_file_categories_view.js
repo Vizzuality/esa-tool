@@ -19,7 +19,7 @@
       this.data = this._getAppData();
       this.ignored_categories = this.options.ignored_categories;
       this.columnsContainer = this.el.getElementsByClassName('box-list')[0];
-      this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors')[0];
+      this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors');
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
     },
 
@@ -95,7 +95,7 @@
 
     refreshCategories: function(columns) {
       var self = this;
-      var colors = App.Helper.deserialize(this.customColumsInput.value);
+      var colors = App.Helper.deserialize(this.customColumsInput[0].value);
       var paletteLenght = this.palette.length;
       var count = 0;
 
@@ -139,7 +139,10 @@
     },
 
     updateColumnsColor: function() {
-      this.customColumsInput.value = this.columnsValues.serialize();
+      var self = this;
+      _.each(this.customColumsInput, function(item) {
+        item.value = self.columnsValues.serialize();
+      });
     },
 
     _getAppData: function() {
