@@ -23,18 +23,32 @@
       color: $font-color-1;
     }
 
-    &._selected::after {
-      @include checked();
-      top:13px;
+    &.-color {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      span {
+        padding-left: 5px;
+        max-width: 90px;
+      }
     }
-
-    &:not(._selected):hover {
-      background-color: rgba($bg-color-4, 0.3);
-      border-radius: 3px;
-
-      &::after {
-        @include checked(0.3);
+  }
+  &.-selectable {
+    > .item {
+      &._selected::after {
+        @include checked();
         top:13px;
+      }
+
+      &:not(._selected):hover {
+        background-color: rgba($bg-color-4, 0.3);
+        border-radius: 3px;
+
+        &::after {
+          @include checked(0.3);
+          top:13px;
+        }
       }
     }
   }

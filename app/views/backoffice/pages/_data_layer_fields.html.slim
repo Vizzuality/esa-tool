@@ -1,14 +1,16 @@
 - if @page.page_type == 2
   .nested-fields
     .row.file.-input
-      .grid-sm-10
-        = f.input :file, as: :file, accept: ".csv"
+      .grid-sm-9
+        = f.input :file, as: :file, accept: ".csv", input_html: {id:"map_file"}
       .grid-sm-2.year
         = f.input_field :year, placeholder: "Year"
+      .grid-sm-1
+        = link_to_remove_association '×', f, class: 'btn -delete'
 - else
   .nested-fields
-    .row.file.-input
-      .grid-sm-12
-        = f.input :file, as: :file
-
-  = f.input :id, as: :hidden
+    .row.file.-input.input-wrapper
+      .grid-sm-11
+        = f.input :file, as: :file, input_html: {id:"map_file"}
+      .grid-sm-1
+        = link_to_remove_association '×', f, class: 'btn -delete'

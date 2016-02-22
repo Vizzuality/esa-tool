@@ -7,6 +7,7 @@ class Contact < ActiveRecord::Base
   #   logo = nil
 
   attr_accessor :delete_image
+  attr_accessor :logo_from_contact_id
   belongs_to :case_study
 
   validates :body, presence: true, length: { minimum: 2 }
@@ -18,6 +19,12 @@ class Contact < ActiveRecord::Base
 
   def delete_image= delete_image
     self.logo.clear if delete_image == "true"
+  end
+
+  def logo_from_contact_id=(contact_id)
+    if contact_id.present?
+      self.logo = Contact.find(contact_id).try(:logo)
+    end
   end
 
 end

@@ -4,26 +4,37 @@
 
   App.View = App.View || {};
 
-  App.View.PreviewImage = Backbone.View.extend({
+  App.View.ImageViews = Backbone.View.extend({
 
     events: {
       'change input[type="file"]': 'setBackgroundImage',
       'click .close': 'cleanImage'
     },
 
+    initialize: function() {
+      this.setListeners();
+    },
+
     setBackgroundImage: function(e) {
       var self = this;
       var reader = new FileReader();
       var file = e.target.files[0];
+      var parent = e.currentTarget.parentNode;
       reader.onload = function() {
-        var parent = e.currentTarget.parentNode;
         parent.parentNode.classList.add('_has_file');
         parent.style.backgroundImage = 'url(' + reader.result + ')';
       };
       if (file && file.type.match('image.*')) {
         reader.readAsDataURL(file);
       }
-      e.currentTarget.parentNode.parentNode.getElementsByClassName('delete_image')[0].value = false;
+      parent.parentNode.getElementsByClassName('delete_image')[0].value = false;
+    },
+
+    loadBackgroundImage: function(id, imgSrc) {
+      var element = document.getElementById('input-image-contact-'+id).parentNode;
+      element.style.backgroundImage = 'url(' + imgSrc + ')';
+      element.parentNode.classList.add('_has_file');
+      element.parentNode.parentNode.getElementsByClassName('delete_image')[0].value = false;
     },
 
     cleanImage: function(e) {
@@ -42,6 +53,18 @@
       target.classList.remove('_has_file');
       target.querySelectorAll('input[type="file"]')[0].value = "";
       target.getElementsByClassName('delete_image')[0].value = true;
+    },
+
+    setListeners: function() {
+      var self = this;
+      $('a.logos-ftlight').on('click', function(e) {
+        self.currentInputId = e.currentTarget.getAttribute('data-id');
+      });
+      $('.uploaded-images').on('click', function(e) {
+        var logoImg = e.currentTarget.getElementsByTagName('img')[0];
+        document.getElementById('contact-id-'+self.currentInputId).value = logoImg.getAttribute('data-contact');
+        self.loadBackgroundImage(self.currentInputId, logoImg.src);
+      });
     }
 
   });
