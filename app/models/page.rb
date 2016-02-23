@@ -3,7 +3,7 @@ class Page < ActiveRecord::Base
   default_scope { order('created_at ASC') }
 
   belongs_to :case_study
-  has_many :data_layers, :dependent => :destroy
+  has_many :data_layers, dependent: :destroy
   has_many :interest_points
   has_and_belongs_to_many :charts
   has_attached_file :background, styles: {

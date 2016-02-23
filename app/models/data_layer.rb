@@ -28,8 +28,8 @@ class DataLayer < ActiveRecord::Base
   end
 
   def remove_cartodb_table
-    layers_same_table = DataLayer.all.where.not(id: self.id).where(table_name: self.table_name)
-    if layers_same_table.blank?
+    layers_same_table = DataLayer.where.not(id: self.id).where(table_name: self.table_name)
+    if layers_same_table.empty?
       CartoDb.remove_cartodb_table(self.table_name)
     end
   end
