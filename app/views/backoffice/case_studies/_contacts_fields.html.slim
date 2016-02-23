@@ -1,4 +1,3 @@
-- f.object.id = @item_index+1
 .nested-fields
   .row
     .grid-sm-7
@@ -10,5 +9,5 @@
       = link_to_remove_association '×', f, class: 'btn -delete'
     .grid-sm-11
       = f.input :website, label: false, placeholder: t('simple_form.placeholders.contact.website')
-  / = f.input :id, as: :hidden
+  = f.input :id, as: :hidden
   = f.hidden_field :logo_from_contact_id, id: "contact-id-#{f.object.id}"
