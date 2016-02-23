@@ -24,9 +24,11 @@
 .form-row
   = f.label :contacts
 
+  - @item_index = 0
   = f.simple_fields_for :contacts do |c|
-    = render 'contact_fields', f: c
-  div 
+    = render 'contacts_fields', f: c
+    - @item_index += 1
+  div#addContact
     = link_to_add_association t('add_contact'), f, :contacts, class: 'btn -dotted'
 
 .form-row
