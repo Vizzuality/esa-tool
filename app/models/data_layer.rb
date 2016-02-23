@@ -10,9 +10,9 @@ class DataLayer < ActiveRecord::Base
   validates :import_status, presence: true
   # validates :year, presence: true
 
-  attr_accessor :file
+  attr_accessor :file, :cloning
 
-  before_validation :create_file, on: :create
+  before_validation :create_file, on: :create, unless: :cloning
 
   def create_file
     if self.file.present?

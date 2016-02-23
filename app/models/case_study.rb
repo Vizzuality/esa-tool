@@ -51,8 +51,10 @@ class CaseStudy < ActiveRecord::Base
   end
 
   def self.clone(id)
-    c_study = find(id).deep_clone include: :pages
-    c_study.slug = c_study.slug+"-"+Time.now.to_i.to_s
+    c_study = find(id).deep_clone include: { pages: :data_layers } do |orig, kop|
+      kop.slug = orig.slug+"-"+Time.now.to_i.to_s if kop.respond_to?(:slug)
+      kop.cloning = true if kop.respond_to?(:file)
+    end
     c_study
   end
 
