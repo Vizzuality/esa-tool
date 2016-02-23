@@ -80,6 +80,7 @@
         e.preventDefault();
       }
       this.submitted = true;
+      e.currentTarget.parentNode.classList.add('_is-loading');
       this.$el.find('form').submit();
     },
 
