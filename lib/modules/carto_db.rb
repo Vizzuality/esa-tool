@@ -47,4 +47,10 @@ module CartoDb
       get("/v1/imports/#{queue_id}?api_key=#{API_KEY}").body
     end
 
+    def self.remove_cartodb_table(table)
+      if table
+        CartoDb.query("DROP TABLE IF EXISTS #{table}")
+      end
+    end
+
 end

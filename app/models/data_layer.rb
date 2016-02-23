@@ -14,6 +14,8 @@ class DataLayer < ActiveRecord::Base
 
   before_validation :create_file, on: :create
 
+  before_destroy :remove_cartodb_table
+
   def create_file
     if self.file.present?
       import_status = DataLayer.import_file(self.file)
@@ -23,7 +25,14 @@ class DataLayer < ActiveRecord::Base
     else
       self.errors[:file] = "You need to provide a file"
     end
-   end
+  end
+
+  def remove_cartodb_table
+    layers_same_table = DataLayer.all.where.not(id: self.id).where(table_name: self.table_name)
+    if layers_same_table.blank?
+      CartoDb.remove_cartodb_table(self.table_name)
+    end
+  end
 
   private
 
