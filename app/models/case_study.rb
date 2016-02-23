@@ -51,9 +51,16 @@ class CaseStudy < ActiveRecord::Base
   end
 
   def self.clone(id)
-    c_study = find(id).deep_clone include: { pages: :data_layers } do |orig, kop|
-      kop.slug = orig.slug+"-"+Time.now.to_i.to_s if kop.respond_to?(:slug)
-      kop.cloning = true if kop.respond_to?(:file)
+    include_these = [
+      :contacts,
+      { pages: [ :interest_points, :data_layers, :charts ] }
+    ]
+    c_study = find(id).deep_clone(include: include_these) do |orig, kopy|
+      kopy.slug = orig.slug+"-"+Time.now.to_i.to_s if kopy.respond_to?(:slug)
+      kopy.cloning = true if kopy.respond_to?(:file)
+      kopy.cover_image = orig.cover_image if kopy.respond_to?(:cover_image)
+      kopy.background = orig.background if kopy.respond_to?(:background)
+      kopy.logo = orig.logo if kopy.respond_to?(:logo)
     end
     c_study
   end
