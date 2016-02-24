@@ -12,7 +12,6 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = @case_study.pages.new(page_params)
     if @page.save
-      upload_carto_file(@page.data_layers.first.id)
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page.page_type
       ), notice: 'Page created successfully.'
@@ -48,10 +47,6 @@ class Backoffice::PagesController < BackofficeController
   end
 
   private
-
-    def upload_carto_file(data_layer_id)
-      Resque.enqueue(CartoDbImporter, data_layer_id)
-    end
 
     def set_case_study
       @case_study = CaseStudy.find(params[:case_study_id])
