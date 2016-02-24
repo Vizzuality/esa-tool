@@ -6,13 +6,27 @@ class DataLayer < ActiveRecord::Base
 
   belongs_to :page
 
-  validates :table_name, presence: true
-  validates :import_status, presence: true
+  has_attached_file :shapefile
+  validates_attachment_content_type :shapefile,
+    content_type: ["text/csv",
+                    "application/vnd.ms-excel",
+                    "application/zip",
+                    "application/vnd.google-earth.kml+xml",
+                    "application/gpx",
+                    "application/gpx+xml",
+                    #for .shp files
+                    "application/octet-stream"]
+
+
+
+  validates :shapefile, attachment_presence: true
+  # validates :table_name, presence: true
+  # validates :import_status, presence: true
   # validates :year, presence: true
 
-  attr_accessor :file, :cloning
+  attr_accessor :cloning
 
-  before_validation :create_file, on: :create, unless: :cloning
+  # before_validation :create_file, on: :create, unless: :cloning
 
   before_destroy :remove_cartodb_table
 
