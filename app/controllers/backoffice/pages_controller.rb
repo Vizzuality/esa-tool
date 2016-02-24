@@ -12,6 +12,7 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = @case_study.pages.new(page_params)
     if @page.save
+      upload_carto_file(@page.data_layers.first.id)
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page.page_type
       ), notice: 'Page created successfully.'
@@ -48,6 +49,10 @@ class Backoffice::PagesController < BackofficeController
 
   private
 
+    def upload_carto_file(data_layer_id)
+      Resque.enqueue(CartoDbImporter, data_layer_id)
+    end
+
     def set_case_study
       @case_study = CaseStudy.find(params[:case_study_id])
     end
@@ -74,7 +79,7 @@ class Backoffice::PagesController < BackofficeController
         :case_study_id,
         :column_selected,
         :delete_image,
-        data_layers_attributes: [:id, :table_name, :year, :file, :layer_column, :layer_column_alias, :custom_columns_colors],
+        data_layers_attributes: [:id, :table_name, :year, :shapefile, :layer_column, :layer_column_alias, :custom_columns_colors],
         interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )

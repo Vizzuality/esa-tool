@@ -46,6 +46,9 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'devise'
 gem 'deep_cloneable', '~> 2.1.1'
 
+# Jobs managment
+gem 'resque', "~> 1.22.0"
+
 # API
 # gem 'sdoc', '~> 0.4.0', group: :doc
 

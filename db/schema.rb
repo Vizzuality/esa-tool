@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217095220) do
+ActiveRecord::Schema.define(version: 20160224111158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,25 +52,29 @@ ActiveRecord::Schema.define(version: 20160217095220) do
     t.integer  "case_study_id",     null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.string   "website"
-    t.datetime "logo_updated_at"
-    t.integer  "logo_file_size"
-    t.string   "logo_content_type"
     t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string   "website"
   end
 
   add_index "contacts", ["case_study_id"], name: "index_contacts_on_case_study_id", using: :btree
 
   create_table "data_layers", force: :cascade do |t|
-    t.string   "table_name",            null: false
-    t.string   "import_status",         null: false
-    t.integer  "page_id",               null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "table_name"
+    t.string   "import_status"
+    t.integer  "page_id",                null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "year"
     t.string   "layer_column"
     t.string   "layer_column_alias"
     t.text     "custom_columns_colors"
+    t.string   "shapefile_file_name"
+    t.string   "shapefile_content_type"
+    t.integer  "shapefile_file_size"
+    t.datetime "shapefile_updated_at"
   end
 
   add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id", using: :btree
