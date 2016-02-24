@@ -16,5 +16,6 @@ class CartoDbImporter
     layer.import_status = import_status["state"]
     layer.table_name = import_status['table_name']
     layer.save
+    layer.shapefile.clear
   end
 end
