@@ -2,7 +2,7 @@
   .nested-fields
     .row.file.-input
       .grid-sm-9
-        = f.input :file, as: :file, accept: ".csv", input_html: {id:"map_file"}
+        = f.input :shapefile, as: :file, accept: ".csv", input_html: {id:"map_file"}
       .grid-sm-2.year
         = f.input_field :year, placeholder: "Year"
       .grid-sm-1
@@ -11,6 +11,6 @@
   .nested-fields
     .row.file.-input.input-wrapper
       .grid-sm-11
-        = f.input :file, as: :file, input_html: {id:"map_file"}
+        = f.input :shapefile, as: :file, input_html: {id:"map_file"}
       .grid-sm-1
         = link_to_remove_association '×', f, class: 'btn -delete'

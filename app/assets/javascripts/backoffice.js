@@ -13,6 +13,7 @@
 //= require views/tags_view
 //= require views/box_select_view
 //= require views/image_views
+//= require views/logo_collection_view
 //= require views/map_file_columns_view
 //= require views/map_file_categories_view
 
@@ -37,6 +38,7 @@
       this.initMapFileColumns();
       this.initFeatherlight();
       this.setExitWithoutSavingConfirmation();
+      this.setListeners();
     },
 
     /**
@@ -61,9 +63,22 @@
     },
 
     initImageView: function() {
-      new App.View.ImageViews({
+      this.images = new App.View.ImageViews({
         el: this.el.querySelectorAll('.file-image-input')
       });
+      this.logoCollection = new App.View.LogoCollectionView({
+        el: this.el
+      });
+      this.listenTo(this.logoCollection, 'logo:opened', this.setCurrentInput);
+      this.listenTo(this.logoCollection, 'logo:selected', this.setLogoSelected);
+    },
+
+    setCurrentInput: function(id) {
+      this.currentInputId = id;
+    },
+
+    setLogoSelected: function(data) {
+      this.images.setLogo(this.currentInputId, data);
     },
 
     initMapFileColumns: function() {
@@ -80,6 +95,7 @@
         e.preventDefault();
       }
       this.submitted = true;
+      e.currentTarget.parentNode.classList.add('_is-loading');
       this.$el.find('form').submit();
     },
 
@@ -93,19 +109,23 @@
     setExitWithoutSavingConfirmation: function(){
       var self = this;
       this.submitted = false;
-      this.form = this.$("form.exit-saving");
+      this.form = this.$('form.exit-saving');
       this.cleanForm = this.form.serialize();
       $(window).on('beforeunload', function(e){
         e = e || window.event;
-        if(!self.submitted && self.cleanForm != self.form.serialize()) {
+        if(!self.submitted && self.cleanForm !== self.form.serialize()) {
           // For IE and Firefox
           if (e) {
-            e.returnValue = "You have unsaved changes.";
+            e.returnValue = 'You have unsaved changes.';
           }
           // For Safari
-          return "You have unsaved changes.";
+          return 'You have unsaved changes.';
         }
       });
+    },
+
+    setListeners: function(){
+      this.$('#addContact').on('cocoon:after-insert', _.bind(this.initImageView, this));
     }
 
   });

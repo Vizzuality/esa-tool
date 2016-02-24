@@ -1,7 +1,7 @@
 class Backoffice::CaseStudiesController < BackofficeController
 
   before_action :set_case_study, only: [:show, :edit, :update, :destroy]
-  before_action :set_existing_contacts, only: [:edit]
+  before_action :set_existing_contacts, only: [:new, :edit]
   before_action :restrict_access!, only: [:edit, :update, :destroy]
 
   def index

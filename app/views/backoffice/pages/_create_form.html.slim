@@ -19,7 +19,7 @@
         #filename
         .form-row
           #input-file-wrapper.input-file-wrapper.input-wrapper.-lg
-            = d.input :file, as: :file, input_html: { id: 'map_file' }
+            = d.input :shapefile, as: :file, input_html: { id: 'map_file' }
             .placeholder
               span.title =t('drop_shapefile')
               span.sub-title

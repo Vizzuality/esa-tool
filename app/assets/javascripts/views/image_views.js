@@ -7,12 +7,12 @@
   App.View.ImageViews = Backbone.View.extend({
 
     events: {
-      'change input[type="file"]': 'setBackgroundImage',
-      'click .close': 'cleanImage'
+      'change input[type="file"]':'setBackgroundImage',
+      'click .close':'cleanImage'
     },
 
     initialize: function() {
-      this.setListeners();
+
     },
 
     setBackgroundImage: function(e) {
@@ -55,17 +55,10 @@
       target.getElementsByClassName('delete_image')[0].value = true;
     },
 
-    setListeners: function() {
-      var self = this;
-      $('a.logos-ftlight').on('click', function(e) {
-        self.currentInputId = e.currentTarget.getAttribute('data-id');
-      });
-      $('.uploaded-images').on('click', function(e) {
-        var logoImg = e.currentTarget.getElementsByTagName('img')[0];
-        document.getElementById('contact-id-'+self.currentInputId).value = logoImg.getAttribute('data-contact');
-        self.loadBackgroundImage(self.currentInputId, logoImg.src);
-      });
-    }
+    setLogo: function(id, data) {
+      document.getElementById('contact-id-'+id).value = data.contactId;
+      this.loadBackgroundImage(id, data.imgSrc);
+    },
 
   });
 

@@ -1,3 +1,4 @@
+- f.object.table_name = f.object.table_name.blank? ? 'The file is uploading' : f.object.table_name
 .file-map-input
   - if @page.page_type == 2
     .nested-fields
