@@ -34,5 +34,6 @@ class CartoDbImporter
     layer.save
     layer.shapefile.destroy
     layer.shapefile.clear
+    File.delete(file)
   end
 end
