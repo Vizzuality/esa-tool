@@ -35,6 +35,7 @@ class Backoffice::PagesController < BackofficeController
     else
       @page.data_layers.build if @page.data_layers.empty?
       gon.cartodb_user = ENV["CDB_USERNAME"]
+      gon.case_study = @case_study.to_json
       set_charts
       render :edit
     end
