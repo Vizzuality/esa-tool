@@ -14,6 +14,7 @@ class DataLayer < ActiveRecord::Base
                     "application/vnd.ms-excel",
                     "application/zip",
                     "application/vnd.google-earth.kml+xml",
+                    "image/tiff",
                     "application/gpx",
                     "application/gpx+xml",
                     "application/octet-stream"] #for .shp files
