@@ -6,7 +6,9 @@ class DataLayer < ActiveRecord::Base
 
   belongs_to :page
 
-  has_attached_file :shapefile
+  path = Rails.env.development? ? ":rails_root/public/system/:attachment/:filename" : "/:attachment/:filename"
+
+  has_attached_file :shapefile, :path => path
   validates_attachment_content_type :shapefile,
     content_type: ["text/csv",
                     "application/vnd.ms-excel",
