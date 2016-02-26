@@ -28,7 +28,7 @@ class DataLayer < ActiveRecord::Base
 
   attr_accessor :cloning
 
-  after_save :upload_carto_file, on: :create, unless: :cloning
+  after_create :upload_carto_file, on: :create, unless: :cloning
 
   before_destroy :remove_cartodb_table
 
