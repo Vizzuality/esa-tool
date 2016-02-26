@@ -12,7 +12,7 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = @case_study.pages.new(page_params)
     if @page.save
-      debugger
+
       id = @page.data_layers.first.id
       Resque.enqueue(CartoDbImporter, id)
 
