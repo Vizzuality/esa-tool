@@ -31,10 +31,38 @@
   text-transform: uppercase;
 }
 
-
 ._is-loading {
-  @include spinner(20px, 3px, $bg-color-1);
+  @include spinner(20px, 3px, $font-color-3);
+
+  .loading-container {
+    .loading-msg {
+      display: block
+    }
+  }
 }
+
+.loading-container {
+  min-height: 200px;
+  width: 100%;
+  position: relative;
+
+  .loading-msg {
+    display: none;
+    z-index: 3;
+    top: 40%;
+    width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+    color: $font-color-1;
+  }
+
+  ._is-loading {
+    .loading-msg {
+      display: block;
+    }
+  }
+}
+
 
 @media screen and (max-width: $screen-sm) {
   ._xs_hidden {
