@@ -12,9 +12,8 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = @case_study.pages.new(page_params)
     if @page.save
-
-      id = @page.data_layers.first.id
-      Resque.enqueue(CartoDbImporter, id)
+      
+      upload_pending_files
 
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page.page_type
@@ -33,6 +32,9 @@ class Backoffice::PagesController < BackofficeController
 
   def update
     if @page.update(page_params)
+
+      upload_pending_files
+
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page.page_type
       ), notice: 'Page updated successfully.'
@@ -52,6 +54,12 @@ class Backoffice::PagesController < BackofficeController
   end
 
   private
+
+    def upload_pending_files
+      @page.data_layers.each do |d|
+        Resque.enqueue(CartoDbImporter, d.id) if d.import_status == "pending"
+      end
+    end
 
     def set_case_study
       @case_study = CaseStudy.find(params[:case_study_id])
