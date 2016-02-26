@@ -14,6 +14,7 @@
 //= require views/box_select_view
 //= require views/image_views
 //= require views/logo_collection_view
+//= require views/map_file_status_view
 //= require views/map_file_columns_view
 //= require views/map_file_categories_view
 
@@ -35,6 +36,7 @@
       this.initTags();
       this.initBoxSelects();
       this.initImageView();
+      this.initMapFileStatus();
       this.initMapFileColumns();
       this.initFeatherlight();
       this.setExitWithoutSavingConfirmation();
@@ -79,6 +81,16 @@
 
     setLogoSelected: function(data) {
       this.images.setLogo(this.currentInputId, data);
+    },
+
+    initMapFileStatus: function() {
+      this.caseStudyPage = document.getElementById('caseStudyPage');
+      // Data type 3 is map type
+      if (this.caseStudyPage && this.caseStudyPage.getAttribute('data-type')==='3') {
+        new App.View.MapFileStatus({
+          el: this.caseStudyPage
+        });
+      }
     },
 
     initMapFileColumns: function() {
