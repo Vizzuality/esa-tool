@@ -31,7 +31,7 @@ class CartoDbImporter
     end
     layer.import_status = import_status["state"]
     layer.table_name = import_status['table_name']
-    layer.save
+    # layer.save(without_callbacks)
     layer.shapefile.destroy
     layer.shapefile.clear
     File.delete(file)
