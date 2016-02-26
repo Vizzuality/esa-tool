@@ -28,7 +28,7 @@ class DataLayer < ActiveRecord::Base
 
   attr_accessor :cloning
 
-  after_create :upload_carto_file, on: :create, unless: :cloning
+  # after_create :upload_carto_file, on: :create, unless: :cloning
 
   before_destroy :remove_cartodb_table
 
@@ -37,10 +37,6 @@ class DataLayer < ActiveRecord::Base
     if layers_same_table.empty?
       CartoDb.remove_cartodb_table(self.table_name)
     end
-  end
-
-  def upload_carto_file
-    Resque.enqueue(CartoDbImporter, self.id) if self.table_name.blank?
   end
 
 end
