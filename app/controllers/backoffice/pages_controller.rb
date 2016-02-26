@@ -12,6 +12,10 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = @case_study.pages.new(page_params)
     if @page.save
+      debugger
+      id = @page.data_layers.first.id
+      Resque.enqueue(CartoDbImporter, id)
+
       redirect_to edit_backoffice_case_study_page_path(
         @case_study, @page, type: @page.page_type
       ), notice: 'Page created successfully.'
