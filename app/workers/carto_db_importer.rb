@@ -34,6 +34,7 @@ class CartoDbImporter
     layer.update_attributes(table_name: import_status["table_name"])
     layer.shapefile.destroy
     layer.shapefile.clear
-    File.delete(file)
+    
+    File.delete(file) unless Rails.env.development?
   end
 end
