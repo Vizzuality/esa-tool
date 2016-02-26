@@ -25,13 +25,13 @@ class CartoDbImporter
     i = 0
     while i < 120
       break if import_status["state"] == "complete"
+      layer.update_attributes(import_status: "uploading")
       sleep(60)
       import_status = CartoDb.import_status(queue_id)
       i += 1
     end
-    layer.import_status = import_status["state"]
-    layer.table_name = import_status['table_name']
-    layer.save
+    layer.update_attributes(import_status: import_status["state"])
+    layer.update_attributes(table_name: import_status["table_name"])
     layer.shapefile.destroy
     layer.shapefile.clear
     File.delete(file)
