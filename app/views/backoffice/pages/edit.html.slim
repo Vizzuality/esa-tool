@@ -16,7 +16,7 @@ section.l-main
       #caseStudyPage.grid-sm-6.offset-sm-1 data-type= @page.page_type
         - layersUploading = false
         - @page.data_layers.each do |d|
-          - if d.import_status == "uploading" or d.import_status == "uploading"
+          - if d.import_status == "pending" or d.import_status == "uploading"
             - layersUploading = true
             - break
             
