@@ -34,11 +34,13 @@ module CartoDb
     end
 
     def self.upload_file(file)
+      privacy = Rails.env.development? ? "public" : "link"
+
       post('/v1/imports/',
         query: {
           api_key: API_KEY,
           file: file,
-          privacy: "link"
+          privacy: privacy
         }
       ).body
     end
