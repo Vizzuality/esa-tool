@@ -20,6 +20,9 @@
 
       background-color: rgba(49, 98, 116, 0.3);
       border-radius: 5px;
+      
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     > .close {
