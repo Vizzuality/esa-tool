@@ -76,7 +76,6 @@
           }
           if (self.layersUploading.length){
             setTimeout(function() {
-              console.log('recheck');
               self.checkStatus();
             }, 3000);
           } else {
