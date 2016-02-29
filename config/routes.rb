@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :organizations, except: [:show]
 
     root 'case_studies#index', as: 'dashboard'
+
+    get 'data-layers/:id', to: 'data_layers#index'
   end
 
   resources :case_studies, only: [:index, :show], param: :slug, path: 'case-studies' do
@@ -21,7 +23,6 @@ Rails.application.routes.draw do
 
   resources :tags, defaults: { format: 'json' }
   get '/tags', to: 'tags#index'
-
 
   root 'landing#index', as: 'root'
 

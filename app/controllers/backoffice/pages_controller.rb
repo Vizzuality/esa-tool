@@ -16,7 +16,9 @@ class Backoffice::PagesController < BackofficeController
       upload_pending_files
 
       redirect_to edit_backoffice_case_study_page_path(
-        @case_study, @page, type: @page.page_type
+        @case_study, @page,
+          type: @page.page_type,
+          shapefile: nil
       ), notice: 'Page created successfully.'
     else
       @page.data_layers.build if @page.data_layers.empty?
@@ -28,6 +30,7 @@ class Backoffice::PagesController < BackofficeController
   def edit
     gon.cartodb_user = ENV["CDB_USERNAME"]
     gon.case_study = @case_study.to_json
+    gon.page = @page.to_json(include: :data_layers)
   end
 
   def update

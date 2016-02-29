@@ -6,7 +6,8 @@ class DataLayer < ActiveRecord::Base
 
   belongs_to :page
 
-  path = Rails.env.development? ? ":rails_root/public/system/:attachment/:filename" : "/:attachment/:filename"
+  # path = Rails.env.development? ? ":rails_root/public/system/:attachment/:filename" : "/:attachment/:filename"
+  path = ":rails_root/public/system/:attachment/:filename"
 
   has_attached_file :shapefile, :path => path
   validates_attachment_content_type :shapefile,
