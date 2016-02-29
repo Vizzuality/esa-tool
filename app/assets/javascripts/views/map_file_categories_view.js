@@ -78,6 +78,9 @@
         table: table,
         limit: 15
       };
+      // if (column === 'the_raster_webmercator') {
+      //   queryOpt.
+      // };
       sql.execute('SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}', queryOpt)
         .done(function(data) {
           if (data.rows.length){
