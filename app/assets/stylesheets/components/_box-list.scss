@@ -3,7 +3,7 @@
   display: flex;
   justify-content: flex-start;
   flex-flow: row wrap;
-  padding: 1rem 2rem;
+  padding: 1rem;
   min-height: 5rem;
 
   border: 1px solid $border-color-1;
@@ -12,9 +12,12 @@
     display: block;
     position: relative;
     padding: .5rem;
+    padding-right: 1rem;
     width: 25%;
 
     box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     span {
       font-family: $font-secondary;
@@ -39,6 +42,7 @@
       &._selected::after {
         @include checked();
         top:13px;
+        right: 0;
       }
 
       &:not(._selected):hover {
@@ -48,6 +52,7 @@
         &::after {
           @include checked(0.3);
           top:13px;
+          right: 0;
         }
       }
     }
