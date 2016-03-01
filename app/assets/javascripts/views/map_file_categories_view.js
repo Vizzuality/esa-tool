@@ -6,7 +6,9 @@
 
   App.View.MapFileCategories = Backbone.View.extend({
 
-    defaults: {},
+    defaults: {
+      rasterColumn: 'the_raster_webmercator'
+    },
 
     columns: [],
 
@@ -25,16 +27,21 @@
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
     },
 
-    init: function(column) {
-      var self = this
+    start: function(column) {
+      var self = this,
+          promise;
       var table = this.el.getAttribute('data-table');
       column = column || this.el.getAttribute('data-column');
 
-      this.isRaster = column === 'the_raster_webmercator' ? true : false;
+      this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
       this.columnsContainer.innerHTML = '';
       if (table && column) {
-        var promise = self.getCategories(table, column);
+        if (this.isRaster) {
+          promise = self.getRasterCategories(table, column);
+        } else {
+          promise = self.getCategories(table, column);
+        }
         promise.done(function(categories) {
           self.refreshCategories(categories);
         });
@@ -86,35 +93,12 @@
         table: table,
         limit: 15
       };
-      if (this.isRaster) {
-        query = 'SELECT distinct (ST_ValueCount(the_raster_webmercator,1,true)).value FROM {{table}} order by value desc LIMIT 30';
-      } else {
-        query = 'SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}';
-      }
+      query = 'SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}';
 
       sql.execute(query, queryOpt)
         .done(function(data) {
           if (data.rows.length) {
-            if (self.isRaster) {
-              if (data.rows.length > 20) {
-                //is a continous type raster and needs a new query
-                self.getRasterContinousCat(table)
-                  .done(function(data) {
-                    defer.resolve(data);
-                  })
-                  .fail(function(error){
-                    defer.reject(error);
-                  });
-              } else {
-                //is a category type raster
-                self.setRasterType('category');
-                self.setRasterCategories(data.rows);
-                var categories = _.map(data.rows, function(item){ return {'category':item.value}; });
-                defer.resolve(categories);
-              }
-            } else {
-              defer.resolve(data.rows);
-            }
+            defer.resolve(data.rows);
           } else {
             defer.reject('there are not categories');
           }
@@ -124,6 +108,48 @@
         });
 
       return defer;
+    },
+
+    getRasterCategories: function(table, column) {
+      var self = this;
+      var query;
+      var defer = new $.Deferred();
+      var sql = new cartodb.SQL({
+        user: this.data.cartodbUser
+      });
+      var queryOpt = {
+        column: column,
+        table: table,
+        limit: 30
+      };
+
+      query = 'SELECT distinct (ST_ValueCount(the_raster_webmercator,1,true)).value FROM {{table}} order by value desc LIMIT {{limit}}';
+
+      sql.execute(query, queryOpt)
+        .done(function(data) {
+          if (data.rows.length > 20) {
+            //is a continous type raster and needs a new query
+            self.getRasterContinousCat(table)
+              .done(function(data) {
+                defer.resolve(data);
+              })
+              .fail(function(error){
+                defer.reject(error);
+              });
+          } else {
+            //is a category type raster
+            self.setRasterType('category');
+            self.setRasterCategories(data.rows);
+            var categories = _.map(data.rows, function(item){ return {'category':item.value}; });
+            defer.resolve(categories);
+          }
+        })
+        .error(function() {
+          defer.reject('fail getting categories');
+        });
+
+      return defer;
+
     },
 
     getRasterContinousCat: function(table) {
