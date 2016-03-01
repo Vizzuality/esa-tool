@@ -56,9 +56,9 @@
       promise.done(function(columns) {
         self.refreshColumns(columns);
         if (self.isRaster) {
-          self.category.init(self.rasterColumn);
+          self.category.start(self.rasterColumn);
         } else {
-          self.category.init();
+          self.category.start();
         }
       });
       promise.fail(function(error) {
@@ -205,7 +205,7 @@
       this.selectCurrent(e);
       this.updateValue(e);
 
-      this.category.init(e.currentTarget.getAttribute('data-value'));
+      this.category.start(e.currentTarget.getAttribute('data-value'));
     },
 
     selectCurrent: function(e) {
