@@ -51,13 +51,14 @@
       this.category = new App.View.MapFileCategories({
         el: document.getElementById('custom-column-layer-' + this.layerId)
       });
-      this.category.init();
 
       var promise = self.getColumns(this.fileName);
       promise.done(function(columns) {
         self.refreshColumns(columns);
         if (self.isRaster) {
           self.category.init(self.rasterColumn);
+        } else {
+          self.category.init();
         }
       });
       promise.fail(function(error) {

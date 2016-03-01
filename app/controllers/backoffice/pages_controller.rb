@@ -12,7 +12,7 @@ class Backoffice::PagesController < BackofficeController
   def create
     @page = @case_study.pages.new(page_params)
     if @page.save
-      
+
       upload_pending_files
 
       redirect_to edit_backoffice_case_study_page_path(
@@ -90,7 +90,17 @@ class Backoffice::PagesController < BackofficeController
         :case_study_id,
         :column_selected,
         :delete_image,
-        data_layers_attributes: [:id, :table_name, :year, :shapefile, :layer_column, :layer_column_alias, :custom_columns_colors],
+        data_layers_attributes: [
+          :id,
+          :table_name,
+          :year,
+          :shapefile,
+          :layer_column,
+          :layer_column_alias,
+          :raster_type,
+          :raster_categories,
+          :custom_columns_colors
+        ],
         interest_points_attributes: [:id, :name, :lat, :lng, :radius, :_destroy, :description],
         chart_ids: []
       )

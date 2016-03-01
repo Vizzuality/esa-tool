@@ -73,6 +73,8 @@
                 .list-container id="custom-column-layer-#{d.object.id}" data={table:d.object.table_name, column: d.object.layer_column}
                   .box-list._is-loading
                   = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
+                  = d.input_field :raster_type, as: :hidden, value: d.object.raster_type, class: "raster-type"
+                  = d.input_field :raster_categories, as: :hidden, value: d.object.raster_categories, class: "raster-category"
         / = f.input :custom_basemap, input_html: {class:"-large"}, placeholder: "CUSTOMIZED CARTOCSS \nPaste code here"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.blank? ? 1 : @page.color_palette.to_i), class: 'input', id:"pallete"
 
