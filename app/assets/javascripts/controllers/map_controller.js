@@ -23,6 +23,7 @@
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
       this.layersLoaded = false;
+      this.isRaster = false;
 
       this.basemap = this.data.basemap;
       this.template = this.data.template;
@@ -62,9 +63,9 @@
      * Starts the dashboard with the data
      */
     _startDashboard: _.debounce(function() {
-      this._updateDashboard({
-        animate: true
-      });
+      // this._updateDashboard({
+      //   animate: true
+      // });
     }, 200),
 
     /**
@@ -276,17 +277,46 @@
     },
 
     _getCartoData: function(data, layer) {
-      var sql = new cartodb.SQL({ user: data.cartoUser });
-      var table = layer.table_name;
-      var column = layer.layer_column;
+      if (layer.raster_type) {
+        //return directly the columns get in backoffice due to
+        // this query takes too much time
+        this.isRaster = true;
+        var defer = new $.Deferred();
+        defer.resolve({
+          rows: layer.raster_categories,
+          isRaster: true
+        });
 
-      var query = 'SELECT {{column}} as column FROM {{table}} \
-       GROUP BY {{column}} ORDER BY {{column}} LIMIT 15';
+        return defer;
 
-      var cartoQuery = sql.execute(query,
-        { column: column, table: table });
+      } else {
 
-      return cartoQuery;
+        var sql = new cartodb.SQL({ user: data.cartoUser });
+        var table = layer.table_name;
+        var column = layer.layer_column;
+
+        var query = 'SELECT {{column}} as column FROM {{table}} \
+         GROUP BY {{column}} ORDER BY {{column}} LIMIT 15';
+
+        var cartoQuery = sql.execute(query,
+          { column: column, table: table });
+
+        return cartoQuery;
+      }
+    },
+
+    /**
+     * Middle parser to format the raster categories
+     * @param {Object} cat categories
+     */
+    _parseRasterCategoryData: function(cat) {
+      var categories = cat.split(',');
+      var data = {};
+      _.each(categories, function(item){
+        data[item] = [];
+        data[item].push({column:item});
+      });
+      return data;
     },
 
     /**
@@ -295,8 +325,13 @@
      * @param {Object} layer data
      */
     _parseLayerData: function(res, layer) {
+      var groups;
       var data = res.rows;
-      var groups = _.groupBy(data, 'column');
+      if (res.isRaster){
+        groups = this._parseRasterCategoryData(res.rows);
+      } else {
+        groups = _.groupBy(data, 'column');
+      }
       var palette, currentLayer;
       var count = 0;
 
@@ -363,7 +398,8 @@
           layer: layer,
           data: data,
           setBounds: params.setBounds,
-          autoUpdate: params.autoUpdate
+          autoUpdate: params.autoUpdate,
+          raster: this.isRaster
         });
       }
     },

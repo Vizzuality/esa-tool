@@ -242,7 +242,11 @@
       if (params.setBounds) {
         this._setLayerBounds(params);
       } else {
-        this._addLayers(params);
+        if (params.raster) {
+          this._addRasterLayer(params);
+        } else {
+          this._addLayers(params);
+        }
       }
     },
 
@@ -265,28 +269,59 @@
           }]
         };
 
-        self._addToLoadingQueue(layerData.category);
+        self._addCartoLayer(params.layer.table_name, cartoOpts);
 
-        cartodb.createLayer(self.map, cartoOpts)
-          .addTo(self.map)
-          .on('done', function(layer) {
-            layer.setZIndex(1);
-            layer.bind('load', function() {
-              self._removeFromLoadingQueue(layerData.category);
-            });
-            self.layers[layerData.category] = layer;
-          })
-          .on('error', function(err) {
-            console.warn(err);
-          });
       });
+    },
+
+    /**
+     * Adds the raster layer in the map
+     * @param {Object} layer parameters
+     */
+    _addRasterLayer: function(params) {
+      var query = 'SELECT * FROM ' + params.layer.table_name;
+      var cartocss = '#'+params.layer.table_name+' {raster-scaling:near;  raster-colorizer-default-mode:exact;  raster-colorizer-default-color: transparent;  raster-colorizer-epsilon:0.1; raster-colorizer-stops:  stop(0, rgba(0,0,255,1))  stop(1, rgba(255,255,255,1))  stop(3, rgba(255,0,0,1))  stop(4, rgba(0,255,0,1))}';
+      var cartoOpts = {
+        user_name: this.cartoUser,
+        type: 'cartodb',
+        cartodb_logo: false,
+        sublayers: [{
+          sql: query,
+          cartocss: cartocss,
+          raster: true,
+          raster_band: 1
+        }]
+      };
+
+      this._addCartoLayer(params.layer.table_name, cartoOpts);
+    },
+
+    /**
+     * Create the cart layer to the map
+     */
+    _addCartoLayer: function(table, cartoOpts) {
+      var self = this;
+
+      this._addToLoadingQueue(table);
+
+      cartodb.createLayer(self.map, cartoOpts)
+        .addTo(self.map)
+        .on('done', function(layer) {
+          layer.setZIndex(1);
+          layer.bind('load', function() {
+            self._removeFromLoadingQueue(table);
+          });
+          self.layers[table] = layer;
+        })
+        .on('error', function(err) {
+          console.warn(err);
+        });
     },
 
     /**
      * Create marker to the map
      */
     createMarker: function(latLng, options, popUp) {
-      var self = this;
       var marker = L.marker(latLng, options);
       if (popUp) {
         marker.bindPopup(popUp);
@@ -382,9 +417,20 @@
       var sqlBounds = new cartodb.SQL({ user: this.cartoUser });
       var sql = 'SELECT the_geom FROM ' + params.layer.table_name;
 
+      if (params.raster){
+        sql = 'SELECT the_raster_webmercator FROM ' + params.layer.table_name;
+        sql = 'SELECT ST_Union(ST_Transform(ST_Envelope(the_raster_webmercator), 4326)) as the_geom FROM (' + sql + ') as t';
+        // var sql =  'select st_asgeojson(box2d(st_collect(st_envelope(the_raster_webmercator)))) FROM ' + params.layer.table_name;
+      }
+
       sqlBounds.getBounds(sql).done(function(bounds) {
         self._setMapBounds(bounds);
-        self._addLayers(params);
+        if (params.raster){
+          self._addRasterLayer(params);
+        } else {
+          self._addLayers(params);
+        }
+
       });
     },
 
@@ -508,7 +554,7 @@
 
           if (layer) {
             var bounds = layer.getBounds();
-            self.map.fitBounds(bounds, {
+            self.fitBounds(bounds, {
               paddingBottomRight: [400, 0]
             });
           }
