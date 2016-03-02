@@ -84,6 +84,7 @@
     _renderList: function(categories) {
       var self = this;
       var container = this.el.querySelector('.list');
+      var lastCatVal = 0;
       container.innerHTML = '';
 
       categories.forEach(function(cat) {
@@ -100,8 +101,15 @@
         iconEl.classList.add('icon-legend');
         iconEl.appendChild(iconBgEl);
 
+
         var itemEl = document.createElement('span');
-        var itemText = document.createTextNode(cat.category);
+        var itemText;
+        if (self.layer.isRaster && self.layer.raster_type === 'continous') {
+          itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
+          lastCatVal = cat.category;
+        } else {
+          itemText = document.createTextNode(cat.category);
+        }
         itemEl.appendChild(itemText);
         itemEl.classList.add('description');
 
