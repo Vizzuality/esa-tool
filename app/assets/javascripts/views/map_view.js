@@ -96,6 +96,7 @@
       this.loadQueue = [];
       this.tileLoaded = false;
       this.autoUpdate = true;
+      this.isRaster = false;
 
       this.createMap();
       this._setListeners();
@@ -242,7 +243,7 @@
       if (params.setBounds) {
         this._setLayerBounds(params);
       } else {
-        if (params.raster) {
+        if (params.layer.isRaster) {
           this._addRasterLayer(params);
         } else {
           this._addLayers(params);
@@ -279,6 +280,7 @@
      * @param {Object} layer parameters
      */
     _addRasterLayer: function(params) {
+      this.isRaster = true;
       var query = 'SELECT * FROM ' + params.layer.table_name;
       var cartocss = '#'+params.layer.table_name+' {raster-scaling:near;  raster-colorizer-default-mode:exact;  raster-colorizer-default-color: transparent;  raster-colorizer-epsilon:0.1; raster-colorizer-stops:  stop(0, rgba(0,0,255,1))  stop(1, rgba(255,255,255,1))  stop(3, rgba(255,0,0,1))  stop(4, rgba(0,255,0,1))}';
       var cartoOpts = {
@@ -334,15 +336,16 @@
      * @param {String} category name
      */
     highLightCategory: function(category) {
-      var layers = this.layers;
-
-      for (var layer in layers) {
-        if (category === '') {
-          layers[layer].setOpacity(1);
-        } else if (layer !== category) {
-          layers[layer].setOpacity(0.1);
-        } else {
-          layers[layer].setOpacity(1);
+      if (!this.isRaster) {
+        var layers = this.layers;
+        for (var layer in layers) {
+          if (category === '') {
+            layers[layer].setOpacity(1);
+          } else if (layer !== category) {
+            layers[layer].setOpacity(0.1);
+          } else {
+            layers[layer].setOpacity(1);
+          }
         }
       }
     },
@@ -417,7 +420,7 @@
       var sqlBounds = new cartodb.SQL({ user: this.cartoUser });
       var sql = 'SELECT the_geom FROM ' + params.layer.table_name;
 
-      if (params.raster){
+      if (params.layer.isRaster){
         sql = 'SELECT the_raster_webmercator FROM ' + params.layer.table_name;
         sql = 'SELECT ST_Union(ST_Transform(ST_Envelope(the_raster_webmercator), 4326)) as the_geom FROM (' + sql + ') as t';
         // var sql =  'select st_asgeojson(box2d(st_collect(st_envelope(the_raster_webmercator)))) FROM ' + params.layer.table_name;
@@ -425,7 +428,7 @@
 
       sqlBounds.getBounds(sql).done(function(bounds) {
         self._setMapBounds(bounds);
-        if (params.raster){
+        if (params.layer.isRaster){
           self._addRasterLayer(params);
         } else {
           self._addLayers(params);

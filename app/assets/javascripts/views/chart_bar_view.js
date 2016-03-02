@@ -18,7 +18,7 @@
       barsRange: 0.7,
       animationType: 'linear',
       animationTime: 200,
-      removeTimeout: 350,      
+      removeTimeout: 350,
       margin: {
         top: 0,
         right: 40,
@@ -98,7 +98,7 @@
         _.map(allData, function(d) {
           d.year = parseInt(d.year, 10);
         });
-        
+
         this.chartData = _.where(allData, { year: this.selectedYear });
         this.years = _.uniq(_.pluck(allData, 'year'));
       } else {
@@ -154,7 +154,7 @@
           .attr('class', 'bar')
           .attr('data-category', function(d) {
             return d.category;
-          }) 
+          })
           .style('fill', function(d) { return d.color; })
           .style('stroke', function(d) { return d.color; })
           .attr('x', function(d) { return self.x(d.x); })
@@ -215,7 +215,7 @@
 
       for (var el in elems) {
         var current = elems[el];
-        
+
         if (current && current.getAttribute) {
           var cat = current.getAttribute('data-category');
           if (category === '') {
@@ -233,7 +233,7 @@
       var self = this;
 
       this.animationTime = this.defaults.animationTime;
-      
+
       this.svg.selectAll('.bar')
         .transition()
         .duration(self.animationTime)

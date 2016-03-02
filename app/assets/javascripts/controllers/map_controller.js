@@ -23,7 +23,6 @@
       this.page = this.options.page;
       this.data = this._getData(this.options.data);
       this.layersLoaded = false;
-      this.isRaster = false;
 
       this.basemap = this.data.basemap;
       this.template = this.data.template;
@@ -46,8 +45,8 @@
       var self = this;
 
       this._getLayerData()
-        .done(function(res) {
-          self._parseLayerData(res);
+        .done(function(res, layer) {
+          self._parseLayerData(res, layer);
           self._updateLayer({
             setBounds: true,
             autoUpdate: true
@@ -63,9 +62,9 @@
      * Starts the dashboard with the data
      */
     _startDashboard: _.debounce(function() {
-      // this._updateDashboard({
-      //   animate: true
-      // });
+      this._updateDashboard({
+        animate: true
+      });
     }, 200),
 
     /**
@@ -183,14 +182,19 @@
       var column = layer.layer_column;
       var table = layer.table_name;
 
-      var query = 'SELECT ' + column + ' as category, ' +
-            'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
-            'FROM ' + table + ' GROUP BY ' + column + ' ' +
-            'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
+      if (layer.isRaster) {
+        return this._getRasterDashboardData();
+      } else {
+        var query = 'SELECT ' + column + ' as category, ' +
+        'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
+        'FROM ' + table + ' GROUP BY ' + column + ' ' +
+        'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
 
-      query = query.replace('%1', query);
+        query = query.replace('%1', query);
 
-      return this._getCartoDashboardData(query, data);
+        return this._getCartoDashboardData(query, data);
+      }
+
     },
 
     _getDashboardTimelineData: function() {
@@ -220,6 +224,24 @@
       query = query.replace('%1', subquery);
 
       return this._getCartoDashboardData(query, data);
+    },
+
+    _getRasterDashboardData: function() {
+      var defer = new $.Deferred();
+      var layer = _.findWhere(this.data.layers, { table_name: this.currentLayer });
+      var obj = {
+        rows: []
+      };
+      var categories = layer.raster_categories.split(',');
+      _.each(categories, function(item) {
+        obj.rows.push({
+          category: item,
+          value: parseFloat(item)
+        });
+      });
+
+      defer.resolve(obj);
+      return defer;
     },
 
     _getCartoDashboardData: function(query, data) {
@@ -273,36 +295,36 @@
       var currentLayer = this.currentLayer;
       var layer = _.findWhere(layers, { table_name: currentLayer });
 
-      return this._getCartoData(data, layer);
+      if (layer.raster_type){
+        layer.isRaster = true;
+        return this._getRasterData(layer);
+      } else {
+        return this._getCartoData(data, layer);
+      }
+
+    },
+
+    _getRasterData: function(layer) {
+      //return directly the columns get in backoffice due to
+      // this query takes too much time
+      var defer = new $.Deferred();
+      defer.resolve({ rows: layer.raster_categories }, layer);
+
+      return defer;
     },
 
     _getCartoData: function(data, layer) {
-      if (layer.raster_type) {
-        //return directly the columns get in backoffice due to
-        // this query takes too much time
-        this.isRaster = true;
-        var defer = new $.Deferred();
-        defer.resolve({
-          rows: layer.raster_categories,
-          isRaster: true
-        });
+      var sql = new cartodb.SQL({ user: data.cartoUser });
+      var table = layer.table_name;
+      var column = layer.layer_column;
 
-        return defer;
+      var query = 'SELECT {{column}} as column FROM {{table}} \
+       GROUP BY {{column}} ORDER BY {{column}} LIMIT 15';
 
-      } else {
+      var cartoQuery = sql.execute(query,
+        { column: column, table: table });
 
-        var sql = new cartodb.SQL({ user: data.cartoUser });
-        var table = layer.table_name;
-        var column = layer.layer_column;
-
-        var query = 'SELECT {{column}} as column FROM {{table}} \
-         GROUP BY {{column}} ORDER BY {{column}} LIMIT 15';
-
-        var cartoQuery = sql.execute(query,
-          { column: column, table: table });
-
-        return cartoQuery;
-      }
+      return cartoQuery;
     },
 
     /**
@@ -327,7 +349,7 @@
     _parseLayerData: function(res, layer) {
       var groups;
       var data = res.rows;
-      if (res.isRaster){
+      if (layer.isRaster){
         groups = this._parseRasterCategoryData(res.rows);
       } else {
         groups = _.groupBy(data, 'column');
@@ -398,8 +420,7 @@
           layer: layer,
           data: data,
           setBounds: params.setBounds,
-          autoUpdate: params.autoUpdate,
-          raster: this.isRaster
+          autoUpdate: params.autoUpdate
         });
       }
     },
@@ -476,7 +497,7 @@
         currentYear: selectedYear,
         animate: animate,
         unit: '%'
-      });
+      }, this.currentLayer);
     },
 
     /**
@@ -520,8 +541,8 @@
         this.data.dashboard = null;
 
         this._getLayerData()
-          .done(function(res) {
-            self._parseLayerData(res);
+          .done(function(res, layer) {
+            self._parseLayerData(res, layer);
             self._updateLayer({
               setBounds: true,
               autoUpdate: true
