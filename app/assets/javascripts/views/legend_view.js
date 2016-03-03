@@ -109,6 +109,8 @@
           if (self.layer.raster_type === 'continous') {
             itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
             lastCatVal = cat.category;
+          } else {
+            itemText = document.createTextNode(cat.category);
           }
         } else {
           itemText = document.createTextNode(cat.category);

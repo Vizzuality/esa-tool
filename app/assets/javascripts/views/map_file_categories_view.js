@@ -145,8 +145,32 @@
           }
         })
         .error(function(error) {
-          query = 'SELECT (ST_Histogram(st_union(the_raster_webmercator),1,true,7,true)).* FROM  k_mandalay_service2_100yr_flood'
-          defer.reject('fail getting categories');
+          //trying this less expensive query
+          query = 'SELECT (ST_Histogram(st_union(the_raster_webmercator),1,true,7,true)).* FROM  k_mandalay_service2_100yr_flood';
+          sql.execute(query, queryOpt)
+            .done(function(data) {
+              var categories = [];
+              _.each(data.rows, function(item){
+                categories.push(item.max);
+              });
+              if (categories > 20) {
+                //is a continous type raster and needs a new query
+                self.getRasterContinousCat(table)
+                  .done(function(data) {
+                    defer.resolve(data);
+                  })
+                  .fail(function(error){
+                    defer.reject(error);
+                  });
+              } else {
+                //is a category type raster
+                self.setRasterType('category');
+                categories = categories.sort(function(a,b) { return a - b;});
+                self.setRasterCategories(categories);
+                categories = _.map(categories, function(item){ return {'category':item}; });
+                defer.resolve(categories);
+              }
+            });
         });
 
       return defer;
@@ -178,10 +202,7 @@
           }
         })
         .error(function() {
-
-          //TODO use this query less expensive
-          // SELECT (ST_Histogram(st_union(the_raster_webmercator),1,true,7,true)).* FROM  k_mandalay_service2_100yr_flood
-          defer.reject('fail getting categories');
+            defer.reject('fail getting raster continous categories');
         });
 
       return defer;
