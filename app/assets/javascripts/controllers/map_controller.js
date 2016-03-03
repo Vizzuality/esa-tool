@@ -347,6 +347,7 @@
      * @param {Object} layer data
      */
     _parseLayerData: function(res, layer) {
+      var self = this;
       var groups;
       var data = res.rows;
       if (layer.isRaster){
@@ -366,10 +367,10 @@
         }
         var colors = App.Helper.deserialize(currentLayer.custom_columns_colors);
         _.map(groups, function(g) {
-          count ++;
           var gr = g[0];
           gr.color = colors[gr.column];
           gr.index = count;
+          count ++;
         });
         this.data.categories = groups;
       } else {

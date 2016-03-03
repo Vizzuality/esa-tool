@@ -104,9 +104,12 @@
 
         var itemEl = document.createElement('span');
         var itemText;
-        if (self.layer.isRaster && self.layer.raster_type === 'continous') {
-          itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
-          lastCatVal = cat.category;
+        if (self.layer.isRaster) {
+          cat.category = parseFloat(cat.category).toFixed(8);
+          if (self.layer.raster_type === 'continous') {
+            itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
+            lastCatVal = cat.category;
+          }
         } else {
           itemText = document.createTextNode(cat.category);
         }

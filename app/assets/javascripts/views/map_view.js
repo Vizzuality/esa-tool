@@ -281,15 +281,14 @@
      */
     _addRasterLayer: function(params) {
       this.isRaster = true;
-      var query = 'SELECT * FROM ' + params.layer.table_name;
-      var cartocss = '#'+params.layer.table_name+' {raster-scaling:near;  raster-colorizer-default-mode:exact;  raster-colorizer-default-color: transparent;  raster-colorizer-epsilon:0.1; raster-colorizer-stops:  stop(0, rgba(0,0,255,1))  stop(1, rgba(255,255,255,1))  stop(3, rgba(255,0,0,1))  stop(4, rgba(0,255,0,1))}';
+      var layer = this._setRasterLayer(params);
       var cartoOpts = {
         user_name: this.cartoUser,
         type: 'cartodb',
         cartodb_logo: false,
         sublayers: [{
-          sql: query,
-          cartocss: cartocss,
+          sql: layer.query,
+          cartocss: layer.cartoCss,
           raster: true,
           raster_band: 1
         }]
@@ -349,6 +348,22 @@
         }
       }
     },
+
+    /**
+     * Generates and sets the cartocss for the layer
+     * @param {Object} layer parameters
+     */
+    _setRasterLayer: function(params) {
+      var rasterLayer = {};
+      var cartoCss = this.cartoCss;
+      var defaultCarto = App.CartoCSS.Raster[params.layer.raster_type];
+      var rasterCss = '#' + params.layer.table_name + this._formatCartoCssRaster(defaultCarto, params.data.categories);
+
+
+      rasterLayer.query = 'SELECT * FROM ' + params.layer.table_name;
+      rasterLayer.cartoCss = rasterCss;
+      return rasterLayer;
+    },
     /**
      * Generates and sets the cartocss for the layer
      * @param {Object} layer parameters
@@ -387,6 +402,34 @@
       }
 
       return layers;
+    },
+
+    /**
+     * Formats the plain cartocss with the colors
+     * of the current template for raster type
+     * @params {String} carto Default template carto code.
+     * @params {String} layer Raster layer.
+     */
+    _formatCartoCssRaster: function(cartoCss, categories) {
+      for (var prop in cartoCss) {
+        if (prop === 'raster-colorizer-stops') {
+          for (var category in categories) {
+            var item = categories[category][0];
+            if (item.color.indexOf('#') !== -1 ) {
+               var color = App.Helper.hexToRgba(item.color, this.cartoCss.default['polygon-opacity']*100);
+               cartoCss[prop] = cartoCss[prop] + 'stop(' + (item.column) + ', ' + color + ')';
+            } else {
+              cartoCss[prop] = cartoCss[prop] + 'stop(' + (item.column) + ', ' + item.color + ')';
+            }
+          }
+        }
+      }
+      var carto = JSON.stringify(cartoCss);
+      carto = carto.replace(/\",/g, ';');
+      carto = carto.replace(/\"/g, '');
+      carto = carto.replace(/\}/g, ';}');
+
+      return carto;
     },
 
     /**

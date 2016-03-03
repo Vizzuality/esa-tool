@@ -123,7 +123,7 @@
         limit: 30
       };
 
-      query = 'SELECT distinct (ST_ValueCount(the_raster_webmercator,1,true)).value FROM {{table}} order by value desc LIMIT {{limit}}';
+      query = 'SELECT distinct (ST_ValueCount(the_raster_webmercator,1,true)).value FROM {{table}} order by value asc LIMIT {{limit}}';
 
       sql.execute(query, queryOpt)
         .done(function(data) {
@@ -139,12 +139,13 @@
           } else {
             //is a category type raster
             self.setRasterType('category');
-            self.setRasterCategories(data.rows);
+            self.setRasterCategories(_.map(data.rows, function(item){ return item.value; }));
             var categories = _.map(data.rows, function(item){ return {'category':item.value}; });
             defer.resolve(categories);
           }
         })
-        .error(function() {
+        .error(function(error) {
+          query = 'SELECT (ST_Histogram(st_union(the_raster_webmercator),1,true,7,true)).* FROM  k_mandalay_service2_100yr_flood'
           defer.reject('fail getting categories');
         });
 
@@ -163,24 +164,40 @@
         table: table,
       };
 
-      query = 'with r as ( SELECT ST_ValueCount(the_raster_webmercator) As pvc FROM {{table}} ) SELECT CDB_JenksBins(array_agg((pvc).value::numeric), 7) FROM r';
+      query = 'with r as ( SELECT ST_ValueCount(the_raster_webmercator) As pvc, ST_BandNoDataValue(the_raster_webmercator, 1) as noDataValue FROM {{table}} ) SELECT CDB_JenksBins(array_agg((pvc).value::numeric), 7), min((pvc).value::numeric), noDataValue  FROM r group by noDataValue';
+      // query = 'with r as ( SELECT ST_ValueCount(the_raster_webmercator) As pvc, ST_BandNoDataValue(the_raster_webmercator, 1) FROM {{table}} ) SELECT CDB_JenksBins(array_agg((pvc).value::numeric), 7), min((pvc).value::numeric)  FROM r';
 
       sql.execute(query, queryOpt)
         .done(function(data) {
           if (data.rows[0].cdb_jenksbins.length) {
-            self.setRasterType('continous');
-            self.setRasterCategories(data.rows[0].cdb_jenksbins);
-            var categories = _.map(data.rows[0].cdb_jenksbins, function(item){ return {'category':item}; });
-            defer.resolve(categories);
+
+            defer.resolve(self.setRasterContinous(data));
+
           } else {
             defer.reject('there are not categories');
           }
         })
         .error(function() {
+
+          //TODO use this query less expensive
+          // SELECT (ST_Histogram(st_union(the_raster_webmercator),1,true,7,true)).* FROM  k_mandalay_service2_100yr_flood
           defer.reject('fail getting categories');
         });
 
       return defer;
+    },
+
+    setRasterContinous: function(data) {
+      this.setRasterType('continous');
+      var categoriesArray = data.rows[0].cdb_jenksbins;
+      var noDataValue = data.rows[0].nodatavalue;
+      var minDataValue = data.rows[0].min;
+      if (!noDataValue || noDataValue < minDataValue) {
+        categoriesArray.unshift(minDataValue);
+      }
+      this.setRasterCategories(categoriesArray);
+
+      return _.map(categoriesArray, function(item){ return {'category':item}; });
     },
 
     setRasterType: function(type) {
