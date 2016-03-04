@@ -55,10 +55,18 @@
       var promise = self.getColumns(this.fileName);
       promise.done(function(columns) {
         self.refreshColumns(columns);
-        if (self.isRaster) {
-          self.category.start(self.rasterColumn);
-        } else {
-          self.category.start();
+        var analyzed = false;
+        _.each(self.data.page.data_layers, function(item){
+          if (!item.raster_type || item.raster_categories) {
+            analyzed = true;
+          }
+        });
+        if (!analyzed) {
+          if (self.isRaster) {
+            self.category.start(self.rasterColumn);
+          } else {
+            self.category.start();
+          }
         }
       });
       promise.fail(function(error) {
@@ -230,6 +238,10 @@
 
       if (gon && gon.cartodb_user)  {
         data.cartodbUser = gon.cartodb_user;
+      }
+
+      if (gon && gon.page)  {
+        data.page = JSON.parse(gon.page);
       }
 
       return data;

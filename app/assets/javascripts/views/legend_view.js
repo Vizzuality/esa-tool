@@ -104,7 +104,7 @@
 
         var itemEl = document.createElement('span');
         var itemText;
-        if (self.layer.isRaster) {
+        if (self.layer.isRaster && cat.category>lastCatVal) {
           cat.category = parseFloat(cat.category).toFixed(8);
           if (self.layer.raster_type === 'continous') {
             itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');

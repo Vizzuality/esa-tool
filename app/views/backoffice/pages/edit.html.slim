@@ -27,3 +27,9 @@ section.l-main
         - else
           = simple_form_for @page, url: backoffice_case_study_page_path, html: { multipart: true }, html: { class: "exit-saving"}  do |f|
             = render 'edit_form', f: f
+          ._hidden
+            #feedbackAnalyzing
+              .loading-container
+                div._is-loading
+                  span.loading-msg The datalayers are being analyzing, please wait a little while
+            

@@ -36,22 +36,44 @@
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
       this.columnsContainer.innerHTML = '';
+
       if (table && column) {
+
+        this.openFeedback();
+
         if (this.isRaster) {
-          promise = self.getRasterCategories(table, column);
+          var prePromise = self.isRasterHighRes(table, column);
+          promise = prePromise.then(function(highRes) {
+            if (highRes) {
+              return self.getRasterHighResCategories(table, column);
+            } else {
+              return self.getRasterCategories(table, column);
+            }
+          });
         } else {
           promise = self.getCategories(table, column);
         }
-        promise.done(function(categories) {
+
+        promise.then(function(categories) {
+
+          self.closeFeedback();
           self.refreshCategories(categories);
         });
         promise.fail(function(error) {
+          self.closeFeedback();
           self.handleCategoriesError(error);
         });
       } else {
         this.columnsContainer.innerHTML = 'Please choose a table column';
         this.columnsContainer.classList.remove('_is-loading');
       }
+    },
+
+    openFeedback: function() {
+      this.feedback = $.featherlight($('#feedbackAnalyzing'));
+    },
+    closeFeedback: function() {
+      this.feedback.close();
     },
 
     initColorPicker: function() {
@@ -93,6 +115,7 @@
         table: table,
         limit: 15
       };
+
       query = 'SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}';
 
       sql.execute(query, queryOpt)
@@ -105,6 +128,34 @@
         })
         .error(function() {
           defer.reject('fail getting categories');
+        });
+
+      return defer;
+    },
+
+    isRasterHighRes: function(table) {
+      var query;
+      var defer = new $.Deferred();
+      var sql = new cartodb.SQL({
+        user: this.data.cartodbUser
+      });
+      var queryOpt = {
+        table: table,
+      };
+
+      query = 'SELECT (ST_SummaryStatsAgg(the_raster_webmercator,true, 1 )).* FROM {{table}}';
+
+      sql.execute(query, queryOpt)
+        .done(function(data) {
+
+          if (data.rows[0].count > 1000000){
+            defer.resolve(true);
+          } else {
+            defer.resolve(false);
+          }
+        })
+        .error(function(error) {
+          defer.reject(error);
         });
 
       return defer;
@@ -145,36 +196,40 @@
           }
         })
         .error(function(error) {
-          //trying this less expensive query
-          query = 'SELECT (ST_Histogram(st_union(the_raster_webmercator),1,true,7,true)).* FROM  k_mandalay_service2_100yr_flood';
-          sql.execute(query, queryOpt)
-            .done(function(data) {
-              var categories = [];
-              _.each(data.rows, function(item){
-                categories.push(item.max);
-              });
-              if (categories > 20) {
-                //is a continous type raster and needs a new query
-                self.getRasterContinousCat(table)
-                  .done(function(data) {
-                    defer.resolve(data);
-                  })
-                  .fail(function(error){
-                    defer.reject(error);
-                  });
-              } else {
-                //is a category type raster
-                self.setRasterType('category');
-                categories = categories.sort(function(a,b) { return a - b;});
-                self.setRasterCategories(categories);
-                categories = _.map(categories, function(item){ return {'category':item}; });
-                defer.resolve(categories);
-              }
-            });
+          defer.reject(error);
         });
 
       return defer;
 
+    },
+
+    getRasterHighResCategories: function(table) {
+      var self = this;
+      var query;
+      var defer = new $.Deferred();
+      var sql = new cartodb.SQL({
+        user: this.data.cartodbUser
+      });
+      var queryOpt = {
+        table: table
+      };
+
+      query = 'SELECT (ST_Histogram(st_union(the_raster_webmercator),1,true,7,false)).*, ST_BandNoDataValue(the_raster_webmercator, 1) as noDataValue FROM {{table}} group by noDataValue'
+
+      sql.execute(query, queryOpt)
+        .done(function(data) {
+          var rasterInfo = {categories:[]};
+          rasterInfo.noDataValue = data.rows[0].nodatavalue;
+          rasterInfo.min = data.rows[0].min;
+
+          _.each(data.rows, function(item){
+            rasterInfo.categories.push(item.max);
+          });
+          
+          defer.resolve(self.setRasterContinous(rasterInfo));
+        });
+
+      return defer;
     },
 
     getRasterContinousCat: function(table) {
@@ -195,7 +250,13 @@
         .done(function(data) {
           if (data.rows[0].cdb_jenksbins.length) {
 
-            defer.resolve(self.setRasterContinous(data));
+            var rasterInfo = {
+              categories: data.rows[0].cdb_jenksbins,
+              noDataValue: data.rows[0].nodatavalue,
+              min: data.rows[0].min
+            };
+
+            defer.resolve(self.setRasterContinous(rasterInfo));
 
           } else {
             defer.reject('there are not categories');
@@ -210,10 +271,11 @@
 
     setRasterContinous: function(data) {
       this.setRasterType('continous');
-      var categoriesArray = data.rows[0].cdb_jenksbins;
-      var noDataValue = data.rows[0].nodatavalue;
-      var minDataValue = data.rows[0].min;
-      if (!noDataValue || noDataValue < minDataValue) {
+
+      var categoriesArray = data.categories;
+      var noDataValue = data.noDataValue;
+      var minDataValue = data.min;
+      if (typeof noDataValue === 'undefined' || noDataValue < minDataValue) {
         categoriesArray.unshift(minDataValue);
       }
       this.setRasterCategories(categoriesArray);

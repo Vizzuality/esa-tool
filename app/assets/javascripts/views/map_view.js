@@ -411,20 +411,19 @@
      * @params {String} layer Raster layer.
      */
     _formatCartoCssRaster: function(cartoCss, categories) {
-      for (var prop in cartoCss) {
-        if (prop === 'raster-colorizer-stops') {
-          for (var category in categories) {
-            var item = categories[category][0];
-            if (item.color.indexOf('#') !== -1 ) {
-               var color = App.Helper.hexToRgba(item.color, this.cartoCss.default['polygon-opacity']*100);
-               cartoCss[prop] = cartoCss[prop] + 'stop(' + (item.column) + ', ' + color + ')';
-            } else {
-              cartoCss[prop] = cartoCss[prop] + 'stop(' + (item.column) + ', ' + item.color + ')';
-            }
-          }
+      categories = _.sortBy(categories, 'column');
+      var cartoTemplate = $.extend({}, cartoCss)
+      _.each(categories, function(item) {
+        item = item[0];
+        if (item.color.indexOf('#') !== -1 ) {
+          var color = App.Helper.hexToRgba(item.color, this.cartoCss.default['polygon-opacity']*100);
+          cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + color + ')';
+        } else {
+          cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + item.color + ')';
         }
-      }
-      var carto = JSON.stringify(cartoCss);
+      });
+
+      var carto = JSON.stringify(cartoTemplate);
       carto = carto.replace(/\",/g, ';');
       carto = carto.replace(/\"/g, '');
       carto = carto.replace(/\}/g, ';}');

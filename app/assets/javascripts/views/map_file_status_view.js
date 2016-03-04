@@ -23,10 +23,10 @@
       this.init();
     },
 
-    init: function(){
+    init: function() {
       var self = this;
       _.each(this.layers, function(item) {
-        if (self.isFileUploading(item.import_status)) {
+        if (self.isFilePending(item)) {
           self.layersUploading.push(item);
         }
       });
@@ -39,8 +39,20 @@
 
     },
 
+    isFilePending: function(layer) {
+      if (this.isFileUploading(layer.import_status) || this.isFileAnalizing(layer)){
+        return true;
+      } else {
+        return false;
+      }
+    },
+
     isFileUploading: function(status) {
       return (status === 'uploading' || status === 'pending') ? true : false;
+    },
+
+    isFileAnalizing: function(layer) {
+      return (layer.raster_type && layer.raster_categories) ? false : true;
     },
 
     getAllStatus: function() {
@@ -58,19 +70,17 @@
         var allLayerStatus = this.getAllStatus();
 
         allLayerStatus.done(function(data) {
-          var statusResponse;
           if (self.layersUploading.length>1) {
-            statusResponse = data;
             self.layersUploading = [];
             _.each(arguments, function(item){
               var layer = item[0].data_layer;
-              if (self.isFileUploading(layer.import_status)) {
+              if (self.isFilePending(layer)) {
                 self.layersUploading.push(layer);
               }
             });
           } else {
             self.layersUploading = [];
-            if (self.isFileUploading(data.data_layer.import_status)) {
+            if (self.isFilePending(data.data_layer)) {
               self.layersUploading.push(data.data_layer);
             }
           }
