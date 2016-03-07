@@ -41,6 +41,7 @@
         this.list = this.el.querySelectorAll('[data-filename]')[0];
         this.layerId = this.list.getAttribute('data-layerid');
         this.fileName = this.list.getAttribute('data-filename');
+        this.columnsContainer = this.list.getElementsByClassName('box-list')[0];
         this.init();
       }
 
@@ -138,17 +139,14 @@
 
     refreshColumns: function(columns) {
       var self = this;
-      var columnsContainer = this.list.getElementsByClassName('box-list')[0];
       var valueSelected = this.list.querySelectorAll('input')[0].value;
-      columnsContainer.innerHTML = '';
-      if (this.isRaster) {
-        columnsContainer.insertAdjacentHTML('afterbegin', 'This map type is a raster, you don\'t need to select a column');
-      } else {
+      if (!this.isRaster) {
+        this.columnsContainer.innerHTML = '';
         _.each(columns, function(element) {
-          columnsContainer.insertAdjacentHTML('afterbegin', self.getColummn(element, valueSelected));
+          self.columnsContainer.insertAdjacentHTML('afterbegin', self.getColummn(element, valueSelected));
         });
+        this.columnsContainer.classList.remove('_is-loading');
       }
-      columnsContainer.classList.remove('_is-loading');
     },
 
     getColummn: function(element, valueSelected) {

@@ -104,14 +104,16 @@
 
         var itemEl = document.createElement('span');
         var itemText;
-        if (self.layer.isRaster && cat.category>lastCatVal) {
-          cat.category = parseFloat(cat.category).toFixed(8);
-          if (self.layer.raster_type === 'continous') {
-            itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
-            lastCatVal = cat.category;
-          } else {
-            itemText = document.createTextNode(cat.category);
-          }
+        if (self.layer.isRaster) {
+          // cat.category = parseFloat(cat.category).toFixed(8);
+          // if (self.layer.raster_type === 'continous') {
+          //   itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
+          //   lastCatVal = cat.category;
+          // } else {
+          //   itemText = document.createTextNode(cat.category);
+          // }
+          itemText = cat.label ? cat.label : cat.category;
+          itemText = document.createTextNode(itemText);
         } else {
           itemText = document.createTextNode(cat.category);
         }

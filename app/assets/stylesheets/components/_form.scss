@@ -33,6 +33,10 @@ select {
 
   border: 0;
   border-bottom: 1px solid $border-color-1;
+
+  &.-centered {
+    text-align: center;
+  }
 }
 
 .input-inline {
@@ -128,7 +132,7 @@ textarea {
 
 .nested-fields {
   margin-bottom: 1rem;
-  
+
   .error {
     color: $error-color;
   }

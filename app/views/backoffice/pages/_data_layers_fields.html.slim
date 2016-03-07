@@ -19,6 +19,7 @@
         .grid-sm-12
           .list-container data= {layerId:f.object.id, filename: f.object.table_name}
             = f.input_field :layer_column, as: :hidden, id: "column-input-#{f.object.id}"
-            .box-list.-selectable._is-loading
+            - if f.object.raster_type.blank?
+              .box-list.-selectable._is-loading
 
   = f.input :id, as: :hidden

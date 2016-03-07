@@ -229,18 +229,24 @@
     _getRasterDashboardData: function() {
       var defer = new $.Deferred();
       var layer = _.findWhere(this.data.layers, { table_name: this.currentLayer });
-      var obj = {
+      var catsArray = [];
+      var data = {
         rows: []
       };
-      var categories = layer.raster_categories.split(',');
-      _.each(categories, function(item) {
-        obj.rows.push({
-          category: item,
-          value: parseFloat(item)
+
+      var categories = App.Helper.deserialize(layer.raster_categories);
+      _.each(categories, function(item, key) {
+        catsArray.push({
+          category: parseFloat(key),
+          value: parseFloat(key),
+          label: item
         });
       });
 
-      defer.resolve(obj);
+      data.rows = _.sortBy(catsArray, 'category');
+
+      defer.resolve(data);
+
       return defer;
     },
 
@@ -332,11 +338,11 @@
      * @param {Object} cat categories
      */
     _parseRasterCategoryData: function(cat) {
-      var categories = cat.split(',');
+      var categories = App.Helper.deserialize(cat);
       var data = {};
-      _.each(categories, function(item){
-        data[item] = [];
-        data[item].push({column:item});
+      _.each(categories, function(item, key) {
+        data[key] = [];
+        data[key].push({column:parseFloat(key), label:item});
       });
       return data;
     },
@@ -452,10 +458,8 @@
      */
     _parseDashboardData: function(data, params) {
       data = data.rows;
-
       if (data) {
         var groups = this.data.categories;
-
         _.map(data, function(d) {
           var group = groups[d.category];
 
@@ -466,6 +470,7 @@
 
 
         var categories = _.keys(_.groupBy(data, 'category'));
+
         this.data.categoriesData = categories;
         this.data.dashboard = data;
 

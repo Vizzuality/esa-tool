@@ -16,7 +16,7 @@
       this.layer = _.findWhere(this.data.page.data_layers, {id: parseInt(this.options.layerId)});
       this.rasterType = this.el.getElementsByClassName('raster-type')[0];
       this.rasterCategory = this.el.getElementsByClassName('raster-category')[0];
-      this.columnsContainer = this.el.getElementsByClassName('box-list')[0];
+      this.columnsContainer = this.el.getElementsByClassName('list-content')[0];
       this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors');
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
       this.analyzed = this.checkAnalyzed();
@@ -25,22 +25,25 @@
 
     start: function(column) {
       var self = this,
-          promise;
+          promise,
+          categoriesObject,
+          categories;
       var table = this.el.getAttribute('data-table');
       column = column || this.el.getAttribute('data-column');
 
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
       this.columnsContainer.innerHTML = '';
-      
+
       if (this.analyzed && !self.initialized) {
         if (this.isRaster) {
-          var categoriesArray = this.layer.raster_categories.split(',');
-          var categories = _.map(categoriesArray, function(item){ return {'category':item}; });
+          categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
         } else  {
-          var categoriesObject = App.Helper.deserialize(this.layer.custom_columns_colors);
-          var categories = _.map(categoriesObject, function(item, key){ return {'category':key}; });
+          categoriesObject = App.Helper.deserialize(this.layer.custom_columns_colors);
         }
+        
+        categories = _.map(categoriesObject, function(item, key){ return {'category': parseFloat(key) }; });
+        categories = _.sortBy(categories, 'category');
         this.refreshCategories(categories);
         this.initialized = true;
 
@@ -214,7 +217,7 @@
           } else {
             //is a category type raster
             self.setRasterType('category');
-            self.setRasterCategories(_.map(data.rows, function(item){ return item.value; }));
+            // self.setRasterCategories(_.map(data.rows, function(item){ return item.value; }));
             var categories = _.map(data.rows, function(item){ return {'category':item.value}; });
             defer.resolve(categories);
           }
@@ -302,7 +305,7 @@
       if (typeof noDataValue === 'undefined' || noDataValue < minDataValue) {
         categoriesArray.unshift(minDataValue);
       }
-      this.setRasterCategories(categoriesArray);
+      // this.setRasterCategories(categoriesArray);
 
       return _.map(categoriesArray, function(item){ return {'category':item}; });
     },
@@ -311,48 +314,83 @@
       this.rasterType.value = type;
     },
 
-    setRasterCategories: function(categories) {
-      this.rasterCategory.value = categories;
+    setRasterCategories: function() {
+      this.rasterCategory.value = this.rasterCategoryNames.serialize();
     },
 
     refreshCategories: function(columns) {
       var self = this;
       var colors = App.Helper.deserialize(this.customColumsInput[0].value);
+      var names = App.Helper.deserialize(this.rasterCategory.value);
       var paletteLenght = this.palette.length;
       var count = 0;
 
       _.each(columns, function(element) {
-        var category, color;
+        var category = {
+          value: element.category,
+          color: '',
+          name: ''
+        };
         if (colors && colors[element.category]) {
-          color = colors[element.category];
+          category.color = colors[element.category];
         } else {
           if (count > paletteLenght - 1) {
             count = 0;
           }
-          color = App.Helper.hexToRgba(self.palette[count], 100);
+          category.color = App.Helper.hexToRgba(self.palette[count], 100);
           count++;
         }
-        category = self.getCategory(element.category, color);
+        if (names && names[element.category]) {
+          category.name = names[element.category];
+        } else {
+          category.name = element.category;
+        }
+        if (self.isRaster) {
+          category = self.getRasterCategory(category);
+        } else {
+          category = self.getCategory(category);
+        }
         self.columnsContainer.insertAdjacentHTML('beforeend', category);
       });
+
       this.initColorPicker();
-      this.columnsValues = this.$('.colorpicker');
+      this.columnsColorValues = this.$('.colorpicker');
+      if (this.isRaster) {
+        this.rasterCategoryNames = this.$('.raster-cat-name');
+        this.rasterCategoryNames.on('change', function(){
+          self.setRasterCategories();
+        });
+        this.setRasterCategories(columns);
+      }
       this.updateColumnsColor();
       this.columnsContainer.classList.remove('_is-loading');
     },
 
-    getCategory: function(element, color) {
-      var category = {
-        value: element,
-        color: color
-      };
+    getRasterCategory: function(category) {
+      return this._rasterCategoryTemplate()(category);
+    },
+
+    _rasterCategoryTemplate: function() {
+      return _.template('<div class="item" >' +
+        '<div class="col">'+
+          '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> ' +
+        '</div>'+
+        '<div class="col -double">'+
+          '<input type="text" class="raster-cat-name -centered" name="<%= value %>" value="<%= name %>"> ' +
+        '</div>'+
+        '<div class="col -double">'+
+          '<span> <%= value %> </span> ' +
+        '</div>');
+    },
+
+    getCategory: function(category) {
       return this._categoryTemplate()(category);
     },
 
     _categoryTemplate: function() {
-      return _.template('<div class="item -color" >' +
-        '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> ' +
-        '<span> <%= value %> </span> ' +
+      return _.template('<div class="item -color" >'+
+          '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> '+
+          '<span> <%= value %> </span> '+
         ' </div>');
     },
 
@@ -363,7 +401,7 @@
     updateColumnsColor: function() {
       var self = this;
       _.each(this.customColumsInput, function(item) {
-        item.value = self.columnsValues.serialize();
+        item.value = self.columnsColorValues.serialize();
       });
     },
 

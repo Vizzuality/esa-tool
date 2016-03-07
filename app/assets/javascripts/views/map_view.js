@@ -411,12 +411,13 @@
      * @params {String} layer Raster layer.
      */
     _formatCartoCssRaster: function(cartoCss, categories) {
+      var self = this;
       categories = _.sortBy(categories, 'column');
       var cartoTemplate = $.extend({}, cartoCss)
       _.each(categories, function(item) {
         item = item[0];
         if (item.color.indexOf('#') !== -1 ) {
-          var color = App.Helper.hexToRgba(item.color, this.cartoCss.default['polygon-opacity']*100);
+          var color = App.Helper.hexToRgba(item.color, self.cartoCss.default['polygon-opacity']*100);
           cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + color + ')';
         } else {
           cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + item.color + ')';

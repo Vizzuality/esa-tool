@@ -52,13 +52,14 @@
             .range
               span.-bordered
               span
-      .item.-col-3.-center.detail-title data-value="3" data-input="pallete" data-details="customBasemap"  class="#{@page.color_palette.to_i == 3 ? '_selected' : nil}"
+      .item.-col-3.-center.detail-title data-value="3" data-input="pallete" class="#{@page.color_palette.to_i == 3 ? '_selected' : nil}"
         label =t('custom')
         - for r in 1..palette_range-2
           .range
             span.-bordered
             span
-      #customBasemap.form-row.detail-item class=('_hidden' unless @page.color_palette == 3)
+      / #customBasemap.form-row.detail-item class=('_hidden' unless @page.color_palette == 3)
+      .form-row
         .row
           .grid-sm-12
             - if @page.page_type == 2
@@ -69,9 +70,23 @@
                 .box-list._is-loading
             - else 
               = f.simple_fields_for :data_layers do |d|
-                label = "Select the columns color for #{d.object.table_name}"
+                - if d.object.raster_type.blank?
+                  label = "Select the columns color for #{d.object.table_name}"
+                - else 
+                  label = "Raster categories for #{d.object.table_name}"
                 .list-container id="custom-column-layer-#{d.object.id}" data={table:d.object.table_name, column: d.object.layer_column}
-                  .box-list._is-loading
+                  - if d.object.raster_type.blank?
+                    .box-list.list-content._is-loading
+                  - else
+                    .unordered-list
+                      .list-header
+                        .col
+                          span color
+                        .col.-double
+                          span name
+                        .col.-double
+                          span category
+                      .list-content._is-loading
                   = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
                   = d.input_field :raster_type, as: :hidden, value: d.object.raster_type, class: "raster-type"
                   = d.input_field :raster_categories, as: :hidden, value: d.object.raster_categories, class: "raster-category"
