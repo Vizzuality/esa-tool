@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 20160229170859) do
     t.string   "basemap",                 default: "terrain"
     t.string   "basemap_url"
     t.text     "body"
-    t.text     "raster_custom_colors"
+    t.text     "custom_basemap"
     t.string   "column_selected"
   end
 

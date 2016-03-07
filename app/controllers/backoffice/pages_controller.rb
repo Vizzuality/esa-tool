@@ -84,7 +84,7 @@ class Backoffice::PagesController < BackofficeController
         :body,
         :background,
         :color_palette,
-        :raster_custom_colors,
+        :custom_basemap,
         :page_type,
         :chart_type_list,
         :case_study_id,
