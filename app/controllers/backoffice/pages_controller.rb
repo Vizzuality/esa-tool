@@ -97,6 +97,7 @@ class Backoffice::PagesController < BackofficeController
           :shapefile,
           :layer_column,
           :layer_column_alias,
+          :raster_color_input,
           :raster_type,
           :raster_categories,
           :custom_columns_colors
