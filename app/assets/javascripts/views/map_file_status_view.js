@@ -40,7 +40,7 @@
     },
 
     isFilePending: function(layer) {
-      if (this.isFileUploading(layer.import_status) || this.isFileAnalizing(layer)){
+      if (this.isFileUploading(layer.import_status)){
         return true;
       } else {
         return false;
@@ -49,10 +49,6 @@
 
     isFileUploading: function(status) {
       return (status === 'uploading' || status === 'pending') ? true : false;
-    },
-
-    isFileAnalizing: function(layer) {
-      return (layer.raster_type && layer.raster_categories) ? false : true;
     },
 
     getAllStatus: function() {

@@ -49,24 +49,17 @@
     init: function() {
       var self = this;
       this.category = new App.View.MapFileCategories({
-        el: document.getElementById('custom-column-layer-' + this.layerId)
+        el: document.getElementById('custom-column-layer-' + this.layerId),
+        layerId: this.layerId
       });
 
       var promise = self.getColumns(this.fileName);
       promise.done(function(columns) {
         self.refreshColumns(columns);
-        var analyzed = false;
-        _.each(self.data.page.data_layers, function(item){
-          if (!item.raster_type || item.raster_categories) {
-            analyzed = true;
-          }
-        });
-        if (!analyzed) {
-          if (self.isRaster) {
-            self.category.start(self.rasterColumn);
-          } else {
-            self.category.start();
-          }
+        if (self.isRaster) {
+          self.category.start(self.rasterColumn);
+        } else {
+          self.category.start();
         }
       });
       promise.fail(function(error) {

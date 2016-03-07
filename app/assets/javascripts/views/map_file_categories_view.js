@@ -10,21 +10,17 @@
       rasterColumn: 'the_raster_webmercator'
     },
 
-    columns: [],
-
-    events: {
-
-    },
-
     initialize: function(params) {
-      this.options = _.extend({}, this.defaults, params.options || {});
+      this.options = _.extend({}, this.defaults, params || {});
       this.data = this._getAppData();
-      this.ignored_categories = this.options.ignored_categories;
+      this.layer = _.findWhere(this.data.page.data_layers, {id: parseInt(this.options.layerId)});
       this.rasterType = this.el.getElementsByClassName('raster-type')[0];
       this.rasterCategory = this.el.getElementsByClassName('raster-category')[0];
       this.columnsContainer = this.el.getElementsByClassName('box-list')[0];
       this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors');
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
+      this.analyzed = this.checkAnalyzed();
+      this.initialized = false;
     },
 
     start: function(column) {
@@ -36,10 +32,21 @@
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
       this.columnsContainer.innerHTML = '';
+      
+      if (this.analyzed && !self.initialized) {
+        if (this.isRaster) {
+          var categoriesArray = this.layer.raster_categories.split(',');
+          var categories = _.map(categoriesArray, function(item){ return {'category':item}; });
+        } else  {
+          var categoriesObject = App.Helper.deserialize(this.layer.custom_columns_colors);
+          var categories = _.map(categoriesObject, function(item, key){ return {'category':key}; });
+        }
+        this.refreshCategories(categories);
+        this.initialized = true;
 
-      if (table && column) {
+      } else if (table && column) {
 
-        this.openFeedback();
+        self.openFeedback();
 
         if (this.isRaster) {
           var prePromise = self.isRasterHighRes(table, column);
@@ -55,7 +62,6 @@
         }
 
         promise.then(function(categories) {
-
           self.closeFeedback();
           self.refreshCategories(categories);
         });
@@ -63,15 +69,33 @@
           self.closeFeedback();
           self.handleCategoriesError(error);
         });
+
       } else {
         this.columnsContainer.innerHTML = 'Please choose a table column';
         this.columnsContainer.classList.remove('_is-loading');
       }
     },
 
-    openFeedback: function() {
-      this.feedback = $.featherlight($('#feedbackAnalyzing'));
+    checkAnalyzed: function() {
+      if ( (!this.layer.raster_type && this.layer.layer_column) ||
+            (this.layer.raster_type && this.layer.raster_categories) ) {
+        return true;
+      } else {
+        return false;
+      }
     },
+
+    openFeedback: function() {
+      this.feedback = $.featherlight(
+        $('#feedbackAnalyzing'),
+        {
+          closeOnClick: false,
+          closeOnEsc: false,
+          afterContent:function(){}
+        }
+      );
+    },
+
     closeFeedback: function() {
       this.feedback.close();
     },
@@ -225,7 +249,7 @@
           _.each(data.rows, function(item){
             rasterInfo.categories.push(item.max);
           });
-          
+
           defer.resolve(self.setRasterContinous(rasterInfo));
         });
 
@@ -352,6 +376,9 @@
         }
         if (gon.case_study)  {
           data.caseStudy = JSON.parse(gon.case_study);
+        }
+        if (gon.page)  {
+          data.page = JSON.parse(gon.page);
         }
       }
 

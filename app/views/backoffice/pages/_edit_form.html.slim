@@ -71,11 +71,7 @@
               = f.simple_fields_for :data_layers do |d|
                 label = "Select the columns color for #{d.object.table_name}"
                 .list-container id="custom-column-layer-#{d.object.id}" data={table:d.object.table_name, column: d.object.layer_column}
-                  - if (d.object.raster_categories)
-                    .box-list
-                      p = d.object.raster_categories
-                  - else 
-                    .box-list._is-loading
+                  .box-list._is-loading
                   = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
                   = d.input_field :raster_type, as: :hidden, value: d.object.raster_type, class: "raster-type"
                   = d.input_field :raster_categories, as: :hidden, value: d.object.raster_categories, class: "raster-category"
