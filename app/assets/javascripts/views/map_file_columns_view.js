@@ -59,6 +59,9 @@
         self.refreshColumns(columns);
         if (self.isRaster) {
           self.category.start(self.rasterColumn);
+          if (self.columnsContainer){
+            self.columnsContainer.remove();
+          }
         } else {
           self.category.start();
         }

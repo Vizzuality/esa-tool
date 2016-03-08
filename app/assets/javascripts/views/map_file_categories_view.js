@@ -16,8 +16,8 @@
       this.layer = _.findWhere(this.data.page.data_layers, {id: parseInt(this.options.layerId)});
       this.rasterType = this.el.getElementsByClassName('raster-type')[0];
       this.rasterCategory = this.el.getElementsByClassName('raster-category')[0];
-      this.columnsContainer = this.el.getElementsByClassName('list-content')[0];
-      this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors');
+      this.columnsContainer = this.el.getElementsByClassName('content')[0];
+      this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors')[0];
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
       this.analyzed = this.checkAnalyzed();
       this.initialized = false;
@@ -33,16 +33,16 @@
 
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
-      this.columnsContainer.innerHTML = '';
 
       if (this.analyzed && !self.initialized) {
         if (this.isRaster) {
           categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
+          categories = _.map(categoriesObject, function(item, key){ return {'category': parseFloat(key) }; });
         } else  {
           categoriesObject = App.Helper.deserialize(this.layer.custom_columns_colors);
+          categories = _.map(categoriesObject, function(item, key){ return {'category': key }; });
         }
-        
-        categories = _.map(categoriesObject, function(item, key){ return {'category': parseFloat(key) }; });
+
         categories = _.sortBy(categories, 'category');
         this.refreshCategories(categories);
         this.initialized = true;
@@ -74,7 +74,7 @@
         });
 
       } else {
-        this.columnsContainer.innerHTML = 'Please choose a table column';
+        self.columnsContainer.innerHTML = 'Please choose a table column';
         this.columnsContainer.classList.remove('_is-loading');
       }
     },
@@ -320,10 +320,36 @@
 
     refreshCategories: function(columns) {
       var self = this;
-      var colors = App.Helper.deserialize(this.customColumsInput[0].value);
-      var names = App.Helper.deserialize(this.rasterCategory.value);
+      if (this.customColumsInput.value) {
+        var colors = App.Helper.deserialize(this.customColumsInput.value);
+      }
+      if (this.rasterCategory.value) {
+        var names = App.Helper.deserialize(this.rasterCategory.value);
+      }
       var paletteLenght = this.palette.length;
       var count = 0;
+      var boxTemplate = '';
+
+
+      this.columnsContainer.innerHTML = '';
+
+      if (this.isRaster) {
+        boxTemplate = '<div class="unordered-list">'+
+                        '<div class="list-header">'+
+                          '<div class="col"> <span> color </span> </div>'+
+                          '<div class="col -double"> <span> name </span> </div>'+
+                          '<div class="col -double"> <span> category </span> </div>' +
+                        '</div>' +
+                        '<div class="list-content"></div>'+
+                      '</div>';
+
+        self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
+      } else {
+        boxTemplate = '<div class="box-list list-content"></div>';
+        self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
+      }
+
+      var listContainer = self.columnsContainer.getElementsByClassName('list-content')[0];
 
       _.each(columns, function(element) {
         var category = {
@@ -350,7 +376,7 @@
         } else {
           category = self.getCategory(category);
         }
-        self.columnsContainer.insertAdjacentHTML('beforeend', category);
+        listContainer.insertAdjacentHTML('beforeend', category);
       });
 
       this.initColorPicker();
@@ -399,10 +425,7 @@
     },
 
     updateColumnsColor: function() {
-      var self = this;
-      _.each(this.customColumsInput, function(item) {
-        item.value = self.columnsColorValues.serialize();
-      });
+      this.customColumsInput.value = this.columnsColorValues.serialize();
     },
 
     _getAppData: function() {
