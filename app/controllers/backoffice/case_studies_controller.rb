@@ -31,6 +31,7 @@ class Backoffice::CaseStudiesController < BackofficeController
       redirect_to edit_backoffice_case_study_path(@case_study),
         notice: 'Case study created successfully.'
     else
+      set_existing_contacts
       render :new
     end
   end
