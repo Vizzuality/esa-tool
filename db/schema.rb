@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229170859) do
+ActiveRecord::Schema.define(version: 20160308095554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160229170859) do
     t.datetime "shapefile_updated_at"
     t.string   "raster_type"
     t.string   "raster_categories"
+    t.text     "raster_color_input"
   end
 
   add_index "data_layers", ["page_id"], name: "index_data_layers_on_page_id", using: :btree
