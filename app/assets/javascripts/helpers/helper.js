@@ -33,4 +33,16 @@
     return 'rgba('+r+','+g+','+b+','+opacity/100+')';
   };
 
+  root.App.Helper.switchInputColors = function(value) {
+    if (! !!value) return null;
+
+    var values = value.split('\n'),
+        categColor = {};
+    for (var i = 0; i < values.length; i ++) {
+      if (values[i].length < 1) break;
+      categColor[values[i].split('-')[1]] =  values[i].split('-')[0];
+    }
+    return categColor;
+  }
+
 })(window);
