@@ -47,6 +47,10 @@ select {
     left: 0;
     margin: 0;
     top: 5px;
+
+    &.error {
+      position: relative;
+    }
   }
 
   input[type="text"],

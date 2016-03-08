@@ -1,6 +1,7 @@
 //= require jquery2
 //= require jquery_ujs
 //= require jquery-ui.min.js
+//= require jquery.validate.js
 //= require cocoon
 //= require jquery.tagsinput/jquery.tagsinput
 //= require featherlight
@@ -39,6 +40,7 @@
       this.initMapFileStatus();
       this.initMapFileColumns();
       this.initFeatherlight();
+      this.initValidation();
       this.setExitWithoutSavingConfirmation();
       this.setListeners();
     },
@@ -103,12 +105,15 @@
     },
 
     submitForm: function(e) {
+      var form = $( 'form' );
       if (e && e.preventDefault) {
         e.preventDefault();
       }
-      this.submitted = true;
-      e.currentTarget.parentNode.classList.add('_is-loading');
-      this.$el.find('form').submit();
+      if (form.valid()) {
+        this.submitted = true;
+        e.currentTarget.parentNode.classList.add('_is-loading');
+        this.$el.find('form').submit();
+      }
     },
 
     initFeatherlight: function(){
@@ -116,6 +121,10 @@
       $.featherlight.defaults.afterContent = function(){
         this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div>');
       };
+    },
+
+    initValidation: function(){
+      $('form').validate();
     },
 
     setExitWithoutSavingConfirmation: function(){
