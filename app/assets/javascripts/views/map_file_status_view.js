@@ -83,7 +83,7 @@
           if (self.layersUploading.length){
             setTimeout(function() {
               self.checkStatus();
-            }, 3000);
+            }, 30000);
           } else {
             self.refreshPage();
           }
