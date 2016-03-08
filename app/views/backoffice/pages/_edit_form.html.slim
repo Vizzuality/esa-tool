@@ -75,7 +75,7 @@
                   = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
                   = d.input_field :raster_type, as: :hidden, value: d.object.raster_type, class: "raster-type"
                   = d.input_field :raster_categories, as: :hidden, value: d.object.raster_categories, class: "raster-category"
-                  = f.input :raster_color_input, input_html: {class:"-large"}, placeholder: "CUSTOMIZED COLORS\nPaste code here\n\nrgba(255,255,255,0.5)-column1\nrgba(73,73,73,0.7)-column2\n"
+                  = d.input :raster_color_input, input_html: {class:"-large"}, placeholder: "CUSTOMIZED COLORS\nPaste code here\n\nrgba(255,255,255,0.5)-column1\nrgba(73,73,73,0.7)-column2\n"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.blank? ? 1 : @page.color_palette.to_i), class: 'input', id:"pallete"
 
   .form-row
