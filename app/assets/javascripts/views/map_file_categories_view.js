@@ -24,6 +24,7 @@
       this.rasterCategory = this.el.getElementsByClassName('raster-category')[0];
       this.columnsContainer = this.el.getElementsByClassName('box-list')[0];
       this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors');
+      this.rasterColorInput = this.el.getElementsByClassName('raster_color_input');
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
     },
 
@@ -193,7 +194,12 @@
 
     refreshCategories: function(columns) {
       var self = this;
-      var colors = App.Helper.deserialize(this.customColumsInput[0].value);
+      if (this.rasterColorInput[0].value) {
+        // Step over current given values with the ones pasted in the CartoCSS formated file
+        var colors = App.Helper.switchInputColors(this.rasterColorInput[0].value);
+      } else {
+        var colors = App.Helper.deserialize(this.customColumsInput[0].value);
+      }
       var paletteLenght = this.palette.length;
       var count = 0;
 
