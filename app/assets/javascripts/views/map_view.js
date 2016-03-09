@@ -380,7 +380,6 @@
       var defaultCarto = App.CartoCSS.Raster[params.layer.raster_type];
       var rasterCss = '#' + params.layer.table_name + this._formatCartoCssRaster(defaultCarto, params.data.categories);
 
-
       rasterLayer.query = 'SELECT * FROM ' + params.layer.table_name;
       rasterLayer.cartoCss = rasterCss;
       return rasterLayer;
