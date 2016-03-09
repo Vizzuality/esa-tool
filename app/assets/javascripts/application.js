@@ -1,5 +1,6 @@
 //= require jquery2
 //= require jquery_ujs
+//= require jquery-ui.min.js
 //= require slick.js/slick.js
 //= require underscore
 //= require backbone
@@ -20,6 +21,7 @@
 //= require views/slider_view
 //= require views/menu_view
 //= require views/tabs_view
+//= require views/slider_transparency_view
 //= require controllers/map_controller
 //= require collections/case_study_collection
 
