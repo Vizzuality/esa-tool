@@ -248,14 +248,20 @@
 
     _confirmRemove: function(name) {
       if (window.confirm("Following dataset will be completely erased: "+ name + ", do you want to continue?")) {
-        this._doRemoveRaster(name);
+        this._doRemoveRaster();
         var target = this.el.querySelectorAll('.-delete.remove_fields')[0];
         target.classList.add('_confirmed');
         target.click();
       }
     },
-    _doRemoveRaster: function(name) {
-
+    _doRemoveRaster: function() {
+      $.ajax({
+          url: '/backoffice/data-layers/' + this.layerId,
+          type: 'DELETE',
+          success: function(result) {
+              console.info('Dataset deleted succesfully')
+          }
+      });
     },
 
     checkRemoveNewItem: function(e) {
