@@ -18,4 +18,8 @@ class Backoffice::DataLayersController < ApplicationController
     params.permit(:id)
   end
 
+  def destroy
+    layer = DataLayer.where(id:data_layer_params[:id]).first
+    layer.destroy
+  end
 end
