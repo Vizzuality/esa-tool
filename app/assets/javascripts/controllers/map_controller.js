@@ -45,8 +45,8 @@
       var self = this;
 
       this._getLayerData()
-        .done(function(res) {
-          self._parseLayerData(res);
+        .done(function(res, layer) {
+          self._parseLayerData(res, layer);
           self._updateLayer({
             setBounds: true,
             autoUpdate: true
@@ -182,14 +182,19 @@
       var column = layer.layer_column;
       var table = layer.table_name;
 
-      var query = 'SELECT ' + column + ' as category, ' +
-            'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
-            'FROM ' + table + ' GROUP BY ' + column + ' ' +
-            'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
+      if (layer.isRaster) {
+        return this._getRasterDashboardData();
+      } else {
+        var query = 'SELECT ' + column + ' as category, ' +
+        'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
+        'FROM ' + table + ' GROUP BY ' + column + ' ' +
+        'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
 
-      query = query.replace('%1', query);
+        query = query.replace('%1', query);
 
-      return this._getCartoDashboardData(query, data);
+        return this._getCartoDashboardData(query, data);
+      }
+
     },
 
     _getDashboardTimelineData: function() {
@@ -219,6 +224,30 @@
       query = query.replace('%1', subquery);
 
       return this._getCartoDashboardData(query, data);
+    },
+
+    _getRasterDashboardData: function() {
+      var defer = new $.Deferred();
+      var layer = _.findWhere(this.data.layers, { table_name: this.currentLayer });
+      var catsArray = [];
+      var data = {
+        rows: []
+      };
+
+      var categories = App.Helper.deserialize(layer.raster_categories);
+      _.each(categories, function(item, key) {
+        catsArray.push({
+          category: parseFloat(key),
+          value: parseFloat(key),
+          label: item
+        });
+      });
+
+      data.rows = _.sortBy(catsArray, 'category');
+
+      defer.resolve(data);
+
+      return defer;
     },
 
     _getCartoDashboardData: function(query, data) {
@@ -272,7 +301,22 @@
       var currentLayer = this.currentLayer;
       var layer = _.findWhere(layers, { table_name: currentLayer });
 
-      return this._getCartoData(data, layer);
+      if (layer.raster_type){
+        layer.isRaster = true;
+        return this._getRasterData(layer);
+      } else {
+        return this._getCartoData(data, layer);
+      }
+
+    },
+
+    _getRasterData: function(layer) {
+      //return directly the columns get in backoffice due to
+      // this query takes too much time
+      var defer = new $.Deferred();
+      defer.resolve({ rows: layer.raster_categories }, layer);
+
+      return defer;
     },
 
     _getCartoData: function(data, layer) {
@@ -290,13 +334,33 @@
     },
 
     /**
+     * Middle parser to format the raster categories
+     * @param {Object} cat categories
+     */
+    _parseRasterCategoryData: function(cat) {
+      var categories = App.Helper.deserialize(cat);
+      var data = {};
+      _.each(categories, function(item, key) {
+        data[key] = [];
+        data[key].push({column:parseFloat(key), label:item});
+      });
+      return data;
+    },
+
+    /**
      * Parser to group the recieved data for the views
      * @param {Object} res response from CartoDB
      * @param {Object} layer data
      */
     _parseLayerData: function(res, layer) {
+      var self = this;
+      var groups;
       var data = res.rows;
-      var groups = _.groupBy(data, 'column');
+      if (layer.isRaster){
+        groups = this._parseRasterCategoryData(res.rows);
+      } else {
+        groups = _.groupBy(data, 'column');
+      }
       var palette, currentLayer;
       var count = 0;
 
@@ -309,10 +373,10 @@
         }
         var colors = App.Helper.deserialize(currentLayer.custom_columns_colors);
         _.map(groups, function(g) {
-          count ++;
           var gr = g[0];
           gr.color = colors[gr.column];
           gr.index = count;
+          count ++;
         });
         this.data.categories = groups;
       } else {
@@ -394,10 +458,8 @@
      */
     _parseDashboardData: function(data, params) {
       data = data.rows;
-
       if (data) {
         var groups = this.data.categories;
-
         _.map(data, function(d) {
           var group = groups[d.category];
 
@@ -408,6 +470,7 @@
 
 
         var categories = _.keys(_.groupBy(data, 'category'));
+
         this.data.categoriesData = categories;
         this.data.dashboard = data;
 
@@ -440,7 +503,7 @@
         currentYear: selectedYear,
         animate: animate,
         unit: '%'
-      });
+      }, this.currentLayer);
     },
 
     /**
@@ -484,8 +547,8 @@
         this.data.dashboard = null;
 
         this._getLayerData()
-          .done(function(res) {
-            self._parseLayerData(res);
+          .done(function(res, layer) {
+            self._parseLayerData(res, layer);
             self._updateLayer({
               setBounds: true,
               autoUpdate: true

@@ -1,0 +1,51 @@
+%list-font {
+  font-family: $font-secondary;
+  font-size: $font-size;
+  line-height: 1.2;
+}
+
+.unordered-list {
+  display: block;
+  min-height: 5rem;
+
+  border: 1px solid $border-color-1;
+
+  .col {
+    display: flex;
+    flex: 1 0 19%;
+    margin-right: 1%;
+    align-items: center;
+    justify-content: center;
+    &.-double {
+      flex: 1 0 39%;
+    }
+  }
+
+  > .list-header, > .list-content {
+    display: flex;
+    flex-flow: row wrap;
+    padding: .5rem;
+  }
+
+  > .list-header {
+    span {
+      @extend %list-font;
+      color: rgba($font-color-1, .5);
+    }
+  }
+
+  > .list-content {
+    position: relative;
+    
+    > .item {
+      padding: .5rem 0;
+      display: flex;
+      flex: 1 0 100%;
+
+      span {
+        @extend %list-font;
+        color: $font-color-1;
+      }
+    }
+  }
+}

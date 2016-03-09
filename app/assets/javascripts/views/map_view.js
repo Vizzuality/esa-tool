@@ -96,6 +96,7 @@
       this.loadQueue = [];
       this.tileLoaded = false;
       this.autoUpdate = true;
+      this.isRaster = false;
 
       this.createMap();
       this._setListeners();
@@ -220,6 +221,27 @@
     },
 
     /**
+     * Initialize the slider for layers transparency
+     */
+    createSliderTransparency: function() {
+      var sliderEl = document.getElementById('sliderView');
+      this.slider = new App.View.SliderTransparency({
+        el: sliderEl
+      });
+      this.listenTo(this.slider, 'slider:changed', this.onSliderChange.bind(this));
+    },
+
+    /**
+     * Slider change event handler
+     * @param {number} opacity
+     */
+    onSliderChange: function(opacity) {
+      for (var layer in this.layers) {
+        this.layers[layer].setOpacity(opacity/100);
+      }
+    },
+
+    /**
      * Sets the provided bounds in the map
      * @param {Object} bounds latlng
      */
@@ -242,7 +264,11 @@
       if (params.setBounds) {
         this._setLayerBounds(params);
       } else {
-        this._addLayers(params);
+        if (params.layer.isRaster) {
+          this._addRasterLayer(params);
+        } else {
+          this._addLayers(params);
+        }
       }
     },
 
@@ -265,28 +291,59 @@
           }]
         };
 
-        self._addToLoadingQueue(layerData.category);
+        self._addCartoLayer(params.layer.table_name, cartoOpts);
 
-        cartodb.createLayer(self.map, cartoOpts)
-          .addTo(self.map)
-          .on('done', function(layer) {
-            layer.setZIndex(1);
-            layer.bind('load', function() {
-              self._removeFromLoadingQueue(layerData.category);
-            });
-            self.layers[layerData.category] = layer;
-          })
-          .on('error', function(err) {
-            console.warn(err);
-          });
       });
+    },
+
+    /**
+     * Adds the raster layer in the map
+     * @param {Object} layer parameters
+     */
+    _addRasterLayer: function(params) {
+      this.isRaster = true;
+      var layer = this._setRasterLayer(params);
+      var cartoOpts = {
+        user_name: this.cartoUser,
+        type: 'cartodb',
+        cartodb_logo: false,
+        sublayers: [{
+          sql: layer.query,
+          cartocss: layer.cartoCss,
+          raster: true,
+          raster_band: 1
+        }]
+      };
+
+      this._addCartoLayer(params.layer.table_name, cartoOpts);
+    },
+
+    /**
+     * Create the cart layer to the map
+     */
+    _addCartoLayer: function(table, cartoOpts) {
+      var self = this;
+
+      this._addToLoadingQueue(table);
+
+      cartodb.createLayer(self.map, cartoOpts)
+        .addTo(self.map)
+        .on('done', function(layer) {
+          layer.setZIndex(1);
+          layer.bind('load', function() {
+            self._removeFromLoadingQueue(table);
+          });
+          self.layers[table] = layer;
+        })
+        .on('error', function(err) {
+          console.warn(err);
+        });
     },
 
     /**
      * Create marker to the map
      */
     createMarker: function(latLng, options, popUp) {
-      var self = this;
       var marker = L.marker(latLng, options);
       if (popUp) {
         marker.bindPopup(popUp);
@@ -299,17 +356,33 @@
      * @param {String} category name
      */
     highLightCategory: function(category) {
-      var layers = this.layers;
-
-      for (var layer in layers) {
-        if (category === '') {
-          layers[layer].setOpacity(1);
-        } else if (layer !== category) {
-          layers[layer].setOpacity(0.1);
-        } else {
-          layers[layer].setOpacity(1);
+      if (!this.isRaster) {
+        var layers = this.layers;
+        for (var layer in layers) {
+          if (category === '') {
+            layers[layer].setOpacity(1);
+          } else if (layer !== category) {
+            layers[layer].setOpacity(0.1);
+          } else {
+            layers[layer].setOpacity(1);
+          }
         }
       }
+    },
+
+    /**
+     * Generates and sets the cartocss for the layer
+     * @param {Object} layer parameters
+     */
+    _setRasterLayer: function(params) {
+      var rasterLayer = {};
+      var cartoCss = this.cartoCss;
+      var defaultCarto = App.CartoCSS.Raster[params.layer.raster_type];
+      var rasterCss = '#' + params.layer.table_name + this._formatCartoCssRaster(defaultCarto, params.data.categories);
+
+      rasterLayer.query = 'SELECT * FROM ' + params.layer.table_name;
+      rasterLayer.cartoCss = rasterCss;
+      return rasterLayer;
     },
     /**
      * Generates and sets the cartocss for the layer
@@ -353,6 +426,34 @@
 
     /**
      * Formats the plain cartocss with the colors
+     * of the current template for raster type
+     * @params {String} carto Default template carto code.
+     * @params {String} layer Raster layer.
+     */
+    _formatCartoCssRaster: function(cartoCss, categories) {
+      var self = this;
+      categories = _.sortBy(categories, 'column');
+      var cartoTemplate = $.extend({}, cartoCss)
+      _.each(categories, function(item) {
+        item = item[0];
+        if (item.color.indexOf('#') !== -1 ) {
+          var color = App.Helper.hexToRgba(item.color, self.cartoCss.default['polygon-opacity']*100);
+          cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + color + ')';
+        } else {
+          cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + item.color + ')';
+        }
+      });
+
+      var carto = JSON.stringify(cartoTemplate);
+      carto = carto.replace(/\",/g, ';');
+      carto = carto.replace(/\"/g, '');
+      carto = carto.replace(/\}/g, ';}');
+
+      return carto;
+    },
+
+    /**
+     * Formats the plain cartocss with the colors
      * of the current template.
      * @params {String} carto Default template carto code.
      * @params {String} index Current element index.
@@ -382,9 +483,20 @@
       var sqlBounds = new cartodb.SQL({ user: this.cartoUser });
       var sql = 'SELECT the_geom FROM ' + params.layer.table_name;
 
+      if (params.layer.isRaster){
+        sql = 'SELECT the_raster_webmercator FROM ' + params.layer.table_name;
+        sql = 'SELECT ST_Union(ST_Transform(ST_Envelope(the_raster_webmercator), 4326)) as the_geom FROM (' + sql + ') as t';
+        // var sql =  'select st_asgeojson(box2d(st_collect(st_envelope(the_raster_webmercator)))) FROM ' + params.layer.table_name;
+      }
+
       sqlBounds.getBounds(sql).done(function(bounds) {
         self._setMapBounds(bounds);
-        self._addLayers(params);
+        if (params.layer.isRaster){
+          self._addRasterLayer(params);
+        } else {
+          self._addLayers(params);
+        }
+
       });
     },
 
@@ -433,6 +545,7 @@
         };
 
         this.trigger('map:layers:loaded', params);
+        this.createSliderTransparency();
       }
     },
 
@@ -508,7 +621,7 @@
 
           if (layer) {
             var bounds = layer.getBounds();
-            self.map.fitBounds(bounds, {
+            self.fitBounds(bounds, {
               paddingBottomRight: [400, 0]
             });
           }

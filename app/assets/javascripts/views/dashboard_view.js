@@ -57,11 +57,12 @@
      * @param {Object} raw data from the backend
      * @param {Object} layer data
      */
-    update: function(data, layer) {
+    update: function(data, currentLayer) {
       this.data = data.data;
       this.animate = data.animate;
       this.currentData = data.currentData;
       this.currentYear = parseInt(data.currentYear, 10);
+      var layer = _.findWhere(data.data.layers, { table_name: currentLayer });
 
       if (this.charts) {
         if (this.selectedChart !== 'line') {

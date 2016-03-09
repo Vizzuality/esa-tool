@@ -2,19 +2,20 @@
 
 (function(App) {
 
-  App.View = App.View || {};
+  App.View = App.View ||  {};
 
   App.View.MapFileColumns = Backbone.View.extend({
 
     defaults: {
-      ignored_columns: [
+      ignoredColumns: [
         'cartodb_id',
         'the_geom',
         'the_geom_webmercator',
         'updated_at',
         'created_at',
         'year'
-      ]
+      ],
+      rasterColumn: 'the_raster_webmercator'
     },
 
     columns: [],
@@ -31,12 +32,17 @@
       this.options = _.extend({}, this.defaults, params || {});
 
       this.data = this._getAppData();
-      this.ignored_columns = this.options.ignored_columns;
+      this.ignoredColumns = this.options.ignoredColumns;
+      this.rasterColumn = this.options.rasterColumn;
+      this.rastertitle = document.getElementById('page_title');
 
-      if (this.el.querySelectorAll('[data-filename]').length){
+      this.isRaster = false;
+
+      if (this.el.querySelectorAll('[data-filename]').length) {
         this.list = this.el.querySelectorAll('[data-filename]')[0];
         this.layerId = this.list.getAttribute('data-layerid');
         this.fileName = this.list.getAttribute('data-filename');
+        this.columnsContainer = this.list.getElementsByClassName('box-list')[0];
         this.init();
       }
 
@@ -45,15 +51,23 @@
     init: function() {
       var self = this;
       this.category = new App.View.MapFileCategories({
-        el: document.getElementById('custom-column-layer-'+this.layerId)
+        el: document.getElementById('custom-column-layer-' + this.layerId),
+        layerId: this.layerId
       });
-      this.category.init();
 
       var promise = self.getColumns(this.fileName);
-      promise.done(function(columns){
+      promise.done(function(columns) {
         self.refreshColumns(columns);
+        if (self.isRaster) {
+          self.category.start(self.rasterColumn);
+          if (self.columnsContainer){
+            self.columnsContainer.remove();
+          }
+        } else {
+          self.category.start();
+        }
       });
-      promise.fail(function(error){
+      promise.fail(function(error) {
         self.handleColumnsError(error);
       });
 
@@ -62,7 +76,7 @@
     onInputChanged: function(e) {
       var self = this;
       var file = e.currentTarget.files[0];
-      var extension = file.name.substr(file.name.lastIndexOf('.')+1);
+      var extension = file.name.substr(file.name.lastIndexOf('.') + 1);
       // var columns = self.getColums(file);
       // columns.done(function(columns){
       //   if (columns.indexOf('year') === -1) {
@@ -97,25 +111,30 @@
       var self = this;
       var columns = [];
       var defer = new $.Deferred();
-      var sql = new cartodb.SQL({ user: this.data.cartodbUser });
+      var sql = new cartodb.SQL({
+        user: this.data.cartodbUser
+      });
       var queryOpt = {
         table: name,
         limit: 0
       };
       sql.execute('SELECT * FROM {{table}} LIMIT {{limit}}', queryOpt)
-        .done(function(data){
-          $.each(data.fields, function(key) {
-            if (!_.contains(self.ignored_columns, key)) {
-              columns.push(key);
+        .done(function(data) {
+          $.each(data.fields, function(item) {
+            if (item === self.rasterColumn) {
+              self.isRaster = true;
+              document.getElementById('column-input-' + self.layerId).value = item;
+            } else if (!_.contains(self.ignoredColumns, item)) {
+              columns.push(item);
             }
           });
-          if (columns.length){
+          if (self.isRaster || columns.length) {
             defer.resolve(columns);
           } else {
             defer.reject('there are not columns');
           }
         })
-        .error(function(){
+        .error(function() {
           defer.reject('fail getting columns');
         });
 
@@ -124,27 +143,28 @@
 
     refreshColumns: function(columns) {
       var self = this;
-      var columnsContainer = this.list.getElementsByClassName('box-list')[0];
       var valueSelected = this.list.querySelectorAll('input')[0].value;
-      columnsContainer.innerHTML = '';
-      _.each(columns, function(element) {
-        columnsContainer.insertAdjacentHTML('afterbegin', self.getColummn(element, valueSelected));
-      });
-      columnsContainer.classList.remove('_is-loading');
+      if (!this.isRaster) {
+        this.columnsContainer.innerHTML = '';
+        _.each(columns, function(element) {
+          self.columnsContainer.insertAdjacentHTML('afterbegin', self.getColummn(element, valueSelected));
+        });
+        this.columnsContainer.classList.remove('_is-loading');
+      }
     },
 
     getColummn: function(element, valueSelected) {
       var column = {
         value: element,
-        selectedClass: (element === valueSelected) ? '_selected':''
+        selectedClass: (element === valueSelected) ? '_selected' : ''
       };
       return this._columnTemplate()(column);
     },
 
     _columnTemplate: function() {
-      return _.template('<div class="item <%= selectedClass %>" data-value="<%= value %>" >'+
-                          '<span> <%= value %> </span> '+
-                        ' </div>');
+      return _.template('<div class="item <%= selectedClass %>" data-value="<%= value %>" >' +
+        '<span> <%= value %> </span> ' +
+        ' </div>');
     },
 
     handleColumnsError: function(error) {
@@ -154,7 +174,10 @@
     addFileSelected: function(e) {
       this.fileInput = e.currentTarget;
       if (this.fileInput.files[0]) {
-        var tpl = this._fileTemplate()({fileName: this.fileInput.files[0].name});
+        var tpl = this._fileTemplate()({
+          fileName: this.fileInput.files[0].name
+        });
+        this.rastertitle.value = (!!this.rastertitle.value) ? this.rastertitle.value : this.fileInput.files[0].name;
         document.getElementById('filename').insertAdjacentHTML('beforeend', tpl);
       }
       this.el.getElementsByClassName('input-wrapper')[0].classList.add('_hidden');
@@ -186,7 +209,7 @@
       this.selectCurrent(e);
       this.updateValue(e);
 
-      this.category.init(e.currentTarget.getAttribute('data-value'));
+      this.category.start(e.currentTarget.getAttribute('data-value'));
     },
 
     selectCurrent: function(e) {
@@ -202,15 +225,19 @@
 
     updateValue: function(e) {
       var target = e.currentTarget;
-      document.getElementById('column-input-'+this.layerId)
+      document.getElementById('column-input-' + this.layerId)
         .value = e.currentTarget.getAttribute('data-value');
     },
 
     _getAppData: function() {
       var data = {};
 
-      if (gon && gon.cartodb_user) {
+      if (gon && gon.cartodb_user)  {
         data.cartodbUser = gon.cartodb_user;
+      }
+
+      if (gon && gon.page)  {
+        data.page = JSON.parse(gon.page);
       }
 
       return data;
@@ -218,4 +245,4 @@
 
   });
 
-})(window.App || {});
+})(window.App ||  {});

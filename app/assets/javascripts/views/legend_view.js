@@ -52,6 +52,7 @@
       this.data = data.data;
       this.currentData = data.currentData;
       this.unit = data.unit;
+      this.layer = layer;
 
       this._updateList();
     },
@@ -64,7 +65,7 @@
       container.classList.add('_is-loading');
     },
 
-    /** 
+    /**
      * Updates the list with the stored data
      */
     _updateList: function() {
@@ -83,6 +84,7 @@
     _renderList: function(categories) {
       var self = this;
       var container = this.el.querySelector('.list');
+      var lastCatVal = 0;
       container.innerHTML = '';
 
       categories.forEach(function(cat) {
@@ -99,19 +101,35 @@
         iconEl.classList.add('icon-legend');
         iconEl.appendChild(iconBgEl);
 
+
         var itemEl = document.createElement('span');
-        var itemText = document.createTextNode(cat.category);
+        var itemText;
+        if (self.layer.isRaster) {
+          // cat.category = parseFloat(cat.category).toFixed(8);
+          // if (self.layer.raster_type === 'continous') {
+          //   itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
+          //   lastCatVal = cat.category;
+          // } else {
+          //   itemText = document.createTextNode(cat.category);
+          // }
+          itemText = cat.label ? cat.label : cat.category;
+          itemText = document.createTextNode(itemText);
+        } else {
+          itemText = document.createTextNode(cat.category);
+        }
         itemEl.appendChild(itemText);
         itemEl.classList.add('description');
 
-        var itemValueEl = document.createElement('span');
-        var itemValueText = document.createTextNode(cat.value + self.unit);
-        itemValueEl.appendChild(itemValueText);
-        itemValueEl.classList.add('value');
-        
         itemContainer.appendChild(iconEl);
         itemContainer.appendChild(itemEl);
-        itemContainer.appendChild(itemValueEl);
+
+        if (!self.layer.isRaster){
+          var itemValueEl = document.createElement('span');
+          var itemValueText = document.createTextNode(cat.value + self.unit);
+          itemValueEl.appendChild(itemValueText);
+          itemValueEl.classList.add('value');
+          itemContainer.appendChild(itemValueEl);
+        }
 
         container.appendChild(itemContainer);
       });
@@ -119,7 +137,7 @@
       container.classList.remove('_is-loading');
     },
 
-    /** 
+    /**
      * Filters the data by a category
      * @param {Object} event
      */
@@ -127,7 +145,7 @@
       var current = ev.currentTarget;
       var category = current.dataset.category;
 
-      if (this.interactionEnabled) {  
+      if (this.interactionEnabled) {
         this.trigger('legend:filter', category);
       }
     }, 100),

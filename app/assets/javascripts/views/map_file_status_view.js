@@ -23,10 +23,10 @@
       this.init();
     },
 
-    init: function(){
+    init: function() {
       var self = this;
       _.each(this.layers, function(item) {
-        if (self.isFileUploading(item.import_status)) {
+        if (self.isFilePending(item)) {
           self.layersUploading.push(item);
         }
       });
@@ -37,6 +37,14 @@
         this.el.classList.remove('_is-loading');
       }
 
+    },
+
+    isFilePending: function(layer) {
+      if (this.isFileUploading(layer.import_status)){
+        return true;
+      } else {
+        return false;
+      }
     },
 
     isFileUploading: function(status) {
@@ -58,26 +66,24 @@
         var allLayerStatus = this.getAllStatus();
 
         allLayerStatus.done(function(data) {
-          var statusResponse;
           if (self.layersUploading.length>1) {
-            statusResponse = data;
             self.layersUploading = [];
             _.each(arguments, function(item){
               var layer = item[0].data_layer;
-              if (self.isFileUploading(layer.import_status)) {
+              if (self.isFilePending(layer)) {
                 self.layersUploading.push(layer);
               }
             });
           } else {
             self.layersUploading = [];
-            if (self.isFileUploading(data.data_layer.import_status)) {
+            if (self.isFilePending(data.data_layer)) {
               self.layersUploading.push(data.data_layer);
             }
           }
           if (self.layersUploading.length){
             setTimeout(function() {
               self.checkStatus();
-            }, 3000);
+            }, 30000);
           } else {
             self.refreshPage();
           }

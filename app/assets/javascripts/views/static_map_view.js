@@ -43,25 +43,47 @@
     _createMapImageLayer: function() {
       var self = this;
       var layer= this.layer;
+      var isRaster = layer.raster_type ? true : false;
 
       this.cartoOpt.layers = [];
       this.cartoOpt.layers.push(this.basemap);
 
       this.cartoOpt.user_name = this.cartodbUser;
+
+      var query = 'SELECT * FROM ' + layer.table_name;
+
+      var options = {
+        sql: query,
+        cartocss_version: '2.3.0'
+      };
+
+      if (isRaster) {
+
+        options.raster = true;
+        options.raster_band = 1;
+        options.geom_type = 'raster';
+        options.geom_column = 'the_raster_webmercator';
+        options.cartocss = '#' + layer.table_name + '{raster-opacity:1;}';
+
+        query = 'SELECT the_raster_webmercator FROM ' + layer.table_name;
+        query = 'SELECT ST_Union(ST_Transform(ST_Envelope(the_raster_webmercator), 4326)) as the_geom FROM (' + query + ') as t';
+
+      } else {
+        options.cartocss = '#' + layer.table_name + '{polygon-fill: #ccc; ' +
+            'polygon-opacity: 0.1;line-color: #FFF; ' +
+            'line-width: 0.9;line-opacity: 0.2 ;}';
+      }
+
       this.cartoOpt.layers.push({
         type: 'cartodb',
-        options: {
-          sql: 'SELECT * FROM ' + layer.table_name,
-          cartocss: '#' + layer.table_name + '{polygon-fill: #ccc; ' +
-            'polygon-opacity: 0.1;line-color: #FFF; ' +
-            'line-width: 0.9;line-opacity: 0.2 ;}',
-          cartocss_version: '2.1.1'
-        }
+        options: options
       });
 
       var optsC = _.extend({}, self.cartoOpt);
+
       var sql = new cartodb.SQL({ user: this.cartodbUser });
-      sql.getBounds('SELECT * FROM ' + layer.table_name).done(function(bounds) {
+
+      sql.getBounds(query).done(function(bounds) {
         self._getImage(optsC, bounds);
       });
 

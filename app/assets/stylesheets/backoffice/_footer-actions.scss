@@ -3,6 +3,10 @@
 
   background-color: rgba($bg-color-1,0.7);
 
+  ._is-loading & {
+    display: none;
+  }
+
   &.-fixed {
     position: fixed;
     bottom: 0;
