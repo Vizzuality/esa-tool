@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     root 'case_studies#index', as: 'dashboard'
 
     get 'data-layers/:id', to: 'data_layers#index'
+    delete 'data-layers/:id', to: 'data_layers#destroy'
+
   end
 
   resources :case_studies, only: [:index, :show], param: :slug, path: 'case-studies' do
