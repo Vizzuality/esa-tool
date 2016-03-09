@@ -34,6 +34,7 @@
       this.data = this._getAppData();
       this.ignoredColumns = this.options.ignoredColumns;
       this.rasterColumn = this.options.rasterColumn;
+      this.rastertitle = document.getElementById('page_title');
 
       this.isRaster = false;
 
@@ -176,6 +177,7 @@
         var tpl = this._fileTemplate()({
           fileName: this.fileInput.files[0].name
         });
+        this.rastertitle.value = (!!this.rastertitle.value) ? this.rastertitle.value : this.fileInput.files[0].name;
         document.getElementById('filename').insertAdjacentHTML('beforeend', tpl);
       }
       this.el.getElementsByClassName('input-wrapper')[0].classList.add('_hidden');
