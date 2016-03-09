@@ -221,6 +221,27 @@
     },
 
     /**
+     * Initialize the slider for layers transparency
+     */
+    createSliderTransparency: function() {
+      var sliderEl = document.getElementById('sliderView');
+      this.slider = new App.View.SliderTransparency({
+        el: sliderEl
+      });
+      this.listenTo(this.slider, 'slider:changed', this.onSliderChange.bind(this));
+    },
+
+    /**
+     * Slider change event handler
+     * @param {number} opacity
+     */
+    onSliderChange: function(opacity) {
+      for (var layer in this.layers) {
+        this.layers[layer].setOpacity(opacity/100);
+      }
+    },
+
+    /**
      * Sets the provided bounds in the map
      * @param {Object} bounds latlng
      */
@@ -525,6 +546,7 @@
         };
 
         this.trigger('map:layers:loaded', params);
+        this.createSliderTransparency();
       }
     },
 
