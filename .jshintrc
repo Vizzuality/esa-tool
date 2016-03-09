@@ -3,7 +3,7 @@
   "esnext": true,
   "bitwise": true,
   "boss": true,
-  "camelcase": true,
+  "camelcase": false,
   "curly": true,
   "devel": true,
   "eqeqeq": true,
