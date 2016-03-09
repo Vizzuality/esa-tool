@@ -38,7 +38,7 @@
   .nested-fields
     = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   .form-row.box-selector
-    = f.input :basemap, as: :radio_buttons, collection: basemaps
+    = f.input :basemap, as: :radio_buttons, required: true,  collection: basemaps
 
     #customBasemapUrl.form-row.detail-item class=('_hidden' unless @page.basemap == 'custom')
       = f.input :basemap_url
