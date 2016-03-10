@@ -183,6 +183,7 @@
       var self = this;
       var data = this.data;
       var layers = data.layers;
+
       var currentLayer = this.currentLayer;
       var layer = _.findWhere(layers, { table_name: currentLayer });
       var column = layer.layer_column;
@@ -204,6 +205,7 @@
     },
 
     _getDashboardTimelineData: function() {
+
       var self = this;
       var data = this.data;
       var layers = data.layers;
@@ -311,6 +313,7 @@
         layer.isRaster = true;
         return this._getRasterData(layer);
       } else {
+        layer.isRaster = false;
         return this._getCartoData(data, layer);
       }
 

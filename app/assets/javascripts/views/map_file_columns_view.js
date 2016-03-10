@@ -272,7 +272,7 @@
       if (!! this.el.classList.contains('file-map-input')) {
         e.stopPropagation();
         this._confirmRemove(this.el.querySelector('.name p').innerHTML.trim());
-      }      
+      }
     }
   });
 
