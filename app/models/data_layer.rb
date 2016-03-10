@@ -22,19 +22,15 @@ class DataLayer < ActiveRecord::Base
 
 
   validates :shapefile, attachment_presence: true
-  # validates :table_name, presence: true
-  # validates :import_status, presence: true
-  # validates :year, presence: true
 
   attr_accessor :cloning
-
-  # after_create :upload_carto_file, on: :create, unless: :cloning
 
   before_destroy :remove_cartodb_table
 
   def remove_cartodb_table
     layers_same_table = DataLayer.where.not(id: self.id).where(table_name: self.table_name)
     if layers_same_table.empty?
+      puts "Deleting cartodb table #{self.table_name}"
       CartoDb.remove_cartodb_table(self.table_name)
     end
   end
