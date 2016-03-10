@@ -139,6 +139,17 @@
 
     border: 0;
     background-color: transparent;
+    &.-inside-input {
+      position: relative;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 48px;
+      left: -100%;
+    }
   }
 
   &.-add {
