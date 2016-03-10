@@ -26,7 +26,7 @@
       'click .item': 'onClickItem',
       'click .remove_fields': 'checkRemoveNewItem',
       'cocoon:after-insert': 'onAddNewItem',
-      'cocoon:after-remove': 'onRemoveNewItem',
+      'cocoon:after-remove': 'onRemoveNewItem'
     },
 
     initialize: function(params) {
