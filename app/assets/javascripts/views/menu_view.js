@@ -20,6 +20,7 @@
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
       this.menu = document.getElementById('menu');
+      this.header = document.getElementById('header');
       this.btnBurger = document.getElementById('btnBurguer');
 
       this._initModules();
@@ -74,6 +75,7 @@
      */
     toggleMenu: function() {
       this.btnBurger.classList.toggle('_active');
+      this.header.classList.toggle('_menu-open');
       this.menu.classList.toggle('_active');
     }
 

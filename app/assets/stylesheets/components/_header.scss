@@ -12,10 +12,21 @@
   .btn-container, .brands-container {
     padding-top: rem(30px);
     padding-bottom: rem(30px);
+
+    @media screen and (max-width: $screen-sm) {
+        padding-top: rem(15px);
+        padding-bottom: rem(15px);
+    }
   }
 
   .brands-container {
     margin: 0 -.2rem;
+  }
+
+  &._menu-open {
+    .brands-container {
+      background: none;
+    }
   }
 
   .brands {
