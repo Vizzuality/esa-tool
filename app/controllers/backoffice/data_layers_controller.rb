@@ -12,6 +12,7 @@ class Backoffice::DataLayersController < BackofficeController
 
   def destroy
     @data_layer.destroy
+    render json: true
   end
 
 
