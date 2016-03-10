@@ -86,6 +86,7 @@
       var container = this.el.querySelector('.list');
       var lastCatVal = 0;
       container.innerHTML = '';
+      container.classList.add(self.data.colorPalette === 2 ? '-palette2':'-palette1');
 
       categories.forEach(function(cat) {
         var itemContainer = document.createElement('li');
@@ -104,7 +105,7 @@
 
         var itemEl = document.createElement('span');
         var itemText;
-        if (self.layer.isRaster) {
+        if (self.layer && self.layer.isRaster) {
           // cat.category = parseFloat(cat.category).toFixed(8);
           // if (self.layer.raster_type === 'continous') {
           //   itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
@@ -123,7 +124,7 @@
         itemContainer.appendChild(iconEl);
         itemContainer.appendChild(itemEl);
 
-        if (!self.layer.isRaster){
+        if (self.layer && !self.layer.isRaster){
           var itemValueEl = document.createElement('span');
           var itemValueText = document.createTextNode(cat.value + self.unit);
           itemValueEl.appendChild(itemValueText);

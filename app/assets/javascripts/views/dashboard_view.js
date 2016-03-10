@@ -26,6 +26,10 @@
       this.options = _.extend({}, this.defaults, params || {});
       this.layers = this.options.data.layers;
       this.charts = this.options.data.charts.length ? true:false;
+      this.theme = {
+        template: this.options.data.template,
+        colorPalette:this.options.data.colorPalette
+      };
 
       this._initLegend();
 
@@ -190,6 +194,7 @@
       this.chart = new App.View.ChartLine({
         el: chartEl,
         data: data,
+        theme: this.theme,
         currentYear: this.currentYear,
         animate: this.animate
       });
@@ -212,6 +217,7 @@
         el: chartEl,
         legendEl: legendEl,
         data: data,
+        theme: this.theme,
         currentYear: this.currentYear,
         animate: this.animate
       });
@@ -229,11 +235,11 @@
       var data = _.flatten(_.values(this.data.dashboard));
 
       this._removeChart();
-
       this.chart = new App.View.ChartBar({
         el: chartEl,
         legendEl: legendEl,
         data: data,
+        theme: this.theme,
         currentYear: this.currentYear,
         animate: this.animate
       });

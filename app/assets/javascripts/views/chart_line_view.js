@@ -39,6 +39,7 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.theme = this.options.theme;
       this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
       this.margin = this.options.margin;
@@ -76,6 +77,8 @@
       this.cWidth = this.cWidth - margin.left - margin.right;
       this.cHeight = this.cHeight - margin.top - margin.bottom;
 
+      this.el.classList.add(this.theme.colorPalette === 2 ? '-palette2':'-palette1');
+
       this.svg = d3.select(el).append('svg')
         .attr('width', this.cWidth + margin.left + margin.right)
         .attr('height', this.cHeight + margin.top + margin.bottom)
@@ -106,12 +109,12 @@
         return d.x;
       });
 
-      this.yearsSteps = _.uniq(_.pluck(this.chartData, 'year')); 
+      this.yearsSteps = _.uniq(_.pluck(this.chartData, 'year'));
 
       this.years = _.uniq(_.pluck(this.chartData, 'x'), function(y) {
         var date = new Date(y);
         return date.valueOf();
-      }); 
+      });
 
       this.chartData = d3.nest()
         .key(function(d) { return d.category; })
@@ -207,9 +210,9 @@
             return d.key;
           })
           .style('fill', function(d) { return d.color; })
-          .style('stroke', function(d) { return d.color; })          
+          .style('stroke', function(d) { return d.color; })
           .transition()
-          .duration(self.areaAnimation) 
+          .duration(self.areaAnimation)
           .attr('d', function(d) { return area(d.values); });
     },
 
@@ -235,8 +238,8 @@
       });
 
       this.svg.selectAll('.line-path').transition()
-        .attr('stroke-dasharray', function() { 
-          var total = this.getTotalLength(); 
+        .attr('stroke-dasharray', function() {
+          var total = this.getTotalLength();
           return total + ' ' + total;
         })
         .attr('stroke-dashoffset', function() { return this.getTotalLength(); })
@@ -305,7 +308,7 @@
           self._filterByDate();
 
           d3.select(this).transition()
-            .duration(0) 
+            .duration(0)
             .call(self.brush.extent(extent1))
             .call(self.brush.event);
         });
@@ -339,7 +342,7 @@
       }
 
       this.handle.attr('transform', function() {
-        return 'translate('+ (self.x(self.currentStep) - 
+        return 'translate('+ (self.x(self.currentStep) -
           (self.handleWidth / 2)) + ', ' + -((self.margin.top / 2) + 1) + ')';
       });
     },
@@ -351,7 +354,7 @@
 
       this._setHandlePosition();
     },
-    
+
     prepareRemove: function() {
       this.svg.selectAll('.area')
         .transition()

@@ -73,6 +73,7 @@
     _initMap: function() {
       var parent = this.elContent;
       var mapEl = parent.querySelector('#mapView');
+      var sliderEl = parent.querySelector('#sliderView');
       var basemapEl = parent.querySelector('#basemapView');
       var defaultBaseMap = basemapEl.getAttribute('data-basemap');
       var customBaseMapUrl = basemapEl.getAttribute('data-basemap-url');
@@ -99,9 +100,14 @@
         basemap: defaultBaseMap
       });
 
+      this.sliderTrans = new App.View.SliderTransparency({
+        el: sliderEl
+      });
+
       this.listenTo(this.map, 'map:tile:loaded', this._startMap);
       this.listenTo(this.map, 'map:layers:loaded', this._onLayersLoaded);
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
+      this.listenTo(this.sliderTrans, 'slider:changed', this.onSliderChange.bind(this));
     },
 
     /**
@@ -177,6 +183,7 @@
       var self = this;
       var data = this.data;
       var layers = data.layers;
+
       var currentLayer = this.currentLayer;
       var layer = _.findWhere(layers, { table_name: currentLayer });
       var column = layer.layer_column;
@@ -198,6 +205,7 @@
     },
 
     _getDashboardTimelineData: function() {
+
       var self = this;
       var data = this.data;
       var layers = data.layers;
@@ -305,6 +313,7 @@
         layer.isRaster = true;
         return this._getRasterData(layer);
       } else {
+        layer.isRaster = false;
         return this._getCartoData(data, layer);
       }
 
@@ -401,6 +410,14 @@
         this.data.categories = groups;
       }
 
+    },
+
+    /**
+     * Slider change layers transparency
+     * @param {number} opacity
+     */
+    onSliderChange: function(opacity) {
+      this.map.trigger('transparency:changed', opacity);
     },
 
     /**
@@ -589,6 +606,11 @@
       if (this.map) {
         this.map.remove();
         this.map = null;
+      }
+
+      if (this.sliderTrans) {
+        this.sliderTrans.remove();
+        this.sliderTrans = null;
       }
 
       if (this.mapBasemap) {

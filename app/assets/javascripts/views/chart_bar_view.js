@@ -34,6 +34,7 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.theme = this.options.theme;
       this.animate = this.options.animate;
       this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
@@ -83,6 +84,8 @@
       this.cWidth = this.cWidth - margin.left - margin.right;
       this.cHeight = this.cHeight - margin.top - margin.bottom;
       this.radius = Math.min(this.cWidth - this.outerRadius, this.cHeight - this.outerRadius) / 2;
+
+      this.el.classList.add(this.theme.colorPalette === 2 ? '-palette2':'-palette1');
 
       this.svg = d3.select(el).append('svg')
         .attr('width', this.cWidth + margin.left + margin.right)
@@ -147,7 +150,6 @@
 
     _drawGraph: function() {
       var self = this;
-
       this.svg.selectAll('.bar')
         .data(this.chartData)
         .enter().append('rect')
