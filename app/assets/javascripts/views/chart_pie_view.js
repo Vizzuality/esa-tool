@@ -33,6 +33,7 @@
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this.options.data;
+      this.theme = this.options.theme;
       this.animate = this.options.animate;
       this.selectedYear = this.options.currentYear;
       this.chartEl = this.options.chartEl;
@@ -78,6 +79,8 @@
       this.cHeight = this.cHeight - margin.top - margin.bottom;
       this.radius = Math.min(this.cWidth - this.outerRadius, this.cHeight - this.outerRadius) / 2;
 
+      this.el.classList.add(this.theme.colorPalette === 2 ? '-palette2':'-palette1');
+
       this.svg = d3.select(el).append('svg')
         .attr('width', this.cWidth + margin.left + margin.right)
         .attr('height', this.cHeight + margin.top + margin.bottom)
@@ -114,17 +117,17 @@
     _tweenPieOut: function(b) {
       var self = this;
       var start = {
-        startAngle: b.startAngle, 
+        startAngle: b.startAngle,
         endAngle: b.endAngle
       };
 
       b.startAngle = 0;
       b.endAngle = 0;
       b.value = 0;
-      
+
       var i = d3.interpolate(start, b);
       return function(t) {
-        return self.arc(i(t)); 
+        return self.arc(i(t));
       };
     },
 
@@ -146,7 +149,7 @@
 
       var container = this.svg.append('g')
         .attr('class', 'container')
-        .attr('transform', 'translate(' + (this.cWidth / 2) + ', ' + 
+        .attr('transform', 'translate(' + (this.cWidth / 2) + ', ' +
           ((this.cHeight / 2)  - (this.margin.top / 2)) + ')');
 
       this.pie = container.selectAll('.arc')
@@ -172,7 +175,9 @@
         var years = this.years;
         var container = this.legendEl;
 
+        debugger;
         container.innerHTML = '';
+        container.classList.add(self.data.colorPalette === 2 ? '-palette2':'-palette1');
 
         years.forEach(function(year) {
           var itemEl = document.createElement('div');
@@ -209,7 +214,7 @@
 
       for (var el in elems) {
         var current = elems[el];
-        
+
         if (current && current.getAttribute) {
           var cat = current.getAttribute('data-category');
           if (category === '') {
@@ -237,7 +242,7 @@
 
       this.removeTimer = setTimeout(this.remove.bind(this), this.removeTimeout);
     },
-    
+
     remove: function() {
       if(this.svg) {
         var svgContainer = this.el.querySelector('svg');
@@ -246,7 +251,7 @@
         this.svg = null;
         this.el.removeChild(svgContainer);
         this._resetLegend();
-        
+
         this._unsetListeners();
         this.undelegateEvents();
       }

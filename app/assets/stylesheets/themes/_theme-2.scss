@@ -187,46 +187,92 @@
   // Charts
 
   .chart {
-    .axis {
-      &.x {
-        .tick {
-          text {
-            fill: $t-font-color-1;
+    &.-palette1 {
+      .axis {
+        &.x {
+          .tick {
+            text {
+              fill: $t-font-color-1;
+            }
           }
         }
       }
-    }
 
-    &.pie {
-      .arc {
-        path {
+      &.pie {
+        .arc {
+          path {
+            fill-opacity: 1;
+            stroke-width: 2;
+            stroke: $t-bg-color-1 !important;
+          }
+        }
+      }
+
+      &.bar {
+        .bar {
+          stroke-width: 0;
+          fill-opacity: 1;
+        }
+      }
+
+      &.line {
+        .handle {
+          stroke: $t-border-color-1;
+        }
+        .area {
           fill-opacity: 1;
           stroke-width: 2;
-          stroke: $t-bg-color-1 !important;
+        }
+        .line-path {
+          stroke-width: 0;
+        }
+        text {
+          fill: $t-font-color-1;
         }
       }
     }
+    &.-palette2 {
+      .axis {
+        &.x {
+          .tick {
+            text {
+              fill: $t-font-color-1;
+            }
+          }
+        }
+      }
 
-    &.bar {
-      .bar {
-        stroke-width: 0;
-        fill-opacity: 1;
+      &.pie {
+        .arc {
+          path {
+            fill-opacity: 0.3;
+            stroke-width: 2;
+            stroke: $t-bg-color-1 !important;
+          }
+        }
       }
-    }
 
-    &.line {
-      .handle {
-        stroke: $t-border-color-1;
+      &.bar {
+        .bar {
+          stroke-width: 0;
+          fill-opacity: 0.3;
+        }
       }
-      .area {
-        fill-opacity: 1;
-        stroke-width: 2;
-      }
-      .line-path {
-        stroke-width: 0;
-      }
-      text {
-        fill: $t-font-color-1;
+
+      &.line {
+        .handle {
+          stroke: $t-border-color-1;
+        }
+        .area {
+          fill-opacity: 0.3;
+          stroke-width: 2;
+        }
+        .line-path {
+          stroke-width: 0;
+        }
+        text {
+          fill: $t-font-color-1;
+        }
       }
     }
   }
@@ -255,9 +301,21 @@
   .icon-legend {
     border-width: 0;
     border-style: solid;
+  }
 
-    .icon-bg {
-      opacity: 1;
+  .-palette1  {
+    .icon-legend {
+      .icon-bg {
+        opacity: 1;
+      }
+    }
+  }
+
+  .-palette2 {
+    .icon-legend {
+      .icon-bg {
+        opacity: 0.3;
+      }
     }
   }
 

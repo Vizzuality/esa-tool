@@ -86,6 +86,7 @@
       var container = this.el.querySelector('.list');
       var lastCatVal = 0;
       container.innerHTML = '';
+      container.classList.add(self.data.colorPalette === 2 ? '-palette2':'-palette1');
 
       categories.forEach(function(cat) {
         var itemContainer = document.createElement('li');

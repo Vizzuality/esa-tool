@@ -391,10 +391,18 @@
     _setLayers: function(params) {
       var self = this;
       var table = params.layer.table_name;
+      var palette = params.data.colorPalette;
       var column =  params.layer.layer_column || params.data.columnSelected;
       var cartoCss = this.cartoCss;
       var groups = params.data.categories;
-      var defaultCarto = cartoCss['default'];
+      var defaultCarto;
+
+      if (palette === 2) {
+        defaultCarto = cartoCss['default-p2'];
+      } else {
+        defaultCarto = cartoCss['default-p1'];
+      }
+
       var dataCarto = cartoCss['data'];
       var layers = [];
       defaultCarto = '#' + table + this._formatCartoCss(defaultCarto);
