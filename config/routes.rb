@@ -12,9 +12,8 @@ Rails.application.routes.draw do
     resources :users, except: [:show]
     resources :organizations, except: [:show]
 
+    resources :data_layers, path: "data-layers", only: [:destroy, :show]
     root 'case_studies#index', as: 'dashboard'
-
-    get 'data-layers/:id', to: 'data_layers#index'
   end
 
   resources :case_studies, only: [:index, :show], param: :slug, path: 'case-studies' do

@@ -24,6 +24,7 @@
       'change #map_file': 'onInputChanged',
       'click .close': 'removeFileSelected',
       'click .item': 'onClickItem',
+      'click .remove_fields': 'checkRemoveNewItem',
       'cocoon:after-insert': 'onAddNewItem',
       'cocoon:after-remove': 'onRemoveNewItem'
     },
@@ -197,11 +198,13 @@
     },
 
     onAddNewItem: function(e) {
-      e.currentTarget.getElementsByClassName('add_fields')[0].classList.add('_hidden');
+      if (!! e.currentTarget.getElementsByClassName('add_fields')[0])
+        e.currentTarget.getElementsByClassName('add_fields')[0].classList.add('_hidden');
     },
 
     onRemoveNewItem: function(e) {
-      e.currentTarget.getElementsByClassName('add_fields')[0].classList.remove('_hidden');
+      if (!! e.currentTarget.getElementsByClassName('add_fields')[0])
+        e.currentTarget.getElementsByClassName('add_fields')[0].classList.remove('_hidden');
     },
 
     onClickItem: function(e) {
@@ -243,6 +246,34 @@
       return data;
     },
 
+    _confirmRemove: function(name) {
+      if (window.confirm("Following dataset will be completely erased: "+ name + ", do you want to continue?")) {
+        this._doRemoveRaster();
+        var target = this.el.querySelectorAll('.-delete.remove_fields')[0];
+        target.classList.add('_confirmed');
+        target.click();
+      }
+    },
+    _doRemoveRaster: function() {
+      $.ajax({
+          url: '/backoffice/data-layers/' + this.layerId,
+          type: 'DELETE',
+          success: function(result) {
+              console.info('Dataset deleted succesfully')
+          }
+      });
+    },
+
+    checkRemoveNewItem: function(e) {
+      if (!! e.target.classList.contains('_confirmed')) {
+        e.target.classList.remove('_confirmed');
+        return;
+      }
+      if (!! this.el.classList.contains('file-map-input')) {
+        e.stopPropagation();
+        this._confirmRemove(this.el.querySelector('.name p').innerHTML.trim());
+      }      
+    }
   });
 
 })(window.App ||  {});
