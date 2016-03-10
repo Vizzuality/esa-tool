@@ -1,25 +1,23 @@
-class Backoffice::DataLayersController < ApplicationController
+class Backoffice::DataLayersController < BackofficeController
 
-  before_action :authenticate_user!
+  before_action :set_data_layer, only: [:show, :destroy]
 
   respond_to :json
 
-  def index
-    if data_layer_params[:id]
-      layer = DataLayer.where(id:data_layer_params[:id]).first
-      body = layer.nil? ? { error:'404', msg: 'Data layer not found', data_layer:{}} : layer
-    else
-      body = { error:'400', msg: 'You need to provide a id', data_layer:{}}
-    end
+  def show
+    body = @data_layer ||
+      { error:'400', msg: 'You need to provide an id', data_layer:{}}
     render json: body
   end
 
-  def data_layer_params
-    params.permit(:id)
+  def destroy
+    @data_layer.destroy
   end
 
-  def destroy
-    layer = DataLayer.where(id:data_layer_params[:id]).first
-    layer.destroy
+
+  private
+
+  def set_data_layer
+    @data_layer = DataLayer.find(params[:id])
   end
 end
