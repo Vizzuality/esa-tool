@@ -92,7 +92,8 @@
       this.cartoCss = this.options.cartoCss || '';
       this.cartoUser = this.options.data ? this.options.data.cartoUser : '';
       this.template = this.options.data ? this.options.data.template : 1;
-      this.layers = [];
+      this.palette = this.options.data ? this.options.data.colorPalette : 1;
+      this.layers = {};
       this.loadQueue = [];
       this.tileLoaded = false;
       this.autoUpdate = true;
@@ -106,6 +107,7 @@
      * Function to set events at beginning
      */
     _setListeners: function() {
+      this.listenTo(this, 'transparency:changed', this.onTransparencyChange.bind(this));
       this.refreshEvent = _.debounce(_.bind(this.refresh, this), 500);
       window.addEventListener('resize', this.refreshEvent, false);
     },
@@ -138,7 +140,7 @@
           var layerInstance = layers[layer];
           this.map.removeLayer(layerInstance);
         }
-        this.layers = [];
+        this.layers = {};
       }
     },
 
@@ -170,6 +172,15 @@
      */
     refresh: function() {
       this.map.invalidateSize();
+    },
+
+    /**
+     * Change the transparency of the layers
+     */
+    onTransparencyChange: function(opacity) {
+      for (var layer in this.layers) {
+        this.layers[layer].setOpacity(opacity/100);
+      }
     },
 
     /**
@@ -217,27 +228,6 @@
       if (!this.tileLoaded) {
         this.tileLoaded = true;
         this.trigger('map:tile:loaded');
-      }
-    },
-
-    /**
-     * Initialize the slider for layers transparency
-     */
-    createSliderTransparency: function() {
-      var sliderEl = document.getElementById('sliderView');
-      this.slider = new App.View.SliderTransparency({
-        el: sliderEl
-      });
-      this.listenTo(this.slider, 'slider:changed', this.onSliderChange.bind(this));
-    },
-
-    /**
-     * Slider change event handler
-     * @param {number} opacity
-     */
-    onSliderChange: function(opacity) {
-      for (var layer in this.layers) {
-        this.layers[layer].setOpacity(opacity/100);
       }
     },
 
@@ -291,7 +281,7 @@
           }]
         };
 
-        self._addCartoLayer(params.layer.table_name, cartoOpts);
+        self._addCartoLayer(layerData.category, cartoOpts);
 
       });
     },
@@ -321,19 +311,19 @@
     /**
      * Create the cart layer to the map
      */
-    _addCartoLayer: function(table, cartoOpts) {
+    _addCartoLayer: function(category, cartoOpts) {
       var self = this;
 
-      this._addToLoadingQueue(table);
+      this._addToLoadingQueue(category);
 
       cartodb.createLayer(self.map, cartoOpts)
         .addTo(self.map)
         .on('done', function(layer) {
           layer.setZIndex(1);
           layer.bind('load', function() {
-            self._removeFromLoadingQueue(table);
+            self._removeFromLoadingQueue(category);
           });
-          self.layers[table] = layer;
+          self.layers[category] = layer;
         })
         .on('error', function(err) {
           console.warn(err);
@@ -378,6 +368,7 @@
       var rasterLayer = {};
       var cartoCss = this.cartoCss;
       var defaultCarto = App.CartoCSS.Raster[params.layer.raster_type];
+      
       var rasterCss = '#' + params.layer.table_name + this._formatCartoCssRaster(defaultCarto, params.data.categories);
 
       rasterLayer.query = 'SELECT * FROM ' + params.layer.table_name;
@@ -391,13 +382,12 @@
     _setLayers: function(params) {
       var self = this;
       var table = params.layer.table_name;
-      var palette = params.data.colorPalette;
       var column =  params.layer.layer_column || params.data.columnSelected;
       var cartoCss = this.cartoCss;
       var groups = params.data.categories;
       var defaultCarto;
 
-      if (palette === 2) {
+      if (this.palette === 2) {
         defaultCarto = cartoCss['default-p2'];
       } else {
         defaultCarto = cartoCss['default-p1'];
@@ -439,13 +429,20 @@
      * @params {String} layer Raster layer.
      */
     _formatCartoCssRaster: function(cartoCss, categories) {
-      var self = this;
       categories = _.sortBy(categories, 'column');
-      var cartoTemplate = $.extend({}, cartoCss)
+      var cartoTemplate = $.extend({}, cartoCss);
+      var defaultCarto;
+
+      if (this.palette === 2) {
+        defaultCarto = this.cartoCss['default-p2'];
+      } else {
+        defaultCarto = this.cartoCss['default-p1'];
+      }
+
       _.each(categories, function(item) {
         item = item[0];
         if (item.color.indexOf('#') !== -1 ) {
-          var color = App.Helper.hexToRgba(item.color, self.cartoCss.default['polygon-opacity']*100);
+          var color = App.Helper.hexToRgba(item.color, defaultCarto['polygon-opacity']*100);
           cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + color + ')';
         } else {
           cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + item.color + ')';
@@ -553,7 +550,6 @@
         };
 
         this.trigger('map:layers:loaded', params);
-        this.createSliderTransparency();
       }
     },
 

@@ -127,6 +127,17 @@
     },
 
     /**
+     * Initialize the slider for layers transparency
+     */
+    initSliderTransparency: function() {
+      var sliderEl = document.getElementById('sliderView');
+      this.slider = new App.View.SliderTransparency({
+        el: sliderEl
+      });
+      this.listenTo(this.slider, 'slider:changed', this.onSliderChange.bind(this));
+    },
+
+    /**
      * Gets the needed data to pass it to the map view
      * @param {Object} raw data from the backend
     */
@@ -404,6 +415,14 @@
     },
 
     /**
+     * Slider change layers transparency
+     * @param {number} opacity
+     */
+    onSliderChange: function(opacity) {
+      this.map.trigger('transparency:changed', opacity);
+    },
+
+    /**
      * Sets the current year
      * and updates the layers
      * @param {Object} parameters
@@ -575,6 +594,8 @@
         this._startDashboard();
       }
 
+      this.initSliderTransparency();
+
       params.layersLoaded = true;
       params.currentYear = this.currentYear;
 
@@ -589,6 +610,11 @@
       if (this.map) {
         this.map.remove();
         this.map = null;
+      }
+
+      if (this.slider) {
+        this.slider.remove();
+        this.slider = null;
       }
 
       if (this.mapBasemap) {

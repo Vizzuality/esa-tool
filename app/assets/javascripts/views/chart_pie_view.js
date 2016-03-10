@@ -175,9 +175,7 @@
         var years = this.years;
         var container = this.legendEl;
 
-        debugger;
         container.innerHTML = '';
-        container.classList.add(self.data.colorPalette === 2 ? '-palette2':'-palette1');
 
         years.forEach(function(year) {
           var itemEl = document.createElement('div');
