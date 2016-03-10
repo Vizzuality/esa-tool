@@ -13,7 +13,7 @@
         .grid-sm-6.name
           p = f.object.table_name
         .grid-sm-1
-          = link_to_remove_association '×', f, class: 'btn -delete'
+          = link_to_remove_association '×', f, class: 'btn -delete -inside-input'
         .grid-sm-5
           = f.input_field :layer_column_alias, placeholder: "Column alias"
     .nested-fields
