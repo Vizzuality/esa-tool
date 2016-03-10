@@ -319,6 +319,21 @@
       this.rasterCategory.value = this.rasterCategoryNames.serialize();
     },
 
+    setRasterColorInput: function() {
+      var line = function() {
+        var lines = document.querySelectorAll('.columns-container .item');
+        var text = '';
+        for (var i = 0; i < lines.length; i++) {
+          text += lines[i].querySelectorAll('input')[0].value;
+          text += '-';
+          text += lines[i].querySelectorAll('.col.-double span')[0].innerHTML.trim();
+          text += '\n';
+        }
+        return (text.length > 0) ? text : '';
+      }
+      this.rasterColorInput.value = line();
+    },
+
     refreshCategories: function(columns) {
       var self = this;
       var colors;
@@ -393,6 +408,7 @@
           self.setRasterCategories();
         });
         this.setRasterCategories(columns);
+        this.setRasterColorInput();
       }
       this.updateColumnsColor();
       this.columnsContainer.classList.remove('_is-loading');
