@@ -73,6 +73,7 @@
     _initMap: function() {
       var parent = this.elContent;
       var mapEl = parent.querySelector('#mapView');
+      var sliderEl = parent.querySelector('#sliderView');
       var basemapEl = parent.querySelector('#basemapView');
       var defaultBaseMap = basemapEl.getAttribute('data-basemap');
       var customBaseMapUrl = basemapEl.getAttribute('data-basemap-url');
@@ -99,9 +100,14 @@
         basemap: defaultBaseMap
       });
 
+      this.sliderTrans = new App.View.SliderTransparency({
+        el: sliderEl
+      });
+
       this.listenTo(this.map, 'map:tile:loaded', this._startMap);
       this.listenTo(this.map, 'map:layers:loaded', this._onLayersLoaded);
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
+      this.listenTo(this.sliderTrans, 'slider:changed', this.onSliderChange.bind(this));
     },
 
     /**
@@ -124,17 +130,6 @@
       this.listenTo(this.dashboard, 'dashboard:filter', this._setFilter);
       this.listenTo(this.dashboard, 'dashboard:update:layer', this._updateByLayer);
       this.listenTo(this.dashboard, 'dashboard:update:year', this._updateByYear);
-    },
-
-    /**
-     * Initialize the slider for layers transparency
-     */
-    initSliderTransparency: function() {
-      var sliderEl = document.getElementById('sliderView');
-      this.slider = new App.View.SliderTransparency({
-        el: sliderEl
-      });
-      this.listenTo(this.slider, 'slider:changed', this.onSliderChange.bind(this));
     },
 
     /**
@@ -594,8 +589,6 @@
         this._startDashboard();
       }
 
-      this.initSliderTransparency();
-
       params.layersLoaded = true;
       params.currentYear = this.currentYear;
 
@@ -612,9 +605,9 @@
         this.map = null;
       }
 
-      if (this.slider) {
-        this.slider.remove();
-        this.slider = null;
+      if (this.sliderTrans) {
+        this.sliderTrans.remove();
+        this.sliderTrans = null;
       }
 
       if (this.mapBasemap) {
