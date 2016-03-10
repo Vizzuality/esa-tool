@@ -20,8 +20,20 @@
       this.$el.on('slide', this.onSliderChange.bind(this));
     },
 
+    unsetListeners: function() {
+      this.$el.off('slide', this.onSliderChange.bind(this));
+    },
+
     onSliderChange: function(event, ui) {
       this.trigger('slider:changed', ui.value);
+    },
+
+    /**
+     * Overwrites backbone's remove method
+     */
+    remove: function() {
+      this.$el.slider('destroy');
+      this.unsetListeners();
     }
 
   });
