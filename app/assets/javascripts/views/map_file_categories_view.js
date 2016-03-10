@@ -323,10 +323,10 @@
       var self = this;
       var colors;
 
-      if (this.rasterCategory.value) {
+      if (this.rasterCategory && this.rasterCategory.value) {
         var names = App.Helper.deserialize(this.rasterCategory.value);
       }
-      if (this.rasterColorInput.value) {
+      if (this.rasterColorInput && this.rasterColorInput.value) {
         // Step over current given values with the ones pasted in the CartoCSS formated file
         colors = App.Helper.switchInputColors(this.rasterColorInput.value);
       } else {
