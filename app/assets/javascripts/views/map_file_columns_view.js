@@ -117,7 +117,7 @@
       });
       var queryOpt = {
         table: name,
-        limit: 0
+        limit: 30
       };
       sql.execute('SELECT * FROM {{table}} LIMIT {{limit}}', queryOpt)
         .done(function(data) {
