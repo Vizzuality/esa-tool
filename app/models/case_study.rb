@@ -7,7 +7,7 @@ class CaseStudy < ActiveRecord::Base
   acts_as_taggable
 
   has_many :contacts
-  has_many :pages
+  has_many :pages, dependent: :destroy
   belongs_to :organization
   has_attached_file :cover_image, styles: {
     medium: '385x200#',
