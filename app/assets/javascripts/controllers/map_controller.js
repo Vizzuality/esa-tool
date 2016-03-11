@@ -195,7 +195,7 @@
         var query = 'SELECT ' + column + ' as category, ' +
         'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
         'FROM ' + table + ' WHERE '+ column + ' IS NOT NULL GROUP BY ' + column + ' ' +
-        'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
+        'ORDER BY ' + column + ' ASC, value DESC LIMIT 30';
 
         query = query.replace('%1', query);
 
@@ -221,7 +221,7 @@
           subquery += '(SELECT ' + column + ' as category, year, ' +
             'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
             'FROM ' + table + ' WHERE '+ column + ' IS NOT NULL GROUP BY ' + column + ', year ' +
-            'ORDER BY ' + column + ' ASC, value DESC LIMIT 7)';
+            'ORDER BY ' + column + ' ASC, value DESC LIMIT 30)';
 
           if (i < layers.length - 1) {
             subquery += ' UNION ';
