@@ -6,7 +6,9 @@
         .grid-sm-10.name
           p = f.object.table_name
         .grid-sm-2.year
-          = f.input_field :year, placeholder: "Year"
+          label 
+            abbr title="required" *
+          = f.input_field :year, placeholder: "Year", required: true
   - else
     .nested-fields
       .row.file
