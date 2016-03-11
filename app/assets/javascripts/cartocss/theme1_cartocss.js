@@ -27,8 +27,16 @@
       '#ffc600',
       '#ffffff'
     ],
-    'default': {
+    'default-p1': {
       'polygon-opacity': 0.2,
+      'line-offset': 0,
+      'line-width': 0,
+      'line-color': 'transparent',
+      'line-opacity': 1,
+      'line-rasterizer': 'fast'
+    },
+    'default-p2': {
+      'polygon-opacity': 1,
       'line-offset': 0,
       'line-width': 0,
       'line-color': 'transparent',

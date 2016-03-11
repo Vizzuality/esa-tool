@@ -32,8 +32,16 @@
       '#e0ba8c',
       '#8e6b6b'
     ],
-    'default': {
+    'default-p1': {
       'polygon-opacity': 0.7,
+      'line-offset': 0,
+      'line-width': 0,
+      'line-color': '#FFFFFF',
+      'line-opacity': 0,
+      'line-rasterizer': 'fast'
+    },
+    'default-p2': {
+      'polygon-opacity': 0.3,
       'line-offset': 0,
       'line-width': 0,
       'line-color': '#FFFFFF',

@@ -141,10 +141,10 @@
       var queryOpt = {
         column: column,
         table: table,
-        limit: 15
+        limit: 30
       };
 
-      query = 'SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}';
+      query = 'SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} WHERE {{column}} IS NOT NULL ORDER BY {{column}} LIMIT {{limit}}';
 
       sql.execute(query, queryOpt)
         .done(function(data) {
@@ -323,10 +323,10 @@
       var self = this;
       var colors;
 
-      if (this.rasterCategory.value) {
+      if (this.rasterCategory && this.rasterCategory.value) {
         var names = App.Helper.deserialize(this.rasterCategory.value);
       }
-      if (this.rasterColorInput.value) {
+      if (this.rasterColorInput && this.rasterColorInput.value) {
         // Step over current given values with the ones pasted in the CartoCSS formated file
         colors = App.Helper.switchInputColors(this.rasterColorInput.value);
       } else {

@@ -12,7 +12,7 @@
     display: block;
     position: relative;
     padding: .5rem;
-    padding-right: 1rem;
+    padding-right: 1.5rem;
     width: 25%;
 
     box-sizing: border-box;
@@ -39,10 +39,15 @@
   }
   &.-selectable {
     > .item {
-      &._selected::after {
-        @include checked();
-        top:13px;
-        right: 0;
+      &._selected {
+        background-color: rgba($bg-color-4, 0.3);
+        border-radius: 3px;
+
+        &:after {
+          @include checked();
+          top:13px;
+          right: .5rem;
+        }
       }
 
       &:not(._selected):hover {
@@ -52,7 +57,7 @@
         &::after {
           @include checked(0.3);
           top:13px;
-          right: 0;
+          right: .5rem;
         }
       }
     }

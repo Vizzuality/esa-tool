@@ -28,8 +28,16 @@
       '#ADD4A0',
       '#ffffff'
     ],
-    'default': {
+    'default-p1': {
       'polygon-opacity': 1,
+      'line-offset': 0,
+      'line-width': 0,
+      'line-color': 'transparent',
+      'line-opacity': 0,
+      'line-rasterizer': 'fast'
+    },
+    'default-p2': {
+      'polygon-opacity': 0.3,
       'line-offset': 0,
       'line-width': 0,
       'line-color': 'transparent',
