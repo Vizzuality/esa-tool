@@ -83,9 +83,13 @@
 
       var sql = new cartodb.SQL({ user: this.cartodbUser });
 
-      sql.getBounds(query).done(function(bounds) {
-        self._getImage(optsC, bounds);
-      });
+      sql.getBounds(query)
+        .done(function(bounds) {
+          self._getImage(optsC, bounds);
+        })
+        .error(function() {
+          self.el.classList.remove('_is-loading');
+        });
 
     },
 
