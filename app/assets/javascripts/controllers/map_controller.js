@@ -330,14 +330,16 @@
 
     _getCartoData: function(data, layer) {
       var sql = new cartodb.SQL({ user: data.cartoUser });
-      var table = layer.table_name;
-      var column = layer.layer_column;
+      var cartoOpts = {
+        table : layer.table_name,
+        column : layer.layer_column,
+        limit: 30
+      };
 
       var query = 'SELECT {{column}} as column FROM {{table}} \
-       GROUP BY {{column}} ORDER BY {{column}} LIMIT 15';
+       GROUP BY {{column}} ORDER BY {{column}} LIMIT {{limit}}';
 
-      var cartoQuery = sql.execute(query,
-        { column: column, table: table });
+      var cartoQuery = sql.execute(query, cartoOpts);
 
       return cartoQuery;
     },
