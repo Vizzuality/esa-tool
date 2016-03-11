@@ -144,7 +144,7 @@
         limit: 15
       };
 
-      query = 'SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} ORDER BY {{column}} LIMIT {{limit}}';
+      query = 'SELECT DISTINCT {{column}} AS CATEGORY FROM {{table}} WHERE {{column}} IS NOT NULL ORDER BY {{column}} LIMIT {{limit}}';
 
       sql.execute(query, queryOpt)
         .done(function(data) {
