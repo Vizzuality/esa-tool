@@ -194,8 +194,8 @@
       } else {
         var query = 'SELECT ' + column + ' as category, ' +
         'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
-        'FROM ' + table + ' GROUP BY ' + column + ' ' +
-        'ORDER BY ' + column + ' ASC, value DESC LIMIT 7';
+        'FROM ' + table + ' WHERE '+ column + ' IS NOT NULL GROUP BY ' + column + ' ' +
+        'ORDER BY ' + column + ' ASC, value DESC LIMIT 30';
 
         query = query.replace('%1', query);
 
@@ -220,8 +220,8 @@
 
           subquery += '(SELECT ' + column + ' as category, year, ' +
             'ROUND( COUNT(*) * 100 / SUM(count(*) ) OVER(), 2 ) AS value ' +
-            'FROM ' + table + ' GROUP BY ' + column + ', year ' +
-            'ORDER BY ' + column + ' ASC, value DESC LIMIT 7)';
+            'FROM ' + table + ' WHERE '+ column + ' IS NOT NULL GROUP BY ' + column + ', year ' +
+            'ORDER BY ' + column + ' ASC, value DESC LIMIT 30)';
 
           if (i < layers.length - 1) {
             subquery += ' UNION ';
@@ -330,14 +330,16 @@
 
     _getCartoData: function(data, layer) {
       var sql = new cartodb.SQL({ user: data.cartoUser });
-      var table = layer.table_name;
-      var column = layer.layer_column;
+      var cartoOpts = {
+        table : layer.table_name,
+        column : layer.layer_column,
+        limit: 30
+      };
 
       var query = 'SELECT {{column}} as column FROM {{table}} \
-       GROUP BY {{column}} ORDER BY {{column}} LIMIT 15';
+       GROUP BY {{column}} ORDER BY {{column}} LIMIT {{limit}}';
 
-      var cartoQuery = sql.execute(query,
-        { column: column, table: table });
+      var cartoQuery = sql.execute(query, cartoOpts);
 
       return cartoQuery;
     },
