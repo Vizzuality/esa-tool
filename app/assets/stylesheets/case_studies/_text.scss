@@ -5,62 +5,93 @@
   @extend %clearfix;
   @include veil;
 
-  .caption {
-    position: relative;
-    top: 100px;
-    height: 70vh;
+  .container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 62px);
 
-    font-size: rem($font-size);
-
-    z-index: 1;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 
     @media screen and (min-width: $screen-sm) {
-      top: 0;
-      height: auto;
-    }
-  }
-
-  .title {
-    padding-bottom: rem(10px);
-    padding-top: rem(10px);
-
-    border-top: 4px solid;
-    border-bottom: 4px solid;
-
-    @media screen and (min-width: $screen-sm) {
-      margin-left: 1rem;
-    }
-    & > h2 {
-      margin: 0;
-      padding: 0;
-
-      font-family: $font-main;
-      font-size: rem($font-size-large);
-      line-height: 1.2;
+      position: relative;
+      height: 100vh;
+      
+      display: flex;
+      align-items: center;
     }
 
-  }
-  .content {
-    display: flex;
-    flex-flow: wrap row;
-    p {
-      flex-basis: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
+    > .image {
+      height: rem(200px);
+      margin-top: 65px;
+
+      background-size: cover;
+      background-position: center;
 
       @media screen and (min-width: $screen-sm) {
-        padding: 1rem;
-        flex-basis: 33%;
-        max-width: 33%;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 0;
+
+        z-index: -1;
+      }
+    }
+
+    .caption {
+      position: relative;
+      top: 0;
+      height: auto;
+
+      font-size: rem($font-size);
+
+      z-index: 1;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+
+      @media screen and (min-width: $screen-sm) {
+        height: auto;
+      }
+    }
+
+    .title {
+      padding-bottom: rem(10px);
+      padding-top: rem(10px);
+
+      border-bottom: 4px solid;
+
+      @media screen and (min-width: $screen-sm) {
+        border-top: 4px solid;
+        margin-left: 1rem;
+      }
+      & > h2 {
+        margin: 0;
+        padding: 0;
+
+        font-family: $font-main;
+        font-size: rem($font-size-large);
+        line-height: 1.2;
+      }
+
+    }
+    .content {
+      display: flex;
+      flex-flow: wrap row;
+      p {
+        flex-basis: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        @media screen and (min-width: $screen-sm) {
+          padding: 1rem;
+          flex-basis: 33%;
+          max-width: 33%;
+        }
       }
     }
   }
-
-  @media screen and (min-width: $screen-sm) {
-    display: flex;
-    align-items: center;
-  }
-
 }

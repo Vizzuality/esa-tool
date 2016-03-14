@@ -9,7 +9,8 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-image: url(#{asset_path('landing-footer.png')});
-      //To add image with different ratio in large screens
+      background-position: center;
+      //TODO add image with different ratio in large screens
       @media screen and (min-width: $screen-md) {
         background-image: url(#{asset_path('landing-footer.png')});
       }
@@ -19,9 +20,12 @@
   .column {
     padding: 3rem;
     @media screen and (max-width: $screen-md) {
-      padding: 1.5rem;
+      padding: 2rem 0;
       text-align: center;
       margin: 0 auto;
+      & + .column {
+        padding-top: 0;
+      }
     }
   }
 
@@ -78,7 +82,7 @@
   }
 
   > .copyright {
-    padding: .5rem 5rem;
+    padding: 1rem 5rem;
 
     font-size: $font-size-small;
     font-family: $font-secondary;

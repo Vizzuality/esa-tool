@@ -1,10 +1,14 @@
 .cases {
   position: relative;
   margin-top: - rem(300px);
-  min-height: rem(400px);
-  padding: 2rem 1rem;
+  // min-height: rem(400px);
+  padding: 1rem;
 
   background-color: $bg-color-landing-3;
+
+  @media screen and (min-width: $screen-md) {
+    padding: 2rem 1rem;
+  }
 
   transition: margin .5s ease;
 
@@ -84,5 +88,5 @@
         background-size: 0;
       }
     }
-  }  
+  }
 }
