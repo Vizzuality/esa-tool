@@ -4,7 +4,7 @@ class CaseStudySerializer < ActiveModel::Serializer
   has_many :pages
 
   def cover_path
-    object.cover_image.url(:medium)
+    object.cover_image.blank? ? '' : object.cover_image.url(:medium)
   end
   def case_path
     case_study_path(object.slug)

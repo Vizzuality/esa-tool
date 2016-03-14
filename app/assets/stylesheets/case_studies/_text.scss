@@ -18,17 +18,20 @@
     @media screen and (min-width: $screen-sm) {
       position: relative;
       height: 100vh;
-      
+
       display: flex;
       align-items: center;
     }
 
     > .image {
+      position: relative;
       height: rem(200px);
-      margin-top: 65px;
+      margin-top: 64px;
 
       background-size: cover;
       background-position: center;
+
+      z-index: 1;
 
       @media screen and (min-width: $screen-sm) {
         width: 100%;
