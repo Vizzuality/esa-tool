@@ -4,7 +4,9 @@
       .grid-sm-9
         = f.input :shapefile, as: :file, accept: ".csv", input_html: {id:"map_file"}
       .grid-sm-2.year
-        = f.input_field :year, placeholder: "Year"
+        label 
+          abbr title="required" *
+        = f.input_field :year, placeholder: "Year", required: true
       .grid-sm-1
         = link_to_remove_association '×', f, class: 'btn -delete'
 - else
