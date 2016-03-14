@@ -110,8 +110,9 @@
      * Function to get the case with template
      */
     _caseTemplate: function(studyCase) {
+      var style = studyCase.cover_path ? 'background-image: url('+ studyCase.cover_path +')':'';
       return '<article id="case-'+studyCase.id+'" class="grid-xs-12 grid-sm-6 grid-md-4 case _is-loading">'+
-                '<a href="'+ studyCase.case_path+'" style="background-image: url('+ studyCase.cover_path +')">'+
+                '<a href="'+ studyCase.case_path+'" style="'+style+'"">'+
                   '<div class="map-image"></div>'+
                   '<div class="caption">'+
                     '<h2>'+studyCase.title+'</h2>'+
