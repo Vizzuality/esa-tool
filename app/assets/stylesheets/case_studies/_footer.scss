@@ -8,4 +8,10 @@
   font-family: $font-secondary;
 
   border-top: 1px solid rgba($white, 0.2);
+
+  .page {
+    span {
+      margin: 0 rem(2px);
+    }
+  }
 }
