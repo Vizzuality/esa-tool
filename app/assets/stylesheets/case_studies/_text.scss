@@ -1,16 +1,28 @@
 .text {
   position: relative;
-  height: 100vh;
+  height: calc(100% - 63px);
+
+  @media screen and (min-width: $screen-sm) {
+    height: 100vh;
+  }
 
   @extend %clearfix;
   @include veil;
+
+  &:after {
+    display: none;
+
+    @media screen and (min-width: $screen-sm) {
+      display: block;
+    }
+  }
 
   .container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100vh - 62px);
+    height: 100%;
 
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -48,7 +60,7 @@
     .caption {
       position: relative;
       top: 0;
-      height: auto;
+      height: calc(100% - 200px);
 
       font-size: rem($font-size);
 

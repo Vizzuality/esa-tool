@@ -1,6 +1,10 @@
 .map {
   position: relative;
-  height: 100vh;
+  height: calc(100% - 63px);
+
+  @media screen and (min-width: $screen-sm) {
+    height: 100vh;
+  }
 
   @extend %clearfix;
 
@@ -9,14 +13,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100vh - 62px);
+    height: 100%;
 
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-
-    @media screen and (min-width: $screen-sm) {
-      height: 100%;
-    }
   }
 
   .vis {

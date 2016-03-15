@@ -1,5 +1,5 @@
 .main-slider {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -7,6 +7,11 @@
 
   .slick-slide {
     position: relative;
+    height: calc(100vh - 63px);
+
+    @media screen and (min-width: $screen-sm) {
+      height: 100vh;
+    }
   }
 
   .slick-arrow {
