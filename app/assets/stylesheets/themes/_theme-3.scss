@@ -200,6 +200,33 @@
         }
       }
     }
+
+    .leaflet-control-zoom a , .leaflet-control-fit-map{
+      background-color: $map-basemap-bg;
+    }
+
+    .slider-transparency {
+      background-color: $map-basemap-bg;
+
+      .title {
+        color: $t-font-color-3;
+      }
+
+      .ui-slider {
+
+        .ui-slider-handle {
+          background-color: $t-font-color-3;
+
+          &.ui-state-active {
+            background-color: $t-font-color-3;
+          }
+        }
+
+        &:after {
+          background-color: $map-basemap-unselected;
+        }
+      }
+    }
   }
 
   // Charts
@@ -350,25 +377,4 @@
       }
     }
   }
-
-  // Transparency slider
-
-  .slider-container {
-    .ui-slider {
-      background-color: $map-basemap-bg;
-      border-radius: 12px;
-
-      .ui-slider-handle {
-
-        background-color: $t-bg-color-1;
-        border: 1px solid $t-bg-color-1;
-
-        &.ui-state-active {
-          background-color: rgba($t-bg-color-1, $default-opacity);
-          border: 1px solid rgba($t-bg-color-1, $default-opacity);
-        }
-      }
-    }
-  }
-
 }

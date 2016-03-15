@@ -201,6 +201,33 @@
         }
       }
     }
+
+    .leaflet-control-zoom a , .leaflet-control-fit-map{
+      background-color: $map-basemap-bg;
+    }
+
+    .slider-transparency {
+      background-color: $map-basemap-bg;
+
+      .title {
+        color: $main-color;
+      }
+
+      .ui-slider {
+
+        .ui-slider-handle {
+          background-color: $main-color;
+
+          &.ui-state-active {
+            background-color: $main-color;
+          }
+        }
+
+        &:after {
+          background-color: $map-basemap-unselected;
+        }
+      }
+    }
   }
 
   // Charts
@@ -352,26 +379,6 @@
     > .action {
       > .icon {
         fill: $t-font-color-1;
-      }
-    }
-  }
-
-  // Transparency slider
-
-  .slider-container {
-    .ui-slider {
-      background-color: $map-basemap-bg;
-      border-radius: 12px;
-
-      .ui-slider-handle {
-
-        background-color: $t-bg-color-2;
-        border: 1px solid $t-bg-color-2;
-
-        &.ui-state-active {
-          background-color: rgba($t-bg-color-2, $default-opacity);
-          border: 1px solid rgba($t-bg-color-2, $default-opacity);
-        }
       }
     }
   }

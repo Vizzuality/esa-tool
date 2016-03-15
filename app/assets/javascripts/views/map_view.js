@@ -99,6 +99,9 @@
       this.autoUpdate = true;
       this.isRaster = false;
 
+      this.controlsContainer = [];
+      this.controlsContainer.push(this.el.parentElement.querySelectorAll('.map-controls-container')[0]);
+
       this.createMap();
       this._setListeners();
     },
@@ -123,9 +126,34 @@
      * Init the Leaflet map and add basemap
      */
     createMap: function() {
+      var self = this;
       if (!this.map) {
         this.map = L.map(this.el, this.options);
         this.setBasemap(this.basemap);
+
+        this.zoomControl = new L.Control.Zoom({ position: 'bottomleft' }).addTo(this.map);
+
+        var FitMapControl = L.Control.extend({
+
+          options: {
+            position: 'bottomleft'
+          },
+
+          onAdd: function () {
+              var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-fit-map');
+              container.onclick = function(e){
+                self.restoreZoom();
+              };
+              L.DomEvent.disableClickPropagation(container);
+              return container;
+            }
+        });
+
+        this.map.addControl(new FitMapControl());
+        var leafletControls = document.querySelectorAll('.leaflet-control-container')[0];
+        leafletControls.classList.add('_hidden');
+        this.controlsContainer.push(leafletControls);
+
       }
     },
 
@@ -155,6 +183,16 @@
         this.map = [];
       }
 
+      if (this.zoomControl) {
+        this.zoomControl = null;
+      }
+
+      if (this.controlsContainer) {
+        _.each(this.controlsContainer, function(control){
+          control.classList.add('_hidden');
+        });
+      }
+
       this._unsetListeners();
     },
 
@@ -165,6 +203,17 @@
     remove: function() {
       this.removeMap();
       this.$el.html(null);
+    },
+
+    /**
+     * Show the map controls
+     */
+    showControls: function() {
+      if (this.controlsContainer) {
+        _.each(this.controlsContainer, function(control) {
+          control.classList.remove('_hidden');
+        });
+      }
     },
 
     /**
@@ -368,7 +417,7 @@
       var rasterLayer = {};
       var cartoCss = this.cartoCss;
       var defaultCarto = App.CartoCSS.Raster[params.layer.raster_type];
-      
+
       var rasterCss = '#' + params.layer.table_name + this._formatCartoCssRaster(defaultCarto, params.data.categories);
 
       rasterLayer.query = 'SELECT * FROM ' + params.layer.table_name;
@@ -495,6 +544,7 @@
       }
 
       sqlBounds.getBounds(sql).done(function(bounds) {
+        self.bounds = bounds;
         self._setMapBounds(bounds);
         if (params.layer.isRaster){
           self._addRasterLayer(params);
@@ -642,6 +692,14 @@
 
     fitBounds: function(bounds, options) {
       this.map.fitBounds(bounds, options);
+    },
+
+    /**
+     * Fit the map in initial state
+     */
+
+    restoreZoom: function() {
+      this.map.fitBounds(this.bounds);
     }
   });
 
