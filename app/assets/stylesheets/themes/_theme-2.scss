@@ -67,26 +67,44 @@
 
   // Header
 
-  .brands-container {
-    background: linear-gradient(to bottom, rgba($t-bg-color-1, 1), rgba($t-bg-color-1, 0));
+  .l-header{
+    @media screen and (max-width: $screen-sm) {
+      background: $t-bg-color-1;
+      &._menu-open {
+        background: none;
+      }
+    }
+  }
+
+  header:not(._menu-open) {
+    .brands-container {
+      background: linear-gradient(to bottom, rgba($t-bg-color-1, 1), rgba($t-bg-color-1, 0));
+      @media screen and (max-width: $screen-sm) {
+          background: none;
+      }
+    }
   }
 
   // Brand
 
-  .brands {
-    .brand {
-      svg {
-        fill: $t-font-color-1;
+  header:not(._menu-open) {
+    .brands {
+      .brand {
+        svg {
+          fill: $t-font-color-1;
+        }
       }
     }
   }
 
   // Menu
 
-  .btn-burguer {
-    background-color: $t-white;
-    span {
-      background-color: $menu-dash-color;
+  header:not(._menu-open) {
+    .btn-burguer {
+      background-color: $t-white;
+      span {
+        background-color: $menu-dash-color;
+      }
     }
   }
 

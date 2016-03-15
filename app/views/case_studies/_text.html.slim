@@ -1,11 +1,13 @@
-.text data-type="text" style=("background-image: url(#{p.background.url(:large)})" if p.background?)
+.text data-type="text" 
 
-  .wrap: .row
-    .grid-xs-12
+  .container
+    .image style=("background-image: url(#{p.background.url(:large)})" if p.background?)
+    .wrap: .row
+      .grid-xs-12
 
-      article.caption
-        .grid-xs-12.grid-sm-8
-          .title: h2 = p.title
-        
-        .content.grid-xs-12
-          = markdown(p.body)
+        article.caption
+          .grid-xs-12.grid-sm-8
+            .title: h2 = p.title
+          
+          .content.grid-xs-12
+            = markdown(p.body)

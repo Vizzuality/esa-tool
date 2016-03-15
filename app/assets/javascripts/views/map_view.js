@@ -188,7 +188,9 @@
       }
 
       if (this.controlsContainer) {
-        this.controlsContainer =  null;
+        _.each(this.controlsContainer, function(control){
+          control.classList.add('_hidden');
+        });
       }
 
       this._unsetListeners();
