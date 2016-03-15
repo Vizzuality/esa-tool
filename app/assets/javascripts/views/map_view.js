@@ -123,9 +123,30 @@
      * Init the Leaflet map and add basemap
      */
     createMap: function() {
+      var self = this;
       if (!this.map) {
         this.map = L.map(this.el, this.options);
         this.setBasemap(this.basemap);
+
+        new L.Control.Zoom({ position: 'bottomleft' }).addTo(this.map);
+
+        var FitMapControl = L.Control.extend({
+
+          options: {
+            position: 'bottomleft'
+          },
+
+          onAdd: function () {
+              var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-fit-map');
+              container.onclick = function(){
+                self.restoreZoom();
+              };
+              return container;
+            }
+        });
+
+        this.map.addControl(new FitMapControl());
+
       }
     },
 
@@ -368,7 +389,7 @@
       var rasterLayer = {};
       var cartoCss = this.cartoCss;
       var defaultCarto = App.CartoCSS.Raster[params.layer.raster_type];
-      
+
       var rasterCss = '#' + params.layer.table_name + this._formatCartoCssRaster(defaultCarto, params.data.categories);
 
       rasterLayer.query = 'SELECT * FROM ' + params.layer.table_name;
@@ -495,6 +516,7 @@
       }
 
       sqlBounds.getBounds(sql).done(function(bounds) {
+        self.bounds = bounds;
         self._setMapBounds(bounds);
         if (params.layer.isRaster){
           self._addRasterLayer(params);
@@ -642,6 +664,14 @@
 
     fitBounds: function(bounds, options) {
       this.map.fitBounds(bounds, options);
+    },
+
+    /**
+     * Fit the map in initial state
+     */
+
+    restoreZoom: function() {
+      this.map.fitBounds(this.bounds);
     }
   });
 

@@ -1,0 +1,180 @@
+.map-controls-container {
+  position: absolute;
+  bottom: 3rem;
+  padding-left: rem(100px);
+
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  align-items: center;
+
+    .basemap {
+      width: rem(90px);
+      height: 30px;
+      box-sizing: content-box;
+      margin-right: 3px;
+
+      overflow: hidden;
+      transform: translate3d(0, 0, 0);
+      transition: width .3s;
+
+      > .content {
+        width: rem(300px);
+        display: block;
+
+        > .action {
+          font-size: rem($font-size-small);
+          font-family: $font-secondary;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: rem(1px);
+          padding: rem(9px) rem(15px);
+          float: left;
+        }
+
+        > .list {
+          width: rem(170px);
+          height: rem(31px);
+          list-style: none;
+          float: left;
+          padding: rem(0px) rem(15px);
+          margin: 0;
+          overflow: hidden;
+
+          > .item {
+            float: left;
+            font-size: rem($font-size-small);
+            font-family: $font-secondary;
+            font-weight: 700;
+            line-height: $font-size-small;
+            text-transform: uppercase;
+            padding: rem(9px) rem(15px);
+            cursor: pointer;
+
+            &.selected {
+              cursor: default;
+            }
+          }
+        }
+      }
+
+      &.active {
+        width: rem(300px);
+
+        > .list {
+          width: rem(170px);
+        }
+      }
+    }
+
+    .slider-transparency {
+      display: flex;
+      align-items: center;
+
+      padding: 0 rem(15px);
+
+      // TODO themify
+      background-color: black;
+
+      .title {
+        font-family: $font-secondary;
+        font-weight: 700;
+        color: white;
+        font-size: rem($font-size-small);
+        margin-right: 1rem;
+      }
+
+      .ui-slider {
+        width: rem(90px);
+        height: 30px;
+        box-sizing: content-box;
+        margin-top: 0;
+        border-radius: 0;
+        background-color: transparent;
+        position: relative;
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 14px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: rgba(white, .5);
+        }
+
+        .ui-slider-handle {
+          border-radius: 50%;
+          outline: none;
+          top: 11px;
+          width: 8px;
+          height: 8px;
+          margin-left: -4px;
+          border: none;
+        }
+      }
+    }
+}
+
+.leaflet-control-container {
+  @extend %wrap;
+  position: relative;
+  height: 100%;
+
+  .leaflet-bar {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .leaflet-control {
+    margin:0;
+    cursor: po
+  }
+
+  .leaflet-control-zoom, .leaflet-control-fit-map {
+    bottom: 3rem;
+    margin-left: 20px;
+  }
+
+  .leaflet-control-zoom {
+    a {
+      position: absolute;
+      bottom: 0;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      box-sizing: border-box;
+
+      font-size: $font-size-medium;
+      -webkit-font-smoothing: subpixel-antialiased;
+      text-indent: -99999px;
+
+      border-radius: 0;
+      border: none;
+
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .leaflet-control-zoom-in {
+      left: rem(66px);
+      background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMTBweCIgaGVpZ2h0PSIxMHB4IiB2aWV3Qm94PSIwIDAgMTAgMTAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+em9vbS1pbjwvdGl0bGU+ICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPiAgICA8ZGVmcz48L2RlZnM+ICAgIDxnIGlkPSIxMjgwX3RlbXBsYXRlLTAxIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4gICAgICAgIDxnIGlkPSIxMjgwLTA0bWFwMDEtc3BhcmtsaW5lcy1jb3B5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTYzLjAwMDAwMCwgLTgyMi4wMDAwMDApIiBmaWxsPSIjRkZGRkZGIj4gICAgICAgICAgICA8cGF0aCBkPSJNMTY5LDgyNiBMMTY5LDgyMiBMMTY3LDgyMiBMMTY3LDgyNiBMMTYzLDgyNiBMMTYzLDgyOCBMMTY3LDgyOCBMMTY3LDgzMiBMMTY5LDgzMiBMMTY5LDgyOCBMMTczLDgyOCBMMTczLDgyNiBMMTY5LDgyNiBaIiBpZD0iem9vbS1pbiI+PC9wYXRoPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+);
+    }
+    .leaflet-control-zoom-out {
+      left: 0;
+      background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMTBweCIgaGVpZ2h0PSIycHgiIHZpZXdCb3g9IjAgMCAxMCAyIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPiAgICAgICAgPHRpdGxlPnpvb20tb3V0PC90aXRsZT4gICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+ICAgIDxkZWZzPjwvZGVmcz4gICAgPGcgaWQ9IjEyODBfdGVtcGxhdGUtMDEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPiAgICAgICAgPGcgaWQ9IjEyODAtMDRtYXAwMS1waWVjaGFydCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMwLjAwMDAwMCwgLTgyNi4wMDAwMDApIiBmaWxsPSIjRkZGRkZGIj4gICAgICAgICAgICA8cmVjdCBpZD0iem9vbS1vdXQiIHg9IjM0IiB5PSI4MjIiIHdpZHRoPSIyIiBoZWlnaHQ9IjEwIj48L3JlY3Q+ICAgICAgICA8L2c+ICAgIDwvZz48L3N2Zz4=);
+    }
+  }
+
+  .leaflet-control-fit-map {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: rem(33px);
+    cursor: pointer;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iMTBweCIgaGVpZ2h0PSIxMHB4IiB2aWV3Qm94PSIwIDAgMTAgMTAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+em9vbS1yZXNldDwvdGl0bGU+ICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPiAgICA8ZGVmcz48L2RlZnM+ICAgIDxnIGlkPSIxMjgwX3RlbXBsYXRlLTAxIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4gICAgICAgIDxnIGlkPSIxMjgwLTA0bWFwMDEtc3BhcmtsaW5lcy1jb3B5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTMyLjAwMDAwMCwgLTgyMi4wMDAwMDApIiBmaWxsPSIjRkZGRkZGIj4gICAgICAgICAgICA8cGF0aCBkPSJNMTQxLDgyMiBMMTQyLDgyMiBMMTQyLDgzMiBMMTQxLDgzMiBMMTMyLDgzMiBMMTMyLDgzMSBMMTMyLDgyMyBMMTMyLDgyMiBMMTQxLDgyMiBaIE0xNDAsODI0IEwxNDAsODMwIEwxMzQsODMwIEwxMzQsODI0IEwxNDAsODI0IFoiIGlkPSJ6b29tLXJlc2V0Ij48L3BhdGg+ICAgICAgICA8L2c+ICAgIDwvZz48L3N2Zz4=);
+  }
+}
