@@ -20,7 +20,7 @@
 
       background-color: rgba(49, 98, 116, 0.3);
       border-radius: 5px;
-      
+
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -52,13 +52,17 @@
   }
 
   .year {
+    position: relative;
 
     label {
       margin: 0;
       padding: 0;
+      position: absolute;
+      left: 0;
     }
     input {
       padding: 0;
+      margin-left: rem(5px);
       margin-top: rem(5px);
       margin-bottom: 0;
       line-height: 2rem;
