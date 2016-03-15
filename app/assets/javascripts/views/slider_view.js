@@ -66,6 +66,7 @@
      */
     _onInit: function(e, s) {
       var self = this;
+      this.updatePage(s.currentSlide);
       this.setCurrent(s.currentSlide);
       self.trigger('slider:initialized');
 

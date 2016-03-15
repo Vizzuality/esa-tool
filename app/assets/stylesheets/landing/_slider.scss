@@ -1,7 +1,12 @@
 .slider {
-  padding: 2rem;
+
+  padding: 2rem 0;
 
   background-color: $bg-color-landing-4;
+
+  @media screen and (min-width: $screen-md) {
+    padding: 2rem;
+  }
 
   .slide {
 
@@ -18,7 +23,7 @@
     }
 
     > .slide-content {
-      padding: 2rem 1rem 1rem;
+      padding: 1rem;
       text-align: center;
 
       > .title {
