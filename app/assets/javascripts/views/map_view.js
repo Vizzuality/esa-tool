@@ -99,6 +99,9 @@
       this.autoUpdate = true;
       this.isRaster = false;
 
+      this.controlsContainer = [];
+      this.controlsContainer.push(this.el.parentElement.querySelectorAll('.map-controls-container')[0]);
+
       this.createMap();
       this._setListeners();
     },
@@ -128,7 +131,7 @@
         this.map = L.map(this.el, this.options);
         this.setBasemap(this.basemap);
 
-        new L.Control.Zoom({ position: 'bottomleft' }).addTo(this.map);
+        this.zoomControl = new L.Control.Zoom({ position: 'bottomleft' }).addTo(this.map);
 
         var FitMapControl = L.Control.extend({
 
@@ -138,14 +141,18 @@
 
           onAdd: function () {
               var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-fit-map');
-              container.onclick = function(){
+              container.onclick = function(e){
                 self.restoreZoom();
               };
+              L.DomEvent.disableClickPropagation(container);
               return container;
             }
         });
 
         this.map.addControl(new FitMapControl());
+        var leafletControls = document.querySelectorAll('.leaflet-control-container')[0];
+        leafletControls.classList.add('_hidden');
+        this.controlsContainer.push(leafletControls);
 
       }
     },
@@ -176,6 +183,14 @@
         this.map = [];
       }
 
+      if (this.zoomControl) {
+        this.zoomControl = null;
+      }
+
+      if (this.controlsContainer) {
+        this.controlsContainer =  null;
+      }
+
       this._unsetListeners();
     },
 
@@ -186,6 +201,17 @@
     remove: function() {
       this.removeMap();
       this.$el.html(null);
+    },
+
+    /**
+     * Show the map controls
+     */
+    showControls: function() {
+      if (this.controlsContainer) {
+        _.each(this.controlsContainer, function(control) {
+          control.classList.remove('_hidden');
+        });
+      }
     },
 
     /**
