@@ -3,17 +3,19 @@
     #mapView.vis.map-container
 
     .wrap: .row: .grid-sm-8
-      .slider-container
-        #sliderView
-      #basemapView data-basemap=p.basemap data-basemap-url= p.basemap_url
-        .basemap
-          .content
-            button.action Basemap
-            ul.list
-              li.item class=('selected' if p.basemap == 'terrain') data-value=("terrain") Terrain
-              li.item class=('selected' if p.basemap == 'satellite') data-value=("satellite") Satellite
-              - if p.basemap == 'custom'
-                li.item.selected data-value=("custom") Custom
+      .map-controls-container._hidden
+        #basemapView data-basemap=p.basemap data-basemap-url= p.basemap_url
+          .basemap
+            .content
+              button.action Basemap
+              ul.list
+                li.item class=('selected' if p.basemap == 'terrain') data-value=("terrain") Terrain
+                li.item class=('selected' if p.basemap == 'satellite') data-value=("satellite") Satellite
+                - if p.basemap == 'custom'
+                  li.item.selected data-value=("custom") Custom
+        .slider-transparency
+          span.title OPACITY
+          #sliderView
     .wrap: .row: .grid-xs-12.grid-sm-4.offset-sm-8
         
       #dashboardView.dashboard
