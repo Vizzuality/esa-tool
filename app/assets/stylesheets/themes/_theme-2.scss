@@ -133,7 +133,7 @@
     }
   }
 
-  .text,
+  .text .image,
   .cover {
     // Veil
     &::after {
@@ -402,7 +402,7 @@
       }
     }
   }
-  
+
   // Footer
 
   .footer {
