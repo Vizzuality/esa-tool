@@ -1,12 +1,19 @@
 .main-slider {
   position: absolute;
-  top: 0;
+  top:0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
 
   .slick-slide {
     position: relative;
+    height: calc(100vh - 63px);
+
+    @media screen and (min-width: $screen-sm) {
+      height: 100vh;
+    }
   }
 
   .slick-arrow {
@@ -84,25 +91,28 @@
 
   .slick-dots {
     position: absolute;
-    top: .9rem;
+    top: 0;
     left: 0;
     right: 0;
 
     list-style: none;
     z-index: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: rem(30px);
+    padding-bottom: rem(30px);
 
     //wrap
     margin-right: auto;
     margin-left: auto;
     padding-left: 100px;
     padding-right: 20px;
-    width: calc(100% - 40px);
     max-width: rem(1200px);
 
     > li {
       display: inline-block;
 
-      padding: .5rem;
+      padding: .75rem .5rem;
 
       cursor: pointer;
 
