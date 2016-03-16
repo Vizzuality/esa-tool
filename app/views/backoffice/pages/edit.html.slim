@@ -27,6 +27,7 @@ section.l-main
             - feedbackMsg = 'There was an error uploading the file, please remove it and try again later'
             - break
 
+        - if layersUploading || layersError
           .loading-container
             div class=(layersUploading ? '_is-loading':'')
               span.loading-msg = feedbackMsg
@@ -44,4 +45,3 @@ section.l-main
                   span.loading-msg
                   | The datalayers are being analyzed,
                     please wait a little while
-
