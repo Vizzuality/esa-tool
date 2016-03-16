@@ -107,7 +107,7 @@
       this.listenTo(this.map, 'map:tile:loaded', this._startMap);
       this.listenTo(this.map, 'map:layers:loaded', this._onLayersLoaded);
       this.listenTo(this.mapBasemap, 'basemap:set', this.setBase);
-      this.listenTo(this.sliderTrans, 'slider:changed', this.onSliderChange.bind(this));
+      this.listenTo(this.sliderTrans, 'slider:changed', this.onSliderTransChange.bind(this));
     },
 
     /**
@@ -418,7 +418,7 @@
      * Slider change layers transparency
      * @param {number} opacity
      */
-    onSliderChange: function(opacity) {
+    onSliderTransChange: function(opacity) {
       this.map.trigger('transparency:changed', opacity);
     },
 
@@ -599,6 +599,7 @@
 
       this.dashboard.updateState(params);
       this.map.addPointInterests(data);
+      this.map.showControls();
     },
 
     /**

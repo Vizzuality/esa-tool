@@ -7,8 +7,14 @@
   text-transform: uppercase;
 }
 .select2-title {
-  margin: 0 .5rem;
+  display: block;
+  margin: .5rem;
   @extend %select-font;
+
+  @media screen and (min-width: $screen-sm) {
+    display: inline-block;
+    margin: 0 .5rem;
+  }
 }
 
 .select2 option{
@@ -73,7 +79,7 @@
 
   .select2-results {
 
-    min-width: rem(300px);
+    min-width: rem(200px);
     position: absolute;
     right: 1rem;
     top: 1rem;
@@ -84,7 +90,11 @@
 
       > .select2-results__options {
 
-      padding: 1rem 2rem;
+      padding: 1rem;
+
+      @media screen and (min-width: $screen-sm) {
+        padding: 1rem 2rem;
+      }
 
       .select2-results__option {
         padding: .5rem;

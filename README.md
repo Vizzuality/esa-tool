@@ -9,6 +9,8 @@ Requirements:
 * Heroku Toolbet [How to install](https://toolbelt.heroku.com)
 * NodeJs 5.2+ [How to install](https://nodejs.org/download/)
 * Ruby 2.2.2 [How to install](https://gorails.com/setup/osx/10.10-yosemite)
+* Postgresql 9.4.x [How to install](http://www.postgresql.org/download/macosx/) [Management app](http://postgresapp.com/)
+* Redis 3.0.x How to install [with brew (easy way)](https://medium.com/@petehouston/install-and-config-redis-on-mac-os-x-via-homebrew-eb8df9a4f298#.qi3s17v0x) [without brew](http://redis.io/download)
 
 Before install the global independencies:
 
@@ -21,9 +23,16 @@ To install run:
 
 ## Usage
 
+To run the enviroment:
+
+    postgres -D /usr/local/var/postgres
+    redis-server /usr/local/etc/redis.conf
+
 To run the application:
 
     bundle exec rails server
+    RAILS_ENV=development bundle exec resque-pool
+
 
 To run testing heroku on local:
 

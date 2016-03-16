@@ -20,7 +20,7 @@
       = f.simple_fields_for :data_layers do |d|
         -if @page.page_type == 2
           .form-row
-            = d.input :year
+            = d.input :year, required: true
 
         #filename
         .form-row
