@@ -133,7 +133,7 @@
     }
   }
 
-  .text,
+  .text .image,
   .cover {
     // Veil
     &::after {
@@ -376,5 +376,11 @@
         fill: $t-font-color-1;
       }
     }
+  }
+
+  // Footer
+
+  .footer {
+    background-color: $t-bg-color-1;
   }
 }

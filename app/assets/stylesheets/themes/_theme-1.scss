@@ -86,6 +86,15 @@
     }
   }
 
+  .dashboard {
+    &:after {
+      background: linear-gradient(to bottom, rgba($t-bg-color-1, 1), rgba($t-bg-color-1, 0));
+      @media screen and (max-width: $screen-sm) {
+        background: none;
+      }
+    }
+  }
+
   // Brand
 
   header:not(._menu-open) {
@@ -134,7 +143,7 @@
     }
   }
 
-  .text,
+  .text .image,
   .cover {
     // Veil
     &::after {
@@ -381,5 +390,11 @@
         fill: $t-font-color-1;
       }
     }
+  }
+
+  // Footer
+
+  .footer {
+    background-color: $t-bg-color-1;
   }
 }
