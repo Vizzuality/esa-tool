@@ -1,6 +1,7 @@
 class CaseStudy < ActiveRecord::Base
 
   default_scope { order('case_studies.created_at ASC') }
+  scope :published, -> { where(published: true ) }
 
   before_validation :check_slug, on: [:create, :update]
 
@@ -34,16 +35,8 @@ class CaseStudy < ActiveRecord::Base
     self.cover_image.clear if delete_image == "true"
   end
 
-  def self.published
-    where(published: true)
-  end
-
-  def self.find_published(slug)
-    find_by(slug: slug, published: true)
-  end
-
   def self.where_published(params)
-    where(params.merge(published: true))
+    published.where(params)
   end
 
   def self.with_pages
