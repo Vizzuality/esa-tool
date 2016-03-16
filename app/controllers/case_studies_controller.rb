@@ -17,7 +17,10 @@ class CaseStudiesController < ApplicationController
 
   def show
     @tags = Tag.all
-    @case_study = CaseStudy.find_published(params[:slug])
+    @case_study = CaseStudy.where(published: true, slug: params[:slug]).
+      includes(:contacts, pages: [:data_layers, :charts, :interest_points]).
+      where(data_layers: { import_status: 'complete' }).
+      first
 
     gon.case_study = @case_study.
       to_json(include: [:contacts, {pages: {include: [:data_layers, :charts, :interest_points]}}])

@@ -1,6 +1,6 @@
 class CaseStudy < ActiveRecord::Base
 
-  default_scope { order('created_at ASC') }
+  default_scope { order('case_studies.created_at ASC') }
 
   before_validation :check_slug, on: [:create, :update]
 
