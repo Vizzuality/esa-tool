@@ -21,8 +21,13 @@ class CaseStudiesController < ApplicationController
       includes(:contacts, pages: [:data_layers, :charts, :interest_points]).
       where(data_layers: { is_ready: true }).first
 
-    gon.case_study = @case_study.
-      as_json(include: [:contacts, {pages: {include: [:data_layers, :charts, :interest_points]}}])
+    if @case_study
+      gon.case_study = @case_study.
+        as_json(include: [:contacts, {pages: {include: [:data_layers, :charts, :interest_points]}}])
+    else
+      @case_study = CaseStudy.published.where(slug: params[:slug]).first
+      gon.case_study =  @case_study.as_json(include: :contacts)
+    end
     gon.cartodb_user = ENV["CDB_USERNAME"]
   end
 
