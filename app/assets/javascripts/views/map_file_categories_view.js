@@ -21,7 +21,14 @@
       this.rasterColorInput = this.el.getElementsByClassName('raster_color_input')[0];
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
       this.analyzed = this.checkAnalyzed();
+      this.featherRaster = this.el.getElementsByClassName('raster-color-ftlight')[0];
+      this.setFeatherlight();
+
       this.initialized = false;
+    },
+
+    setFeatherlight: function() {
+      $(this.featherRaster).featherlight();
     },
 
     start: function(column) {
