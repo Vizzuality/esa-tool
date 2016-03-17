@@ -28,9 +28,10 @@ class DataLayer < ActiveRecord::Base
   before_save :check_is_ready
   before_destroy :remove_cartodb_table
 
+  private
+
   def check_is_ready
     if self.import_status == 'complete'
-      debugger
       if (self.raster_type.blank? && (!self.layer_column.blank? || !self.year.blank?))
           self.is_ready = true
       elsif (self.raster_categories)
