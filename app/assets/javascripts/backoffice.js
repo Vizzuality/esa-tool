@@ -87,8 +87,10 @@
 
     initMapFileStatus: function() {
       this.caseStudyPage = document.getElementById('caseStudyPage');
-      // Data type 3 is map type
-      if (this.caseStudyPage && this.caseStudyPage.getAttribute('data-type')==='3') {
+      // Data type 2 and 3 is timeline and map type
+      if (this.caseStudyPage &&
+          (this.caseStudyPage.getAttribute('data-type')==='2' ||
+           this.caseStudyPage.getAttribute('data-type')==='3') ) {
         new App.View.MapFileStatus({
           el: this.caseStudyPage
         });
