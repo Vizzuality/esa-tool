@@ -267,6 +267,9 @@
     checkRemoveNewItem: function(e) {
       if (!! e.target.classList.contains('_confirmed')) {
         e.target.classList.remove('_confirmed');
+        var el = document.querySelector('#custom-column-layer-'+this.layerId).parentNode;
+        el.parentNode.removeChild(el);
+        this.remove();
         return;
       }
       if (!! this.el.classList.contains('file-map-input')) {
