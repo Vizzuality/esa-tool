@@ -87,8 +87,10 @@
 
     initMapFileStatus: function() {
       this.caseStudyPage = document.getElementById('caseStudyPage');
-      // Data type 3 is map type
-      if (this.caseStudyPage && this.caseStudyPage.getAttribute('data-type')==='3') {
+      // Data type 2 and 3 is timeline and map type
+      if (this.caseStudyPage &&
+          (this.caseStudyPage.getAttribute('data-type')==='2' ||
+           this.caseStudyPage.getAttribute('data-type')==='3') ) {
         new App.View.MapFileStatus({
           el: this.caseStudyPage
         });
@@ -124,7 +126,20 @@
     },
 
     initValidation: function(){
-      $('form').validate();
+      var headerHeight = 0;
+      $('header').each(function(idex, item){
+        headerHeight += item.offsetHeight;
+      });
+      $('form').validate({
+        focusInvalid: false,
+        invalidHandler: function(form, validator) {
+          var errorPosTop = $(validator.errorList[0].element).offset().top - headerHeight - 20;
+          $('html, body').animate({
+            scrollTop: errorPosTop
+          }, 500);
+
+        }
+      });
     },
 
     setExitWithoutSavingConfirmation: function(){

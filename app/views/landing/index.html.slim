@@ -18,7 +18,7 @@
     .wrap
       #casesArticles.row._is-loading
         - @case_studies.each do |c|
-          article.grid-xs-12.grid-sm-6.grid-md-4.case._is-loading id=("case-#{c.id}")
+          article.grid-xs-12.grid-sm-6.grid-md-4.case._is-loading.-clickable id=("case-#{c.id}")
             - style = c.cover_image? ? "background-image: url(#{c.cover_image.url(:medium)})" : ''
             =link_to case_study_path(c.slug), style: style
               .caption
