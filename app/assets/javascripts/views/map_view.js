@@ -457,13 +457,14 @@
           index = index + 1;
           index = index.toString();
           var carto = self._formatCartoCss(data, index, color);
+          var parsedCat = typeof cat === 'number' ? cat : '\''+cat+'\'';
 
           layers.push({
             category: cat,
             sql: 'SELECT * FROM ' + table +
-              ' WHERE ' + column + ' = \'' + group + '\'',
+              ' WHERE ' + column + ' = ' + parsedCat + '',
             cartocss: defaultCarto + '#' + table +
-            '[' + column + '="' + cat + '"]' + carto
+            '[' + column + '=' + parsedCat + ']' + carto
           });
         }
       }
