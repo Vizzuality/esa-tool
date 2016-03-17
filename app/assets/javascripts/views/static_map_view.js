@@ -63,7 +63,7 @@
         options.raster_band = 1;
         options.geom_type = 'raster';
         options.geom_column = 'the_raster_webmercator';
-        options.cartocss = '#' + layer.table_name + '{raster-opacity:1;}';
+        options.cartocss = '#' + layer.table_name + '{raster-opacity:1; raster-colorizer-default-color: #FFF;raster-colorizer-stops:stop(0, rgba(255,255,255,0))stop(1, rgba(255,255,255,0.2))}';
 
         query = 'SELECT the_raster_webmercator FROM ' + layer.table_name;
         query = 'SELECT ST_Union(ST_Transform(ST_Envelope(the_raster_webmercator), 4326)) as the_geom FROM (' + query + ') as t';
