@@ -25,7 +25,21 @@ class DataLayer < ActiveRecord::Base
 
   attr_accessor :cloning
 
+  before_save :check_is_ready
   before_destroy :remove_cartodb_table
+
+  def check_is_ready
+    if self.import_status == 'complete'
+      debugger
+      if (self.raster_type.blank? && (!self.layer_column.blank? || !self.year.blank?))
+          self.is_ready = true
+      elsif (self.raster_categories)
+        self.is_ready = true
+      else
+        self.is_ready = false
+      end
+    end
+  end
 
   def remove_cartodb_table
     layers_same_table = DataLayer.where.not(id: self.id).where(table_name: self.table_name)

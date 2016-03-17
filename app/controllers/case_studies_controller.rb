@@ -19,7 +19,7 @@ class CaseStudiesController < ApplicationController
     @tags = Tag.all
     @case_study = CaseStudy.published.where(slug: params[:slug]).
       includes(:contacts, pages: [:data_layers, :charts, :interest_points]).
-      where(data_layers: { import_status: 'complete' }).
+      where(data_layers: { is_ready: true }).
       first
 
     gon.case_study = @case_study.
