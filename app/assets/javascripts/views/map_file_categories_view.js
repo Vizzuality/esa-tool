@@ -23,7 +23,6 @@
       this.analyzed = this.checkAnalyzed();
       this.featherRaster = this.el.getElementsByClassName('raster-color-ftlight')[0];
       this.setFeatherlight();
-
       this.initialized = false;
     },
 
@@ -41,7 +40,6 @@
 
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
-
       if (this.analyzed && !self.initialized) {
         if (this.isRaster) {
           categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
@@ -56,7 +54,6 @@
         this.initialized = true;
 
       } else if (table && column) {
-
         self.openFeedback();
 
         if (this.isRaster) {
@@ -75,6 +72,7 @@
         promise.then(function(categories) {
           self.closeFeedback();
           self.refreshCategories(categories);
+          self.setRasterColorInput();
         });
         promise.fail(function(error) {
           self.closeFeedback();
@@ -333,7 +331,7 @@
         for (var i = 0; i < lines.length; i++) {
           text += lines[i].querySelectorAll('input')[0].value;
           text += '-';
-          text += lines[i].querySelectorAll('.col.-double span')[0].innerHTML.trim();
+          text += lines[i].querySelectorAll('input')[0].name.trim();
           text += '\n';
         }
         return (text.length > 0) ? text : '';
