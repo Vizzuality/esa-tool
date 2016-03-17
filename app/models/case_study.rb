@@ -9,6 +9,9 @@ class CaseStudy < ActiveRecord::Base
 
   has_many :contacts
   has_many :pages, dependent: :destroy
+  has_many :valid_pages, -> { joins(:data_layers).includes(:charts, :interest_points).where(data_layers: { is_ready: true }) },
+    class_name: 'Page'
+
   belongs_to :organization
   has_attached_file :cover_image, styles: {
     medium: '385x200#',
