@@ -45,7 +45,7 @@ en:
       long: '%B %d, %Y'
       short: '%b %d, %Y'
   delete: 'Delete'
-  drop_shapefile: Start by dropping a shapefile here
+  drop_shapefile: Start by dropping a shapefile or a raster here
   duplicate: 'Duplicate'
   edit: 'Edit'
   email: 'Email'
