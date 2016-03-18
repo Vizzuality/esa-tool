@@ -9,7 +9,9 @@ class CaseStudy < ActiveRecord::Base
 
   has_many :contacts
   has_many :pages, dependent: :destroy
-  has_many :valid_pages, -> { joins(:data_layers).includes(:charts, :interest_points).where(data_layers: { is_ready: true }) },
+  has_many :valid_pages, -> {
+    joins("LEFT OUTER JOIN data_layers ON data_layers.page_id = pages.id").includes(:charts, :interest_points).
+    where("(data_layers.is_ready = 't' AND pages.page_type IN (2,3)) OR (pages.page_type = 1)") },
     class_name: 'Page'
 
   belongs_to :organization
