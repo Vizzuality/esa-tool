@@ -10,6 +10,7 @@ gem 'dotenv-rails'
 gem 'puma'
 gem 'gon'
 gem 'active_model_serializers'
+gem "enumerate_it"
 
 # Assets managment
 gem 'sass-rails', '~> 5.0'
