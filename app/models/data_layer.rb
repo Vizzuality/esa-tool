@@ -34,7 +34,7 @@ class DataLayer < ActiveRecord::Base
     if self.import_status == 'complete'
       if (self.raster_type.blank? && (!self.layer_column.blank? || !self.year.blank?))
           self.is_ready = true
-      elsif (self.raster_categories)
+      elsif (!self.raster_categories.blank?)
         self.is_ready = true
       else
         self.is_ready = false
