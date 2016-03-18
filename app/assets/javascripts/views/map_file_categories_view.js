@@ -38,6 +38,7 @@
       var self = this;
       var saveFormBtn = document.getElementsByClassName('-saveform')[0];
       saveFormBtn.style.display = 'block';
+      self.setRasterColorInput();
       saveFormBtn.onclick = function() {
         self.rasterColorInput.value = document.getElementsByClassName('raster_color_input')[1].value;
         document.getElementById('saveBtn').click();
@@ -351,6 +352,12 @@
         return (text.length > 0) ? text : '';
       }
       this.rasterColorInput.value = line();
+      
+      //firefox hack
+      if (document.getElementsByClassName('raster_color_input').length > 1) {
+        var target = document.getElementsByClassName('raster_color_input');
+        target[1].value = target[0].value;
+      }
     },
 
     refreshCategories: function(columns) {
