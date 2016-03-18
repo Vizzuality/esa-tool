@@ -27,6 +27,10 @@
   @extend %clearfix;
 }
 
+._clear-scroll {
+  @extend %clear-scroll-bars;
+}
+
 ._upper {
   text-transform: uppercase;
 }
