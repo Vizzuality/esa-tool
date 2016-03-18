@@ -18,11 +18,11 @@ section.l-main
         - layersError = false
         - feedbackMsg = ''
         - @page.data_layers.each do |d|
-          - if d.import_status == "pending" or d.import_status == "uploading"
+          - if [ImportStatus::PENDING, ImportStatus::UPLOADING].include?(d.import_status)
             - layersUploading = true
             - feedbackMsg = 'Datasets files are being uploaded, please wait and page will reload automatically or return in a little while'
             - break
-          - if d.import_status == "failure"
+          - if d.import_status == ImportStatus::FAILURE
             - layersError = true
             - feedbackMsg = 'There was an error uploading the file, please remove it and try again later'
             - break
