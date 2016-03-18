@@ -453,6 +453,7 @@
 
     updateColumnsColor: function() {
       this.customColumsInput.value = this.columnsColorValues.serialize();
+      this.setRasterColorInput();
     },
 
     _getAppData: function() {
