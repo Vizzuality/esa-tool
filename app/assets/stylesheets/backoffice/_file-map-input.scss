@@ -79,6 +79,13 @@
   justify-content: center;
   align-items: center;
 
+  border-radius: 8px;
+  border: 2px dashed $border-color-1;
+
+  &:hover {
+    border-color: $font-color-1;
+  }
+
   text-align: center;
 
   label {
@@ -97,6 +104,10 @@
     white-space: nowrap;
     overflow: hidden;
     font-size: 0;
+
+    //to hide background in ie
+    opacity: 0;
+    filter:alpha(opacity=0);
   }
 
   span.error {
