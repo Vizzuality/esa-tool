@@ -23,7 +23,7 @@
           h2 = p.title
         .legend.tabs-wrapper
           .legend-nav
-            - if (p.page_type == 3)
+            - if (p.page_type == PageType::MAP)
               ul.tabs.-wb
                 - p.data_layers.each.with_index do |layer, index|
                   li data-tab="#{layer.table_name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)

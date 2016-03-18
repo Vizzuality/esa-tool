@@ -1,10 +1,10 @@
-- if @page.page_type == 2
+- if @page.page_type == PageType::TIMELINE
   .nested-fields
     .row.file.-input
       .grid-sm-9
         = f.input :shapefile, as: :file, accept: ".csv", input_html: {id:"map_file"}
       .grid-sm-2.year
-        label 
+        label
           abbr title="required" *
         = f.input_field :year, placeholder: "Year", required: true
       .grid-sm-1
