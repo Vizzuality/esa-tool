@@ -1,16 +1,16 @@
 .form-row
   = f.input :title
 
-- if @page.page_type == 1
+- if @page.page_type == PageType::TEXT
   .form-row
     = f.input :body, input_html: {class:"-large"}
 
   .form-row.file-image
-    = render 'backoffice/partials/input_image_file', 
-      f: f, 
-      name: :background, 
-      image: @page.background, 
-      class_name: "-large", 
+    = render 'backoffice/partials/input_image_file',
+      f: f,
+      name: :background,
+      image: @page.background,
+      class_name: "-large",
       custom_label:'background',
       size_recommendations: '600x400'
 
@@ -18,7 +18,7 @@
   .form-row.file-map-input
     = f.label :file
       = f.simple_fields_for :data_layers do |d|
-        -if @page.page_type == 2
+        -if @page.page_type == PageType::TIMELINE
           .form-row
             = d.input :year, required: true
 
