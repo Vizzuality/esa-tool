@@ -10,6 +10,10 @@
       rasterColumn: 'the_raster_webmercator'
     },
 
+    events: {
+      'click .raster-color-ftlight' : 'clickFeatherRaster'
+    },
+
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this._getAppData();
@@ -28,6 +32,16 @@
 
     setFeatherlight: function() {
       $(this.featherRaster).featherlight();
+    },
+
+    clickFeatherRaster: function() {
+      var self = this;
+      var saveFormBtn = document.getElementsByClassName('-saveform')[0];
+      saveFormBtn.style.display = 'block';
+      saveFormBtn.onclick = function() {
+        self.rasterColorInput.value = document.getElementsByClassName('raster_color_input')[1].value;
+        document.getElementById('saveBtn').click();
+      }
     },
 
     start: function(column) {
