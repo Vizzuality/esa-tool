@@ -9,7 +9,7 @@ $form-shadows-c: rgba($bg-color-landing-3, 0.3);
   background-color: $bg-color-landing-4;
 
   @media screen and (min-width: $screen-md) {
-    padding: 2rem;
+    padding: 2rem 2rem 3rem;
   }
 
   > .title {
@@ -23,7 +23,7 @@ $form-shadows-c: rgba($bg-color-landing-3, 0.3);
     text-align: center;
   }
 
-  > form {
+  > .form {
     label {
       font-size: $font-size-small;
       color: $form-font-c;
@@ -66,5 +66,14 @@ $form-shadows-c: rgba($bg-color-landing-3, 0.3);
       display: block;
       margin: 0 auto;
     }
+  }
+
+  .feedback {
+    min-height: rem(370px);
+
+    font-family: $font-main;
+    font-size: $font-size-medium;
+    color: $font-color-landing-4;
+    line-height: 1;
   }
 }
