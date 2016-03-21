@@ -9,7 +9,7 @@
           h2 = "#{t('tags')}:"
           - case_study.tags.each do |t|
             a.tag href="/?tags[]=#{t}" = t
-          
+
         .partners
           - if !case_study.contacts.empty?
             - case_study.contacts.each do |c|
@@ -17,7 +17,7 @@
                 = image_tag c.logo.url(:thumb)
             a.btn.-transparent.action href="#" data-featherlight="#contacts"
               = t 'project_contact'
-              
+
             ._hidden
               #contacts.contacts
                 - case_study.contacts.each_with_index do |c, index|

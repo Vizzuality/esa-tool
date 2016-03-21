@@ -275,6 +275,9 @@
           });
 
           defer.resolve(self.setRasterContinous(rasterInfo));
+        })
+        .error(function(err) {
+          defer.reject(err);
         });
 
       return defer;
@@ -469,7 +472,7 @@
     },
 
     handleCategoriesError: function(error) {
-      console.log(error);
+      console.warn(error);
     },
 
     updateColumnsColor: function() {

@@ -144,7 +144,7 @@
         formattedData.cartoUser = data.cartodb_user;
 
         if (caseStudy) {
-          var pages = caseStudy.pages;
+          var pages = caseStudy.valid_pages;
           formattedData.template = caseStudy.template;
 
           if (pages) {
