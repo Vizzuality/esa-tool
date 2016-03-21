@@ -111,7 +111,7 @@
      */
     _caseTemplate: function(studyCase) {
       var style = studyCase.cover_path ? 'background-image: url('+ studyCase.cover_path +')':'';
-      return '<article id="case-'+studyCase.id+'" class="grid-xs-12 grid-sm-6 grid-md-4 case _is-loading">'+
+      return '<article id="case-'+studyCase.id+'" class="grid-xs-12 grid-sm-6 grid-md-4 case _is-loading -clickable">'+
                 '<a href="'+ studyCase.case_path+'" style="'+style+'"">'+
                   '<div class="map-image"></div>'+
                   '<div class="caption">'+

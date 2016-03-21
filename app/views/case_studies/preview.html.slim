@@ -2,6 +2,6 @@
   div = render partial: 'cover', locals: { case_study: @case_study }
 
   - @case_study.valid_pages.each do |p|
-    div = render partial: p.page_type == 1 ? 'text' : 'map', locals: { p: p }
+    div = render partial: p.page_type == PageType::TEXT ? 'text' : 'map', locals: { p: p }
 
 = render partial: 'footer'

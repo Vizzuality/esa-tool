@@ -1,6 +1,10 @@
 .cover {
   position: relative;
-  height: 100vh;
+  height: calc(100% - 63px);
+
+  @media screen and (min-width: $screen-sm) {
+    height: 100vh;
+  }
 
   @extend %clearfix;
   @include veil;

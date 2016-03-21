@@ -33,6 +33,12 @@
 
 ._is-loading {
   @include spinner(20px, 3px, $font-color-3);
+
+  &.-clickable{
+    &:before, &:after {
+      pointer-events: none;
+    }
+  }
 }
 
 .loading-container {

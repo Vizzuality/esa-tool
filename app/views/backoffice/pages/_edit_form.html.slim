@@ -7,7 +7,7 @@
 .form-row
   = f.input :title
 
-- if @page.page_type == 1
+- if @page.page_type == PageType::TEXT
   .form-row
     = f.input :body, input_html: {class:"-large"}
 
@@ -28,7 +28,7 @@
         = render 'data_layer_fields', f: d, p:f
       - else
         = render 'data_layers_fields', f: d, p:f
-  - if @page.page_type == 2
+  - if @page.page_type == PageType::TIMELINE
     .nested-fields.file-map-input
       .list-container data= {layerId: @page.data_layers.first.id, filename: @page.data_layers.first.table_name}
         = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-#{@page.data_layers.first.id}"
@@ -62,7 +62,7 @@
       .form-row
         .row
           .grid-sm-12
-            - if @page.page_type == 2
+            - if @page.page_type == PageType::TIMELINE
               label = "Select the columns color for #{@page.data_layers.first.table_name}"
               .list-container id="custom-column-layer-#{@page.data_layers.first.id}" data= {table:@page.data_layers.first.table_name, column: @page.column_selected}
                 = f.simple_fields_for :data_layers do |d|
@@ -79,14 +79,17 @@
                   = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
                   = d.input_field :raster_type, as: :hidden, value: d.object.raster_type, class: "raster-type"
                   = d.input_field :raster_categories, as: :hidden, value: d.object.raster_categories, class: "raster-category"
-                  = d.input :raster_color_input, input_html: {class:"-large raster_color_input"}, placeholder: "CUSTOMIZED COLORS PER COLUMNS\nPaste code here\n\nrgba(255,255,255,0.5)-column1\nrgba(73,73,73,0.7)-column2\n"
+                  a.btn.-dotted.-light.raster-color-ftlight href="#" data={featherlight:"#raster_color"} Import / Export raster colors
+                  ._hidden
+                    #raster_color
+                      = d.input :raster_color_input, input_html: {class:"-large raster_color_input"}, placeholder: "CUSTOMIZED COLORS PER COLUMNS\nPaste code here\n\nrgba(255,255,255,0.5)-column1\nrgba(73,73,73,0.7)-column2\n"
       = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.blank? ? 1 : @page.color_palette.to_i), class: 'input', id:"pallete"
 
   .form-row
     = f.label :charts
     .box-selector.-around
       - for chart in @charts
-        - if chart.name=="line" && @page.page_type == 3
+        - if chart.name=="line" && @page.page_type == PageType::MAP
         - else
           .item.checkbox data={input: "chart-#{chart.name}", multiple: "yes"}
             svg.icon-chart.-bo

@@ -121,12 +121,25 @@
     initFeatherlight: function(){
       $.featherlight.defaults.otherClose = "button.-close, .uploaded-images";
       $.featherlight.defaults.afterContent = function(){
-        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div>');
+        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div><div class="featherlight-actions _center"><button class="btn -primary -saveform" style="display:none"> Save </button></div>');
       };
     },
 
     initValidation: function(){
-      $('form').validate();
+      var headerHeight = 0;
+      $('header').each(function(idex, item){
+        headerHeight += item.offsetHeight;
+      });
+      $('form').validate({
+        focusInvalid: false,
+        invalidHandler: function(form, validator) {
+          var errorPosTop = $(validator.errorList[0].element).offset().top - headerHeight - 20;
+          $('html, body').animate({
+            scrollTop: errorPosTop
+          }, 500);
+
+        }
+      });
     },
 
     setExitWithoutSavingConfirmation: function(){

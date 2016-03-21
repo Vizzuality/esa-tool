@@ -10,6 +10,10 @@
       rasterColumn: 'the_raster_webmercator'
     },
 
+    events: {
+      'click .raster-color-ftlight' : 'clickFeatherRaster'
+    },
+
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
       this.data = this._getAppData();
@@ -21,7 +25,24 @@
       this.rasterColorInput = this.el.getElementsByClassName('raster_color_input')[0];
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
       this.analyzed = this.checkAnalyzed();
+      this.featherRaster = this.el.getElementsByClassName('raster-color-ftlight')[0];
+      this.setFeatherlight();
       this.initialized = false;
+    },
+
+    setFeatherlight: function() {
+      $(this.featherRaster).featherlight();
+    },
+
+    clickFeatherRaster: function() {
+      var self = this;
+      var saveFormBtn = document.getElementsByClassName('-saveform')[0];
+      saveFormBtn.style.display = 'block';
+      self.setRasterColorInput();
+      saveFormBtn.onclick = function() {
+        self.rasterColorInput.value = document.getElementsByClassName('raster_color_input')[1].value;
+        document.getElementById('saveBtn').click();
+      }
     },
 
     start: function(column) {
@@ -34,7 +55,6 @@
 
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
-
       if (this.analyzed && !self.initialized) {
         if (this.isRaster) {
           categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
@@ -49,7 +69,6 @@
         this.initialized = true;
 
       } else if (table && column) {
-
         self.openFeedback();
 
         if (this.isRaster) {
@@ -68,6 +87,7 @@
         promise.then(function(categories) {
           self.closeFeedback();
           self.refreshCategories(categories);
+          self.setRasterColorInput();
         });
         promise.fail(function(error) {
           self.closeFeedback();
@@ -322,6 +342,27 @@
       this.rasterCategory.value = this.rasterCategoryNames.serialize();
     },
 
+    setRasterColorInput: function() {
+      var line = function() {
+        var lines = document.querySelectorAll('.columns-container .item');
+        var text = '';
+        for (var i = 0; i < lines.length; i++) {
+          text += lines[i].querySelectorAll('input')[0].value;
+          text += '-';
+          text += lines[i].querySelectorAll('input')[0].name.trim();
+          text += '\n';
+        }
+        return (text.length > 0) ? text : '';
+      }
+      this.rasterColorInput.value = line();
+      
+      //firefox hack
+      if (document.getElementsByClassName('raster_color_input').length > 1) {
+        var target = document.getElementsByClassName('raster_color_input');
+        target[1].value = target[0].value;
+      }
+    },
+
     refreshCategories: function(columns) {
       var self = this;
       var colors;
@@ -396,6 +437,7 @@
           self.setRasterCategories();
         });
         this.setRasterCategories(columns);
+        this.setRasterColorInput();
       }
       this.updateColumnsColor();
       this.columnsContainer.classList.remove('_is-loading');
@@ -435,6 +477,7 @@
 
     updateColumnsColor: function() {
       this.customColumsInput.value = this.columnsColorValues.serialize();
+      this.setRasterColorInput();
     },
 
     _getAppData: function() {

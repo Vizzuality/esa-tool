@@ -1,4 +1,5 @@
 class DataLayer < ActiveRecord::Base
+  has_enumeration_for :import_status, with: ImportStatus, create_helpers: true
 
   include CartoDb
 

@@ -1,3 +1,3 @@
 web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
 
-worker: bundle exec resque-pool
+worker: bundle exec resque-pool TERM_CHILD=1

@@ -1,123 +1,127 @@
 .map-controls-container {
+  display: none;
   position: absolute;
   bottom: 3rem;
   padding-left: rem(100px);
 
-  display: flex;
   flex: 1 1 auto;
   flex-direction: row;
   align-items: center;
 
-    .basemap {
-      width: rem(90px);
-      height: 30px;
-      box-sizing: content-box;
-      margin-right: 3px;
+  @media screen and (min-width: $screen-sm) {
+    display: flex;
+  }
 
-      overflow: hidden;
-      transform: translate3d(0, 0, 0);
-      transition: width .3s;
+  .basemap {
+    width: rem(90px);
+    height: 30px;
+    box-sizing: content-box;
+    margin-right: 3px;
 
-      > .content {
-        width: rem(300px);
-        display: block;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    transition: width .3s;
 
-        > .action {
+    > .content {
+      width: rem(300px);
+      display: block;
+
+      > .action {
+        font-size: rem($font-size-small);
+        font-family: $font-secondary;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: rem(1px);
+        padding: rem(9px) rem(15px);
+        float: left;
+      }
+
+      > .list {
+        width: rem(170px);
+        height: rem(31px);
+        list-style: none;
+        float: left;
+        padding: rem(0px) rem(15px);
+        margin: 0;
+        overflow: hidden;
+
+        > .item {
+          float: left;
           font-size: rem($font-size-small);
           font-family: $font-secondary;
           font-weight: 700;
+          line-height: $font-size-small;
           text-transform: uppercase;
-          letter-spacing: rem(1px);
           padding: rem(9px) rem(15px);
-          float: left;
-        }
+          cursor: pointer;
 
-        > .list {
-          width: rem(170px);
-          height: rem(31px);
-          list-style: none;
-          float: left;
-          padding: rem(0px) rem(15px);
-          margin: 0;
-          overflow: hidden;
-
-          > .item {
-            float: left;
-            font-size: rem($font-size-small);
-            font-family: $font-secondary;
-            font-weight: 700;
-            line-height: $font-size-small;
-            text-transform: uppercase;
-            padding: rem(9px) rem(15px);
-            cursor: pointer;
-
-            &.selected {
-              cursor: default;
-            }
+          &.selected {
+            cursor: default;
           }
         }
       }
-
-      &.active {
-        width: rem(300px);
-
-        > .list {
-          width: rem(170px);
-        }
-      }
     }
 
-    .slider-transparency {
-      display: flex;
-      align-items: center;
+    &.active {
+      width: rem(280px);
 
-      padding: 0 rem(15px);
+      > .list {
+        width: rem(170px);
+      }
+    }
+  }
 
-      .title {
-        margin-right: 1rem;
-        padding: 7.5px 0;
+  .slider-transparency {
+    display: flex;
+    align-items: center;
 
-        font-family: $font-secondary;
-        font-size: rem($font-size-small);
-        font-weight: 700;
-        color: white;
+    padding: 0 rem(15px);
+
+    .title {
+      margin-right: 1rem;
+      padding: 7.5px 0;
+
+      font-family: $font-secondary;
+      font-size: rem($font-size-small);
+      font-weight: 700;
+      color: white;
+    }
+
+    .ui-slider {
+      width: rem(90px);
+      height: 30px;
+      margin-top: 0;
+      position: relative;
+
+      box-sizing: content-box;
+      background-color: transparent;
+      border-radius: 0;
+      cursor: pointer;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 14px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+
+        background-color: rgba(white, .5);
       }
 
-      .ui-slider {
-        width: rem(90px);
-        height: 30px;
-        margin-top: 0;
-        position: relative;
+      .ui-slider-handle {
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        margin-left: -4px;
 
-        box-sizing: content-box;
-        background-color: transparent;
-        border-radius: 0;
+        border: none;
+        border-radius: 50%;
+        outline: none;
         cursor: pointer;
-
-        &:after {
-          content: "";
-          position: absolute;
-          top: 14px;
-          left: 0;
-          width: 100%;
-          height: 2px;
-
-          background-color: rgba(white, .5);
-        }
-
-        .ui-slider-handle {
-          top: 11px;
-          width: 8px;
-          height: 8px;
-          margin-left: -4px;
-
-          border: none;
-          border-radius: 50%;
-          outline: none;
-          cursor: pointer;
-        }
       }
     }
+  }
 }
 
 .leaflet-control-container {
@@ -133,11 +137,17 @@
   .leaflet-control {
     margin:0;
     cursor: pointer;
+    border: none;
   }
 
   .leaflet-control-zoom, .leaflet-control-fit-map {
+    display: none;
     bottom: 3rem;
     margin-left: 20px;
+
+    @media screen and (min-width: $screen-sm){
+      display: block;
+    }
   }
 
   .leaflet-control-zoom {
