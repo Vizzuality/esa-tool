@@ -1,8 +1,11 @@
-.form-row
-  = f.input :name, required: true
-.form-row
-  = f.input :email, required: true
-.form-row
-  = f.input :content, required: true
+.row.form-row
+  .grid-xs-12.grid-sm-6
+    = f.input :name, required: true
+  .grid-xs-12.grid-sm-6
+    = f.input :email, required: true
+    
+.row.form-row
+  .grid-xs-12
+    = f.input :content, required: true
   
 = f.button :submit, "Send", class: 'btn -primary'

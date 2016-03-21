@@ -7,6 +7,7 @@
   root.App.Router = Backbone.Router.extend({
 
     routes: {
+      'contact-form': 'landing',
       '(?tags[]=:tag)': 'landing',
       'case-studies/:id(?page=:page)': 'caseStudies',
       'case-studies/:id/preview(?page=:page)': 'caseStudies'

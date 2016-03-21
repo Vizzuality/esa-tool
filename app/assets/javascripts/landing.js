@@ -7,6 +7,7 @@
 //= require_self
 //= require router
 //= require views/map_view
+//= require views/smoth_links_view
 //= require views/menu_view
 //= require views/slider_view
 //= require views/static_map_view
@@ -77,6 +78,7 @@
     _initModules: function(tag) {
       this._initMenu(tag);
       this._initCasesFilter(tag);
+      this._initSmoothLinks();
       this._initCasesList();
       this._initMap();
       this._initSlider();
@@ -92,6 +94,24 @@
       });
 
       this.listenTo(this.menu, 'tag:update', _.bind(this._updateRouter, this));
+    },
+
+    toggleMenu: function(){
+      this.menu.toggleMenu();
+    },
+
+    /**
+     * Function to initialize the menu
+     */
+    _initSmoothLinks: function() {
+      this.links = new App.View.SmoothLinks({
+        el: document.body
+      });
+      var section = Backbone.history.getFragment();
+      if (section) {
+        this.links.goToLinkSmoothly('#'+section);
+      }
+      this.listenTo(this.links, 'link:selected', _.bind(this.toggleMenu, this));
     },
 
     _initCasesList: function() {
