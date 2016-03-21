@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   resources :tags, defaults: { format: 'json' }
   get '/tags', to: 'tags#index'
 
+  resources :contact_form, only: [:create], path: "contact-form", defaults: { format: 'json' }
+
   root 'landing#index', as: 'root'
 
 end

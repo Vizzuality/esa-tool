@@ -25,6 +25,13 @@
                 h2 =c.title
             
           
+  section#contact-form.contact-form
+    .wrap: .row
+      .grid-sm-12
+        h2.title = t('contact')
+        = simple_form_for @contact_form, url: contact_form_index_path do |f|
+          = render 'form', f: f
+
   section.slider
     .wrap
       #landingSlider
