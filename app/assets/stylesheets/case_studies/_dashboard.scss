@@ -8,6 +8,8 @@
 
   z-index: 1;
 
+  @extend %clear-scroll-bars;
+
   @media screen and (min-width: $screen-sm) {
     height: 100vh;
   }

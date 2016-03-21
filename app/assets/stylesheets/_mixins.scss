@@ -9,6 +9,14 @@
   }
 }
 
+%clear-scroll-bars {
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+      display: none;
+  }
+}
+
 @function rem($px, $font-initial: 16px) {
   @return ($px / $font-initial) * 1rem;
 }
