@@ -27,7 +27,7 @@
           
   section#contact-form
     .wrap: .row
-      .grid-sm-12
+      .grid-sm-12.contact-form
         h2.title = t('contact')
         = simple_form_for @contact_form, url: contact_form_index_path, class: 'contact-form' do |f|
           = render 'form', f: f

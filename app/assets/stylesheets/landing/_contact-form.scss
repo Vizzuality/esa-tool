@@ -1,0 +1,70 @@
+$form-font-c: $font-color-landing-1;
+$form-shadows-c: rgba($bg-color-landing-3, 0.3);
+
+
+.contact-form {
+
+  padding: 2rem 0;
+
+  background-color: $bg-color-landing-4;
+
+  @media screen and (min-width: $screen-md) {
+    padding: 2rem;
+  }
+
+  > .title {
+    display: block;
+
+    font-family: $font-main;
+    font-size: $font-size-large;
+
+    color: $font-color-landing-4;
+    line-height: 2.5rem;
+    text-align: center;
+  }
+
+  > form {
+    label {
+      font-size: $font-size-small;
+      color: $form-font-c;
+      opacity: .5;
+
+      abbr[title] {
+        color: $form-font-c;
+      }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="password"],
+    input[type="number"],
+    input[type="file"],
+    textarea,
+    select {
+      border: none;
+      box-shadow: 0px 1px 0px 0px $form-shadows-c;
+
+      font-family: $font-main;
+      font-size: $font-size-medium;
+      color: $font-color-landing-4;
+      line-height: 1;
+
+      @include placeholder {
+        font-family: $font-main;
+        font-size: $font-size-medium;
+        color: $font-color-landing-4;
+        line-height: 1;
+      }
+    }
+
+    textarea {
+      min-height: rem(150px);
+    }
+
+    input[type="submit"] {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}
