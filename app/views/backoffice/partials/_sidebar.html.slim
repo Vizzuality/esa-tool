@@ -5,13 +5,13 @@
     - next if page.new_record?
     - active = params.has_key?(:type) && (params[:type].to_i == page.page_type) && (page.id == params[:id].to_i) ? 'sidebar-item _active' : 'sidebar-item'
     - case page.page_type.to_i
-      - when 1
+      - when PageType::TEXT
         - page_type = 'text'
-      - when 2
+      - when PageType::TIMELINE
         - page_type = 'timeline'
       - else
         - page_type = 'map'
-      end
+
     = link_to edit_backoffice_case_study_page_path(id: page.id,
       type: page.page_type, case_study_id: @case_study.id), class: active do
       svg class="icon icon-#{page_type}"

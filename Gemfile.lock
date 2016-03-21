@@ -88,6 +88,8 @@ GEM
       json
       thread
       thread_safe
+    enumerate_it (1.2.4)
+      activesupport (>= 3.0.0)
     erubis (2.7.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
@@ -300,6 +302,7 @@ DEPENDENCIES
   deep_cloneable (~> 2.1.1)
   devise
   dotenv-rails
+  enumerate_it
   factory_girl_rails
   faker
   featherlight
