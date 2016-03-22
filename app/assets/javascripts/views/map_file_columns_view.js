@@ -119,7 +119,7 @@
         table: name,
         limit: 30
       };
-      sql.execute('SELECT * FROM {{table}} LIMIT {{limit}}', queryOpt)
+      sql.execute('SELECT * FROM {{table}} WHERE false LIMIT {{limit}}', queryOpt)
         .done(function(data) {
           $.each(data.fields, function(item) {
             if (item === self.rasterColumn) {
