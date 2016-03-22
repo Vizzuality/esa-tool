@@ -354,8 +354,10 @@
         }
         return (text.length > 0) ? text : '';
       }
-      this.rasterColorInput.value = line();
-      
+      if (this.rasterColorInput) {
+        this.rasterColorInput.value = line();
+      }
+
       //firefox hack
       if (document.getElementsByClassName('raster_color_input').length > 1) {
         var target = document.getElementsByClassName('raster_color_input');

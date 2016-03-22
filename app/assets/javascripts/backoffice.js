@@ -60,9 +60,14 @@
      * @param {Object}
      */
     initBoxSelects: function() {
-      var boxSelects = this.el.getElementsByClassName('box-selector');
-      if (boxSelects && boxSelects.length) {
-        new App.View.BoxSelect({ el: boxSelects });
+      this.boxSelects = this.el.getElementsByClassName('box-selector');
+
+      if (this.boxSelects && this.boxSelects.length) {
+        _.each(this.boxSelects, function(item) {
+          new App.View.BoxSelect({
+            el: item
+          });
+        });
       }
     },
 

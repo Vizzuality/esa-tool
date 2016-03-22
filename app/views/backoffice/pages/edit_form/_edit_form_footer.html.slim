@@ -1,0 +1,11 @@
+= f.hidden_field :page_type
+
+.footer.-fixed
+  .wrap: .row: .grid-sm-6.offset-sm-3
+    .actions
+      - unless @page.new_record?
+        = link_to t('delete'),
+          backoffice_case_study_page_path(case_study_id: @page.case_study.id,
+          id: @page.id),  method: :delete,
+          data: { confirm: t('confirm_sure') }, class: 'btn -alt'
+      = f.button :submit, class: 'btn', id: 'saveBtn'
