@@ -54,6 +54,7 @@
       top: 0;
       height: calc(100% - 200px);
       max-height: rem(550px);
+      @extend %clear-scroll-bars;
 
       font-size: rem($font-size);
 
