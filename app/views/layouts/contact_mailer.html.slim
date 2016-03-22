@@ -3,9 +3,9 @@ html
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
   body
-    h1 "Submission on #{@form.created_at} by #{@form.email}"
+    h2 Submission on #{@form.created_at.to_formatted_s(:db)} by #{@form.email}
       
-    h2 "Content of the #{@form.name} message:"
+    h3 Content of the #{@form.name} message:
     p =@form.content
     
     / h1 "Hi #{@form.name} thanks contact with esaworld"

@@ -3,13 +3,13 @@ html
   head
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
   body
-    h1 "Submission on #{@form.created_at} by #{@form.email}"
-
-    h2 "Content of the #{@form.name} message:"
+    h2 Submission on #{@form.created_at.to_formatted_s(:db)} by #{@form.email}
+      
+    h3 Content of the #{@form.name} message:
     p =@form.content
-
+    
     / h1 "Hi #{@form.name} thanks contact with esaworld"
-    /
+    /   
     / p "Your message has been received and we will be in touch soon."
-    /
+    / 
     / p Thanks and have a great day!
