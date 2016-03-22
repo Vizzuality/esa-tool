@@ -53,6 +53,7 @@
       position: relative;
       top: 0;
       height: calc(100% - 200px);
+      max-height: rem(550px);
 
       font-size: rem($font-size);
 
