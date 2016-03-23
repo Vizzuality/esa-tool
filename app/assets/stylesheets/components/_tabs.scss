@@ -1,50 +1,103 @@
-.tabs {
-  padding: rem($font-size-small/2) 1.5rem;
-  margin: rem(18px) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-
-  > .tab-title {
-    margin-right: 1.25rem;
+.tabs-wrapper {
+  .tabs {
+    padding: rem($font-size-small/2) 1.5rem;
+    margin: rem(18px) 0;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
 
-    &:last-child {
-      margin-right: 0;
+    > .tab-title {
+      margin-right: 1.25rem;
+      display: flex;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      > a {
+        font-family: $font-secondary;
+        font-size: rem($font-size-small);
+        letter-spacing: rem(1.3px);
+        text-decoration: none;
+        text-transform: uppercase;
+      }
     }
 
-    > a {
-      font-family: $font-secondary;
-      font-size: rem($font-size-small);
-      letter-spacing: rem(1.3px);
-      text-decoration: none;
-      text-transform: uppercase;
+    &.-wb {
+      border-width: 1px;
+      border-style: solid;
+
+      > .tab-title {
+        > a {
+          opacity: 0.3;
+        }
+
+        &.-active {
+          a {
+            opacity: 1;
+          }
+        }
+      }
     }
   }
 
-  &.-wb {
-    > .tab-title {
-      > a {
-        opacity: 0.3;
-      }
+  .tab-content {
+    display: none;
 
-      &.-active {
-        a {
-          opacity: 1;
+    &.-active {
+      display: block;
+    }
+  }
+
+
+  &.-bo {
+    .tabs {
+      justify-content: flex-start;
+      margin: 0;
+      padding: 0 1.5rem;
+      margin-right: .5rem;
+      .tab-title {
+        position: relative;
+        height: 15px;
+        padding: .5rem;
+
+        border: 1px solid $border-color-1;
+        border-bottom: none;
+        > a {
+          max-width: 10rem;
+          text-overflow: ellipsis;
+          opacity: 0.3;
+          overflow: hidden;
+        }
+
+        &.-active {
+          a {
+            opacity: 1;
+          }
+
+          &:after {
+            content:"";
+            height: 1px;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+
+            background-color: $bg-color-1;
+          }
         }
       }
     }
 
-    border-width: 1px;
-    border-style: solid;
-  }
-}
+    .tab-content {
+      border: 1px solid $border-color-1;
+      padding: 1rem;
+      min-height: 10rem;
 
-.tab-content {
-  display: none;
-
-  &.-active {
-    display: block;
+      .unordered-list, .box-list {
+        border: none;
+      }
+    }
   }
 }

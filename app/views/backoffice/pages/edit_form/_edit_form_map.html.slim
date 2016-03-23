@@ -1,19 +1,19 @@
-- palettes = 2
-- palette_range = 8
 - basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? || @page.basemap=="terrain" ? true : false }],
               [t('satellite'), 'satellite', {class:"item detail-title", checked: @page.basemap=="satellite" ? true : false }],
               [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"}, checked: @page.basemap=="custom" ? true : false } ]]
 
-.form-row.tabs-wrapper
+.form-row.tabs-wrapper.-bo
   .map-layers-nav
-    ul.tabs.-wb
+    ul.tabs.tab-title-wrapper
       - @page.data_layers.each_with_index do |d, i|
         - name = d.layer_column_alias.blank? ? d.table_name : d.layer_column_alias
-        li data-tab=d.id class=("tab-title #{i==0? "-active":""}") = name
+        li data-tab=d.id class=("tab-title #{i==0? "-active":""}")
+          a href="#" = name
         
-      li data-tab="new" class=("tab-title") = t('add_data_layers')
-   
-  .map-layers-content
+      li data-tab="new" class=("tab-title add-file-cocoon") 
+        = link_to_add_association t('add_data_layers'), f, :data_layers
+        
+  .map-layers-content.tab-content-wrapper
     - index = 0
     = f.simple_fields_for :data_layers do |d|
       div.tab-content data-tab-content="#{d.object.id}" class=("#{index==0? "-active":""}")
@@ -21,17 +21,6 @@
       - index =+ 1
       
     div.tab-content data-tab-content="#new"
-      = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
-      
-      
-#colorPalette._hidden
-  .box-selector
-    - for t in 1..palettes
-      .item.-col-3.-palette.detail-title data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
-        - for r in 1..palette_range
-          .range
-            span.-bordered
-            span
   
 .form-row.box-selector
   = f.input :basemap, as: :radio_buttons, required: true,  collection: basemaps

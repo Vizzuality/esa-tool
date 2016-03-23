@@ -16,6 +16,8 @@
 //= require views/box_select_view
 //= require views/image_views
 //= require views/logo_collection_view
+//= require views/add_map_file_view
+//= require views/map_file_upload_view
 //= require views/map_file_status_view
 //= require views/map_file_columns_view
 //= require views/map_file_categories_view
@@ -40,6 +42,8 @@
       this.initBoxSelects();
       this.initImageView();
       this.initMapFileStatus();
+      this.initMapFileUpload();
+      this.initAddMapFile();
       this.initMapFileColumns();
       this.initFeatherlight();
       this.initValidation();
@@ -62,7 +66,7 @@
      * @param {Object}
      */
     initTabs: function() {
-      new App.View.Tabs({
+      this.tabs = new App.View.Tabs({
         el: window.document
       });
     },
@@ -114,10 +118,30 @@
       }
     },
 
+    initAddMapFile: function() {
+      this.addFiles = new App.View.AddMapFile({
+        el: document.getElementsByClassName('add-file-cocoon')
+      });
+      this.listenTo(this.addFiles, 'file:added', this.onFileAdded);
+    },
+
+    onFileAdded: function(title, content) {
+      this.tabs.addTab(title, content);
+    },
+
     initMapFileColumns: function() {
       this.filesContainer = document.getElementsByClassName('file-map-input');
       _.each(this.filesContainer, function(item) {
         new App.View.MapFileColumns({
+          el: item
+        });
+      });
+    },
+
+    initMapFileUpload: function() {
+      this.filesUpload = document.getElementsByClassName('file-map-upload');
+      _.each(this.filesUpload, function(item) {
+        new App.View.MapFileUpload({
           el: item
         });
       });

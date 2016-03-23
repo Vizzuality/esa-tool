@@ -22,6 +22,7 @@ en:
   about: 'About'
   actions: 'Actions'
   add_contact: 'Add new contact'
+  add_data_layers: 'Add data layers'
   add_interest_points: 'Add interest points'
   add_new_case_study: 'Add new case'
   add_page: 'Add new page'
@@ -45,7 +46,8 @@ en:
       long: '%B %d, %Y'
       short: '%b %d, %Y'
   delete: 'Delete'
-  drop_shapefile: Start by dropping a shapefile or a raster here
+  drop_shapefile: Drop a shapefile or a raster here
+  drop_new_shapefile: Start by dropping a shapefile or a raster here
   duplicate: 'Duplicate'
   edit: 'Edit'
   email: 'Email'
@@ -54,6 +56,7 @@ en:
   explore_map: 'Explore the map'
   filter_cases_by : 'Filter cases by'
   forgot_password: 'Forgot your password?'
+  impor_export_colors: 'Import / Export raster colors'
   last_update: 'Last update'
   location_latitude: 'Location latitude'
   location_longitude: 'Location longitude'
