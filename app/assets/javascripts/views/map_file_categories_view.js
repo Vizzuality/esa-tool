@@ -423,11 +423,8 @@
         } else {
           category.name = element.category;
         }
-        if (self.isRaster) {
-          category = self.getRasterCategory(category);
-        } else {
-          category = self.getCategory(category);
-        }
+
+        category = self.getCategory(category);
         listContainer.insertAdjacentHTML('beforeend', category);
       });
 
@@ -445,11 +442,11 @@
       this.columnsContainer.classList.remove('_is-loading');
     },
 
-    getRasterCategory: function(category) {
-      return this._rasterCategoryTemplate()(category);
+    getCategory: function(category) {
+      return this._categoryTemplate()(category);
     },
 
-    _rasterCategoryTemplate: function() {
+    _categoryTemplate: function() {
       return _.template('<div class="item" >' +
         '<div class="col">'+
           '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> ' +
@@ -460,17 +457,6 @@
         '<div class="col -double">'+
           '<span> <%= value %> </span> ' +
         '</div>');
-    },
-
-    getCategory: function(category) {
-      return this._categoryTemplate()(category);
-    },
-
-    _categoryTemplate: function() {
-      return _.template('<div class="item -color" >'+
-          '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> '+
-          '<span> <%= value %> </span> '+
-        ' </div>');
     },
 
     handleCategoriesError: function(error) {
