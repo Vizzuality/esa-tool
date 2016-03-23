@@ -12,6 +12,7 @@
 //= require helpers/helper
 //= require_tree ./cartocss
 //= require views/tags_view
+//= require views/tabs_view
 //= require views/box_select_view
 //= require views/image_views
 //= require views/logo_collection_view
@@ -35,6 +36,7 @@
 
     initialize: function() {
       this.initTags();
+      this.initTabs();
       this.initBoxSelects();
       this.initImageView();
       this.initMapFileStatus();
@@ -52,6 +54,16 @@
     initTags: function() {
       new App.View.Tags({
         el: this.$el.find('.tags')
+      });
+    },
+
+    /**
+     * Initializing tabs plugin
+     * @param {Object}
+     */
+    initTabs: function() {
+      new App.View.Tabs({
+        el: window.document
       });
     },
 

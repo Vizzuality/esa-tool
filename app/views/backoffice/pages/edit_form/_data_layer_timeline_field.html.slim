@@ -1,0 +1,12 @@
+- f.object.table_name = f.object.table_name.blank? ? 'The file is uploading' : f.object.table_name
+.file-map-input
+  .nested-fields
+    .row.file
+      .grid-sm-10.name
+        p = f.object.table_name
+      .grid-sm-2.year
+        label
+          abbr title="required" *
+        = f.input_field :year, placeholder: "Year", required: true
+
+  = f.input :id, as: :hidden

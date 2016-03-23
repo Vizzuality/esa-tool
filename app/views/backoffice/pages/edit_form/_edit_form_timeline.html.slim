@@ -13,7 +13,7 @@
     - if d.object.new_record?
       = render 'data_layer_fields', f: d, p:f
     - else
-      = render 'data_layers_fields', f: d, p:f
+      = render 'backoffice/pages/edit_form/data_layer_timeline_field', f: d, p:f
       
   .nested-fields
     = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
@@ -23,8 +23,7 @@
       = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-#{@page.data_layers.first.id}"
       .box-list.-selectable._is-loading
 
-.form-row
-  = f.label :color_palette
+#colorPalette._hidden
   .box-selector
     - for t in 1..palettes
       .item.-col-3.-palette.detail-title data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
@@ -32,12 +31,6 @@
           .range
             span.-bordered
             span
-    .item.-col-3.-center.detail-title data-value="3" data-input="pallete" class="#{@page.color_palette.to_i == 3 ? '_selected' : nil}"
-      label =t('custom')
-      - for r in 1..palette_range-2
-        .range
-          span.-bordered
-          span
 
 .form-row
   .row
@@ -57,13 +50,11 @@
 
 .form-row
   = f.label :charts
-  .box-selector.-around
+  .box-selector
     - for chart in @charts
-      - if chart.name=="line" && @page.page_type == PageType::MAP
-      - else
-        .item.checkbox data={input: "chart-#{chart.name}", multiple: "yes"}
-          svg.icon-chart.-bo
-            use xlink:href="#icon-chart-#{chart.name}"
+      .item.checkbox data={input: "chart-#{chart.name}", multiple: "yes"}
+        svg.icon-chart.-bo
+          use xlink:href="#icon-chart-#{chart.name}"
   ._hidden
     = f.association :charts, as: :check_boxes, label:false, collection: @charts.map { |r| [r.name, r.id, {class: 'association-input', id: "chart-#{r.name}"}] }
 
