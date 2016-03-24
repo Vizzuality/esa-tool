@@ -23,6 +23,7 @@ module Esatool
 
     # Adding modules from lib
     config.autoload_paths += %W(#{config.root}/lib/modules)
+    config.autoload_paths << "#{config.root}/app/enumerations"
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true

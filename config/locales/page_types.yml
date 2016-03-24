@@ -1,0 +1,6 @@
+en:
+  enumerations:
+    page_types:
+      text: "Text"
+      timeline: "Timeline"
+      map: "Map"

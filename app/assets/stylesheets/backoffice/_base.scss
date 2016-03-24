@@ -3,4 +3,6 @@ body {
 
   padding-top: rem(50px);
   padding-bottom: rem(50px);
+
+  @extend %clear-scroll-bars;
 }

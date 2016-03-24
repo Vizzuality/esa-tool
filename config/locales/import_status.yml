@@ -1,0 +1,7 @@
+en:
+  enumerations:
+    import_status:
+      pending: "Pending"
+      uploading: "Uploading"
+      failure: "Failure"
+      complete: "Complete"

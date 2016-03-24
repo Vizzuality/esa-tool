@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+  has_enumeration_for :page_type, with: PageType, create_helpers: true
 
   default_scope { order('created_at ASC') }
 

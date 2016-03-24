@@ -208,22 +208,23 @@
     },
 
     highlight: function(category) {
-      var elems = this.el.querySelectorAll('.arc');
+      // needs jquery because of .classList
+      // does not have support on SVG or MathML elements in IE
+      var elems = this.$('.arc');
+      elems.each(function(index, current){
+        var $current = $(current);
+        var cat = $current.data('category');
 
-      for (var el in elems) {
-        var current = elems[el];
-
-        if (current && current.getAttribute) {
-          var cat = current.getAttribute('data-category');
+        if ($current && cat) {
           if (category === '') {
-            current.classList.remove('unHighLight');
+            $current.removeClass('unHighLight');
           } else if (cat !== category) {
-            current.classList.add('unHighLight');
+            $current.addClass('unHighLight');
           } else {
-            current.classList.remove('unHighLight');
+            $current.removeClass('unHighLight');
           }
         }
-      }
+      });
     },
 
     prepareRemove: function() {

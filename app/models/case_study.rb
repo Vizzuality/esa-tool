@@ -1,6 +1,7 @@
 class CaseStudy < ActiveRecord::Base
 
-  default_scope { order('created_at ASC') }
+  default_scope { order('case_studies.created_at ASC') }
+  scope :published, -> { where(published: true ) }
 
   before_validation :check_slug, on: [:create, :update]
 
@@ -8,6 +9,12 @@ class CaseStudy < ActiveRecord::Base
 
   has_many :contacts
   has_many :pages, dependent: :destroy
+  has_many :valid_pages, -> {
+    joins("LEFT OUTER JOIN data_layers ON data_layers.page_id = pages.id").includes(:charts, :interest_points).
+    where("(data_layers.is_ready = 't' AND pages.page_type IN (?)) OR (pages.page_type = ?)",
+          [PageType::TIMELINE, PageType::MAP], PageType::TEXT ) },
+    class_name: 'Page'
+
   belongs_to :organization
   has_attached_file :cover_image, styles: {
     medium: '385x200#',
@@ -34,16 +41,8 @@ class CaseStudy < ActiveRecord::Base
     self.cover_image.clear if delete_image == "true"
   end
 
-  def self.published
-    where(published: true)
-  end
-
-  def self.find_published(slug)
-    find_by(slug: slug, published: true)
-  end
-
   def self.where_published(params)
-    where(params.merge(published: true))
+    published.where(params)
   end
 
   def self.with_pages

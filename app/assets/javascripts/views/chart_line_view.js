@@ -383,27 +383,29 @@
     },
 
     highlight: function(category) {
-      var elems = this.el.querySelectorAll('.area');
-      var elemsLine = this.el.querySelectorAll('.line-path');
+      // needs jquery because of .classList
+      // does not have support on SVG or MathML elements in IE
+      var elems = this.$('.area');
+      var elemsLine = this.$('.line-path');
 
-      for (var el in elems) {
-        var current = elems[el];
-        var currentLine = elemsLine[el];
+      elems.each(function(index, elem){
+        var $current = $(elem);
+        var $currentLine = $(elemsLine[index]);
+        var cat = $current.data('category');
 
-        if (current && current.getAttribute) {
-          var cat = current.getAttribute('data-category');
+        if ($current && cat) {
           if (category === '') {
-            current.classList.remove('unHighLight');
-            currentLine.classList.remove('unHighLight');
+            $current.removeClass('unHighLight');
+            $currentLine.removeClass('unHighLight');
           } else if (cat !== category) {
-            current.classList.add('unHighLight');
-            currentLine.classList.add('unHighLight');
+            $current.addClass('unHighLight');
+            $currentLine.addClass('unHighLight');
           } else {
-            current.classList.remove('unHighLight');
-            currentLine.classList.remove('unHighLight');
+            $current.removeClass('unHighLight');
+            $currentLine.removeClass('unHighLight');
           }
         }
-      }
+      });
     },
 
     remove: function() {
