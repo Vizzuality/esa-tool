@@ -1,10 +1,10 @@
 class ContactMailer < ApplicationMailer
-  default from: "contact@esaworld.com"
+  default from: "contact@esa.int"
 
   layout "contact_mailer"
 
   def contact_form(form)
     @form = form
-    mail(to: "admin@esaworld.com", subject: 'New submission on esaworld contact form')
+    mail(to: "joseangel.parreno@vizzuality.com", subject: 'New submission on esaworld contact form')
   end
 end
