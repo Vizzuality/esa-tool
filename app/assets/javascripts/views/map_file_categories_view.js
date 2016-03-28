@@ -392,7 +392,7 @@
       if (item) {
         item.value = line();
       }
-      
+
       // firefox hack
       var rasterInputs = document.getElementsByClassName('raster_color_input');
       if (rasterInputs.length > 1) {
@@ -403,6 +403,7 @@
     refreshCategories: function(columns) {
       var self = this;
       var colors;
+      this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
 
       if (this.rasterCategory && this.rasterCategory.value) {
         var names = App.Helper.deserialize(this.rasterCategory.value);
