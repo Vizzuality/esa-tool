@@ -108,7 +108,7 @@
       this.links = new App.View.SmoothLinks({
         el: document.body
       });
-      var section = Backbone.history.getFragment();
+      var section = Backbone.history.location.pathname.replace('/','');
       if (section) {
         this.links.goToLinkSmoothly('#'+section);
       }
