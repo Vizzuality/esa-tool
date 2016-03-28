@@ -10,8 +10,11 @@
 
   @extend %clear-scroll-bars;
 
+  padding-bottom: 250px;
+
   @media screen and (min-width: $screen-sm) {
     height: 100vh;
+    padding-bottom: 0;
   }
 
   > .title {
