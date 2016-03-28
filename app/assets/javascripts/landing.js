@@ -1,5 +1,6 @@
 //= require jquery2
 //= require jquery_ujs
+//= require jquery.validate.js
 //= require slick.js/slick.js
 //= require select2.js
 //= require underscore
@@ -7,8 +8,9 @@
 //= require_self
 //= require router
 //= require views/map_view
+//= require views/smoth_links_view
 //= require views/menu_view
-//= require views/slider_view
+//= require views/contact_form_view
 //= require views/static_map_view
 //= require views/cases_list_view
 //= require views/cases_filter_view
@@ -77,9 +79,10 @@
     _initModules: function(tag) {
       this._initMenu(tag);
       this._initCasesFilter(tag);
+      this._initSmoothLinks();
       this._initCasesList();
       this._initMap();
-      this._initSlider();
+      this._initContactForm();
     },
 
     /**
@@ -92,6 +95,24 @@
       });
 
       this.listenTo(this.menu, 'tag:update', _.bind(this._updateRouter, this));
+    },
+
+    toggleMenu: function(){
+      this.menu.toggleMenu();
+    },
+
+    /**
+     * Function to initialize the menu
+     */
+    _initSmoothLinks: function() {
+      this.links = new App.View.SmoothLinks({
+        el: document.body
+      });
+      var section = Backbone.history.getFragment();
+      if (section) {
+        this.links.goToLinkSmoothly('#'+section);
+      }
+      this.listenTo(this.links, 'link:selected', _.bind(this.toggleMenu, this));
     },
 
     _initCasesList: function() {
@@ -178,18 +199,14 @@
     },
 
     /**
-     * Function to initialize the slider
+     * Function to initialize the contact form events handler
      */
-    _initSlider: function() {
-      this.slider = new App.View.Slider({
-        el: '#landingSlider',
-        arrows: false,
-        dots:true,
-        responsive: [],
-        autoplay: true,
-        autoplaySpeed: 3000
+    _initContactForm: function() {
+      this.contactFormEl = $('#contact-form');
+      this.contactFormEl.find('form').validate();
+      this.contactForm = new App.View.ContactForm({
+        el: this.contactFormEl,
       });
-      this.slider.start();
     },
 
     /**

@@ -25,27 +25,14 @@
                 h2 =c.title
             
           
-  section.slider
-    .wrap
-      #landingSlider
-        article.slide
-          .slide-content
-            h2.title = t('slide1_title')
-            p.content = t('slide1_content')
-          .slide-link
-            button.btn.-landing.-inv =t('data_origin')
-        article.slide
-          .slide-content
-            h2.title = t('slide2_title')
-            p.content = t('slide2_content')
-          .slide-link
-            button.btn.-landing.-inv =t('data_origin')
-        article.slide
-          .slide-content
-            h2.title = t('slide3_title')
-            p.content = t('slide3_content')
-          .slide-link
-            button.btn.-landing.-inv =t('data_origin')
+  section#contact-form
+    .wrap: .row
+      .grid-sm-12.contact-form
+        h2.title = t('contact')
+        .form
+          = simple_form_for @contact_form, url: contact_form_index_path, class: 'contact-form', remote: true do |f|
+            = render 'form', f: f
+        .feedback._hidden
 
   footer.footer
     .pre-footer
