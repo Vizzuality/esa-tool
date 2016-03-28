@@ -35,6 +35,7 @@ en:
   contact: 'Contact'
   create_case_study: 'Create new case study'
   create_user: 'Create user'
+  close_explore_map: 'Close exploring'
   change_password: 'Change password'
   create_organization: 'Create Organization'
   data: 'Data'

@@ -32,7 +32,7 @@
   var LandingView = Backbone.View.extend({
 
     events: {
-      'click #exploreMap': '_exploreMap',
+      'click .toggle-explore': '_toggleExploreMap',
     },
 
     /**
@@ -232,12 +232,14 @@
      * Function to open the map navigation
      * @param  {Event} e
      */
-    _exploreMap: function() {
-      this.banner.classList.add('_hidden');
-      this.cases.el.classList.add('_expanded');
-      this.map.el.classList.add('_expanded');
+    _toggleExploreMap: function() {
+      this.banner.classList.toggle('_hidden');
+      this.cases.el.classList.toggle('_expanded');
+      this.map.el.classList.toggle('_expanded');
 
-      this._renderCases();
+      if (this.map.el.classList.contains('_expanded')){
+        this._renderCases();
+      }
     }
 
   });

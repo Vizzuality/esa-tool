@@ -1,12 +1,15 @@
 .l-content
-  #map.map
+  .map-container._center
+    #map.map
+    button.btn.-landing.toggle-explore =t('close_explore_map')
+    
   #banner.banner
     .title 
       h1 =t('earth_observation')
     .title
       h1 =t('sustainable_development')
     .link
-      button#exploreMap.btn.-landing =t('explore_map')
+      button.btn.-landing.toggle-explore =t('explore_map')
   section#cases.cases
     .wrap: .row._right
       .tags-filter
