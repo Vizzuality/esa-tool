@@ -19,7 +19,8 @@
     = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
   - if @page.data_layers.any?
     .nested-fields.file-map-input
-      .list-container data= {layerId: @page.data_layers.first.id, filename: @page.data_layers.first.table_name}
+      #layerId data= {layerId:@page.data_layers.first.id}
+      .list-container data= {filename: @page.data_layers.first.table_name}
         = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-#{@page.data_layers.first.id}"
         .box-list.-selectable._is-loading
 
