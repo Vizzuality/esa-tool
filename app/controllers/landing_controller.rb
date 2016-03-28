@@ -3,6 +3,7 @@ class LandingController < ApplicationController
   layout "landing"
 
   def index
+    @contact_form = ContactForm.new
     @tags = Tag.all
     @case_studies = CaseStudy.published.limit(9)
 
