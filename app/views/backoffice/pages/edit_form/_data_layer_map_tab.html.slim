@@ -4,6 +4,7 @@
 .form-row
   - f.object.table_name = f.object.table_name.blank? ? 'The file is uploading' : f.object.table_name
   .file-map-input
+    #layerId data= {layerId:f.object.id}
     .nested-fields
       .row.file
         .grid-sm-11.name

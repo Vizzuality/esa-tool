@@ -36,10 +36,10 @@
       this.rastertitle = document.getElementById('page_title');
 
       this.isRaster = false;
+      this.layerId = document.getElementById('layerId').getAttribute('data-layerid');
 
       if (this.el.querySelectorAll('[data-filename]').length) {
         this.list = this.el.querySelectorAll('[data-filename]')[0];
-        this.layerId = this.list.getAttribute('data-layerid');
         this.fileName = this.list.getAttribute('data-filename');
         this.columnsContainer = this.list.getElementsByClassName('box-list')[0];
         this.init();
