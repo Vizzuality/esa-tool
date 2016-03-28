@@ -162,7 +162,7 @@
     initFeatherlight: function(){
       $.featherlight.defaults.otherClose = "button.-close, .uploaded-images";
       $.featherlight.defaults.afterContent = function(){
-        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div><div class="featherlight-actions _center"><button class="btn -primary -saveform" style="display:none"> Save </button></div>');
+        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close -closeform"> Back </button><button class="btn -primary -saveform" style="display:none"> Save </button></div>');
       };
     },
 

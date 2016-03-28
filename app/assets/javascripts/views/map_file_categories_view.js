@@ -37,12 +37,31 @@
     clickFeatherRaster: function() {
       var self = this;
       var saveFormBtn = document.getElementsByClassName('-saveform')[0];
+      var closeFormBtn = document.getElementsByClassName('-closeform')[0];
+      self.setFeatherlightListeners();
       saveFormBtn.style.display = 'block';
+      closeFormBtn.classList.add('-alt');
       self.setRasterColorInput();
       saveFormBtn.onclick = function() {
-        self.rasterColorInput.value = document.getElementsByClassName('raster_color_input')[1].value;
+        var rasterColorInput = document.getElementsByClassName('raster_color_input');
+        self.rasterColorInput.value = rasterColorInput[rasterColorInput.length-1].value;
         document.getElementById('saveBtn').click();
       }
+    },
+
+    setFeatherlightListeners: function() {
+      var self = this;
+      this.palettesBox = $('.featherlight-content .item.-palette');
+      this.palettesBox.on('click', function(e) {
+        var targetValue = e.currentTarget.getAttribute('data-value');
+        var cartoCss = App.CartoCSS['Theme' + self.data.caseStudy.template];
+        var defaultCarto = cartoCss['default-p'+targetValue];
+        var palette = cartoCss['palette'+targetValue];
+        palette = _.map(palette, function(color) { return App.Helper.hexToRgba(color, defaultCarto['polygon-opacity']*100)})
+        var $item = $(e.currentTarget);
+        var item = $item.parents('.raster-color').find('.raster_color_input')[0];
+        self.setRasterColorInput(item,palette);
+      });
     },
 
     start: function(column) {
@@ -125,8 +144,12 @@
     },
 
     initColorPicker: function() {
+      this.colorPickers = $('.colorpicker');
+    },
+
+    startColorPicker: function() {
       var self = this;
-      $('.colorpicker').each(function(index, item) {
+      this.colorPickers.each(function(index, item) {
         var $item = $(item),
           borderColor;
         $item.spectrum({
@@ -148,7 +171,6 @@
           self.updateColumnsColor();
         });
       });
-
     },
 
     getCategories: function(table, column) {
@@ -342,27 +364,39 @@
       this.rasterCategory.value = this.rasterCategoryNames.serialize();
     },
 
-    setRasterColorInput: function() {
+    setRasterColorInput: function(item, palette) {
       var self = this;
+      self.palette = palette;
+      item = item || this.rasterColorInput;
       var line = function() {
         var lines = self.el.querySelectorAll('.columns-container .item.-color');
         var text = '';
+        var count = 0;
+        var paletteLenght = self.palette ? self.palette.length:0;
         for (var i = 0; i < lines.length; i++) {
-          text += lines[i].querySelectorAll('input')[0].value;
+          if (self.palette) {
+            if (count > paletteLenght - 1) {
+              count = 0;
+            }
+            text += self.palette[count];
+            count++;
+          } else {
+            text += lines[i].querySelectorAll('input')[0].value;
+          }
           text += '-';
           text += lines[i].querySelectorAll('input')[0].name.trim();
           text += '\n';
         }
         return (text.length > 0) ? text : '';
+      };
+      if (item) {
+        item.value = line();
       }
-      if (this.rasterColorInput) {
-        this.rasterColorInput.value = line();
-      }
-
-      //firefox hack
-      if (document.getElementsByClassName('raster_color_input').length > 1) {
-        var target = document.getElementsByClassName('raster_color_input');
-        target[1].value = target[0].value;
+      
+      // firefox hack
+      var rasterInputs = document.getElementsByClassName('raster_color_input');
+      if (rasterInputs.length > 1) {
+        rasterInputs[rasterInputs.length-1].value = item.value;
       }
     },
 
@@ -420,8 +454,8 @@
         category = self.getCategory(category);
         listContainer.insertAdjacentHTML('beforeend', category);
       });
-
       this.initColorPicker();
+      this.startColorPicker();
       this.columnsColorValues = this.$('.colorpicker');
       if (this.isRaster) {
         this.rasterCategoryNames = this.$('.raster-cat-name');

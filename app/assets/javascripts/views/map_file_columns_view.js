@@ -36,7 +36,7 @@
       this.rastertitle = document.getElementById('page_title');
 
       this.isRaster = false;
-      this.layerId = document.getElementById('layerId').getAttribute('data-layerid');
+      this.layerId = this.el.querySelectorAll('#layerId')[0].getAttribute('data-layerid');
 
       if (this.el.querySelectorAll('[data-filename]').length) {
         this.list = this.el.querySelectorAll('[data-filename]')[0];
