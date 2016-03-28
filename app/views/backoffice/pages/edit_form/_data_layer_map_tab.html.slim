@@ -1,27 +1,29 @@
 - palettes = 2
 - palette_range = 8
 
-.form-row
+.form-row.file-map-input
   - f.object.table_name = f.object.table_name.blank? ? 'The file is uploading' : f.object.table_name
-  .file-map-input
-    #layerId data= {layerId:f.object.id}
-    .nested-fields
-      .row.file
-        .grid-sm-11.name
-          p = f.object.table_name
-        .grid-sm-1
-          = link_to_remove_association '×', f, class: 'btn -delete -inside-input'
-    .nested-fields
-      .row
-        .grid-sm-12
-          = f.input_field :layer_column_alias, placeholder: "Column alias"
-    .nested-fields
-      .row
-        .grid-sm-12
-          .list-container data= {layerId:f.object.id, filename: f.object.table_name}
-            = f.input_field :layer_column, as: :hidden, id: "column-input-#{f.object.id}"
-            - if f.object.raster_type.blank?
-              .box-list.-selectable._is-loading
+  #layerId data= {layerId:f.object.id}
+  = f.label :files
+  .nested-fields
+    .row.file
+      .grid-sm-11.name
+        p = f.object.table_name
+      .grid-sm-1
+        = link_to_remove_association '×', f, class: 'btn -delete -inside-input'
+  .nested-fields
+    .row
+      .grid-sm-12
+        = f.input :layer_column_alias, label:"Name", placeholder: "Column alias", wrapper_html: {class: "input-inline -spaced"}
+  .nested-fields
+    .row
+      .grid-sm-12
+      - if f.object.raster_type.blank?
+        = f.label :column
+      .list-container data= {layerId:f.object.id, filename: f.object.table_name}
+        = f.input_field :layer_column, as: :hidden, id: "column-input-#{f.object.id}"
+        - if f.object.raster_type.blank?
+          .box-list.-selectable._is-loading
 
     = f.input :id, as: :hidden
           
@@ -37,16 +39,16 @@
           = f.input_field :raster_type, as: :hidden, value: f.object.raster_type, class: "raster-type"
           = f.input_field :raster_categories, as: :hidden, value: f.object.raster_categories, class: "raster-category"
           
-._hidden
-  #raster_color
-    .box-selector
-      - for t in 1..palettes
-        .item.-col-2.-palette.detail-title data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
-          - for r in 1..palette_range
-            .range
-              span.-bordered
-              span
-    = f.input :raster_color_input, input_html: {class:"-large raster_color_input"}, placeholder: "CUSTOMIZED COLORS PER COLUMNS\nPaste code here\n\nrgba(255,255,255,0.5)-column1\nrgba(73,73,73,0.7)-column2\n"
+          ._hidden
+            #raster_color
+              .box-selector
+                - for t in 1..palettes
+                  .item.-col-2.-palette.detail-title data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
+                    - for r in 1..palette_range
+                      .range
+                        span.-bordered
+                        span
+              = f.input :raster_color_input, input_html: {class:"-large raster_color_input"}, placeholder: "CUSTOMIZED COLORS PER COLUMNS\nPaste code here\n\nrgba(255,255,255,0.5)-column1\nrgba(73,73,73,0.7)-column2\n"
 
           
 = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.blank? ? 1 : @page.color_palette.to_i), class: 'input', id:"pallete"

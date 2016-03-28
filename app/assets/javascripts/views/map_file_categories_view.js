@@ -343,8 +343,9 @@
     },
 
     setRasterColorInput: function() {
+      var self = this;
       var line = function() {
-        var lines = document.querySelectorAll('.columns-container .item');
+        var lines = self.el.querySelectorAll('.columns-container .item.-color');
         var text = '';
         for (var i = 0; i < lines.length; i++) {
           text += lines[i].querySelectorAll('input')[0].value;
@@ -382,25 +383,17 @@
       var count = 0;
       var boxTemplate = '';
 
-
       this.columnsContainer.innerHTML = '';
+      boxTemplate = '<div class="unordered-list">'+
+                      '<div class="list-header row">'+
+                        '<div class="grid-sm-1"> <span> color </span> </div>'+
+                        '<div class="grid-sm-5"> <span> category </span> </div>' +
+                        '<div class="grid-sm-6"> <span> name </span> </div>'+
+                      '</div>' +
+                      '<div class="list-content"></div>'+
+                    '</div>';
 
-      if (this.isRaster) {
-        boxTemplate = '<div class="unordered-list">'+
-                        '<div class="list-header">'+
-                          '<div class="col"> <span> color </span> </div>'+
-                          '<div class="col -double"> <span> name </span> </div>'+
-                          '<div class="col -double"> <span> category </span> </div>' +
-                        '</div>' +
-                        '<div class="list-content"></div>'+
-                      '</div>';
-
-        self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
-      } else {
-        boxTemplate = '<div class="box-list list-content"></div>';
-        self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
-      }
-
+      self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
       var listContainer = self.columnsContainer.getElementsByClassName('list-content')[0];
 
       _.each(columns, function(element) {
@@ -447,15 +440,15 @@
     },
 
     _categoryTemplate: function() {
-      return _.template('<div class="item" >' +
-        '<div class="col">'+
+      return _.template('<div class="item -color row" >' +
+        '<div class="grid-sm-1">'+
           '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> ' +
         '</div>'+
-        '<div class="col -double">'+
-          '<input type="text" class="raster-cat-name -centered" name="<%= value %>" value="<%= name %>"> ' +
-        '</div>'+
-        '<div class="col -double">'+
+        '<div class="grid-sm-5">'+
           '<span> <%= value %> </span> ' +
+        '</div>'+
+        '<div class="grid-sm-6">'+
+          '<input type="text" class="raster-cat-name -centered" name="<%= value %>" value="<%= name %>"> ' +
         '</div>');
     },
 
