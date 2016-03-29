@@ -41,7 +41,7 @@
           
           ._hidden
             .raster-color id="raster-color-#{f.object.id}"
-              .box-selector
+              .box-selector.-no-selectable
                 - for t in 1..palettes
                   .item.-col-2.-palette.detail-title data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
                     - for r in 1..palette_range
