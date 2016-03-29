@@ -61,7 +61,7 @@ class Backoffice::PagesController < BackofficeController
 
     def upload_pending_files
       @page.data_layers.each do |d|
-        Resque.enqueue(CartoDbImporter, d.id) if d.import_status == "pending"
+        Resque.enqueue(CartoDbImporter, d.id) if d.import_status == ImportStatus::PENDING
       end
     end
 

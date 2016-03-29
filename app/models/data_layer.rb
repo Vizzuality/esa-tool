@@ -25,7 +25,7 @@ class DataLayer < ActiveRecord::Base
 
 
 
-  validates :shapefile, attachment_presence: true
+  validates :shapefile, attachment_presence: true, on: :create
 
   attr_accessor :cloning
 
@@ -35,7 +35,7 @@ class DataLayer < ActiveRecord::Base
   private
 
   def check_is_ready
-    if self.import_status == 'complete'
+    if self.import_status == ImportStatus::COMPLETE
       if (self.raster_type.blank? && (!self.layer_column.blank? || !self.year.blank?))
           self.is_ready = true
       elsif (!self.raster_categories.blank?)
@@ -44,6 +44,7 @@ class DataLayer < ActiveRecord::Base
         self.is_ready = false
       end
     end
+    true
   end
 
   def remove_cartodb_table

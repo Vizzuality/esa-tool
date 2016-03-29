@@ -1,10 +1,6 @@
 .text {
   position: relative;
-  height: calc(100% - 63px);
-
-  @media screen and (min-width: $screen-sm) {
-    height: 100vh;
-  }
+  height: 100vh;
 
   .container {
     position: absolute;
@@ -53,7 +49,7 @@
       position: relative;
       top: 0;
       height: calc(100% - 200px);
-      max-height: rem(550px);
+      padding-bottom: 120px;
       @extend %clear-scroll-bars;
 
       font-size: rem($font-size);
@@ -63,7 +59,9 @@
       -webkit-overflow-scrolling: touch;
 
       @media screen and (min-width: $screen-sm) {
+        max-height: rem(550px);
         height: auto;
+        padding-bottom: 0;
       }
     }
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317151259) do
+ActiveRecord::Schema.define(version: 20160321121234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,14 @@ ActiveRecord::Schema.define(version: 20160317151259) do
 
   add_index "charts_pages", ["chart_id"], name: "index_charts_pages_on_chart_id", using: :btree
   add_index "charts_pages", ["page_id"], name: "index_charts_pages_on_page_id", using: :btree
+
+  create_table "contact_forms", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "email",      null: false
+    t.text     "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "contacts", force: :cascade do |t|
     t.text     "body",              null: false
