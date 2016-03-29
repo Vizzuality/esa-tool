@@ -32,10 +32,11 @@ class CartoDbImporter
       import_status = CartoDb.import_status(queue_id)
       i += 1
     end
-    layer.update_attributes(import_status: import_status["state"])
-    layer.update_attributes(table_name: import_status["table_name"])
+    layer.table_name = import_status["table_name"]
+    layer.import_status = import_status["state"]
     layer.shapefile.destroy
     layer.shapefile.clear
+    layer.save
 
     File.delete(file) unless Rails.env.development?
   end
