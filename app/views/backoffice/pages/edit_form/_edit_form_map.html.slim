@@ -15,7 +15,7 @@
         
   .map-layers-content.tab-content-wrapper
     - index = 0
-    = f.simple_fields_for :data_layers do |d|
+    = f.simple_fields_for :data_layers, f.object.data_layers.order(:table_name) do |d|
       div.tab-content data-tab-content="#{d.object.id}" class=("#{index==0? "-active":""}")
         = render 'backoffice/pages/edit_form/data_layer_map_tab', f: d, p:f
       - index =+ 1
