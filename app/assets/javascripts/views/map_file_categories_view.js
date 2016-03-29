@@ -75,13 +75,10 @@
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
       if (this.analyzed && !self.initialized) {
-        if (this.isRaster) {
-          categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
-          categories = _.map(categoriesObject, function(item, key){ return {'category': parseFloat(key) }; });
-        } else  {
-          categoriesObject = App.Helper.deserialize(this.layer.custom_columns_colors);
-          categories = _.map(categoriesObject, function(item, key){ return {'category': key }; });
-        }
+        categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
+        categories = _.map(categoriesObject, function(item, key){
+          return self.isRaster ? {'category': parseFloat(key) } : {'category': key };
+        });
 
         categories = _.sortBy(categories, 'category');
         this.refreshCategories(categories);
@@ -458,14 +455,12 @@
       this.initColorPicker();
       this.startColorPicker();
       this.columnsColorValues = this.$('.colorpicker');
-      if (this.isRaster) {
-        this.rasterCategoryNames = this.$('.raster-cat-name');
-        this.rasterCategoryNames.on('change', function(){
-          self.setRasterCategories();
-        });
-        this.setRasterCategories(columns);
-        this.setRasterColorInput();
-      }
+      this.rasterCategoryNames = this.$('.raster-cat-name');
+      this.rasterCategoryNames.on('change', function(){
+        self.setRasterCategories();
+      });
+      this.setRasterCategories(columns);
+      this.setRasterColorInput();
       this.updateColumnsColor();
       this.columnsContainer.classList.remove('_is-loading');
     },
