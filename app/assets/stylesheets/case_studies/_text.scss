@@ -59,7 +59,7 @@
       -webkit-overflow-scrolling: touch;
 
       @media screen and (min-width: $screen-sm) {
-        max-height: rem(550px);
+        max-height: 70vh;
         height: auto;
         padding-bottom: 0;
       }
