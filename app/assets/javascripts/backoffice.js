@@ -12,9 +12,12 @@
 //= require helpers/helper
 //= require_tree ./cartocss
 //= require views/tags_view
+//= require views/tabs_view
 //= require views/box_select_view
 //= require views/image_views
 //= require views/logo_collection_view
+//= require views/add_map_file_view
+//= require views/map_file_upload_view
 //= require views/map_file_status_view
 //= require views/map_file_columns_view
 //= require views/map_file_categories_view
@@ -35,9 +38,12 @@
 
     initialize: function() {
       this.initTags();
+      this.initTabs();
       this.initBoxSelects();
       this.initImageView();
       this.initMapFileStatus();
+      this.initMapFileUpload();
+      this.initAddMapFile();
       this.initMapFileColumns();
       this.initFeatherlight();
       this.initValidation();
@@ -56,13 +62,28 @@
     },
 
     /**
+     * Initializing tabs plugin
+     * @param {Object}
+     */
+    initTabs: function() {
+      this.tabs = new App.View.Tabs({
+        el: window.document
+      });
+    },
+
+    /**
      * Initializing box selector
      * @param {Object}
      */
     initBoxSelects: function() {
-      var boxSelects = this.el.getElementsByClassName('box-selector');
-      if (boxSelects && boxSelects.length) {
-        new App.View.BoxSelect({ el: boxSelects });
+      this.boxSelects = this.el.getElementsByClassName('box-selector');
+
+      if (this.boxSelects && this.boxSelects.length) {
+        _.each(this.boxSelects, function(item) {
+          new App.View.BoxSelect({
+            el: item
+          });
+        });
       }
     },
 
@@ -97,10 +118,30 @@
       }
     },
 
+    initAddMapFile: function() {
+      this.addFiles = new App.View.AddMapFile({
+        el: document.getElementsByClassName('add-file-cocoon')
+      });
+      this.listenTo(this.addFiles, 'file:added', this.onFileAdded);
+    },
+
+    onFileAdded: function(title, content) {
+      this.tabs.addTab(title, content);
+    },
+
     initMapFileColumns: function() {
       this.filesContainer = document.getElementsByClassName('file-map-input');
       _.each(this.filesContainer, function(item) {
         new App.View.MapFileColumns({
+          el: item
+        });
+      });
+    },
+
+    initMapFileUpload: function() {
+      this.filesUpload = document.getElementsByClassName('file-map-upload');
+      _.each(this.filesUpload, function(item) {
+        new App.View.MapFileUpload({
           el: item
         });
       });
@@ -121,7 +162,7 @@
     initFeatherlight: function(){
       $.featherlight.defaults.otherClose = "button.-close, .uploaded-images";
       $.featherlight.defaults.afterContent = function(){
-        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close"> Back </button></div><div class="featherlight-actions _center"><button class="btn -primary -saveform" style="display:none"> Save </button></div>');
+        this.$content.after('<div class="featherlight-actions _center"><button class="btn -primary -close -closeform"> Back </button><button class="btn -primary -saveform" style="display:none"> Save </button></div>');
       };
     },
 

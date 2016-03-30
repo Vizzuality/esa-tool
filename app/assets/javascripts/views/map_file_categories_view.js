@@ -37,12 +37,34 @@
     clickFeatherRaster: function() {
       var self = this;
       var saveFormBtn = document.getElementsByClassName('-saveform')[0];
+      var closeFormBtn = document.getElementsByClassName('-closeform')[0];
+      self.setFeatherlightListeners();
       saveFormBtn.style.display = 'block';
+      closeFormBtn.classList.add('-alt');
       self.setRasterColorInput();
       saveFormBtn.onclick = function() {
-        self.rasterColorInput.value = document.getElementsByClassName('raster_color_input')[1].value;
+        var rasterColorInput = document.getElementsByClassName('raster_color_input');
+        self.rasterColorInput.value = rasterColorInput[rasterColorInput.length-1].value;
+        // self.updateColumnsColor(self.paletteSelected);
+        console.log('input value: '+ self.customColumsInput.value);
+        console.log('raste value: '+ self.rasterColorInput.value);
         document.getElementById('saveBtn').click();
-      }
+      };
+    },
+
+    setFeatherlightListeners: function() {
+      var self = this;
+      this.palettesBox = $('.featherlight-content .item.-palette');
+      this.palettesBox.on('click', function(e) {
+        var targetValue = e.currentTarget.getAttribute('data-value');
+        var cartoCss = App.CartoCSS['Theme' + self.data.caseStudy.template];
+        var defaultCarto = cartoCss['default-p'+targetValue];
+        self.paletteSelected = cartoCss['palette'+targetValue];
+        self.paletteSelected = _.map(self.paletteSelected, function(color) { return App.Helper.hexToRgba(color, defaultCarto['polygon-opacity']*100);});
+        var $item = $(e.currentTarget);
+        var item = $item.parents('.raster-color').find('.raster_color_input')[0];
+        self.setRasterColorInput(item,self.paletteSelected);
+      });
     },
 
     start: function(column) {
@@ -56,13 +78,10 @@
       this.isRaster = column === this.options.rasterColumn;
       this.columnsContainer.classList.add('_is-loading');
       if (this.analyzed && !self.initialized) {
-        if (this.isRaster) {
-          categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
-          categories = _.map(categoriesObject, function(item, key){ return {'category': parseFloat(key) }; });
-        } else  {
-          categoriesObject = App.Helper.deserialize(this.layer.custom_columns_colors);
-          categories = _.map(categoriesObject, function(item, key){ return {'category': key }; });
-        }
+        categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
+        categories = _.map(categoriesObject, function(item, key){
+          return self.isRaster ? {'category': parseFloat(key) } : {'category': key };
+        });
 
         categories = _.sortBy(categories, 'category');
         this.refreshCategories(categories);
@@ -87,7 +106,6 @@
         promise.then(function(categories) {
           self.closeFeedback();
           self.refreshCategories(categories);
-          self.setRasterColorInput();
         });
         promise.fail(function(error) {
           self.closeFeedback();
@@ -125,8 +143,12 @@
     },
 
     initColorPicker: function() {
+      this.colorPickers = this.$('.colorpicker');
+    },
+
+    startColorPicker: function() {
       var self = this;
-      $('.colorpicker').each(function(index, item) {
+      this.colorPickers.each(function(index, item) {
         var $item = $(item),
           borderColor;
         $item.spectrum({
@@ -136,7 +158,7 @@
           showPalette: true,
           showSelectionPalette: true,
           maxSelectionSize: 10,
-          preferredFormat: 'rgb',
+          preferredFormat: 'rgba',
           palette: self.palette
         });
         borderColor = $(item).spectrum('get').toHex();
@@ -148,7 +170,6 @@
           self.updateColumnsColor();
         });
       });
-
     },
 
     getCategories: function(table, column) {
@@ -342,63 +363,71 @@
       this.rasterCategory.value = this.rasterCategoryNames.serialize();
     },
 
-    setRasterColorInput: function() {
+    setRasterColorInput: function(item, palette) {
+      var self = this;
+      self.palette = palette;
+      item = item || this.rasterColorInput;
       var line = function() {
-        var lines = document.querySelectorAll('.columns-container .item');
+        var lines = self.el.querySelectorAll('.columns-container .item.-color');
         var text = '';
+        var count = 0;
+        var paletteLenght = self.palette ? self.palette.length:0;
         for (var i = 0; i < lines.length; i++) {
-          text += lines[i].querySelectorAll('input')[0].value;
+          if (self.palette) {
+            if (count > paletteLenght - 1) {
+              count = 0;
+            }
+            text += self.palette[count];
+            count++;
+          } else {
+            text += lines[i].querySelectorAll('input')[0].value;
+          }
           text += '-';
           text += lines[i].querySelectorAll('input')[0].name.trim();
           text += '\n';
         }
         return (text.length > 0) ? text : '';
+      };
+      if (item) {
+        item.value = line();
       }
-      this.rasterColorInput.value = line();
-      
-      //firefox hack
-      if (document.getElementsByClassName('raster_color_input').length > 1) {
-        var target = document.getElementsByClassName('raster_color_input');
-        target[1].value = target[0].value;
-      }
+      //
+      // // firefox hack
+      // var rasterInputs = document.getElementsByClassName('raster_color_input');
+      // if (rasterInputs.length > 1) {
+      //   rasterInputs[rasterInputs.length-1].value = item.value;
+      // }
     },
 
     refreshCategories: function(columns) {
       var self = this;
-      var colors;
+      this.colors;
+      this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
 
       if (this.rasterCategory && this.rasterCategory.value) {
         var names = App.Helper.deserialize(this.rasterCategory.value);
       }
       if (this.rasterColorInput && this.rasterColorInput.value) {
         // Step over current given values with the ones pasted in the CartoCSS formated file
-        colors = App.Helper.switchInputColors(this.rasterColorInput.value);
+        this.colors = App.Helper.switchInputColors(this.rasterColorInput.value);
       } else {
-        colors = App.Helper.deserialize(this.customColumsInput.value);
+        this.colors = App.Helper.deserialize(this.customColumsInput.value);
       }
       var paletteLenght = this.palette.length;
       var count = 0;
       var boxTemplate = '';
 
-
       this.columnsContainer.innerHTML = '';
+      boxTemplate = '<div class="unordered-list">'+
+                      '<div class="list-header row">'+
+                        '<div class="grid-sm-1"> <span> color </span> </div>'+
+                        '<div class="grid-sm-5"> <span> category </span> </div>' +
+                        '<div class="grid-sm-6"> <span> name </span> </div>'+
+                      '</div>' +
+                      '<div class="list-content"></div>'+
+                    '</div>';
 
-      if (this.isRaster) {
-        boxTemplate = '<div class="unordered-list">'+
-                        '<div class="list-header">'+
-                          '<div class="col"> <span> color </span> </div>'+
-                          '<div class="col -double"> <span> name </span> </div>'+
-                          '<div class="col -double"> <span> category </span> </div>' +
-                        '</div>' +
-                        '<div class="list-content"></div>'+
-                      '</div>';
-
-        self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
-      } else {
-        boxTemplate = '<div class="box-list list-content"></div>';
-        self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
-      }
-
+      self.columnsContainer.insertAdjacentHTML('afterbegin', boxTemplate);
       var listContainer = self.columnsContainer.getElementsByClassName('list-content')[0];
 
       _.each(columns, function(element) {
@@ -407,8 +436,8 @@
           color: '',
           name: ''
         };
-        if (colors && colors[element.category]) {
-          category.color = colors[element.category];
+        if (self.colors && self.colors[element.category]) {
+          category.color = self.colors[element.category];
         } else {
           if (count > paletteLenght - 1) {
             count = 0;
@@ -421,43 +450,19 @@
         } else {
           category.name = element.category;
         }
-        if (self.isRaster) {
-          category = self.getRasterCategory(category);
-        } else {
-          category = self.getCategory(category);
-        }
+
+        category = self.getCategory(category);
         listContainer.insertAdjacentHTML('beforeend', category);
       });
-
       this.initColorPicker();
-      this.columnsColorValues = this.$('.colorpicker');
-      if (this.isRaster) {
-        this.rasterCategoryNames = this.$('.raster-cat-name');
-        this.rasterCategoryNames.on('change', function(){
-          self.setRasterCategories();
-        });
-        this.setRasterCategories(columns);
-        this.setRasterColorInput();
-      }
+      this.startColorPicker();
+      this.rasterCategoryNames = this.$('.raster-cat-name');
+      this.rasterCategoryNames.on('change', function(){
+        self.setRasterCategories();
+      });
+      this.setRasterCategories(columns);
       this.updateColumnsColor();
       this.columnsContainer.classList.remove('_is-loading');
-    },
-
-    getRasterCategory: function(category) {
-      return this._rasterCategoryTemplate()(category);
-    },
-
-    _rasterCategoryTemplate: function() {
-      return _.template('<div class="item" >' +
-        '<div class="col">'+
-          '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> ' +
-        '</div>'+
-        '<div class="col -double">'+
-          '<input type="text" class="raster-cat-name -centered" name="<%= value %>" value="<%= name %>"> ' +
-        '</div>'+
-        '<div class="col -double">'+
-          '<span> <%= value %> </span> ' +
-        '</div>');
     },
 
     getCategory: function(category) {
@@ -465,18 +470,42 @@
     },
 
     _categoryTemplate: function() {
-      return _.template('<div class="item -color" >'+
-          '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> '+
-          '<span> <%= value %> </span> '+
-        ' </div>');
+      return _.template('<div class="item -color row" >' +
+        '<div class="grid-sm-1">'+
+          '<input type="text" class="colorpicker" name="<%= value %>" value="<%= color %>"> ' +
+        '</div>'+
+        '<div class="grid-sm-5">'+
+          '<span> <%= value %> </span> ' +
+        '</div>'+
+        '<div class="grid-sm-6">'+
+          '<input type="text" class="raster-cat-name -centered" name="<%= value %>" value="<%= name %>"> ' +
+        '</div>');
     },
 
     handleCategoriesError: function(error) {
       console.warn(error);
     },
 
-    updateColumnsColor: function() {
-      this.customColumsInput.value = this.columnsColorValues.serialize();
+    updateColumnsColor: function(palette) {
+      var self = this;
+      if (palette) {
+        var count = 0;
+        var paletteLenght = palette.length;
+        _.each(this.colorPickers, function(colorPicker){
+          if (count > paletteLenght - 1) {
+            count = 0;
+          }
+          colorPicker.value = palette[count];
+          $(colorPicker).spectrum('set', palette[count]);
+          count++;
+        });
+      } else {
+        self.setRasterColorInput();
+      }
+      _.each(this.colorPickers, function(colorPicker){
+        colorPicker.value = $(colorPicker).spectrum('get').toRgbString();
+      });
+      this.customColumsInput.value = this.colorPickers.serialize();
       this.setRasterColorInput();
     },
 

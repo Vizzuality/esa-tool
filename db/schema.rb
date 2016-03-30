@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160321121234) do
+ActiveRecord::Schema.define(version: 20160329155832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20160321121234) do
   create_table "pages", force: :cascade do |t|
     t.string   "title",                                       null: false
     t.integer  "page_type",               default: 1
-    t.integer  "color_palette",           default: 1
+    t.integer  "color_palette",           default: 3
     t.string   "custom_color_palette"
     t.integer  "case_study_id",                               null: false
     t.datetime "created_at",                                  null: false

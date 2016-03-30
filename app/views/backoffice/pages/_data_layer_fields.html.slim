@@ -11,8 +11,11 @@
         = link_to_remove_association '×', f, class: 'btn -delete'
 - else
   .nested-fields
-    .row.file.-input.input-wrapper
-      .grid-sm-11
-        = f.input :shapefile, as: :file, input_html: {id:"map_file"}
-      .grid-sm-1
-        = link_to_remove_association '×', f, class: 'btn -delete'
+    #filename
+    #input-file-wrapper.input-file-wrapper.input-wrapper.-lg
+      = f.input :shapefile, as: :file, input_html: { id: 'map_file' }
+      .placeholder
+        span.title =t('drop_shapefile')
+        span.sub-title
+          =t('or')
+          span.link =t('browse')

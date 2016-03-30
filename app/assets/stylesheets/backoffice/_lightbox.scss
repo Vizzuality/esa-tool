@@ -1,7 +1,11 @@
 .featherlight{
   padding: 2rem;
   padding-bottom: 4rem;
-  background: rgba(0,0,0,.8);
+  background: rgba($bg-lightbox-color,.8);
+
+  &:last-of-type{
+    background: rgba($bg-lightbox-color,.8);
+  }
 
   .featherlight-content {
     min-width: 50%;

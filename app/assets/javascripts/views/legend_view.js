@@ -98,26 +98,14 @@
         iconBgEl.classList.add('icon-bg');
 
         var iconEl = document.createElement('span');
-        iconEl.style.borderColor = cat.color;
+        iconEl.style.borderColor = cat.color.indexOf('#') ? App.Helper.rgbaToHex(cat.color) : cat.color;
         iconEl.classList.add('icon-legend');
         iconEl.appendChild(iconBgEl);
 
 
         var itemEl = document.createElement('span');
-        var itemText;
-        if (self.layer && self.layer.isRaster) {
-          // cat.category = parseFloat(cat.category).toFixed(8);
-          // if (self.layer.raster_type === 'continous') {
-          //   itemText = document.createTextNode('['+lastCatVal+'-'+cat.category+']');
-          //   lastCatVal = cat.category;
-          // } else {
-          //   itemText = document.createTextNode(cat.category);
-          // }
-          itemText = cat.label ? cat.label : cat.category;
-          itemText = document.createTextNode(itemText);
-        } else {
-          itemText = document.createTextNode(cat.category);
-        }
+        var itemText = cat.label ? cat.label : cat.category;
+        itemText = document.createTextNode(itemText);
         itemEl.appendChild(itemText);
         itemEl.classList.add('description');
 

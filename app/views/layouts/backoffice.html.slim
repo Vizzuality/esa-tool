@@ -7,7 +7,9 @@ html lang="#{I18n.locale}"
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lato:400,700", media: "all"
     = stylesheet_link_tag "backoffice", media: "all"
     = csrf_meta_tag
-  body
+  - if @case_study.present? 
+    - className = @case_study.template.blank? ? '': "-cs-theme-#{@case_study.template}"
+  body class=className
     = render partial: 'backoffice/partials/icons'
     = render partial: 'backoffice/partials/header'
     = render partial: 'backoffice/partials/messages'

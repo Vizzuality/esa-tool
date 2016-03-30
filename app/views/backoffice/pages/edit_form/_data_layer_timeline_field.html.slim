@@ -1,0 +1,15 @@
+- f.object.table_name = f.object.table_name.blank? ? 'The file is uploading' : f.object.table_name
+.file-map-input
+  #layerId data= {layerId:f.object.id}
+  .nested-fields
+    .row.file
+      .grid-sm-9.name
+        p = f.object.table_name
+      .grid-sm-1
+        = link_to_remove_association '×', f, class: 'btn -delete -inside-input'
+      .grid-sm-2.year
+        label
+          abbr title="required" *
+        = f.input_field :year, placeholder: "Year", required: true
+
+  = f.input :id, as: :hidden

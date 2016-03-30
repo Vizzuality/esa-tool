@@ -158,7 +158,10 @@
             return d.category;
           })
           .style('fill', function(d) { return d.color; })
-          .style('stroke', function(d) { return d.color; })
+          .style('stroke', function(d) {
+            var color = d.data.color;
+            return color.indexOf('#') ? App.Helper.rgbaToHex(color) : color;
+          })
           .attr('x', function(d) { return self.x(d.x); })
           .attr('width', this.x.rangeBand())
           .attr('height', function() {
@@ -215,7 +218,7 @@
     highlight: function(category) {
       // needs jquery because of .classList
       // does not have support on SVG or MathML elements in IE
-      var elems = this.el.$('.bar');
+      var elems = this.$('.bar');
       elems.each(function(index, current){
         var $current = $(current);
         var cat = $current.data('category');

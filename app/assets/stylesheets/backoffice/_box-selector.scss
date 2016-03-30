@@ -39,22 +39,26 @@
       width: 32%;
     }
 
-    &._selected {
-      border-color: $font-color-1;
-
-      > .icon-chart {
-        fill: $font-color-1;
-      }
-    }
-
-    &._selected::after {
-      @include checked();
-    }
-
     &.-center {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  &:not(.-no-selectable) {
+    & > .item {
+      &._selected {
+        border-color: $font-color-1;
+
+        > .icon-chart {
+          fill: $font-color-1;
+        }
+      }
+
+      &._selected::after {
+        @include checked();
+      }
     }
   }
 
