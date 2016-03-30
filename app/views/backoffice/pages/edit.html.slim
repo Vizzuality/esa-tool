@@ -8,7 +8,7 @@ section.l-main
         .btns-toolbar
           = link_to t('save'), '#save', class: 'btn', id: 'saveBtn'
 
-  .content class="-cs-theme-#{@case_study.template}"
+  .content
     .wrap: .row
       .grid-sm-2
         = render partial: 'backoffice/partials/sidebar'
@@ -37,7 +37,17 @@ section.l-main
                 id: @page.id), method: :delete, class: 'btn -alt'
         - else
           = simple_form_for @page, url: backoffice_case_study_page_path, html: { multipart: true }, html: { class: "exit-saving"}  do |f|
-            = render 'edit_form', f: f
+            - if @page.page_type == PageType::TEXT
+              = render 'backoffice/pages/edit_form/edit_form_text', f: f
+            - elsif @page.page_type == PageType::TIMELINE
+              = render 'backoffice/pages/edit_form/edit_form_timeline', f: f
+            - else 
+              = render 'backoffice/pages/edit_form/edit_form_map', f: f
+            
+            = render 'backoffice/pages/edit_form/edit_form_footer', f: f
+            
+            / = render 'edit_form', f: f
+            
           ._hidden
             #feedbackAnalyzing
               .loading-container

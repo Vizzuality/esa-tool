@@ -7,29 +7,19 @@
 .unordered-list {
   display: block;
   min-height: 5rem;
+  margin: 1rem 0;
+  padding: 1rem;
 
   border: 1px solid $border-color-1;
 
-  .col {
-    display: flex;
-    flex: 1 0 19%;
-    margin-right: 1%;
-    align-items: center;
-    justify-content: center;
-    &.-double {
-      flex: 1 0 39%;
-    }
-  }
-
   > .list-header, > .list-content {
-    display: flex;
-    flex-flow: row wrap;
-    padding: .5rem;
+    text-align: center;
   }
 
   > .list-header {
     span {
       @extend %list-font;
+      text-transform: uppercase;
       color: rgba($font-color-1, .5);
     }
   }
@@ -40,7 +30,7 @@
     > .item {
       padding: .5rem 0;
       display: flex;
-      flex: 1 0 100%;
+      align-items: center;
 
       span {
         @extend %list-font;

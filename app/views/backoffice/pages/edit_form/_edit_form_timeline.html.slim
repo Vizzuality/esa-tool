@@ -1,0 +1,65 @@
+- palettes = 2
+- palette_range = 8
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? || @page.basemap=="terrain" ? true : false }],
+              [t('satellite'), 'satellite', {class:"item detail-title", checked: @page.basemap=="satellite" ? true : false }],
+              [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"}, checked: @page.basemap=="custom" ? true : false } ]]
+
+.form-row
+  = f.input :title
+
+.form-row
+  = f.label :files
+  = f.simple_fields_for :data_layers do |d|
+    - if d.object.new_record?
+      = render 'data_layer_fields', f: d, p:f
+    - else
+      = render 'backoffice/pages/edit_form/data_layer_timeline_field', f: d, p:f
+      
+  .nested-fields
+    = link_to_add_association t('add_data_layers'), f, :data_layers, class: 'btn -dotted'
+  - if @page.data_layers.any?
+    .nested-fields.file-map-input
+      #layerId data= {layerId:@page.data_layers.first.id}
+      .list-container data= {filename: @page.data_layers.first.table_name}
+        = f.input_field :column_selected, as: :hidden, class: 'input', id: "column-input-#{@page.data_layers.first.id}"
+        .box-list.-selectable._is-loading
+
+#colorPalette._hidden
+  .box-selector
+    - for t in 1..palettes
+      .item.-col-3.-palette.detail-title data-value="#{t}" data-input="pallete" class="-range-#{t} #{@page.color_palette.to_i == t ? '_selected' : nil}"
+        - for r in 1..palette_range
+          .range
+            span.-bordered
+            span
+- if @page.data_layers.any?
+  .form-row
+    .row
+      .grid-sm-12
+        label = "Select the columns color for #{@page.data_layers.first.table_name}"
+        .list-container id="custom-column-layer-#{@page.data_layers.first.id}" data= {table:@page.data_layers.first.table_name, column: @page.column_selected}
+          = f.simple_fields_for :data_layers do |d|
+            = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
+          .content
+= f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.blank? ? 1 : @page.color_palette.to_i), class: 'input', id:"pallete"
+
+.form-row.box-selector
+  = f.input :basemap, as: :radio_buttons, required: true,  collection: basemaps
+
+  #customBasemapUrl.form-row.detail-item class=('_hidden' unless @page.basemap == 'custom')
+    = f.input :basemap_url
+
+.form-row
+  = f.label :charts
+  .box-selector
+    - for chart in @charts
+      .item.checkbox data={input: "chart-#{chart.name}", multiple: "yes"}
+        svg.icon-chart.-bo
+          use xlink:href="#icon-chart-#{chart.name}"
+  ._hidden
+    = f.association :charts, as: :check_boxes, label:false, collection: @charts.map { |r| [r.name, r.id, {class: 'association-input', id: "chart-#{r.name}"}] }
+
+.form-row
+  = f.simple_fields_for :interest_points do |c|
+    = render 'interest_point_fields', f: c
+  = link_to_add_association t('add_interest_points'), f, :interest_points, class: 'btn -dotted'

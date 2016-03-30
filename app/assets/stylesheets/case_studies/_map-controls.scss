@@ -1,7 +1,7 @@
 .map-controls-container {
   display: none;
   position: absolute;
-  bottom: 3rem;
+  bottom: 10rem;
   padding-left: rem(100px);
 
   flex: 1 1 auto;
@@ -142,7 +142,7 @@
 
   .leaflet-control-zoom, .leaflet-control-fit-map {
     display: none;
-    bottom: 3rem;
+    bottom: 10rem;
     margin-left: 20px;
 
     @media screen and (min-width: $screen-sm){

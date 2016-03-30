@@ -1,0 +1,45 @@
+- basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? || @page.basemap=="terrain" ? true : false }],
+              [t('satellite'), 'satellite', {class:"item detail-title", checked: @page.basemap=="satellite" ? true : false }],
+              [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"}, checked: @page.basemap=="custom" ? true : false } ]]
+
+.form-row.tabs-wrapper.-bo
+  .map-layers-nav
+    ul.tabs.tab-title-wrapper
+      - @page.data_layers.each_with_index do |d, i|
+        - name = d.layer_column_alias.blank? ? d.table_name : d.layer_column_alias
+        li data-tab=d.id class=("tab-title #{i==0? "-active":""}")
+          a href="#" = name
+        
+      li data-tab="new" class=("tab-title add-file-cocoon") 
+        = link_to_add_association t('add_data_layers'), f, :data_layers
+        
+  .map-layers-content.tab-content-wrapper
+    - index = 0
+    = f.simple_fields_for :data_layers, f.object.data_layers.order(:table_name) do |d|
+      div.tab-content data-tab-content="#{d.object.id}" class=("#{index==0? "-active":""}")
+        = render 'backoffice/pages/edit_form/data_layer_map_tab', f: d, p:f
+      - index =+ 1
+      
+    div.tab-content data-tab-content="#new"
+  
+.form-row.box-selector
+  = f.input :basemap, as: :radio_buttons, required: true,  collection: basemaps
+
+  #customBasemapUrl.form-row.detail-item class=('_hidden' unless @page.basemap == 'custom')
+    = f.input :basemap_url
+
+.form-row
+  = f.label :charts
+  .box-selector.-around
+    - for chart in @charts
+      - unless chart.name=="line"
+        .item.checkbox data={input: "chart-#{chart.name}", multiple: "yes"}
+          svg.icon-chart.-bo
+            use xlink:href="#icon-chart-#{chart.name}"
+  ._hidden
+    = f.association :charts, as: :check_boxes, label:false, collection: @charts.map { |r| [r.name, r.id, {class: 'association-input', id: "chart-#{r.name}"}] }
+
+.form-row
+  = f.simple_fields_for :interest_points do |c|
+    = render 'interest_point_fields', f: c
+  = link_to_add_association t('add_interest_points'), f, :interest_points, class: 'btn -dotted'

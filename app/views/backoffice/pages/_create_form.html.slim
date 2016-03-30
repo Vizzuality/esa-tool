@@ -15,7 +15,7 @@
       size_recommendations: '600x400'
 
 - else
-  .form-row.file-map-input
+  .form-row.file-map-input.file-map-upload
     = f.label :file
       = f.simple_fields_for :data_layers do |d|
         -if @page.page_type == PageType::TIMELINE
@@ -27,7 +27,7 @@
           #input-file-wrapper.input-file-wrapper.input-wrapper.-lg
             = d.input :shapefile, as: :file, input_html: { id: 'map_file' }
             .placeholder
-              span.title =t('drop_shapefile')
+              span.title =t('drop_new_shapefile')
               span.sub-title
                 =t('or')
                 span.link =t('browse')

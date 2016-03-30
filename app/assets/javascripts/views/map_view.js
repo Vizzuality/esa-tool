@@ -444,6 +444,7 @@
 
       var dataCarto = cartoCss['data'];
       var layers = [];
+      defaultCarto['polygon-opacity'] = 1;
       defaultCarto = '#' + table + this._formatCartoCss(defaultCarto);
 
       for (var group in groups) {
@@ -492,7 +493,7 @@
       _.each(categories, function(item) {
         item = item[0];
         if (item.color.indexOf('#') !== -1 ) {
-          var color = App.Helper.hexToRgba(item.color, defaultCarto['polygon-opacity']*100);
+          var color = App.Helper.hexToRgba(item.color, 100);
           cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + color + ')';
         } else {
           cartoTemplate['raster-colorizer-stops'] = cartoTemplate['raster-colorizer-stops'] + 'stop(' + (item.column) + ', ' + item.color + ')';

@@ -382,11 +382,13 @@
         } else {
           currentLayer = _.findWhere(this.data.layers, { year: this.currentYear });
         }
+        var labels = App.Helper.deserialize(currentLayer.raster_categories);
         var colors = App.Helper.deserialize(currentLayer.custom_columns_colors);
         _.map(groups, function(g) {
           var gr = g[0];
           gr.color = colors[gr.column];
           gr.index = count;
+          gr.label = labels[gr.column];
           count ++;
         });
         this.data.categories = groups;
@@ -484,6 +486,7 @@
 
           if (group && group[0]) {
             d.color = group[0].color;
+            d.label = group[0].label;
           }
         });
 

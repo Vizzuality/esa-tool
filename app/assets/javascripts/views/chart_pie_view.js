@@ -163,7 +163,10 @@
       this.pie.append('path')
         .attr('d', this.arc)
         .style('fill', function(d) { return d.data.color })
-        .style('stroke', function(d) { return d.data.color })
+        .style('stroke', function(d) {
+          var color = d.data.color;
+          return color.indexOf('#') ? App.Helper.rgbaToHex(color) : color;
+        })
         .transition()
         .duration(this.animationTime)
         .attrTween('d', this._tweenPie.bind(this));

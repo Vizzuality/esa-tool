@@ -257,7 +257,7 @@
       &.pie {
         .arc {
           path {
-            fill-opacity: 0.3;
+            fill-opacity: 1;
             stroke-width: 2;
           }
         }
@@ -266,7 +266,7 @@
       &.bar {
         .bar {
           stroke-width: 1;
-          fill-opacity: 0.3;
+          fill-opacity: 1;
         }
       }
 
@@ -275,7 +275,7 @@
           stroke: $t-border-color-1;
         }
         .area {
-          fill-opacity: 0.3;
+          fill-opacity: 1;
           stroke-width: 0;
         }
         .line-path {
@@ -360,7 +360,7 @@
   .-palette1  {
     .icon-legend {
       .icon-bg {
-        opacity: 0.3;
+        opacity: 1;
       }
     }
   }
