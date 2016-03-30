@@ -156,7 +156,7 @@
           showPalette: true,
           showSelectionPalette: true,
           maxSelectionSize: 10,
-          preferredFormat: 'rgb',
+          preferredFormat: 'rgba',
           palette: self.palette
         });
         borderColor = $(item).spectrum('get').toHex();

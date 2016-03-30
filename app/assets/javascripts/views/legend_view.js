@@ -98,7 +98,7 @@
         iconBgEl.classList.add('icon-bg');
 
         var iconEl = document.createElement('span');
-        iconEl.style.borderColor = cat.color;
+        iconEl.style.borderColor = cat.color.indexOf('#') ? App.Helper.rgbaToHex(cat.color) : cat.color;
         iconEl.classList.add('icon-legend');
         iconEl.appendChild(iconBgEl);
 
