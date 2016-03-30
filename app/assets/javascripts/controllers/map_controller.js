@@ -382,8 +382,9 @@
         } else {
           currentLayer = _.findWhere(this.data.layers, { year: this.currentYear });
         }
-        var labels = App.Helper.deserialize(currentLayer.raster_categories);
-        var colors = App.Helper.deserialize(currentLayer.custom_columns_colors);
+
+        var labels = currentLayer.raster_categories ? App.Helper.deserialize(currentLayer.raster_categories):{};
+        var colors = currentLayer.custom_columns_colors ? App.Helper.deserialize(currentLayer.custom_columns_colors):{};
         _.map(groups, function(g) {
           var gr = g[0];
           gr.color = colors[gr.column];
