@@ -40,7 +40,7 @@
         .list-container id="custom-column-layer-#{@page.data_layers.first.id}" data= {table:@page.data_layers.first.table_name, column: @page.column_selected}
           = f.simple_fields_for :data_layers do |d|
             = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
-            = f.input_field :raster_categories, as: :hidden, value: f.object.raster_categories, class: "raster-category"
+            = f.input_field :raster_categories, as: :hidden, value: d.object.raster_categories, class: "raster-category"
           .content
           
 = f.input_field :color_palette, as: :hidden, value: (@page.color_palette.to_i.blank? ? 1 : @page.color_palette.to_i), class: 'input', id:"pallete"

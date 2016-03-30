@@ -360,7 +360,9 @@
     },
 
     setRasterCategories: function() {
-      this.rasterCategory.value = this.rasterCategoryNames.serialize();
+      if (this.rasterCategory){
+        this.rasterCategory.value = this.rasterCategoryNames.serialize();
+      }
     },
 
     setRasterColorInput: function(item, palette) {
@@ -445,6 +447,7 @@
           category.color = App.Helper.hexToRgba(self.palette[count], 100);
           count++;
         }
+        debugger;
         if (names && names[element.category]) {
           category.name = names[element.category];
         } else {
