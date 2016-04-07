@@ -5,7 +5,7 @@
 .form-row.tabs-wrapper.-bo
   .map-layers-nav
     ul.tabs.tab-title-wrapper
-      - @page.data_layers.each_with_index do |d, i|
+      - @page.data_layers.order("table_name").each_with_index do |d, i|
         - name = d.layer_column_alias.blank? ? d.table_name : d.layer_column_alias
         li data-tab=d.id class=("tab-title #{i==0? "-active":""}")
           a href="#" = name
