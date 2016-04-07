@@ -159,7 +159,7 @@
           })
           .style('fill', function(d) { return d.color; })
           .style('stroke', function(d) {
-            var color = d.data.color;
+            var color = d.color;
             return color.indexOf('#') ? App.Helper.rgbaToHex(color) : color;
           })
           .attr('x', function(d) { return self.x(d.x); })
