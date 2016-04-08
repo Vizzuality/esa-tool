@@ -446,16 +446,21 @@
       var layers = [];
       defaultCarto['polygon-opacity'] = 1;
       defaultCarto = '#' + table + this._formatCartoCss(defaultCarto);
-
       for (var group in groups) {
         var category = groups[group][0];
         var cat = category.column;
         var color = category.color;
         var index = category.index;
-        var data = dataCarto[index];
 
-        if (data) {
+        if (dataCarto) {
+          var data = _.extend({}, dataCarto);
           index = index + 1;
+          if (data['polygon-fill']){
+            data['polygon-fill']+=index;
+          }
+          if (data['line-color']){
+            data['line-color']+=index;
+          }
           index = index.toString();
           var carto = self._formatCartoCss(data, index, color);
           var parsedCat = typeof cat === 'number' ? cat : '\''+cat+'\'';

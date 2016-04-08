@@ -25,6 +25,7 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
+      this.baseMapEl = this.el.getElementsByClassName('basemap')[0];
       this.basemap = this.options.basemap;
     },
 
@@ -35,6 +36,14 @@
     _toggleBasemap: function(ev) {
       var elem = ev.currentTarget;
       elem.classList.toggle('active');
+    },
+
+    /**
+     * Closes the basemap menu
+     * @param {Event}
+     */
+    _closeBasemap: function() {
+      this.baseMapEl.classList.remove('active');
     },
 
     /**
@@ -52,6 +61,7 @@
       elem.classList.add('selected');
 
       this.trigger('basemap:set', selectedValue);
+      this._closeBasemap();
     },
 
     /**

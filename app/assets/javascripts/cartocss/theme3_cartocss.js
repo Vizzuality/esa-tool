@@ -48,52 +48,10 @@
       'line-opacity': 0,
       'line-rasterizer': 'fast'
     },
-    'data': [
-      {
-        'polygon-fill': '%1',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%2',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%3',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%4',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%5',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%6',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%7',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%8',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%9',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%10',
-        'polygon-opacity': 0.7
-      },
-      {
-        'polygon-fill': '%11',
-        'polygon-opacity': 0.7
-      }
-    ]
-  }
+    'data': {
+      'polygon-fill': '%',
+      'polygon-opacity': 0.7
+    }
+  };
 
 })(window);
