@@ -44,35 +44,9 @@
       'line-opacity': 0,
       'line-rasterizer': 'fast'
     },
-    'data': [
-      {
-        'polygon-fill': '%1'
-      },
-      {
-        'polygon-fill': '%2'
-      },
-      {
-        'polygon-fill': '%3'
-      },
-      {
-        'polygon-fill': '%4'
-      },
-      {
-        'polygon-fill': '%5'
-      },
-      {
-        'polygon-fill': '%6'
-      },
-      {
-        'polygon-fill': '%7'
-      },
-      {
-        'polygon-fill': '%8'
-      },
-      {
-        'polygon-fill': '%9'
-      }
-    ]
-  }
+    'data':{
+      'polygon-fill': '%'
+    }
+  };
 
 })(window);
