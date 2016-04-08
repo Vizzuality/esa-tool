@@ -1,7 +1,10 @@
 - basemaps = [[t('terrain'), 'terrain', {class:"item detail-title", checked: @page.basemap.blank? || @page.basemap=="terrain" ? true : false }],
               [t('satellite'), 'satellite', {class:"item detail-title", checked: @page.basemap=="satellite" ? true : false }],
               [t('custom'), 'custom', {class:"item detail-title", data: {details:"customBasemapUrl"}, checked: @page.basemap=="custom" ? true : false } ]]
-
+              
+.form-row
+  = f.input :title
+                
 .form-row.tabs-wrapper.-bo
   .map-layers-nav
     ul.tabs.tab-title-wrapper
