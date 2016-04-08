@@ -447,7 +447,6 @@
           category.color = App.Helper.hexToRgba(self.palette[count], 100);
           count++;
         }
-        debugger;
         if (names && names[element.category]) {
           category.name = names[element.category];
         } else {

@@ -446,7 +446,6 @@
       var layers = [];
       defaultCarto['polygon-opacity'] = 1;
       defaultCarto = '#' + table + this._formatCartoCss(defaultCarto);
-      debugger;
       for (var group in groups) {
         var category = groups[group][0];
         var cat = category.column;
