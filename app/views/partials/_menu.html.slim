@@ -7,10 +7,10 @@
             = link_to t('home'), '/'
           li.nav-item
             = link_to t('contact'), '/#contact-form', class:'smooth-link'
-
+          li.nav-item
+            = link_to t('case_studies'), '/#cases', class:'smooth-link'
 
       .search
-        h2 = t('case_studies')
         .search-form
           = form_tag case_studies_path, :method => 'get', :id => "casesSearch", :enforce_utf8 => false, class: "form" do
             svg.icon-search

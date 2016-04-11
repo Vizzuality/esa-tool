@@ -8,6 +8,7 @@
 
     routes: {
       'contact-form': 'landing',
+      'cases': 'landing',
       '(?tags[]=:tag)': 'landing',
       'case-studies/:id(?page=:page)': 'caseStudies',
       'case-studies/:id/preview(?page=:page)': 'caseStudies'
