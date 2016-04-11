@@ -1,6 +1,6 @@
 .menu#menu
   .wrap: .row
-    .grid-xs-12.grid-sm-6
+    .grid-xs-12.grid-sm-6.offset-sm-3
       nav.navigation role="navigation"
         ul
           li.nav-item
@@ -8,7 +8,7 @@
           li.nav-item
             = link_to t('contact'), '/#contact-form', class:'smooth-link'
 
-    .grid-xs-12.grid-sm-6
+
       .search
         h2 = t('case_studies')
         .search-form
