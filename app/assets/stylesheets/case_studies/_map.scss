@@ -35,6 +35,12 @@
 
   .leaflet-layer {
     transform: translate3d(0, 0, 0);
+    opacity: 1;
+    transition: opacity .4s ease;
+
+    &.unhighlight {
+      opacity: 0.1!important;
+    }
   }
 
   .leaflet-right {

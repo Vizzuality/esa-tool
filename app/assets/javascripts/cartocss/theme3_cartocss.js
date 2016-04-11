@@ -50,7 +50,7 @@
     },
     'data': {
       'polygon-fill': '%',
-      'polygon-opacity': 0.7
+      'polygon-opacity': 1
     }
   };
 

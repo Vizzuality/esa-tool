@@ -598,9 +598,6 @@
         this._startDashboard();
       }
 
-      console.log(this.mapEl);
-      this.mapEl.classList.remove('_is-loading');
-
       params.layersLoaded = true;
       params.currentYear = this.currentYear;
 
