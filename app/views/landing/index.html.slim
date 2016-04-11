@@ -10,6 +10,7 @@
       h1 =t('sustainable_development')
     .link
       button.btn.-landing.toggle-explore =t('explore_map')
+
   section#cases.cases
     .wrap: .row._right
       .tags-filter
@@ -26,39 +27,6 @@
             =link_to case_study_path(c.slug), style: style
               .caption
                 h2 =c.title
-            
-          
-  section#contact-form
-    .wrap: .row
-      .grid-sm-12.contact-form
-        h2.title = t('contact')
-        .form
-          = simple_form_for @contact_form, url: contact_form_index_path, class: 'contact-form', remote: true do |f|
-            = render 'form', f: f
-        .feedback._hidden
 
-  footer.footer
-    .pre-footer
-      .logo
-    .wrap
-      .row
-        .grid-xs-7.grid-md-7.column
-          nav.nav role="navigation"
-            svg.icon.icon-eoworld-logo
-              use xlink:href="#icon-eoworld-logo"
-            ul
-              li = link_to t('case_studies'), "http://www.vizzuality.com", target: "_blank"
-              li = link_to t('data sources'), "http://www.vizzuality.com", target: "_blank"
-              li = link_to t('about'), "http://www.vizzuality.com", target: "_blank"
-              li = link_to t('contact'), "http://www.vizzuality.com", target: "_blank"
-        .grid-xs-12.grid-md-5.column.partnerts
-            span.title =t('parnertship_convened')
-            .partner-list
-              = link_to 'http://www.esa.int/ESA', class: "item", target: "_blank" do
-                svg.icon.icon-esa-logo
-                  use xlink:href="#icon-esa-logo"
-              = link_to 'http://www.esa.int/ESA', class: "item", target: "_blank" do
-                svg.icon.icon-esa-logo
-                  use xlink:href="#icon-esa-logo"
-    .copyright
-      span © 2013 - 2015 · Terms of Service · European Space Agency and World Bank Group
+  = render('contact_form');
+  = render('footer');

@@ -1,0 +1,19 @@
+section#contact-form
+  .wrap: .row
+    .grid-sm-12.contact-form
+      h2.title = t('contact')
+      .form
+        = simple_form_for @contact_form, url: contact_form_index_path, class: 'contact-form', remote: true do |f|
+        
+          .row.form-row
+            .grid-xs-12.grid-sm-6
+              = f.input :email, required: true, label: "Email address", placeholder: "example@email.com"
+            .grid-xs-12.grid-sm-6
+              = f.input :name, required: true, label: "Your name", placeholder: "Your name here"
+              
+          .row.form-row
+            .grid-xs-12
+              = f.input :content, required: true, label: "Message", placeholder: "Write your message here"
+
+          = f.button :submit, "Send", class: 'button btn -landing -inv'
+      .feedback._hidden

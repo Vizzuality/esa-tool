@@ -97,8 +97,10 @@
       this.listenTo(this.menu, 'tag:update', _.bind(this._updateRouter, this));
     },
 
-    toggleMenu: function(){
-      this.menu.toggleMenu();
+    handleLinkSelected: function(){
+      if (this.menu.isOpen()){
+        this.menu.toggleMenu();
+      }
     },
 
     /**
@@ -112,7 +114,7 @@
       if (section) {
         this.links.goToLinkSmoothly('#'+section);
       }
-      this.listenTo(this.links, 'link:selected', _.bind(this.toggleMenu, this));
+      this.listenTo(this.links, 'link:selected', _.bind(this.handleLinkSelected, this));
     },
 
     _initCasesList: function() {
