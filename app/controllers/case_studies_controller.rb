@@ -17,8 +17,7 @@ class CaseStudiesController < ApplicationController
 
   def show
     @tags = Tag.all
-    @case_study = CaseStudy.published.where(slug: params[:slug]).
-      includes(:contacts, :valid_pages).first
+    @case_study = CaseStudy.published.where(slug: params[:slug]).first
 
     gon.case_study = @case_study.
       as_json(include: [:contacts, {valid_pages: {include: [:data_layers, :charts, :interest_points]}}])
@@ -28,8 +27,7 @@ class CaseStudiesController < ApplicationController
   def preview
     if user_signed_in?
       @tags = Tag.all
-      @case_study = CaseStudy.where(slug: params[:slug]).
-        includes(:contacts, :valid_pages).first
+      @case_study = CaseStudy.where(slug: params[:slug]).first
 
       gon.case_study = @case_study.
         to_json(include: [:contacts, {pages: {include: [:data_layers, :charts]}}])
