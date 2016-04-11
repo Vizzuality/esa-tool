@@ -15,11 +15,9 @@
     margin-bottom: 1rem;
     padding-bottom: 1rem;
 
-    display: inline-block;
-    border-bottom: 4px solid;
-
     & > h1 {
       margin: 0;
+      text-decoration: underline;
 
       font-size: rem($font-size-big);
       line-height: 1;

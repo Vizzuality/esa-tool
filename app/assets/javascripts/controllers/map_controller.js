@@ -72,7 +72,7 @@
      */
     _initMap: function() {
       var parent = this.elContent;
-      var mapEl = parent.querySelector('#mapView');
+      this.mapEl = parent.querySelector('#mapView');
       var sliderEl = parent.querySelector('#sliderView');
       var basemapEl = parent.querySelector('#basemapView');
       var defaultBaseMap = basemapEl.getAttribute('data-basemap');
@@ -88,7 +88,7 @@
       }
 
       this.map = new App.View.Map({
-        el: mapEl,
+        el: this.mapEl,
         data: this.data,
         cartoCss: this.cartoCss,
         basemap: defaultBaseMap,
@@ -597,6 +597,9 @@
       if (params.autoUpdate) {
         this._startDashboard();
       }
+
+      console.log(this.mapEl);
+      this.mapEl.classList.remove('_is-loading');
 
       params.layersLoaded = true;
       params.currentYear = this.currentYear;
