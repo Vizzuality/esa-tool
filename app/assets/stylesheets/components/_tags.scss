@@ -33,7 +33,7 @@ $bg-tags: #0a3c57;
     background-color: rgba($font-color-1, 0.6);
     text-decoration: none;
 
-    &._selected {
+    &:hover, &._selected {
       background-color: $font-color-landing-5;
     }
 
