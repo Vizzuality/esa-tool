@@ -4,13 +4,45 @@
   top: 0;
   margin: 0 -1rem;
   padding: 0 1rem;
-  overflow: scroll;
+  padding-bottom: 250px;
 
+  overflow: scroll;
   z-index: 1;
 
-  @extend %clear-scroll-bars;
+  .gradient{
+    position: absolute;
+    top:0;
+    left:0;
+    height: rem(94px);
+    width: 100%;
 
-  padding-bottom: 250px;
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right:0;
+      left:0;
+      top:0;
+      opacity: 1;
+      transition: opacity .5s ease;
+      transition-delay: .5s;
+      z-index: 1;
+    }
+    @media screen and (max-width: $screen-sm) {
+      &:before {
+        opacity: 0;
+      }
+    }
+  }
+
+  &._menu-open & {
+    .gradient:before {
+      opacity:0;
+      transition: none;
+    }
+  }
+
+  @extend %clear-scroll-bars;
 
   @media screen and (min-width: $screen-sm) {
     height: 100vh;

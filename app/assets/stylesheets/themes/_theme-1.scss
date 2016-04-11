@@ -77,13 +77,8 @@
     }
   }
 
-  header:not(._menu-open) {
-    .brands-container {
-      background: linear-gradient(to bottom, rgba($t-bg-color-1, 1), rgba($t-bg-color-1, 0));
-      @media screen and (max-width: $screen-sm) {
-          background: none;
-      }
-    }
+  .gradient:before {
+    background: linear-gradient(to bottom, rgba($t-bg-color-1, 1), rgba($t-bg-color-1, 0));
   }
 
   .dashboard {

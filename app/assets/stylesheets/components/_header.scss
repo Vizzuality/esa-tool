@@ -21,32 +21,6 @@
 
   .brands-container {
     margin: 0 -.2rem;
-    position: relative;
-
-    &:before {
-      z-index: -1;
-      content: "";
-      position: absolute;
-      bottom: 0;
-      right:0;
-      left:0;
-      top:0;
-      opacity: 1;
-      transition: opacity .5s ease;
-      transition-delay: .5s;
-    }
-    @media screen and (max-width: $screen-sm) {
-      &:before {
-        opacity: 0;
-      }
-    }
-  }
-
-  &._menu-open {
-    .brands-container:before {
-      opacity:0;
-      transition: none;
-    }
   }
 
   .brands {
