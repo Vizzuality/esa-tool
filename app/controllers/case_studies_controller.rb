@@ -1,5 +1,6 @@
 class CaseStudiesController < ApplicationController
 
+  before_action :restrict_access!, only: [:index]
   after_action :check_case_study
 
   def index
@@ -49,6 +50,10 @@ class CaseStudiesController < ApplicationController
 
     def case_studies_params
       params.permit(:search, tags:[])
+    end
+
+    def restrict_access!
+      redirect_to backoffice_dashboard_path unless user_signed_in?
     end
 
 end
