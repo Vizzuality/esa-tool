@@ -21,6 +21,7 @@
       this.options = _.extend({}, this.defaults, params || {});
       this.elContent = this.options.elContent;
       this.page = this.options.page;
+      this.tab = this.options.tab;
       this.data = this._getData(this.options.data);
       this.layersLoaded = false;
 
@@ -90,6 +91,7 @@
       this.map = new App.View.Map({
         el: this.mapEl,
         data: this.data,
+        tab: this.tab,
         cartoCss: this.cartoCss,
         basemap: defaultBaseMap,
         customBaseMap: customBaseMap
@@ -124,6 +126,7 @@
 
       this.dashboard = new App.View.Dashboard({
         el: dashboardEl,
+        tab: this.tab,
         data: this.data
       });
 

@@ -225,9 +225,9 @@
     /**
      * Function to update the tag filter
      */
-    _updateTag: function(tag) {
-      this.cases.updateTag(tag);
-      this.menu.updateTag(tag);
+    _updateTag: function(params) {
+      this.cases.updateTag(params.tag);
+      this.menu.updateTag(params.tag);
     },
 
     /**

@@ -24,13 +24,14 @@
      */
     initialize: function(params) {
       this.options = _.extend({}, this.defaults, params || {});
+      this.tab = this.options.tab;
       this.layers = this.options.data.layers;
       this.charts = this.options.data.charts.length ? true:false;
       this.theme = {
         template: this.options.data.template,
         colorPalette:this.options.data.colorPalette
       };
-
+      console.log('initialize dashboar with tab: ' + this.tab);
       this._initLegend();
       this._initStickyGradient();
 
@@ -315,6 +316,7 @@
         elem.classList.add('-active');
 
         this.trigger('dashboard:update:layer', currentTab);
+        Backbone.Events.trigger('tab:change', {tab:currentTab});
       }
     },
 
