@@ -30,7 +30,7 @@ class CaseStudiesController < ApplicationController
       @case_study = CaseStudy.where(slug: params[:slug]).first
 
       gon.case_study = @case_study.
-        to_json(include: [:contacts, {pages: {include: [:data_layers, :charts]}}])
+        as_json(include: [:contacts, {valid_pages: {include: [:data_layers, :charts, :interest_points]}}])
       gon.cartodb_user = ENV["CDB_USERNAME"]
     else
       not_found
