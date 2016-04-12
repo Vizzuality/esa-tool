@@ -45,8 +45,8 @@
   @extend %clear-scroll-bars;
 
   @media screen and (min-width: $screen-sm) {
-    height: 100vh;
-    padding-bottom: 0;
+    height: calc(100vh - 3rem);
+    padding-bottom: 3rem;
   }
 
   > .title {
