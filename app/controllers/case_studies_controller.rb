@@ -20,7 +20,9 @@ class CaseStudiesController < ApplicationController
     @tags = Tag.all
     @case_study = CaseStudy.published.where(slug: params[:slug]).
       includes(:contacts, :valid_pages).first
-
+    @tab = params[:tab]
+    puts 'TAAAAAAAAB'
+    puts @tab
     gon.case_study = @case_study.
       as_json(include: [:contacts, {valid_pages: {include: [:data_layers, :charts, :interest_points]}}])
     gon.cartodb_user = ENV["CDB_USERNAME"]

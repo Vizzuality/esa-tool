@@ -21,7 +21,7 @@
       this.options = _.extend({}, this.defaults, params || {});
       this.elContent = this.options.elContent;
       this.page = this.options.page;
-      this.tab = this.options.tab;
+      this.tabAlias = this.options.tab;
       this.data = this._getData(this.options.data);
       this.layersLoaded = false;
 
@@ -91,7 +91,6 @@
       this.map = new App.View.Map({
         el: this.mapEl,
         data: this.data,
-        tab: this.tab,
         cartoCss: this.cartoCss,
         basemap: defaultBaseMap,
         customBaseMap: customBaseMap
@@ -126,7 +125,6 @@
 
       this.dashboard = new App.View.Dashboard({
         el: dashboardEl,
-        tab: this.tab,
         data: this.data
       });
 
@@ -304,13 +302,17 @@
       var data = this.data;
       var layers = this.data.layers;
 
-      if (!this.currentLayer) {
-        var layer = _.first(layers);
-        this.currentLayer = layer.table_name;
+      if (this.tabAlias && !this.currentLayer) {
+        if (_.findWhere(layers, { layer_column_alias: this.tabAlias })){
+          this.currentLayer = _.findWhere(layers, { layer_column_alias: this.tabAlias }).table_name;
+        } else {
+          this.currentLayer = _.findWhere(layers, { layer_column: this.tabAlias }).table_name;
+        }
+      } else if (!this.currentLayer) {
+        this.currentLayer = _.first(layers).table_name;
       }
 
-      var currentLayer = this.currentLayer;
-      var layer = _.findWhere(layers, { table_name: currentLayer });
+      var layer = _.findWhere(layers, { table_name: this.currentLayer });
 
       if (layer.raster_type){
         layer.isRaster = true;

@@ -87,7 +87,6 @@
 
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
-      this.tab = this.options.tab;
       this.basemap = this.options.basemap;
       this.customBaseMap = this.options.customBaseMap;
       this.cartoCss = this.options.cartoCss || '';
@@ -103,7 +102,6 @@
       this.controlsContainer = [];
       this.controlsContainer.push(this.el.parentElement.querySelectorAll('.map-controls-container')[0]);
 
-      console.log('initialize dashboar with tab: ' + this.tab);
       this.createMap();
       this._setListeners();
     },
