@@ -48,7 +48,7 @@
     },
     'data':{
       'polygon-fill': '%',
-      'polygon-opacity': 0.9
+      'polygon-opacity': 1
     }
   };
 

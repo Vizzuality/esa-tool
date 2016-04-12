@@ -77,7 +77,16 @@
       this.btnBurger.classList.toggle('_active');
       this.header.classList.toggle('_menu-open');
       this.menu.classList.toggle('_active');
+    },
+
+    /**
+     * Function to get is the menu is open
+     */
+    isOpen: function() {
+      return this.menu.classList.contains('_active');
     }
+
+
 
   });
 

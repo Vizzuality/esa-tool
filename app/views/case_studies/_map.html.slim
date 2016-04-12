@@ -1,6 +1,6 @@
 .map data-type="map": .container
 
-    #mapView.vis.map-container
+    #mapView.vis.map-container._is-loading
 
     .wrap: .row: .grid-sm-8
       .map-controls-container._hidden
@@ -19,6 +19,8 @@
     .wrap: .row: .grid-xs-12.grid-sm-4.offset-sm-8
         
       #dashboardView.dashboard
+        .gradient.sticky-top
+
         .title
           h2 = p.title
         .legend.tabs-wrapper
@@ -26,7 +28,8 @@
             - if (p.page_type == PageType::MAP)
               ul.tabs.-wb
                 - p.data_layers.each.with_index do |layer, index|
-                  li data-tab="#{layer.table_name}" class=("tab-title -active" if index == 0) class=("tab-title" if index > 0)
+                  - layer_alias = layer.layer_column_alias.blank? ? layer.layer_column : layer.layer_column_alias
+                  li data-tab="#{layer.table_name}" data-alias="#{layer_alias}" class=("tab-title -active" if index == 0 && @tab.blank?) class=(layer.layer_column_alias == @tab || layer.layer_column == @tab ? 'tab-title -active' : 'tab-title') 
                     a href="#" 
                       - if layer.layer_column_alias?
                         =layer.layer_column_alias

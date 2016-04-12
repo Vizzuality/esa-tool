@@ -45,6 +45,7 @@
     },
     'data':{
       'polygon-fill': '%',
+      'polygon-opacity': 1,
       'line-color': '%',
       'line-width': 1
     }

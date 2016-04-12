@@ -4,13 +4,16 @@
 
   root.App = root.App || {};
 
+  Backbone.Router.namedParameters = true;
+
   root.App.Router = Backbone.Router.extend({
 
     routes: {
       'contact-form': 'landing',
+      'cases': 'landing',
       '(?tags[]=:tag)': 'landing',
-      'case-studies/:id(?page=:page)': 'caseStudies',
-      'case-studies/:id/preview(?page=:page)': 'caseStudies'
+      'case-studies/:id(?*queryString)': 'caseStudies',
+      'case-studies/:id/preview(?*queryString)': 'caseStudies'
     },
 
     initialize: function() {
@@ -19,6 +22,7 @@
 
     setListeners: function() {
       this.listenTo(this, 'route:updateParam', this.updateParam);
+      Backbone.Events.on('tab:change', this.updateParam.bind(this));
     },
 
     /**
@@ -32,20 +36,25 @@
      * Updates the url with the params
      * @param {Object} params Parameters for the url
      */
-    updateParam: function(params) {
-      var current = window.location.pathname;
-
-      if (params && params.name && params.value) {
-        this.navigate(current + '?'+ params.name + '=' + params.value, {
-          trigger: false, replace: true
-        });
+    updateParam: function(newParam) {
+      var path = window.location.pathname;
+      var params = null;
+      var query = Object.keys(newParam)[0];
+      
+      if (query==='page'){
+        params = newParam;
       } else {
-        this.navigate(current, {
-          trigger: false, replace: true
-        });
+        params = this._parseQueryParamString(window.location.search.replace('?',''));
+        params[query] = newParam[query];
       }
 
-      this.trigger('rooter:updated', params.value);
+      path = path + '?' + $.param(params);
+
+      this.navigate(path, {
+        trigger: false, replace: true
+      });
+
+      this.trigger('rooter:updated', params);
     },
 
     /**
@@ -59,9 +68,18 @@
     /**
      * Router for Case Studies
      */
-    caseStudies: function(id, page) {
-      page = page || 0;
-      this.trigger('start:slider', page);
+    caseStudies: function(id, params) {
+      params = params ? this._parseQueryParamString(params):{page:0};
+      this.trigger('start:case', params);
+    },
+
+    _parseQueryParamString: function(queryParams) {
+      var result = {};
+      queryParams.split('&').forEach(function(param) {
+        var item = param.split('=');
+        result[item[0]] = decodeURIComponent(item[1]);
+      });
+      return result;
     }
 
   });

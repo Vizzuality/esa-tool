@@ -64,7 +64,7 @@
      * Function to set events at beginning
      */
     _setListeners: function() {
-      this.listenTo(this.router, 'start:slider', this._setSliderPageFromUrl);
+      this.listenTo(this.router, 'start:case', this._startCaseFromUrl);
     },
 
     /**
@@ -91,17 +91,17 @@
     _setCurrentSliderPage: function(page) {
       this.sliderPage = page;
       this.router.trigger('route:updateParam', {
-        name: 'page',
-        value: page.toString()
+        'page':page.toString()
       });
     },
 
     /**
      * Function to update slide current page from the url
      */
-    _setSliderPageFromUrl: function(page) {
-      this.sliderPage = page;
-      this._initSlider(page);
+    _startCaseFromUrl: function(params) {
+      this.sliderPage = params.page;
+      this.tabPage = params.tab;
+      this._initSlider(this.sliderPage);
     },
 
     /**
@@ -155,7 +155,8 @@
         this.map = new App.Controller.Map({
           elContent: el,
           data: this.data,
-          page: this.sliderPage
+          page: this.sliderPage,
+          tab: this.tabPage
         });
       }
     }

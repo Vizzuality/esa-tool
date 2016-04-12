@@ -6,10 +6,16 @@
 
   App.View.ContactForm = Backbone.View.extend({
 
+    events:{
+      'click .reset':'onFormOKClick'
+    },
+
     initialize: function(options) {
       this.options = _.extend({}, this.defaults, options || {});
-      this.form = this.el.getElementsByClassName('form')[0];
+      this.formContainer = this.el.getElementsByClassName('form')[0];
+      this.form = this.formContainer.getElementsByTagName('form')[0];
       this.feedback = this.el.getElementsByClassName('feedback')[0];
+      this.feedbackContent = this.el.getElementsByClassName('feedback-content')[0];
       this._setListeners();
     },
 
@@ -27,14 +33,20 @@
     },
 
     _setFeedback: function(wasGood, data) {
-      this.feedback.innerHTML = '<p> Thanks '+ data.name + '</p>';
+      this.feedbackContent.innerHTML = '<p> Thanks '+ data.name + '</p>';
       if (wasGood) {
-        this.feedback.insertAdjacentHTML('beforeend', '<p> The contact form was sent succefully </p>');
+        this.feedbackContent.insertAdjacentHTML('beforeend', '<p> The contact form was sent succefully </p>');
       } else {
-        this.feedback.insertAdjacentHTML('beforeend', '<p> There was an error, please try it later </p>');
+        this.feedbackContent.insertAdjacentHTML('beforeend', '<p> There was an error, please try it later </p>');
       }
-      this.form.classList.add('_hidden');
+      this.formContainer.classList.add('_hidden');
       this.feedback.classList.remove('_hidden');
+    },
+
+    onFormOKClick: function() {
+      this.form.reset();
+      this.formContainer.classList.remove('_hidden');
+      this.feedback.classList.add('_hidden');
     }
 
   });

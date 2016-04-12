@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   resources :contact_form, only: [:create], path: "contact-form", defaults: { format: 'json' }
 
+  get '/cases', to: redirect('/#cases')
   get '/contact-form', to: redirect('/#contact-form')
 
   root 'landing#index', as: 'root'

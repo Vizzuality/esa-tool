@@ -298,6 +298,7 @@
 
       // Remove previous if it exists
       this.removeLayer();
+      this.el.classList.add('_is-loading');
 
       this.autoUpdate = params.autoUpdate;
       if (params.setBounds) {
@@ -397,13 +398,13 @@
     highLightCategory: function(category) {
       if (!this.isRaster) {
         var layers = this.layers;
+        var layerContainer;
         for (var layer in layers) {
-          if (category === '') {
-            layers[layer].setOpacity(1);
-          } else if (layer !== category) {
-            layers[layer].setOpacity(0.1);
+          layerContainer = layers[layer].getContainer();
+          if (category !== '' && layer !== category) {
+            if (layerContainer !== undefined) {layerContainer.classList.add('unhighlight')};
           } else {
-            layers[layer].setOpacity(1);
+            if (layerContainer !== undefined) {layerContainer.classList.remove('unhighlight')};
           }
         }
       }
@@ -605,7 +606,7 @@
         var params = {
           autoUpdate: this.autoUpdate
         };
-
+        this.el.classList.remove('_is-loading');
         this.trigger('map:layers:loaded', params);
       }
     },

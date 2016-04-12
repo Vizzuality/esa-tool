@@ -45,7 +45,8 @@
       'line-rasterizer': 'fast'
     },
     'data':{
-      'polygon-fill': '%'
+      'polygon-fill': '%',
+      'polygon-opacity': 1
     }
   };
 

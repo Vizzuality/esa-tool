@@ -18,13 +18,13 @@
 
   background-color: $bg-color-3;
 
-  z-index: 2;
-
-  transition: all .3s ease;
-  transform: translateX(-100%);
+  transition: all .5s ease;
+  z-index: -1;
+  opacity:0;
 
   &._active {
-    transform: translateX(0);
+    z-index: 2;
+    opacity: 1;
   }
 
   h2 {
@@ -33,9 +33,8 @@
     @extend %menu-main-font;
   }
 
-  .navigation, .search {
-    padding: 1.25rem 0;
-
+  .navigation {
+    padding-top: 1.25rem;
     border-top: 4px solid $white;
 
     a {
