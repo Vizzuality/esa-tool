@@ -10,9 +10,10 @@ class CaseStudy < ActiveRecord::Base
   has_many :contacts
   has_many :pages, dependent: :destroy
   has_many :valid_pages, -> {
-    joins("LEFT OUTER JOIN data_layers ON data_layers.page_id = pages.id").includes(:charts, :interest_points).
+    joins("LEFT OUTER JOIN data_layers ON data_layers.page_id = pages.id").
+    distinct.includes(:charts, :interest_points).
     where("(data_layers.is_ready = 't' AND pages.page_type IN (?)) OR (pages.page_type = ?)",
-          [PageType::TIMELINE, PageType::MAP], PageType::TEXT ) },
+          [PageType::TIMELINE, PageType::MAP], PageType::TEXT )},
     class_name: 'Page'
 
   belongs_to :organization
