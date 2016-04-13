@@ -383,12 +383,23 @@
     /**
      * Create marker to the map
      */
+    clearMarkers: function() {
+      _.each(this.markers,function(marker){
+        this.map.removeLayer(marker);
+      }.bind(this));
+      this.markers = [];
+    },
+
+    /**
+     * Create marker to the map
+     */
     createMarker: function(latLng, options, popUp) {
       var marker = L.marker(latLng, options);
       if (popUp) {
         marker.bindPopup(popUp);
       }
-      marker.addTo(this.map)
+      marker.addTo(this.map);
+      this.markers.push(marker);
     },
 
     /**

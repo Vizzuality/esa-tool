@@ -1,9 +1,31 @@
-.map {
+.map-container {
   height: rem(700px);
   position: absolute;
   top:0;
   left:0;
   width: 100%;
+
+  .wrap {
+    position: relative;
+    pointer-events: none;
+  }
+
+  .close-explore-btn {
+    position: absolute;
+    left: 0;
+    bottom: 2rem;
+    pointer-events: all;
+
+    font-size: $font-size-small;
+  }
+}
+
+.map {
+  position: absolute;
+  top:0;
+  bottom:0;
+  right: 0;
+  left:0;
 
   background-color: $bg-color-landing-3;
 

@@ -23,6 +23,10 @@
   justify-content: center;
 }
 
+._relative {
+  position: relative;
+}
+
 ._clearfix {
   @extend %clearfix;
 }

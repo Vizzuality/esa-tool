@@ -4,8 +4,33 @@
   width: 100%;
   margin: 1rem 0;
 
+  position: relative;
+
   @media screen and (min-width: $screen-md) {
     text-align: left;
     width: auto;
+  }
+
+  ._expanded & {
+    .select2-container--esa{
+      position: absolute;
+      top: rem(-115px);
+      right: 0;
+
+      .select2-selection--single {
+        background-color: transparent;
+        border-color: rgba(255, 255, 255, 0.5);
+
+        .select2-selection__rendered{
+          color: rgba(255, 255, 255, 0.5);
+        }
+        &:active, &:hover, &:focus {
+          background-color: $bg-color-landing-4;
+          .select2-selection__rendered{
+            color: $font-color-landing-3;
+          }
+        }
+      }
+    }
   }
 }

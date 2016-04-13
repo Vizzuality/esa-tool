@@ -126,7 +126,17 @@
       var caseStudies = this.data.caseStudies;
       this.casesList.staticMapsView(caseStudies);
 
-      this.listenTo(this.cases, 'list:update', this.casesList.staticMapsView.bind(this.casesList));
+      this.listenTo(this.cases, 'list:update', this._onListUpdatedByTag.bind(this));
+    },
+
+    /**
+     * Function to handle the tag updated list
+     */
+    _onListUpdatedByTag: function(cases) {
+      this.casesList.staticMapsView(cases);
+      if (this.map.el.classList.contains('_expanded')){
+        this._renderCases(cases);
+      }
     },
 
     /**
@@ -162,7 +172,8 @@
     /**
      * Function to initialize the map cases location
      */
-    _renderCases: function() {
+    _renderCases: function(cases) {
+      cases = cases || this.data.caseStudies;
       var self = this;
       var markers = [];
       var myIcon = L.divIcon({
@@ -173,7 +184,8 @@
         icon:myIcon
       };
 
-      _.each(this.data.caseStudies, function(caseStudy){
+      this.map.clearMarkers();
+      _.each(cases, function(caseStudy){
         if (caseStudy.lat && caseStudy.lng){
           self.map.createMarker(
             [caseStudy.lat,caseStudy.lng],
