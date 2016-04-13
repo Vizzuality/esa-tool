@@ -23,7 +23,7 @@
     },
 
     setListeners: function () {
-      var self = this
+      var self = this;
       this.tabs.each(function(index, elem){
         $(elem).on('click', function(e){
           e.preventDefault();

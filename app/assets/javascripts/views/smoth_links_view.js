@@ -31,7 +31,7 @@
       if (item.length){
         $('html, body').animate({
           scrollTop: $(item).offset().top - 100
-        }, 1000);
+        }, 300);
       }
     }
 

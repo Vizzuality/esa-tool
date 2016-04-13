@@ -32,6 +32,7 @@
       };
 
       this._initLegend();
+      this._initStickyGradient();
 
       if (this.charts){
         this._initChart();
@@ -105,6 +106,16 @@
       });
 
       this.listenTo(this.legend, 'legend:filter', this._hightLight, this);
+    },
+
+    /**
+     * Initializes sticky gradient
+     */
+    _initStickyGradient: function() {
+      var $sticky = this.$('.sticky-top');
+      $( this.el ).scroll(function() {
+        $sticky.css('top', this.$el.scrollTop());
+      }.bind(this));
     },
 
     /**
@@ -298,12 +309,14 @@
 
       if (!elem.classList.contains('-active')) {
         var currentTab = elem.getAttribute('data-tab');
+        var aliasTab = elem.getAttribute('data-alias');
         var previousTabSelected = this.el.querySelector('.legend-nav .-active');
 
         previousTabSelected.classList.remove('-active');
         elem.classList.add('-active');
 
         this.trigger('dashboard:update:layer', currentTab);
+        Backbone.Events.trigger('tab:change', {tab:aliasTab});
       }
     },
 

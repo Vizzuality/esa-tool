@@ -21,6 +21,7 @@
       this.options = _.extend({}, this.defaults, params || {});
       this.elContent = this.options.elContent;
       this.page = this.options.page;
+      this.tabAlias = this.options.tab;
       this.data = this._getData(this.options.data);
       this.layersLoaded = false;
 
@@ -72,7 +73,7 @@
      */
     _initMap: function() {
       var parent = this.elContent;
-      var mapEl = parent.querySelector('#mapView');
+      this.mapEl = parent.querySelector('#mapView');
       var sliderEl = parent.querySelector('#sliderView');
       var basemapEl = parent.querySelector('#basemapView');
       var defaultBaseMap = basemapEl.getAttribute('data-basemap');
@@ -88,7 +89,7 @@
       }
 
       this.map = new App.View.Map({
-        el: mapEl,
+        el: this.mapEl,
         data: this.data,
         cartoCss: this.cartoCss,
         basemap: defaultBaseMap,
@@ -301,13 +302,17 @@
       var data = this.data;
       var layers = this.data.layers;
 
-      if (!this.currentLayer) {
-        var layer = _.first(layers);
-        this.currentLayer = layer.table_name;
+      if (this.tabAlias && !this.currentLayer) {
+        if (_.findWhere(layers, { layer_column_alias: this.tabAlias })){
+          this.currentLayer = _.findWhere(layers, { layer_column_alias: this.tabAlias }).table_name;
+        } else {
+          this.currentLayer = _.findWhere(layers, { layer_column: this.tabAlias }).table_name;
+        }
+      } else if (!this.currentLayer) {
+        this.currentLayer = _.first(layers).table_name;
       }
 
-      var currentLayer = this.currentLayer;
-      var layer = _.findWhere(layers, { table_name: currentLayer });
+      var layer = _.findWhere(layers, { table_name: this.currentLayer });
 
       if (layer.raster_type){
         layer.isRaster = true;

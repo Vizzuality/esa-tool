@@ -1,5 +1,6 @@
 class CaseStudiesController < ApplicationController
 
+  before_action :restrict_access!, only: [:index]
   after_action :check_case_study
 
   def index
@@ -17,8 +18,8 @@ class CaseStudiesController < ApplicationController
 
   def show
     @tags = Tag.all
-    @case_study = CaseStudy.published.where(slug: params[:slug]).
-      includes(:contacts, :valid_pages).first
+    @case_study = CaseStudy.published.where(slug: params[:slug]).first
+    @tab = params[:tab]
 
     gon.case_study = @case_study.
       as_json(include: [:contacts, {valid_pages: {include: [:data_layers, :charts, :interest_points]}}])
@@ -28,11 +29,10 @@ class CaseStudiesController < ApplicationController
   def preview
     if user_signed_in?
       @tags = Tag.all
-      @case_study = CaseStudy.where(slug: params[:slug]).
-        includes(:contacts, :valid_pages).first
+      @case_study = CaseStudy.where(slug: params[:slug]).first
 
       gon.case_study = @case_study.
-        to_json(include: [:contacts, {pages: {include: [:data_layers, :charts]}}])
+        as_json(include: [:contacts, {valid_pages: {include: [:data_layers, :charts, :interest_points]}}])
       gon.cartodb_user = ENV["CDB_USERNAME"]
     else
       not_found
@@ -49,6 +49,10 @@ class CaseStudiesController < ApplicationController
 
     def case_studies_params
       params.permit(:search, tags:[])
+    end
+
+    def restrict_access!
+      redirect_to backoffice_dashboard_path unless user_signed_in?
     end
 
 end

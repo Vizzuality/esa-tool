@@ -21,7 +21,7 @@ $bg-tags: #0a3c57;
     display: inline-block;
     margin-right: .3rem;
     margin-top: .3rem;
-    padding: .5rem;
+    padding: .1rem .5rem;
 
     font-family: $font-secondary;
     font-size: rem($font-size-small);
@@ -33,7 +33,7 @@ $bg-tags: #0a3c57;
     background-color: rgba($font-color-1, 0.6);
     text-decoration: none;
 
-    &._selected {
+    &:hover, &._selected {
       background-color: $font-color-landing-5;
     }
 

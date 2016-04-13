@@ -93,6 +93,8 @@
         max-width: 100%;
         box-sizing: border-box;
 
+        font-family: $font-secondary;
+
         @media screen and (min-width: $screen-sm) {
           padding: 1rem;
           flex-basis: 33%;

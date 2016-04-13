@@ -70,10 +70,16 @@ $form-shadows-c: rgba($bg-color-landing-3, 0.3);
 
   .feedback {
     min-height: rem(370px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     font-family: $font-main;
     font-size: $font-size-medium;
     color: $font-color-landing-4;
     line-height: 1;
+    .feedback-content{
+      text-align: center;
+    }
   }
 }
