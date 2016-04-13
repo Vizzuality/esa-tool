@@ -117,6 +117,17 @@
       background-color: $bg-color-landing-4;
     }
 
+    &.-alt {
+      color: rgba($bg-color-landing-4, 0.5);
+      border-color: rgba($bg-color-landing-4, 0.5);
+      background-color: transparent;
+
+      &:hover, &:active {
+        color: $font-color-landing-3;
+        background-color: $bg-color-landing-4;
+      }
+    }
+
     &.-inv {
       color: $font-color-landing-2;
       background-color: $bg-color-landing-3;
