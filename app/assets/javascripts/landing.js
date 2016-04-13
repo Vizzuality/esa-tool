@@ -215,11 +215,9 @@
      * Function to initialize the cases filter view
      */
     _updateRouter: function(tag) {
-      var params = {
-        name: this.cases.filterName,
-        value: tag
-      };
-      this.router.trigger('route:updateParam', params);
+      this.router.trigger('route:updateParam', {
+        'tag':tag
+      });
     },
 
     /**
