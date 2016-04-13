@@ -13,6 +13,10 @@
 
   &._expanded {
     margin-top: 0;
+
+    .select2-title {
+      display: none;
+    }
   }
 
   ._is-loading {

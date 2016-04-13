@@ -11,7 +11,7 @@
     routes: {
       'contact-form': 'landing',
       'cases': 'landing',
-      '(?tags[]=:tag)': 'landing',
+      '(?tag=:tag)': 'landing',
       'case-studies/:id(?*queryString)': 'caseStudies',
       'case-studies/:id/preview(?*queryString)': 'caseStudies'
     },
@@ -48,7 +48,9 @@
         params[query] = newParam[query];
       }
 
-      path = path + '?' + $.param(params);
+      if (params[query]){
+        path = path + '?' + $.param(params);
+      }
 
       this.navigate(path, {
         trigger: false, replace: true
