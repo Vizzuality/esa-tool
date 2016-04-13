@@ -40,8 +40,8 @@
       var path = window.location.pathname;
       var params = null;
       var query = Object.keys(newParam)[0];
-      
-      if (query==='page'){
+
+      if (query==='page' || query === 'tag'){
         params = newParam;
       } else {
         params = this._parseQueryParamString(window.location.search.replace('?',''));
