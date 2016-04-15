@@ -1,6 +1,6 @@
-section#contact-form
+section#contact-form.contact-form-container
   .wrap: .row
-    .grid-sm-12.contact-form
+    .grid-xs-12.contact-form
       h2.title = t('contact')
       .form
         = simple_form_for @contact_form, url: contact_form_index_path, class: 'contact-form', remote: true do |f|
