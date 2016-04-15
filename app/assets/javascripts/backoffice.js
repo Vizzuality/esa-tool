@@ -199,6 +199,10 @@
           return 'You have unsaved changes.';
         }
       });
+      Backbone.Events.on('refresh:force', function(){
+        $(window).off('beforeunload');
+        location.reload();
+      });
     },
 
     setListeners: function(){
