@@ -5,8 +5,8 @@ class Page < ActiveRecord::Base
 
   belongs_to :case_study
   has_many :data_layers, dependent: :destroy
-  has_many :interest_points
-  has_and_belongs_to_many :charts
+  has_many :interest_points, dependent: :destroy
+  has_and_belongs_to_many :charts, dependent: :destroy
   has_attached_file :background, styles: {
     medium: '385x200#',
     large: '1920x1080#'
