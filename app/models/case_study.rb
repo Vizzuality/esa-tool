@@ -7,7 +7,7 @@ class CaseStudy < ActiveRecord::Base
 
   acts_as_taggable
 
-  has_many :contacts
+  has_many :contacts, dependent: :destroy
   has_many :pages, dependent: :destroy
   has_many :valid_pages, -> {
     joins("LEFT OUTER JOIN data_layers ON data_layers.page_id = pages.id").
