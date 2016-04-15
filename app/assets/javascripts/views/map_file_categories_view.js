@@ -76,7 +76,6 @@
       column = column || this.el.getAttribute('data-column');
 
       this.isRaster = column === this.options.rasterColumn;
-      this.columnsContainer.classList.add('_is-loading');
       if (this.analyzed && !self.initialized) {
         categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
         categories = _.map(categoriesObject, function(item, key){
@@ -89,7 +88,6 @@
 
       } else if (table && column) {
         self.openFeedback();
-
         if (this.isRaster) {
           var prePromise = self.isRasterHighRes(table, column);
           promise = prePromise.then(function(highRes) {
@@ -114,7 +112,6 @@
 
       } else {
         self.columnsContainer.innerHTML = 'Please choose a table column';
-        this.columnsContainer.classList.remove('_is-loading');
       }
     },
 
@@ -464,7 +461,6 @@
       });
       this.setRasterCategories(columns);
       this.updateColumnsColor();
-      this.columnsContainer.classList.remove('_is-loading');
     },
 
     getCategory: function(category) {
@@ -484,8 +480,8 @@
         '</div>');
     },
 
-    handleCategoriesError: function(error) {
-      console.warn(error);
+    handleCategoriesError: function() {
+      this.columnsContainer.innerHTML = '<p>There was an error analyzing the data, please contact us</p>';
     },
 
     updateColumnsColor: function(palette) {
