@@ -303,10 +303,11 @@
       var layers = this.data.layers;
 
       if (this.tabAlias && !this.currentLayer) {
+        var tab = this.tabAlias.split('-')[0];
         if (_.findWhere(layers, { layer_column_alias: this.tabAlias })){
-          this.currentLayer = _.findWhere(layers, { layer_column_alias: this.tabAlias }).table_name;
+          this.currentLayer = _.findWhere(layers, { layer_column_alias: tab }).table_name;
         } else {
-          this.currentLayer = _.findWhere(layers, { layer_column: this.tabAlias }).table_name;
+          this.currentLayer = _.findWhere(layers, { layer_column: tab }).table_name;
         }
       } else if (!this.currentLayer) {
         this.currentLayer = _.first(layers).table_name;

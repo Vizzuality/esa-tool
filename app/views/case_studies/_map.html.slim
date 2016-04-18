@@ -30,7 +30,7 @@
                 - p.data_layers.each.with_index do |layer, index|
                   - layer_alias = layer.layer_column_alias.blank? ? layer.layer_column : layer.layer_column_alias
                   - layer_alias = layer_alias + "-#{layer.id}"
-                  - class_name = (index == 0 && @tab.blank?) || (layer.layer_column_alias == @tab || layer.layer_column == @tab) ? 'tab-title -active' : 'tab-title'
+                  - class_name = (index == 0 && @tab.blank?) || (layer.layer_column_alias + "-#{layer.id}" == @tab || layer.layer_column + "-#{layer.id}" == @tab) ? 'tab-title -active' : 'tab-title'
                   li data-tab="#{layer.table_name}" data-alias="#{layer_alias}" class="#{class_name}"
                     a href="#" 
                       - if layer.layer_column_alias?
