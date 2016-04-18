@@ -40,6 +40,7 @@ section.l-main
             - if @page.page_type == PageType::TEXT
               = render 'backoffice/pages/edit_form/edit_form_text', f: f
             - elsif @page.page_type == PageType::TIMELINE
+              - @page.data_layers = @page.data_layers.order("id")
               = render 'backoffice/pages/edit_form/edit_form_timeline', f: f
             - else 
               = render 'backoffice/pages/edit_form/edit_form_map', f: f

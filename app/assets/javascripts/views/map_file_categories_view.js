@@ -44,11 +44,8 @@
       closeFormBtn.classList.add('-alt');
       self.setRasterColorInput();
       saveFormBtn.onclick = function() {
-        var rasterColorInput = document.getElementsByClassName('raster_color_input');
-        self.rasterColorInput.value = rasterColorInput[rasterColorInput.length-1].value;
+        self.rasterColorInput.value = self.currentRasterInput.value;
         // self.updateColumnsColor(self.paletteSelected);
-        console.log('input value: '+ self.customColumsInput.value);
-        console.log('raste value: '+ self.rasterColorInput.value);
         document.getElementById('saveBtn').click();
       };
     },
@@ -367,6 +364,7 @@
       var self = this;
       self.palette = palette;
       item = item || this.rasterColorInput;
+      this.currentRasterInput = item;
       var line = function() {
         var lines = self.el.querySelectorAll('.columns-container .item.-color');
         var text = '';
