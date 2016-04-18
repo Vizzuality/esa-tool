@@ -48,7 +48,7 @@
         categColor = {};
     for (var i = 0; i < values.length; i ++) {
       if (values[i].length < 1) break;
-      categColor[values[i].split('-')[1]] =  values[i].split('-')[0];
+      categColor[values[i].substring(values[i].indexOf('-')+1)] =  values[i].split('-')[0];
     }
     return categColor;
   }
