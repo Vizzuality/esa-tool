@@ -24,6 +24,7 @@
       this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors')[0];
       this.rasterColorInput = this.el.getElementsByClassName('raster_color_input')[0];
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
+      this.opacity = App.CartoCSS['Theme' + this.data.caseStudy.template]['default-p1']['polygon-opacity'];
       this.analyzed = this.checkAnalyzed();
       this.featherRaster = this.el.getElementsByClassName('raster-color-ftlight')[0];
       this.setFeatherlight();
@@ -441,7 +442,7 @@
           if (count > paletteLenght - 1) {
             count = 0;
           }
-          category.color = App.Helper.hexToRgba(self.palette[count], 100);
+          category.color = App.Helper.hexToRgba(self.palette[count], self.opacity*100);
           count++;
         }
         if (names && names[element.category]) {
