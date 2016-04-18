@@ -111,7 +111,7 @@
         });
 
       } else {
-        self.columnsContainer.innerHTML = 'Please choose a table column';
+        self.columnsContainer.innerHTML = '<p>Please choose a table column</p>';
       }
     },
 
