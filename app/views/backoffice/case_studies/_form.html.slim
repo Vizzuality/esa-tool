@@ -4,7 +4,7 @@
   = f.input :title, input_html: { maxlength: 100 }
 
 .form-row
-  = f.input :slug, placeholder: @case_study.slug.blank? ? '' : @case_study.slug
+  = f.input :slug, label:'Slug (Short title page in the url)', placeholder: @case_study.slug.blank? ? '' : @case_study.slug
 
 .form-row
   = f.input :published, as: :radio_buttons, collection: [[t('published'), true], [t('unpublished'), false]]

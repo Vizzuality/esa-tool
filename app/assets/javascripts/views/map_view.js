@@ -688,6 +688,12 @@
 
         var group = L.featureGroup([newPoint, myTextLabel]);
 
+        group.on('mouseover', function() {
+          self.el.classList.add('_c-pointer');
+        });
+        group.on('mouseout', function() {
+          self.el.classList.remove('_c-pointer');
+        });
         group.on('click', function(e) {
           var layers = this.getLayers();
           var layer = layers[0];
