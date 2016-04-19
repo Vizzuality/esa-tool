@@ -45,7 +45,6 @@
       self.setRasterColorInput();
       saveFormBtn.onclick = function() {
         self.rasterColorInput.value = self.currentRasterInput.value;
-        // self.updateColumnsColor(self.paletteSelected);
         document.getElementById('saveBtn').click();
       };
     },
@@ -53,6 +52,10 @@
     setFeatherlightListeners: function() {
       var self = this;
       this.palettesBox = $('.featherlight-content .item.-palette');
+      this.rasterColorInputModal = $('.featherlight-content .raster_color_input');
+      this.rasterColorInputModal.on('change', function(e) {
+        self.rasterColorInput.value = e.currentTarget.value;
+      });
       this.palettesBox.on('click', function(e) {
         var targetValue = e.currentTarget.getAttribute('data-value');
         var cartoCss = App.CartoCSS['Theme' + self.data.caseStudy.template];
