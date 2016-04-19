@@ -203,8 +203,8 @@
       $.ajax({
           url: '/backoffice/data-layers/' + this.layerId,
           type: 'DELETE',
-          success: function(result) {
-              console.info('Dataset deleted succesfully')
+          success: function() {
+            Backbone.Events.trigger('refresh:force');
           }
       });
     },

@@ -2,11 +2,12 @@ $form-font-c: $font-color-landing-1;
 $form-shadows-c: rgba($bg-color-landing-3, 0.3);
 
 
+.contact-form-container {
+  background-color: $bg-color-landing-4;
+}
 .contact-form {
 
   padding: 2rem 0;
-
-  background-color: $bg-color-landing-4;
 
   @media screen and (min-width: $screen-md) {
     padding: 2rem 2rem 3rem;

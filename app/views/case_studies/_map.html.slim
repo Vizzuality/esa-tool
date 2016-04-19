@@ -29,7 +29,9 @@
               ul.tabs.-wb
                 - p.data_layers.each.with_index do |layer, index|
                   - layer_alias = layer.layer_column_alias.blank? ? layer.layer_column : layer.layer_column_alias
-                  li data-tab="#{layer.table_name}" data-alias="#{layer_alias}" class=("tab-title -active" if index == 0 && @tab.blank?) class=(layer.layer_column_alias == @tab || layer.layer_column == @tab ? 'tab-title -active' : 'tab-title') 
+                  - layer_alias = layer_alias + "-#{layer.id}" unless layer_alias.blank?
+                  - class_name = (index == 0 && @tab.blank?) || (layer.layer_column_alias + "-#{layer.id}" == @tab || layer.layer_column + "-#{layer.id}" == @tab) ? 'tab-title -active' : 'tab-title'
+                  li data-tab="#{layer.table_name}" data-alias="#{layer_alias}" class="#{class_name}"
                     a href="#" 
                       - if layer.layer_column_alias?
                         =layer.layer_column_alias

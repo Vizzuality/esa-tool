@@ -24,6 +24,7 @@
       this.customColumsInput = this.el.getElementsByClassName('custom_columns_colors')[0];
       this.rasterColorInput = this.el.getElementsByClassName('raster_color_input')[0];
       this.palette = App.CartoCSS['Theme' + this.data.caseStudy.template].palette1;
+      this.opacity = App.CartoCSS['Theme' + this.data.caseStudy.template]['default-p1']['polygon-opacity'];
       this.analyzed = this.checkAnalyzed();
       this.featherRaster = this.el.getElementsByClassName('raster-color-ftlight')[0];
       this.setFeatherlight();
@@ -43,11 +44,8 @@
       closeFormBtn.classList.add('-alt');
       self.setRasterColorInput();
       saveFormBtn.onclick = function() {
-        var rasterColorInput = document.getElementsByClassName('raster_color_input');
-        self.rasterColorInput.value = rasterColorInput[rasterColorInput.length-1].value;
+        self.rasterColorInput.value = self.currentRasterInput.value;
         // self.updateColumnsColor(self.paletteSelected);
-        console.log('input value: '+ self.customColumsInput.value);
-        console.log('raste value: '+ self.rasterColorInput.value);
         document.getElementById('saveBtn').click();
       };
     },
@@ -76,7 +74,6 @@
       column = column || this.el.getAttribute('data-column');
 
       this.isRaster = column === this.options.rasterColumn;
-      this.columnsContainer.classList.add('_is-loading');
       if (this.analyzed && !self.initialized) {
         categoriesObject = App.Helper.deserialize(this.layer.raster_categories);
         categories = _.map(categoriesObject, function(item, key){
@@ -89,7 +86,6 @@
 
       } else if (table && column) {
         self.openFeedback();
-
         if (this.isRaster) {
           var prePromise = self.isRasterHighRes(table, column);
           promise = prePromise.then(function(highRes) {
@@ -113,8 +109,7 @@
         });
 
       } else {
-        self.columnsContainer.innerHTML = 'Please choose a table column';
-        this.columnsContainer.classList.remove('_is-loading');
+        self.columnsContainer.innerHTML = '<p>Please choose a table column</p>';
       }
     },
 
@@ -369,6 +364,7 @@
       var self = this;
       self.palette = palette;
       item = item || this.rasterColorInput;
+      this.currentRasterInput = item;
       var line = function() {
         var lines = self.el.querySelectorAll('.columns-container .item.-color');
         var text = '';
@@ -444,7 +440,7 @@
           if (count > paletteLenght - 1) {
             count = 0;
           }
-          category.color = App.Helper.hexToRgba(self.palette[count], 100);
+          category.color = App.Helper.hexToRgba(self.palette[count], self.opacity*100);
           count++;
         }
         if (names && names[element.category]) {
@@ -464,7 +460,6 @@
       });
       this.setRasterCategories(columns);
       this.updateColumnsColor();
-      this.columnsContainer.classList.remove('_is-loading');
     },
 
     getCategory: function(category) {
@@ -484,8 +479,8 @@
         '</div>');
     },
 
-    handleCategoriesError: function(error) {
-      console.warn(error);
+    handleCategoriesError: function() {
+      this.columnsContainer.innerHTML = '<p>There was an error analyzing the data, please contact us</p>';
     },
 
     updateColumnsColor: function(palette) {

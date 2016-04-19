@@ -10,6 +10,8 @@
     border: none;
     overflow: visible;
 
+    box-sizing: border-box;
+
     @media screen and (max-width: $screen-sm) {
       height: 100%;
     }

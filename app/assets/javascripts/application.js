@@ -149,6 +149,7 @@
       if (this.map) {
         this.map.remove();
         this.map = null;
+        this.tabPage = null;
       }
 
       if (el.firstElementChild.getAttribute('data-type') === 'map') {

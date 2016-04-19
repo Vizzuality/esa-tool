@@ -43,6 +43,11 @@
       font-weight: 400;
       padding-top: rem(6px);
       padding-bottom: rem(6px);
+      margin: 1rem 0;
+
+      @media (max-width: $screen-sm) {
+        display: block;
+      }
     }
   }
 
