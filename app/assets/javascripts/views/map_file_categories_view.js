@@ -109,7 +109,7 @@
         });
 
       } else {
-        self.columnsContainer.innerHTML = '<p>Please choose a table column</p>';
+        self.columnsContainer.innerHTML = '<label class="error">Please choose a table column</label>';
       }
     },
 
@@ -480,7 +480,7 @@
     },
 
     handleCategoriesError: function() {
-      this.columnsContainer.innerHTML = '<p>There was an error analyzing the data, please contact us</p>';
+      this.columnsContainer.innerHTML = '<label class="error">There was an error analyzing the data, please contact us</label>';
     },
 
     updateColumnsColor: function(palette) {
