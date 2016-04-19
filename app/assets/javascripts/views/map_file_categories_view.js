@@ -64,6 +64,10 @@
         self.paletteSelected = _.map(self.paletteSelected, function(color) { return App.Helper.hexToRgba(color, defaultCarto['polygon-opacity']*100);});
         var $item = $(e.currentTarget);
         var item = $item.parents('.raster-color').find('.raster_color_input')[0];
+        item.classList.remove('border-animate');
+        setTimeout(function(){
+          item.classList.add('border-animate');
+        }.bind(this),100);
         self.setRasterColorInput(item,self.paletteSelected);
       });
     },
@@ -463,6 +467,7 @@
       });
       this.setRasterCategories(columns);
       this.updateColumnsColor();
+      this.featherRaster.classList.remove('_hidden');
     },
 
     getCategory: function(category) {

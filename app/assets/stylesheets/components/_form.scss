@@ -186,3 +186,20 @@ textarea {
     font-size: rem($font-size-medium);
   }
 }
+
+.border-animate {
+  animation: border-animation 1s ease;
+}
+
+@keyframes border-animation {
+  0% {
+    border-color: $border-color-1;
+  }
+  50% {
+    border-color: $border-color-2;
+    box-shadow: 0px 0px 1px 1px rgba($border-color-2,.5);
+  }
+  100% {
+    border-color: $border-color-1;
+  }
+}
