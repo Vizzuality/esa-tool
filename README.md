@@ -23,16 +23,23 @@ To install run:
 
 ## Usage
 
-To run the enviroment:
+Use the start.sh script to set everything:
+
+    ./start.sh
+
+or if you prefer do it manually:
+
+1. To run the enviroment:
 
     postgres -D /usr/local/var/postgres
+
     redis-server /usr/local/etc/redis.conf
 
-To run the application:
+2. To run the application:
 
     bundle exec rails server
-    RAILS_ENV=development bundle exec resque-pool
 
+    RAILS_ENV=development bundle exec resque-pool
 
 To run testing heroku on local:
 
