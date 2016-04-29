@@ -7,6 +7,8 @@ class Backoffice::CaseStudiesController < BackofficeController
   def index
     @case_studies = if current_user.is_admin?
                       CaseStudy.all
+                    elsif current_user.organization.nil?
+                      CaseStudy.where(organization_id: nil)
                     else
                       current_user.organization.try(:case_studies) || []
                     end
