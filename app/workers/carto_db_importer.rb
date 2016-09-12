@@ -26,11 +26,12 @@ class CartoDbImporter
     import_status = CartoDb.import_status(queue_id)
     i = 0
     # posibles status: enqueued, pending, uploading, unpacking, importing, guessing, complete, or failure.
-    while i < 120
+    while i < 60
       break if [ImportStatus::COMPLETE, ImportStatus::FAILURE].include?(import_status["state"])
       sleep(60)
       import_status = CartoDb.import_status(queue_id)
       i += 1
+      layer.update_attributes(import_attempt: i)
     end
     layer.table_name = import_status["table_name"]
     layer.import_status = import_status["state"]
