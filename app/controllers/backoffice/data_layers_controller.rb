@@ -11,8 +11,12 @@ class Backoffice::DataLayersController < BackofficeController
   end
 
   def destroy
+    @page = @data_layer.page
     @data_layer.destroy
-    render json: true
+    respond_to do |format|
+      format.json { render json: true }
+      format.html { redirect_to edit_backoffice_case_study_page_path(@page.case_study, @page) }
+    end
   end
 
 
