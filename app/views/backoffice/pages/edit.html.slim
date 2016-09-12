@@ -17,13 +17,17 @@ section.l-main
         - layersUploading = false
         - layersError = false
         - feedbackMsg = ''
+        - erroredLayer = nil
         - @page.data_layers.each do |d|
           - if [ImportStatus::PENDING, ImportStatus::UPLOADING].include?(d.import_status)
             - layersUploading = true
-            - feedbackMsg = 'Datasets files are being uploaded, please wait and page will reload automatically or return in a little while'
+            - feedbackMsg = "Datasets files are being uploaded, please wait and page will reload automatically or return in a moment."
+            - if d.import_attempt > 0
+              - feedbackMsg = feedbackMsg + " Import started #{d.import_attempt} minutes ago. Larger files will take longer to import. The application will allow 1 hour before assuming a failure in the upload."
             - break
           - if d.import_status == ImportStatus::FAILURE
             - layersError = true
+            - erroredLayer = d
             - feedbackMsg = 'There was an error uploading the file, please remove it and try again later'
             - break
 
@@ -32,9 +36,13 @@ section.l-main
             div class=(layersUploading ? '_is-loading':'')
               span.loading-msg = feedbackMsg
             - if layersError
-              = link_to t('delete'),
-                backoffice_case_study_page_path(case_study_id: @page.case_study.id,
-                id: @page.id), method: :delete, class: 'btn -alt'
+              - if @page.data_layers.count > 1
+                = link_to t('delete'), backoffice_data_layer_path(erroredLayer),
+                  method: :delete, class: 'btn -alt'
+              - else
+                = link_to t('delete'),
+                  backoffice_case_study_page_path(case_study_id: @page.case_study.id,
+                  id: @page.id), method: :delete, class: 'btn -alt'
         - else
           = simple_form_for @page, url: backoffice_case_study_page_path, html: { multipart: true }, html: { class: "exit-saving"}  do |f|
             - if @page.page_type == PageType::TEXT
@@ -44,15 +52,13 @@ section.l-main
               = render 'backoffice/pages/edit_form/edit_form_timeline', f: f
             - else 
               = render 'backoffice/pages/edit_form/edit_form_map', f: f
-            
+
             = render 'backoffice/pages/edit_form/edit_form_footer', f: f
-            
             / = render 'edit_form', f: f
-            
           ._hidden
             #feedbackAnalyzing
               .loading-container
                 div._is-loading
                   span.loading-msg
                   | The datalayers are being analyzed,
-                    please wait a little while
+                    please wait a moment.

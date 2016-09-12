@@ -32,7 +32,7 @@
     .grid-sm-12
         
         .list-container.columns-container id="custom-column-layer-#{f.object.id}" data={table:f.object.table_name, column: f.object.layer_column}
-          a.btn.-alt.raster-color-ftlight href="#" data={featherlight:"#raster-color-#{f.object.id}"} = t('import_export_colors')
+          a.btn.-alt.raster-color-ftlight._hidden href="#" data={featherlight:"#raster-color-#{f.object.id}"} = t('import_export_colors')
           
           .content
           = f.input_field :custom_columns_colors, as: :hidden, value: f.object.custom_columns_colors, class: "custom_columns_colors"

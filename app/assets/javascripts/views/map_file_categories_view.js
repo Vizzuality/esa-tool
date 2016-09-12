@@ -45,7 +45,6 @@
       self.setRasterColorInput();
       saveFormBtn.onclick = function() {
         self.rasterColorInput.value = self.currentRasterInput.value;
-        // self.updateColumnsColor(self.paletteSelected);
         document.getElementById('saveBtn').click();
       };
     },
@@ -53,6 +52,10 @@
     setFeatherlightListeners: function() {
       var self = this;
       this.palettesBox = $('.featherlight-content .item.-palette');
+      this.rasterColorInputModal = $('.featherlight-content .raster_color_input');
+      this.rasterColorInputModal.on('change', function(e) {
+        self.rasterColorInput.value = e.currentTarget.value;
+      });
       this.palettesBox.on('click', function(e) {
         var targetValue = e.currentTarget.getAttribute('data-value');
         var cartoCss = App.CartoCSS['Theme' + self.data.caseStudy.template];
@@ -61,6 +64,10 @@
         self.paletteSelected = _.map(self.paletteSelected, function(color) { return App.Helper.hexToRgba(color, defaultCarto['polygon-opacity']*100);});
         var $item = $(e.currentTarget);
         var item = $item.parents('.raster-color').find('.raster_color_input')[0];
+        item.classList.remove('border-animate');
+        setTimeout(function(){
+          item.classList.add('border-animate');
+        }.bind(this),100);
         self.setRasterColorInput(item,self.paletteSelected);
       });
     },
@@ -109,7 +116,7 @@
         });
 
       } else {
-        self.columnsContainer.innerHTML = '<p>Please choose a table column</p>';
+        self.columnsContainer.innerHTML = '<label class="error">Please choose a table column</label>';
       }
     },
 
@@ -460,6 +467,7 @@
       });
       this.setRasterCategories(columns);
       this.updateColumnsColor();
+      this.featherRaster.classList.remove('_hidden');
     },
 
     getCategory: function(category) {
@@ -480,7 +488,7 @@
     },
 
     handleCategoriesError: function() {
-      this.columnsContainer.innerHTML = '<p>There was an error analyzing the data, please contact us</p>';
+      this.columnsContainer.innerHTML = '<label class="error">There was an error analyzing the data, please contact us</label>';
     },
 
     updateColumnsColor: function(palette) {

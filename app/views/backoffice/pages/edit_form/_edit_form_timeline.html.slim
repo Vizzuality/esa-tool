@@ -38,7 +38,7 @@
       .grid-sm-12
         label = "Select the columns color for #{@page.data_layers.first.table_name}"
         .list-container.columns-container id="custom-column-layer-#{@page.data_layers.first.id}" data= {table:@page.data_layers.first.table_name, column: @page.column_selected}
-          a.btn.-alt.raster-color-ftlight href="#" data={featherlight:"#raster-color-#{@page.data_layers.first.id}"} = t('import_export_colors')
+          a.btn.-alt.raster-color-ftlight._hidden href="#" data={featherlight:"#raster-color-#{@page.data_layers.first.id}"} = t('import_export_colors')
         
           = f.simple_fields_for :data_layers do |d|
             = d.input_field :custom_columns_colors, as: :hidden, value: d.object.custom_columns_colors, class: "custom_columns_colors"
