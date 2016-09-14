@@ -39,7 +39,7 @@
           attribution: 'cartodb'
         },
         satellite: {
-          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.e0f64082/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         }
       },
@@ -49,37 +49,37 @@
           attribution: 'cartodb'
         },
         satellite: {
-          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.e0f64082/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         }
       },
       2: {
         terrain: {
-          tileUrl: 'https://api.mapbox.com/v4/alexdontsurf.fa9a7462/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxleGRvbnRzdXJmIiwiYSI6IlU5MWZ4TU0ifQ.Ro2ZkpiiUpzhResB5Lr04A',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.c8be86ae/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         },
         satellite: {
-          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.e0f64082/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         }
       },
       3: {
         terrain: {
-          tileUrl: 'https://api.mapbox.com/v4/alexdontsurf.fa9a7462/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYWxleGRvbnRzdXJmIiwiYSI6IlU5MWZ4TU0ifQ.Ro2ZkpiiUpzhResB5Lr04A',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.f2281336/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         },
         satellite: {
-          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.e0f64082/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         }
       },
       4: {
         terrain: {
-          tileUrl: 'https://api.mapbox.com/v4/elena3558.2fb60408/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZWxlbmEzNTU4IiwiYSI6ImNpaWhndnczMzAwMHN2eGtzYmJzejVkYzQifQ.2rBSYnizcEVl8nko6Fry6g',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.d4d275ed/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         },
         satellite: {
-          tileUrl: 'https://api.mapbox.com/v4/geriux.om6jab39/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ2VyaXV4IiwiYSI6IkFYS1ZJdDgifQ.Md25z-4Qp3qtodl4kjTrZQ',
+          tileUrl: 'https://api.mapbox.com/v4/simaob.e0f64082/{z}/{x}/{y}.png?access_token=sk.eyJ1Ijoic2ltYW9iIiwiYSI6ImNpdDJ3Y3hhaDAwYnoydG8zcXg2a2V1Z2YifQ.zZocs-lrVpGt9O-NVzeckA',
           attribution: 'mapbox'
         }
       }
